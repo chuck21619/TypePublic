@@ -123,7 +123,7 @@ Documents are the pages of text contained within folders. They can contain infin
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/docanatomy.png">
 Documents are files that contain text, images, tables, references, links, etc. they can span multiple (physical) page lengths and be exported to any printable file type, and published to any platform (that accepts Markdown and has an available API)
 
-Documents are named either by the first **\#title** and **\##subtitle** in the document, or manually in the /info panel. (See sidebar)
+Documents are named either by the first **\#title** and **\#\#subtitle** in the document, or manually in the /info panel. (See sidebar)
  
 # Workspace
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/workspace.png">
@@ -157,7 +157,7 @@ In split view you can load two documents side-by-side. They can be two different
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/paged.png">
 This view has two different options. The first option defines the left and right boundaries of the page (A4 or 8.5x11 by default). The other provides a rectangle delineating a piece of paper (this is a lot like MS word would display documents). This view displays page breaks as separate pages.
 
-# Sidebar /Runner 
+# Sidebar /Runner
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/sidebar.png">
 
 Runner is the **Swiss-army knife** of **TYPE**. It is contained on the right-hand side of the window in the **Sidebar**. From here the writer to access and execute complex functionality with just a few keywords. Activate runner with the shortcut **( ⌘+/ )**.  
@@ -261,7 +261,7 @@ manually add text to the sidebar as notes. It’s associated with the document a
 General settings for TYPE.
 
 ## /Themes
-<img src="https://github.com/JEFLBROWN/Type/blob/master/Img/r_themses.png">
+<img src="https://github.com/JEFLBROWN/Type/blob/master/Img/r_themes.png">
 Writers have an ability to customize the workspace theme. **Themes** determine how the writing appears in the app. Arrowing up and down the themes sidebar updates the workspace in real time.
 
 Some of the customizations include:
@@ -307,7 +307,7 @@ TYPE uses half of this mechanic. Instead of assigning the left and right shift k
 When you enter syntax and then enter characters, you don’t need to repeat the syntax at the end, you can hit **right shift** to complete the closing syntax. Closing syntax in this manner also automatically adds a _space_ right after, saving you an extra keystroke and furthering the momentum of writing.
 
 ## Outline
-<img src="https://github.com/JEFLBROWN/Type/blob/master/Img/outline.gif">
+<img src="https://github.com/JEFLBROWN/Type/blob/master/Img/Outline.gif">
 The outline is (technically) a list of anchor tags built from “#Titles, ##Subtitles, and ###headlines ” automatically. It provides a birds-eye view of your writing that you can interact with. It more-or-less treats text like groups and layers in photoshop.
 
 ### Rearranging & Relocate
