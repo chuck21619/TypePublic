@@ -16,15 +16,15 @@ Along with a language that promotes efficiency, The core user experience is cent
 ## The  Audience
 This application and it’s features are made to serve three categories of writers:
 
-| Creative Writer  | Modern Writers  |  Academic Writers |
-| ------------- |:-------------:| -----:|
+| Creative Writers  | Modern Writers  |  Academic Writers |
+|:------ |:-------------|:---|
 | Books/Novels/Short Stories |  Web Publications/blogs/Forums   |  Research papers  |
 | Poetry | Static HTML Pages | Presentations|
 |Scripts/Screenplays | Social Media Posts | Documentation |
 | et al  | Email  & Newsletters | Journals |
-| Journalists | Wiki pages | Grants |
+|  | Wiki pages | Grants |
 |  | et al | Notes |
-| et al |
+
 
 
 
