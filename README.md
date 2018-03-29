@@ -16,29 +16,37 @@ Along with a language that promotes efficiency, The core user experience is cent
 ## The  Audience
 This application and it’s features are made to serve three categories of writers:
 
-### Creative Writers
+| ### Creative Writer        | ### Modern Writers    | ### Academic Writers  |
+| ------------- |:-------------:| -----:|
+|  
 * Books/Novels/Short Stories
 * Poetry
 * Scripts/Screenplays
-* et al
-
-### Modern Writers
+* et al     | 
 * Journalists
 * Web Publications/blogs/Forums
 * Static HTML Pages
 * Social Media Posts
 * Email  & Newsletters 
 * Wiki pages
-* et al
-
-### Academic Writers
+* et al | 
 * Research papers 
 * Presentations
 * Documentation
 * Journals
 * Grants
 * Notes
-* et al.
+* et al. |
+
+
+
+
+
+
+
+
+
+
 
 # The Structure of Type
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/structure.png">
