@@ -23,18 +23,7 @@ This application and it’s features are made to serve three categories of write
 |Scripts/Screenplays | Social Media Posts | Documentation |
 | et al  | Email  & Newsletters | Journals |
 |  | Wiki pages | Grants |
-|  | et al | Notes |
-
-
-
-
-
-
-
-
-
-
-
+|  |  | Notes |
 
 # The Structure of Type
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/structure.png">
@@ -280,7 +269,7 @@ Runner categories should be treated like plugins/extensions that other developer
 A good example of a runner extension would be something like ‘/Hemingway’. Based on the web app [Hemingway editor][5], it deconstructs and evaluates writing based on its complexity and structure.
 
 # Toolbar
-
+<img src="https://github.com/JEFLBROWN/Type/blob/master/Img/toolbar.png">
 The toolbar is mainly for those who are new to markdown. Markdown is intuitive once you get over the initial hump of learning the syntax, but people are used to the “MS word” school of word processing, where the only formatting done with a keyboard is **Bold** and _italic_ 
 
 <img src="https://github.com/JEFLBROWN/Type/blob/master/Img/toolbarex.png">
@@ -335,6 +324,7 @@ Simply placing a cursor inside of a word or at the beginning of a word allows yo
  if you want to rearrange lines, you only need to place the cursor anywhere inside that line.
 
 ### Shift Selection
+<img src="https://github.com/JEFLBROWN/Type/blob/master/Img/shiftselect.gif">
 you can select a word by pressing _Left_ shift once. Rapidly pressing it twice selects the sentence (or last words typed after a sentence). Three times and you select the line that the cursor occupies.
 
 ### Text Decoration
