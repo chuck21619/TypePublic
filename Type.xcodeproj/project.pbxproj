@@ -12,6 +12,9 @@
 		A327176120E55CA200AD89A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A327176020E55CA200AD89A0 /* Assets.xcassets */; };
 		A327176420E55CA200AD89A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A327176220E55CA200AD89A0 /* Main.storyboard */; };
 		A327177020E55CA200AD89A0 /* TypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A327176F20E55CA200AD89A0 /* TypeTests.swift */; };
+		A3828C2220E56CA1000FDA72 /* Panels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3828C2120E56C89000FDA72 /* Panels.framework */; };
+		A3828C2320E56CA1000FDA72 /* Panels.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A3828C2120E56C89000FDA72 /* Panels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A3C325D420E57115007DFCE4 /* TestViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C325D320E57115007DFCE4 /* TestViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,7 +25,35 @@
 			remoteGlobalIDString = A327175820E55CA100AD89A0;
 			remoteInfo = Type;
 		};
+		A3828C2020E56C89000FDA72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A3828BF220E5612A000FDA72;
+			remoteInfo = Panels;
+		};
+		A3828C2420E56CA1000FDA72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A3828BF120E5612A000FDA72;
+			remoteInfo = Panels;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A3828C2620E56CA1000FDA72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A3828C2320E56CA1000FDA72 /* Panels.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A327175920E55CA100AD89A0 /* Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Type.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,6 +66,8 @@
 		A327176B20E55CA200AD89A0 /* TypeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A327176F20E55CA200AD89A0 /* TypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTests.swift; sourceTree = "<group>"; };
 		A327177120E55CA200AD89A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Panels.xcodeproj; path = ../Panels/Panels.xcodeproj; sourceTree = "<group>"; };
+		A3C325D320E57115007DFCE4 /* TestViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3828C2220E56CA1000FDA72 /* Panels.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +92,7 @@
 		A327175020E55CA100AD89A0 = {
 			isa = PBXGroup;
 			children = (
+				A3828C1C20E56C81000FDA72 /* Frameworks */,
 				A327175B20E55CA100AD89A0 /* Type */,
 				A327176E20E55CA200AD89A0 /* TypeTests */,
 				A327175A20E55CA100AD89A0 /* Products */,
@@ -77,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				A327175C20E55CA100AD89A0 /* AppDelegate.swift */,
+				A3C325D320E57115007DFCE4 /* TestViewController.storyboard */,
 				A327175E20E55CA100AD89A0 /* ViewController.swift */,
 				A327176020E55CA200AD89A0 /* Assets.xcassets */,
 				A327176220E55CA200AD89A0 /* Main.storyboard */,
@@ -95,6 +131,22 @@
 			path = TypeTests;
 			sourceTree = "<group>";
 		};
+		A3828C1C20E56C81000FDA72 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3828C1D20E56C89000FDA72 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3828C2120E56C89000FDA72 /* Panels.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,10 +157,12 @@
 				A327175520E55CA100AD89A0 /* Sources */,
 				A327175620E55CA100AD89A0 /* Frameworks */,
 				A327175720E55CA100AD89A0 /* Resources */,
+				A3828C2620E56CA1000FDA72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A3828C2520E56CA1000FDA72 /* PBXTargetDependency */,
 			);
 			name = Type;
 			productName = Type;
@@ -163,6 +217,12 @@
 			mainGroup = A327175020E55CA100AD89A0;
 			productRefGroup = A327175A20E55CA100AD89A0 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A3828C1D20E56C89000FDA72 /* Products */;
+					ProjectRef = A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A327175820E55CA100AD89A0 /* Type */,
@@ -171,6 +231,16 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		A3828C2120E56C89000FDA72 /* Panels.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Panels.framework;
+			remoteRef = A3828C2020E56C89000FDA72 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		A327175720E55CA100AD89A0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -178,6 +248,7 @@
 			files = (
 				A327176120E55CA200AD89A0 /* Assets.xcassets in Resources */,
 				A327176420E55CA200AD89A0 /* Main.storyboard in Resources */,
+				A3C325D420E57115007DFCE4 /* TestViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +286,11 @@
 			isa = PBXTargetDependency;
 			target = A327175820E55CA100AD89A0 /* Type */;
 			targetProxy = A327176C20E55CA200AD89A0 /* PBXContainerItemProxy */;
+		};
+		A3828C2520E56CA1000FDA72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Panels;
+			targetProxy = A3828C2420E56CA1000FDA72 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -346,6 +422,7 @@
 		A327177520E55CA200AD89A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Type/Type.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -365,6 +442,7 @@
 		A327177620E55CA200AD89A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Type/Type.entitlements;
 				CODE_SIGN_STYLE = Automatic;

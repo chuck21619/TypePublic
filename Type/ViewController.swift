@@ -7,13 +7,29 @@
 //
 
 import Cocoa
+import Panels
 
 class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+//        let leftPanel = NSViewController()
+        
+        
+        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
+        let leftPanel = storyboard.instantiateInitialController() as? NSViewController
+        
+//        let mainPanel = NSViewController()
+//        let rightPanel = NSViewController()
+        
+        
+        guard let panels = Panels.sweetHomeAlabama(leftPanel: leftPanel, mainPanel: nil, rightPanel: nil) else {
+            return
+        }
+        
+        
+        self.view.addSubview(panels)
     }
 
     override var representedObject: Any? {

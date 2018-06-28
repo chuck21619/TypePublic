@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="xk1-Xr-Zch">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="v9Q-8k-tm3">
+            <objects>
+                <viewController storyboardIdentifier="testVC" id="xk1-Xr-Zch" sceneMemberID="viewController">
+                    <view key="view" id="vYQ-Fu-Svd">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dYc-WW-zem">
+                                <rect key="frame" x="18" y="263" width="37" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="UmN-Wn-Z0x"/>
+                                    <constraint firstAttribute="height" constant="17" id="hTR-bI-mOT"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Wyn-dd-rB3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" constant="20" id="92Z-jp-l8C"/>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" constant="20" id="Www-Y7-Klq"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="m0e-Xi-Tvm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-43" y="90"/>
+        </scene>
+    </scenes>
+</document>
