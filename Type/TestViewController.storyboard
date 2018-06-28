@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dYc-WW-zem">
-                                <rect key="frame" x="18" y="263" width="37" height="17"/>
+                                <rect key="frame" x="18" y="233" width="37" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="33" id="UmN-Wn-Z0x"/>
                                     <constraint firstAttribute="height" constant="17" id="hTR-bI-mOT"/>
@@ -28,7 +28,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="dYc-WW-zem" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" constant="20" id="92Z-jp-l8C"/>
-                            <constraint firstItem="dYc-WW-zem" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" constant="20" id="Www-Y7-Klq"/>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" constant="50" id="Www-Y7-Klq"/>
                         </constraints>
                     </view>
                 </viewController>

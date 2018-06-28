@@ -8,56 +8,95 @@
 
 import Foundation
 
-public class Panels: NSView {
+public class Panels: NSView, PanelsInterface {
+    
+    // MARK: - public interface
+    public func setLeftPanel(_ leftViewController: NSViewController?) {
+        
+        self.leftViewController = leftViewController
+    }
+    
+    public func setMainPanel(_ mainViewController: NSViewController?) {
+        
+        self.mainViewController = mainViewController
+    }
+    
+    public func setRightPanel(_ rightViewController: NSViewController?) {
+        
+        self.rightViewController = rightViewController
+    }
+    
+    public func setPanels(leftPanel leftViewController: NSViewController?, mainPanel mainViewController: NSViewController?, rightPanel rightViewController: NSViewController?) {
+        
+        self.leftViewController = leftViewController
+        self.mainViewController = mainViewController
+        self.rightViewController = rightViewController
+    }
+    
+    // MARK: - properties
+    @IBOutlet var contentView: Panels!
     
     @IBOutlet weak var leftPanel: NSView!
     @IBOutlet weak var mainPanel: NSView!
     @IBOutlet weak var rightPanel: NSView!
     
     // view controllers of each view
-    private var leftViewContrller: NSViewController? = nil
-    private var mainViewController: NSViewController? = nil
-    private var rightViewContrller: NSViewController? = nil
-    
-    public static func sweetHomeAlabama(leftPanel: NSViewController?, mainPanel: NSViewController?, rightPanel: NSViewController?) -> Panels? {
+    private var leftViewController: NSViewController? = nil {
         
-        var topLevelObjects: NSArray? = NSArray()
-
-        let bundle = Bundle(for: Panels.self)
-        bundle.loadNibNamed(NSNib.Name(rawValue: "Panels"), owner: self, topLevelObjects: &topLevelObjects)
-        
-        guard let panels = topLevelObjects?.first(where: { (object) -> Bool in
-            object is Panels
-        }) as? Panels else {
-            print("WTF")
-            return nil
+        didSet {
+            for view in leftPanel.subviews {
+                view.removeFromSuperview()
+            }
+            
+            if let view = leftViewController?.view {
+                
+                leftPanel.addSubview(view)
+            }
         }
+    }
+    private var mainViewController: NSViewController? = nil {
         
-        panels.leftViewContrller = leftPanel
-        panels.mainViewController = mainPanel
-        panels.rightViewContrller = rightPanel
-        
-        
-        if let leftView = leftPanel?.view {
-            panels.leftPanel.addSubview(leftView)
+        didSet {
+            for view in mainPanel.subviews {
+                view.removeFromSuperview()
+            }
+            
+            if let view = mainViewController?.view {
+                
+                mainPanel.addSubview(view)
+            }
         }
-        if let mainView = mainPanel?.view {
-            panels.mainPanel.addSubview(mainView)
-        }
-        if let rightView = rightPanel?.view {
-            panels.rightPanel.addSubview(rightView)
-        }
+    }
+    private var rightViewController: NSViewController? = nil {
         
-        return panels
+        didSet {
+            for view in rightPanel.subviews {
+                view.removeFromSuperview()
+            }
+            
+            if let view = rightViewController?.view {
+                
+                rightPanel.addSubview(view)
+            }
+        }
     }
     
-//    public override init(frame frameRect: NSRect) {
-//        super.init(frame: frame)
-//        self.commonInit()
-//    }
-//    
-//    required public init?(coder decoder: NSCoder) {
-//        super.init(coder: decoder)
-//        self.commonInit()
-//    }
+    // MARK: - Constructors
+    private func commonInit() {
+        
+        var topLevelObjects: NSArray? = NSArray()
+        let bundle = Bundle(for: Panels.self)
+        bundle.loadNibNamed(NSNib.Name(rawValue: "Panels"), owner: self, topLevelObjects: &topLevelObjects)
+        addSubview(contentView)
+    }
+    
+    public override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        commonInit()
+    }
+    
+    required public init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+        commonInit()
+    }
 }
