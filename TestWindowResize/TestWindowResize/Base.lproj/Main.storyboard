@@ -11,11 +11,11 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="Type" id="1Xt-HY-uBw">
+                            <menuItem title="TestWindowResize" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Type" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="TestWindowResize" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About Type" id="5kV-Vb-QxS">
+                                        <menuItem title="About TestWindowResize" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -29,7 +29,7 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                                        <menuItem title="Hide Type" keyEquivalent="h" id="Olw-nP-bQN">
+                                        <menuItem title="Hide TestWindowResize" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
                                             </connections>
@@ -47,7 +47,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                                        <menuItem title="Quit Type" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit TestWindowResize" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -660,7 +660,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="Type Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="TestWindowResize Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                             </connections>
@@ -674,7 +674,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Type" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TestWindowResize" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -704,40 +704,41 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="TestWindowResize" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="258"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r4K-02-NzU">
-                                <rect key="frame" x="199" y="113" width="81" height="32"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEE-Po-fbj">
+                                <rect key="frame" x="200" y="222" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZUe-sH-PFv">
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Cn-2S-B4w">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="buttonClicked:" target="XfG-lQ-9wD" id="Eqg-VT-ZHB"/>
+                                    <action selector="buttonClicked:" target="XfG-lQ-9wD" id="ely-Eg-HVa"/>
                                 </connections>
                             </button>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="qfj-Su-nV2" customClass="Panels" customModule="Panels">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="258"/>
-                            </customView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OTH-2V-s0U">
+                                <rect key="frame" x="-3" y="-3" width="486" height="276"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="wOl-iU-E3p"/>
+                            </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="qfj-Su-nV2" secondAttribute="bottom" id="9QQ-OM-gfa"/>
-                            <constraint firstItem="qfj-Su-nV2" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ybe-7Y-fha"/>
-                            <constraint firstAttribute="trailing" secondItem="qfj-Su-nV2" secondAttribute="trailing" id="q2g-Vj-MLJ"/>
-                            <constraint firstItem="qfj-Su-nV2" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="zUg-R9-yaF"/>
+                            <constraint firstAttribute="trailing" secondItem="OTH-2V-s0U" secondAttribute="trailing" id="0TL-Om-qtn"/>
+                            <constraint firstItem="OTH-2V-s0U" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="0fj-bo-5Wa"/>
+                            <constraint firstItem="OTH-2V-s0U" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="iln-Pt-iPH"/>
+                            <constraint firstAttribute="bottom" secondItem="OTH-2V-s0U" secondAttribute="bottom" id="m4t-wL-AFt"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="panels" destination="qfj-Su-nV2" id="xcp-5U-tlJ"/>
+                        <outlet property="myImageWell" destination="OTH-2V-s0U" id="Zt6-lb-FV3"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="775"/>
+            <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
 </document>

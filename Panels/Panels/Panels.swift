@@ -87,6 +87,7 @@ public class Panels: NSView, PanelsInterface {
         var topLevelObjects: NSArray? = NSArray()
         let bundle = Bundle(for: Panels.self)
         bundle.loadNibNamed(NSNib.Name(rawValue: "Panels"), owner: self, topLevelObjects: &topLevelObjects)
+        contentView.autoresizingMask = [.width, .height]
         addSubview(contentView)
     }
     

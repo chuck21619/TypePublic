@@ -11,6 +11,9 @@ import Panels
 
 class ViewController: NSViewController {
 
+    @IBAction func buttonClicked(_ sender: Any) {
+        print("")
+    }
     @IBOutlet weak var panels: Panels!
     
     override func viewDidLoad() {
