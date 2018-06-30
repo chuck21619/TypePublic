@@ -10,6 +10,11 @@ import Foundation
 
 public class Panels: NSView, PanelsInterface {
     
+    @IBOutlet weak var leftPanelViewWidthConstraint: NSLayoutConstraint!
+    @IBAction func test2(_ sender: NSPanGestureRecognizer) {
+        
+        leftPanelViewWidthConstraint.constant = sender.location(in: contentView).x
+    }
     // MARK: - public interface
     public func set(panels: [Panel]) {
         
@@ -77,6 +82,7 @@ public class Panels: NSView, PanelsInterface {
         contentView.frame = self.bounds
         addSubview(contentView)
         
+        // debug border colors
 //        contentView.wantsLayer = true
 //        contentView.layer?.borderWidth = 1
 //        contentView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 1, alpha: 1)

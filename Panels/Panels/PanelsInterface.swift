@@ -12,9 +12,6 @@ public protocol PanelsInterface {
     
     func set(panels: [Panel])
     
-//    func setPanels(leftPanel leftViewController: NSViewController?, mainPanel mainViewController: NSViewController?, rightPanel rightViewController: NSViewController?)
-    
-    
     //set autoHide threshholds //maybe a percentage of screen space or a flat number
     //get and set which panels are visible
     //var independantFullScreenState //each panel has an open/close state for fullscreen as well as non-fullscreen
