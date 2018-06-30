@@ -11,6 +11,7 @@ import Panels
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var mycustomview: NSView!
     @IBAction func buttonClicked(_ sender: Any) {
         print("")
     }
@@ -19,28 +20,24 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let leftPanel = NSViewController()
+        mycustomview.wantsLayer = true
+        mycustomview.layer?.borderWidth = 1
         
-//        
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
-        let leftPanel = storyboard.instantiateInitialController() as? NSViewController
+        panels.wantsLayer = true
+        panels.layer?.borderWidth = 3
         
-        panels.setLeftPanel(leftPanel)
+//        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
+//        let leftPanel = storyboard.instantiateInitialController() as? NSViewController
+//        
+//        panels.setLeftPanel(leftPanel)
         
-        let rightPanel = storyboard.instantiateInitialController() as? NSViewController
-        
-        panels.setRightPanel(rightPanel)
-//
-////        let mainPanel = NSViewController()
-////        let rightPanel = NSViewController()
+//        let rightPanel = storyboard.instantiateInitialController() as? NSViewController
 //        
+//        panels.setRightPanel(rightPanel)
 //        
-//        guard let panels = Panels.sweetHomeAlabama(leftPanel: leftPanel, mainPanel: nil, rightPanel: nil) else {
-//            return
-//        }
+//        let mainPanel = storyboard.instantiateInitialController() as? NSViewController
 //        
-//        
-//        self.view.addSubview(panels)
+//        panels.setMainPanel(mainPanel)
     }
 
     override var representedObject: Any? {

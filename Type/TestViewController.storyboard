@@ -5,19 +5,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Test View Controller-->
         <scene sceneID="v9Q-8k-tm3">
             <objects>
-                <viewController storyboardIdentifier="testVC" id="xk1-Xr-Zch" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="testVC" id="xk1-Xr-Zch" customClass="TestViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="vYQ-Fu-Svd">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="66" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eLT-ve-GFe">
+                                <rect key="frame" x="-3" y="-3" width="72" height="306"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" image="egg-icon" id="7ex-nx-T1g"/>
+                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dYc-WW-zem">
-                                <rect key="frame" x="18" y="233" width="37" height="17"/>
+                                <rect key="frame" x="-2" y="283" width="37" height="17"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="33" id="UmN-Wn-Z0x"/>
-                                    <constraint firstAttribute="height" constant="17" id="hTR-bI-mOT"/>
+                                    <constraint firstAttribute="width" constant="33" id="3Tj-bx-0cp"/>
+                                    <constraint firstAttribute="height" constant="17" id="zFL-2P-btk"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Wyn-dd-rB3">
                                     <font key="font" metaFont="system"/>
@@ -27,14 +31,21 @@
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="dYc-WW-zem" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" constant="20" id="92Z-jp-l8C"/>
-                            <constraint firstItem="dYc-WW-zem" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" constant="50" id="Www-Y7-Klq"/>
+                            <constraint firstAttribute="bottom" secondItem="eLT-ve-GFe" secondAttribute="bottom" id="3cq-Hm-9nM"/>
+                            <constraint firstItem="eLT-ve-GFe" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" id="3s8-nF-cxO"/>
+                            <constraint firstAttribute="trailing" secondItem="eLT-ve-GFe" secondAttribute="trailing" id="OHa-Au-4ap"/>
+                            <constraint firstItem="eLT-ve-GFe" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" id="cEl-Vj-bRb"/>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" id="hkM-gD-fNr"/>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" id="jZ4-mF-tc7"/>
                         </constraints>
                     </view>
                 </viewController>
                 <customObject id="m0e-Xi-Tvm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-43" y="90"/>
+            <point key="canvasLocation" x="-235" y="90"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="egg-icon" width="256" height="256"/>
+    </resources>
 </document>

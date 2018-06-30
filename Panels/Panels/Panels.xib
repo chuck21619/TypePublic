@@ -7,32 +7,26 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Panels" customModule="Panels" customModuleProvider="target">
             <connections>
-                <outlet property="contentView" destination="c22-O7-iKe" id="CrJ-1y-1NE"/>
-                <outlet property="leftPanel" destination="JQh-tB-bkV" id="Tec-Sl-QbD"/>
-                <outlet property="mainPanel" destination="oxJ-Ja-5H9" id="aFZ-Qq-L0D"/>
-                <outlet property="rightPanel" destination="Qae-ig-qO0" id="pbw-FB-asg"/>
+                <outlet property="contentView" destination="c22-O7-iKe" id="v9e-lS-qYZ"/>
+                <outlet property="leftPanel" destination="JQh-tB-bkV" id="z3u-B4-1MK"/>
+                <outlet property="mainPanel" destination="oxJ-Ja-5H9" id="c05-ZM-N8f"/>
+                <outlet property="rightPanel" destination="Qae-ig-qO0" id="Uoj-gY-Ima"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView identifier="Panels" id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="540" height="332"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="403" height="218"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="JQh-tB-bkV">
-                    <rect key="frame" x="0.0" y="0.0" width="100" height="332"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="cJO-jW-Opv"/>
-                    </constraints>
+                    <rect key="frame" x="0.0" y="0.0" width="134" height="218"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="oxJ-Ja-5H9">
-                    <rect key="frame" x="100" y="0.0" width="340" height="332"/>
+                    <rect key="frame" x="134" y="0.0" width="135" height="218"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qae-ig-qO0">
-                    <rect key="frame" x="440" y="0.0" width="100" height="332"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="h5V-KB-aiD"/>
-                    </constraints>
+                    <rect key="frame" x="269" y="0.0" width="134" height="218"/>
                 </customView>
             </subviews>
             <constraints>
@@ -41,13 +35,15 @@
                 <constraint firstItem="oxJ-Ja-5H9" firstAttribute="leading" secondItem="JQh-tB-bkV" secondAttribute="trailing" id="28Q-BK-xwC"/>
                 <constraint firstItem="JQh-tB-bkV" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="3hQ-JI-56M"/>
                 <constraint firstAttribute="trailing" secondItem="Qae-ig-qO0" secondAttribute="trailing" id="C36-jz-kfh"/>
+                <constraint firstItem="oxJ-Ja-5H9" firstAttribute="width" secondItem="JQh-tB-bkV" secondAttribute="width" id="D16-Ll-GSB"/>
+                <constraint firstItem="Qae-ig-qO0" firstAttribute="width" secondItem="oxJ-Ja-5H9" secondAttribute="width" id="EgF-5o-XpV"/>
                 <constraint firstItem="oxJ-Ja-5H9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Eig-Uq-j34"/>
                 <constraint firstItem="Qae-ig-qO0" firstAttribute="leading" secondItem="oxJ-Ja-5H9" secondAttribute="trailing" id="HDW-BL-vtO"/>
                 <constraint firstAttribute="bottom" secondItem="Qae-ig-qO0" secondAttribute="bottom" id="blM-mw-BDe"/>
                 <constraint firstItem="JQh-tB-bkV" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="gjS-F7-EMb"/>
                 <constraint firstItem="Qae-ig-qO0" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="vXf-K6-on9"/>
             </constraints>
-            <point key="canvasLocation" x="169" y="199"/>
+            <point key="canvasLocation" x="100.5" y="142"/>
         </customView>
     </objects>
 </document>

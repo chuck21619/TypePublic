@@ -34,7 +34,8 @@ public class Panels: NSView, PanelsInterface {
     }
     
     // MARK: - properties
-    @IBOutlet var contentView: Panels!
+    // outlets
+    @IBOutlet var contentView: NSView!
     
     @IBOutlet weak var leftPanel: NSView!
     @IBOutlet weak var mainPanel: NSView!
@@ -49,7 +50,15 @@ public class Panels: NSView, PanelsInterface {
             }
             
             if let view = leftViewController?.view {
+//                view.wantsLayer = true
+//                view.layer?.borderWidth = 1
                 
+//                view.leadingAnchor.constraint(equalTo: leftPanel.leadingAnchor)
+//                view.trailingAnchor.constraint(equalTo: leftPanel.trailingAnchor)
+//                view.topAnchor.constraint(equalTo: leftPanel.topAnchor)
+//                view.bottomAnchor.constraint(equalTo: leftPanel.bottomAnchor)
+////
+//                view.autoresizingMask = [.width, .height]
                 leftPanel.addSubview(view)
             }
         }
@@ -63,6 +72,16 @@ public class Panels: NSView, PanelsInterface {
             
             if let view = mainViewController?.view {
                 
+                
+//                view.wantsLayer = true
+//                view.layer?.borderWidth = 1
+//
+//                view.leadingAnchor.constraint(equalTo: mainPanel.leadingAnchor)
+//                view.trailingAnchor.constraint(equalTo: mainPanel.trailingAnchor)
+//                view.topAnchor.constraint(equalTo: mainPanel.topAnchor)
+//                view.bottomAnchor.constraint(equalTo: mainPanel.bottomAnchor)
+//
+//                view.autoresizingMask = [.width, .height]
                 mainPanel.addSubview(view)
             }
         }
@@ -75,7 +94,14 @@ public class Panels: NSView, PanelsInterface {
             }
             
             if let view = rightViewController?.view {
-                
+//                view.wantsLayer = true
+//                view.layer?.borderWidth = 1
+//                view.leadingAnchor.constraint(equalTo: rightPanel.leadingAnchor)
+//                view.trailingAnchor.constraint(equalTo: rightPanel.trailingAnchor)
+//                view.topAnchor.constraint(equalTo: rightPanel.topAnchor)
+//                view.bottomAnchor.constraint(equalTo: rightPanel.bottomAnchor)
+//
+//                view.autoresizingMask = [.width, .height]
                 rightPanel.addSubview(view)
             }
         }
@@ -86,9 +112,30 @@ public class Panels: NSView, PanelsInterface {
         
         var topLevelObjects: NSArray? = NSArray()
         let bundle = Bundle(for: Panels.self)
-        bundle.loadNibNamed(NSNib.Name(rawValue: "Panels"), owner: self, topLevelObjects: &topLevelObjects)
-        contentView.autoresizingMask = [.width, .height]
+        bundle.loadNibNamed(NSNib.Name(rawValue: String(describing: Panels.self)), owner: self, topLevelObjects: &topLevelObjects)
+        
+//        self.autoresizingMask = [.width, .height]
         addSubview(contentView)
+        
+        
+//        self.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+//        self.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+//        self.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+//        self.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+        leftPanel.wantsLayer = true
+        leftPanel.layer?.borderWidth = 2
+        leftPanel.layer?.borderColor = CGColor(red: 1, green: 0, blue: 0, alpha: 1)
+        mainPanel.wantsLayer = true
+        mainPanel.layer?.borderWidth = 2
+        mainPanel.layer?.borderColor = CGColor(red: 0, green: 1, blue: 0, alpha: 1)
+        rightPanel.wantsLayer = true
+        rightPanel.layer?.borderWidth = 2
+        rightPanel.layer?.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 1)
+        
+//        leftPanel.autoresizingMask = [.width, .height]
+//        mainPanel.autoresizingMask = [.width, .height]
+//        rightPanel.autoresizingMask = [.width, .height]
     }
     
     public override init(frame frameRect: NSRect) {

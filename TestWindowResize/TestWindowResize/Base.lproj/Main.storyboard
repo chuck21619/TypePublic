@@ -708,33 +708,7 @@
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEE-Po-fbj">
-                                <rect key="frame" x="200" y="222" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Cn-2S-B4w">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="buttonClicked:" target="XfG-lQ-9wD" id="ely-Eg-HVa"/>
-                                </connections>
-                            </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OTH-2V-s0U">
-                                <rect key="frame" x="-3" y="-3" width="486" height="276"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="wOl-iU-E3p"/>
-                            </imageView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="OTH-2V-s0U" secondAttribute="trailing" id="0TL-Om-qtn"/>
-                            <constraint firstItem="OTH-2V-s0U" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="0fj-bo-5Wa"/>
-                            <constraint firstItem="OTH-2V-s0U" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="iln-Pt-iPH"/>
-                            <constraint firstAttribute="bottom" secondItem="OTH-2V-s0U" secondAttribute="bottom" id="m4t-wL-AFt"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="myImageWell" destination="OTH-2V-s0U" id="Zt6-lb-FV3"/>
-                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
