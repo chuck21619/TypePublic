@@ -114,8 +114,13 @@ public class Panels: NSView, PanelsInterface {
         let bundle = Bundle(for: Panels.self)
         bundle.loadNibNamed(NSNib.Name(rawValue: String(describing: Panels.self)), owner: self, topLevelObjects: &topLevelObjects)
         
+        contentView.frame = self.bounds
 //        self.autoresizingMask = [.width, .height]
         addSubview(contentView)
+        
+        contentView.wantsLayer = true
+        contentView.layer?.borderWidth = 1
+        contentView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 1, alpha: 1)
         
         
 //        self.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true

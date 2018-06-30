@@ -23,8 +23,8 @@ class ViewController: NSViewController {
         mycustomview.wantsLayer = true
         mycustomview.layer?.borderWidth = 1
         
-        panels.wantsLayer = true
-        panels.layer?.borderWidth = 3
+//        panels.wantsLayer = true
+//        panels.layer?.borderWidth = 3
         
 //        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
 //        let leftPanel = storyboard.instantiateInitialController() as? NSViewController
