@@ -24,7 +24,7 @@ public class Panels: NSView, PanelsInterface {
     @IBOutlet weak var mainPanelView: NSView!
     @IBOutlet weak var rightPanelView: NSView!
     
-    // view controllers of each view
+    // panels
     private var panels: [Panel] = [] {
         
         didSet {
@@ -33,26 +33,28 @@ public class Panels: NSView, PanelsInterface {
             if let leftPanel = panels.first(where: { (panel) -> Bool in
                 panel.position == .left
             }) {
-                replaceContentsOf(view: leftPanelView, with: leftPanel.viewController?.view)
+                replace(contentsOf: leftPanelView, with: leftPanel.viewController?.view)
             }
             
             //main panel
             if let mainPanel = panels.first(where: { (panel) -> Bool in
                 panel.position == .main
             }) {
-                replaceContentsOf(view: mainPanelView, with: mainPanel.viewController?.view)
+                replace(contentsOf: mainPanelView, with: mainPanel.viewController?.view)
             }
             
             //right panel
             if let rightPanel = panels.first(where: { (panel) -> Bool in
                 panel.position == .right
             }) {
-                replaceContentsOf(view: rightPanelView, with: rightPanel.viewController?.view)
+                replace(contentsOf: rightPanelView, with: rightPanel.viewController?.view)
             }
         }
     }
     
-    private func replaceContentsOf(view: NSView, with newView: NSView?) {
+    // MARK: - Methods
+    // helper function
+    private func replace(contentsOf view: NSView, with newView: NSView?) {
         
         for view in view.subviews {
             view.removeFromSuperview()
@@ -65,7 +67,7 @@ public class Panels: NSView, PanelsInterface {
         }
     }
     
-    // MARK: - Constructors
+    // MARK: Constructors
     private func commonInit() {
         
         var topLevelObjects: NSArray? = NSArray()
