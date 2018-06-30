@@ -11,7 +11,7 @@
                 <viewController storyboardIdentifier="testVC" id="xk1-Xr-Zch" customClass="TestViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="vYQ-Fu-Svd">
                         <rect key="frame" x="0.0" y="0.0" width="66" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eLT-ve-GFe">
                                 <rect key="frame" x="-3" y="-3" width="72" height="306"/>

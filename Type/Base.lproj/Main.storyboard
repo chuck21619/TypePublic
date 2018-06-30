@@ -709,6 +709,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qfj-Su-nV2" customClass="Panels" customModule="Panels">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4K-02-NzU">
                                 <rect key="frame" x="199" y="118" width="81" height="32"/>
                                 <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZUe-sH-PFv">
@@ -719,25 +723,13 @@
                                     <action selector="buttonClicked:" target="XfG-lQ-9wD" id="Eqg-VT-ZHB"/>
                                 </connections>
                             </button>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qfj-Su-nV2" customClass="Panels" customModule="Panels">
-                                <rect key="frame" x="20" y="20" width="440" height="230"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="QuD-Zz-pgP">
-                                <rect key="frame" x="5" y="5" width="470" height="260"/>
-                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="r4K-02-NzU" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="CRD-mj-FYq"/>
                             <constraint firstItem="r4K-02-NzU" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Qtq-Uq-bRj"/>
-                            <constraint firstAttribute="bottom" secondItem="QuD-Zz-pgP" secondAttribute="bottom" constant="5" id="RTw-Do-2Ep"/>
-                            <constraint firstAttribute="trailing" secondItem="QuD-Zz-pgP" secondAttribute="trailing" constant="5" id="c8z-9R-gUn"/>
-                            <constraint firstItem="QuD-Zz-pgP" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="5" id="ixd-LQ-ay7"/>
-                            <constraint firstItem="QuD-Zz-pgP" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="5" id="lE1-2W-2yu"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="mycustomview" destination="QuD-Zz-pgP" id="hhj-d9-uch"/>
                         <outlet property="panels" destination="qfj-Su-nV2" id="xcp-5U-tlJ"/>
                     </connections>
                 </viewController>

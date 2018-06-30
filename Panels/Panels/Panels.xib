@@ -8,36 +8,36 @@
         <customObject id="-2" userLabel="File's Owner" customClass="Panels" customModule="Panels" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="c22-O7-iKe" id="v9e-lS-qYZ"/>
-                <outlet property="leftPanel" destination="JQh-tB-bkV" id="z3u-B4-1MK"/>
-                <outlet property="mainPanel" destination="oxJ-Ja-5H9" id="c05-ZM-N8f"/>
-                <outlet property="rightPanel" destination="Qae-ig-qO0" id="Uoj-gY-Ima"/>
+                <outlet property="leftPanelView" destination="JQh-tB-bkV" id="ikH-Cu-ZNw"/>
+                <outlet property="mainPanelView" destination="oxJ-Ja-5H9" id="Odq-Hd-tIa"/>
+                <outlet property="rightPanelView" destination="Qae-ig-qO0" id="6fs-MY-3Xn"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="997" height="329"/>
+            <rect key="frame" x="0.0" y="0.0" width="996" height="329"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="JQh-tB-bkV">
                     <rect key="frame" x="0.0" y="0.0" width="332" height="329"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="oxJ-Ja-5H9">
-                    <rect key="frame" x="332" y="0.0" width="333" height="329"/>
+                    <rect key="frame" x="332" y="0.0" width="332" height="329"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qae-ig-qO0">
-                    <rect key="frame" x="665" y="0.0" width="332" height="329"/>
+                    <rect key="frame" x="664" y="0.0" width="332" height="329"/>
                 </customView>
             </subviews>
             <constraints>
                 <constraint firstItem="JQh-tB-bkV" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="CCo-Pr-ycL"/>
+                <constraint firstItem="oxJ-Ja-5H9" firstAttribute="width" secondItem="Qae-ig-qO0" secondAttribute="width" id="F0a-oE-n4Y"/>
                 <constraint firstAttribute="trailing" secondItem="Qae-ig-qO0" secondAttribute="trailing" id="SJd-6W-Fg9"/>
-                <constraint firstItem="Qae-ig-qO0" firstAttribute="width" secondItem="oxJ-Ja-5H9" secondAttribute="width" id="SxJ-pa-Yzh"/>
+                <constraint firstItem="JQh-tB-bkV" firstAttribute="width" secondItem="oxJ-Ja-5H9" secondAttribute="width" id="VBH-Jr-mXm"/>
                 <constraint firstAttribute="bottom" secondItem="JQh-tB-bkV" secondAttribute="bottom" id="Xqg-xk-DVO"/>
                 <constraint firstItem="oxJ-Ja-5H9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Yyz-az-5Fp"/>
                 <constraint firstItem="Qae-ig-qO0" firstAttribute="leading" secondItem="oxJ-Ja-5H9" secondAttribute="trailing" id="cv8-Nw-Oa1"/>
                 <constraint firstAttribute="bottom" secondItem="Qae-ig-qO0" secondAttribute="bottom" id="dAu-CT-4fr"/>
-                <constraint firstItem="oxJ-Ja-5H9" firstAttribute="width" secondItem="JQh-tB-bkV" secondAttribute="width" id="eBv-3B-XWC"/>
                 <constraint firstItem="oxJ-Ja-5H9" firstAttribute="leading" secondItem="JQh-tB-bkV" secondAttribute="trailing" id="lNr-Sb-ypD"/>
                 <constraint firstItem="Qae-ig-qO0" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="oBy-hR-gTb"/>
                 <constraint firstItem="JQh-tB-bkV" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="qb0-lM-wUV"/>

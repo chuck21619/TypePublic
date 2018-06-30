@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A37658BE20E8092700BD76B9 /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37658BD20E8092700BD76B9 /* Panel.swift */; };
+		A37658C420E80C6800BD76B9 /* PanelInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37658C320E80C6800BD76B9 /* PanelInterface.swift */; };
 		A3828C0320E5612A000FDA72 /* Panels.h in Headers */ = {isa = PBXBuildFile; fileRef = A3828BF520E5612A000FDA72 /* Panels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3828C1920E563DC000FDA72 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3828C1820E563DC000FDA72 /* Panels.swift */; };
 		A3986E9F20E58A5B00098A81 /* PanelsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3986E9E20E58A5B00098A81 /* PanelsInterface.swift */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A37658BD20E8092700BD76B9 /* Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
+		A37658C320E80C6800BD76B9 /* PanelInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelInterface.swift; sourceTree = "<group>"; };
 		A3828BF220E5612A000FDA72 /* Panels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Panels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3828BF520E5612A000FDA72 /* Panels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Panels.h; sourceTree = "<group>"; };
 		A3828BF620E5612A000FDA72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +37,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A37658C120E80C4000BD76B9 /* Panel */ = {
+			isa = PBXGroup;
+			children = (
+				A37658BD20E8092700BD76B9 /* Panel.swift */,
+				A37658C320E80C6800BD76B9 /* PanelInterface.swift */,
+			);
+			path = Panel;
+			sourceTree = "<group>";
+		};
 		A3828BE820E5612A000FDA72 = {
 			isa = PBXGroup;
 			children = (
@@ -54,9 +67,10 @@
 			children = (
 				A3828BF520E5612A000FDA72 /* Panels.h */,
 				A3828BF620E5612A000FDA72 /* Info.plist */,
-				A3828C1820E563DC000FDA72 /* Panels.swift */,
 				A3986E9E20E58A5B00098A81 /* PanelsInterface.swift */,
+				A3828C1820E563DC000FDA72 /* Panels.swift */,
 				A3C325D120E56E65007DFCE4 /* Panels.xib */,
+				A37658C120E80C4000BD76B9 /* Panel */,
 			);
 			path = Panels;
 			sourceTree = "<group>";
@@ -142,8 +156,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A37658C420E80C6800BD76B9 /* PanelInterface.swift in Sources */,
 				A3986E9F20E58A5B00098A81 /* PanelsInterface.swift in Sources */,
 				A3828C1920E563DC000FDA72 /* Panels.swift in Sources */,
+				A37658BE20E8092700BD76B9 /* Panel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,18 +8,15 @@
 
 import Foundation
 
-protocol PanelsInterface {
+public protocol PanelsInterface {
     
-    func setLeftPanel(_ leftViewController: NSViewController?)
+    func set(panels: [Panel])
     
-    func setMainPanel(_ mainViewController: NSViewController?)
-    
-    func setRightPanel(_ rightViewController: NSViewController?)
-    
-    func setPanels(leftPanel leftViewController: NSViewController?, mainPanel mainViewController: NSViewController?, rightPanel rightViewController: NSViewController?)
+//    func setPanels(leftPanel leftViewController: NSViewController?, mainPanel mainViewController: NSViewController?, rightPanel rightViewController: NSViewController?)
     
     
-    //setAutoHideThreshHolds()
-    //toggleShowPanel(.left, .right, .main)
-    //visiblePanels() -> (bool, bool, bool)
+    //set autoHide threshholds //maybe a percentage of screen space or a flat number
+    //get and set which panels are visible
+    //var independantFullScreenState //each panel has an open/close state for fullscreen as well as non-fullscreen
+    //set width
 }

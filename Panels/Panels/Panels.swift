@@ -11,99 +11,57 @@ import Foundation
 public class Panels: NSView, PanelsInterface {
     
     // MARK: - public interface
-    public func setLeftPanel(_ leftViewController: NSViewController?) {
+    public func set(panels: [Panel]) {
         
-        self.leftViewController = leftViewController
-    }
-    
-    public func setMainPanel(_ mainViewController: NSViewController?) {
-        
-        self.mainViewController = mainViewController
-    }
-    
-    public func setRightPanel(_ rightViewController: NSViewController?) {
-        
-        self.rightViewController = rightViewController
-    }
-    
-    public func setPanels(leftPanel leftViewController: NSViewController?, mainPanel mainViewController: NSViewController?, rightPanel rightViewController: NSViewController?) {
-        
-        self.leftViewController = leftViewController
-        self.mainViewController = mainViewController
-        self.rightViewController = rightViewController
+        self.panels = panels
     }
     
     // MARK: - properties
     // outlets
     @IBOutlet var contentView: NSView!
     
-    @IBOutlet weak var leftPanel: NSView!
-    @IBOutlet weak var mainPanel: NSView!
-    @IBOutlet weak var rightPanel: NSView!
+    @IBOutlet weak var leftPanelView: NSView!
+    @IBOutlet weak var mainPanelView: NSView!
+    @IBOutlet weak var rightPanelView: NSView!
     
     // view controllers of each view
-    private var leftViewController: NSViewController? = nil {
+    private var panels: [Panel] = [] {
         
         didSet {
-            for view in leftPanel.subviews {
-                view.removeFromSuperview()
+            
+            //left panel
+            if let leftPanel = panels.first(where: { (panel) -> Bool in
+                panel.position == .left
+            }) {
+                replaceContentsOf(view: leftPanelView, with: leftPanel.viewController?.view)
             }
             
-            if let view = leftViewController?.view {
-//                view.wantsLayer = true
-//                view.layer?.borderWidth = 1
-                
-//                view.leadingAnchor.constraint(equalTo: leftPanel.leadingAnchor)
-//                view.trailingAnchor.constraint(equalTo: leftPanel.trailingAnchor)
-//                view.topAnchor.constraint(equalTo: leftPanel.topAnchor)
-//                view.bottomAnchor.constraint(equalTo: leftPanel.bottomAnchor)
-////
-//                view.autoresizingMask = [.width, .height]
-                leftPanel.addSubview(view)
+            //main panel
+            if let mainPanel = panels.first(where: { (panel) -> Bool in
+                panel.position == .main
+            }) {
+                replaceContentsOf(view: mainPanelView, with: mainPanel.viewController?.view)
+            }
+            
+            //right panel
+            if let rightPanel = panels.first(where: { (panel) -> Bool in
+                panel.position == .right
+            }) {
+                replaceContentsOf(view: rightPanelView, with: rightPanel.viewController?.view)
             }
         }
     }
-    private var mainViewController: NSViewController? = nil {
+    
+    private func replaceContentsOf(view: NSView, with newView: NSView?) {
         
-        didSet {
-            for view in mainPanel.subviews {
-                view.removeFromSuperview()
-            }
-            
-            if let view = mainViewController?.view {
-                
-                
-//                view.wantsLayer = true
-//                view.layer?.borderWidth = 1
-//
-//                view.leadingAnchor.constraint(equalTo: mainPanel.leadingAnchor)
-//                view.trailingAnchor.constraint(equalTo: mainPanel.trailingAnchor)
-//                view.topAnchor.constraint(equalTo: mainPanel.topAnchor)
-//                view.bottomAnchor.constraint(equalTo: mainPanel.bottomAnchor)
-//
-//                view.autoresizingMask = [.width, .height]
-                mainPanel.addSubview(view)
-            }
+        for view in view.subviews {
+            view.removeFromSuperview()
         }
-    }
-    private var rightViewController: NSViewController? = nil {
         
-        didSet {
-            for view in rightPanel.subviews {
-                view.removeFromSuperview()
-            }
-            
-            if let view = rightViewController?.view {
-//                view.wantsLayer = true
-//                view.layer?.borderWidth = 1
-//                view.leadingAnchor.constraint(equalTo: rightPanel.leadingAnchor)
-//                view.trailingAnchor.constraint(equalTo: rightPanel.trailingAnchor)
-//                view.topAnchor.constraint(equalTo: rightPanel.topAnchor)
-//                view.bottomAnchor.constraint(equalTo: rightPanel.bottomAnchor)
-//
-//                view.autoresizingMask = [.width, .height]
-                rightPanel.addSubview(view)
-            }
+        if let newView = newView {
+            newView.frame = view.bounds
+            newView.autoresizingMask = [.width, .height]
+            view.addSubview(newView)
         }
     }
     
@@ -115,32 +73,21 @@ public class Panels: NSView, PanelsInterface {
         bundle.loadNibNamed(NSNib.Name(rawValue: String(describing: Panels.self)), owner: self, topLevelObjects: &topLevelObjects)
         
         contentView.frame = self.bounds
-//        self.autoresizingMask = [.width, .height]
         addSubview(contentView)
         
-        contentView.wantsLayer = true
-        contentView.layer?.borderWidth = 1
-        contentView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 1, alpha: 1)
+//        contentView.wantsLayer = true
+//        contentView.layer?.borderWidth = 1
+//        contentView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 1, alpha: 1)
         
-        
-//        self.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-//        self.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-//        self.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-//        self.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        
-        leftPanel.wantsLayer = true
-        leftPanel.layer?.borderWidth = 2
-        leftPanel.layer?.borderColor = CGColor(red: 1, green: 0, blue: 0, alpha: 1)
-        mainPanel.wantsLayer = true
-        mainPanel.layer?.borderWidth = 2
-        mainPanel.layer?.borderColor = CGColor(red: 0, green: 1, blue: 0, alpha: 1)
-        rightPanel.wantsLayer = true
-        rightPanel.layer?.borderWidth = 2
-        rightPanel.layer?.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 1)
-        
-//        leftPanel.autoresizingMask = [.width, .height]
-//        mainPanel.autoresizingMask = [.width, .height]
-//        rightPanel.autoresizingMask = [.width, .height]
+        leftPanelView.wantsLayer = true
+        leftPanelView.layer?.borderWidth = 2
+        leftPanelView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 0, alpha: 1)
+        mainPanelView.wantsLayer = true
+        mainPanelView.layer?.borderWidth = 2
+        mainPanelView.layer?.borderColor = CGColor(red: 0, green: 1, blue: 0, alpha: 1)
+        rightPanelView.wantsLayer = true
+        rightPanelView.layer?.borderWidth = 2
+        rightPanelView.layer?.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 1)
     }
     
     public override init(frame frameRect: NSRect) {

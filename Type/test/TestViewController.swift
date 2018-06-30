@@ -12,8 +12,5 @@ import AppKit
 class TestViewController: NSViewController {
     
     override func viewDidLoad() {
-        self.view.autoresizingMask = [.width, .height]
-//        self.view.layer?.borderWidth = 1
-//        self.view.layer?.borderColor = .black
     }
 }
