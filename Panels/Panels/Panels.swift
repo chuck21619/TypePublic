@@ -76,7 +76,7 @@ public class Panels: NSView, PanelsInterface {
     @IBOutlet weak var resizeBarRight: ResizeBar!
     
     // MARK: - Methods
-    // resizeGestures
+    // MARK: Resizing gestures
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
         
         if sender.state == .began {
