@@ -79,11 +79,6 @@ public class Panels: NSView, PanelsInterface {
         
         let xCoordinate = sender.location(in: contentView).x
         
-        // leftPanel and mainPanel must both be resizeable
-        guard leftPanel?.resizeable == true && mainPanel?.resizeable == true else {
-            return
-        }
-        
         // cannot resize to the left of the window
         guard xCoordinate > 0 else {
             return
@@ -92,7 +87,7 @@ public class Panels: NSView, PanelsInterface {
         // do not resize to the left of leftPanels minimumWidth
         if let leftPanel = leftPanel {
             
-            guard xCoordinate > leftPanel.minimumWidth else {
+            guard xCoordinate > leftPanel.minimumSize().width else {
                 
                 return
             }
@@ -101,7 +96,7 @@ public class Panels: NSView, PanelsInterface {
         // do not resize to the right of mainPanels minimumWidth
         if let mainPanel = mainPanel {
             
-            guard xCoordinate < mainPanelView.frame.maxX - mainPanel.minimumWidth else {
+            guard xCoordinate < mainPanelView.frame.maxX - mainPanel.minimumSize().width else {
                 
                 return
             }
@@ -119,11 +114,6 @@ public class Panels: NSView, PanelsInterface {
         
         let xCoordinate = sender.location(in: contentView).x
         
-        // mainPanel and rightPanel must both be resizeable
-        guard mainPanel?.resizeable == true && rightPanel?.resizeable == true else {
-            return
-        }
-        
         // cannot resize to the right of the window
         guard xCoordinate < contentView.frame.width else {
             return
@@ -135,20 +125,14 @@ public class Panels: NSView, PanelsInterface {
         }
         
         // do not allow resizing to the left of the main panel's minimum width
-        if let mainPanel = mainPanel {
-            guard xCoordinate > leftPanelView.frame.width + mainPanel.minimumWidth else {
-                return
-            }
+        guard xCoordinate > leftPanelView.frame.width + (mainPanel?.minimumSize().width ?? 0) else {
+            return
         }
         
         // do not allow resizing to the right of rightPanel's minimum width
-        if let rightPanel = rightPanel {
-            
-            guard xCoordinate < contentView.frame.width - rightPanel.minimumWidth else {
-                return
-            }
+        guard xCoordinate < contentView.frame.width - (rightPanel?.minimumSize().width ?? 0) else {
+            return
         }
-        
         
         rightPanelWidthConstraint.constant = contentView.frame.width - sender.location(in: contentView).x
         

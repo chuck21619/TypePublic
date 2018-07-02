@@ -29,7 +29,7 @@ class ViewController: NSViewController {
         let rightPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
         
-        let mainPanelViewController = storyboard.instantiateInitialController() as? NSViewController
+        let mainPanelViewController = storyboard2.instantiateInitialController() as? NSViewController
         let mainPanel = Panel(position: .main, viewController: mainPanelViewController)
         
         panels.set(panels: [leftPanel, rightPanel, mainPanel])
