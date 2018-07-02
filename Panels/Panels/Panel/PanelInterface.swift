@@ -11,10 +11,11 @@ import Foundation
 public protocol PanelInterface {
     
     // contructors
-    init(position: PanelPosition, viewController: NSViewController?)
+    init(position: PanelPosition, minimumWidth: CGFloat, viewController: NSViewController?)
     
     // properties
     var position: PanelPosition { get }
+    var minimumWidth: CGFloat { get set }
     var viewController: NSViewController? { get set }
     
     // methods

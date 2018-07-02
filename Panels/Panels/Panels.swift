@@ -10,55 +10,151 @@ import Foundation
 
 public class Panels: NSView, PanelsInterface {
     
-    @IBOutlet weak var leftPanelViewWidthConstraint: NSLayoutConstraint!
-    @IBAction func test2(_ sender: NSPanGestureRecognizer) {
-        
-        leftPanelViewWidthConstraint.constant = sender.location(in: contentView).x
-    }
+    
     // MARK: - public interface
     public func set(panels: [Panel]) {
         
-        self.panels = panels
+        //left panel
+        if let leftPanel = panels.first(where: { (panel) -> Bool in
+            panel.position == .left
+        }) {
+            self.leftPanel = leftPanel
+        }
+        
+        //main panel
+        if let mainPanel = panels.first(where: { (panel) -> Bool in
+            panel.position == .main
+        }) {
+            self.mainPanel = mainPanel
+        }
+        
+        //right panel
+        if let rightPanel = panels.first(where: { (panel) -> Bool in
+            panel.position == .right
+        }) {
+            self.rightPanel = rightPanel
+        }
     }
     
+    public var leftPanel: Panel? {
+        
+        didSet {
+            
+            replace(contentsOf: leftPanelView, with: leftPanel?.viewController?.view)
+        }
+    }
+    
+    public var mainPanel: Panel? {
+        
+        didSet {
+            
+            replace(contentsOf: mainPanelView, with: mainPanel?.viewController?.view)
+        }
+    }
+    
+    public var rightPanel: Panel? {
+        
+        didSet {
+            
+            replace(contentsOf: rightPanelView, with: rightPanel?.viewController?.view)
+        }
+    }
+    
+    
+    // MARK: - implementation
     // MARK: - properties
     // outlets
+    @IBOutlet weak var leftPanelViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightPanelWidthConstraint: NSLayoutConstraint!
+    
     @IBOutlet var contentView: NSView!
     
     @IBOutlet weak var leftPanelView: NSView!
     @IBOutlet weak var mainPanelView: NSView!
     @IBOutlet weak var rightPanelView: NSView!
     
-    // panels
-    private var panels: [Panel] = [] {
+    // MARK: - Methods
+    // resizeGestures
+    @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
         
-        didSet {
+        let xCoordinate = sender.location(in: contentView).x
+        
+        // leftPanel and mainPanel must both be resizeable
+        guard leftPanel?.resizeable == true && mainPanel?.resizeable == true else {
+            return
+        }
+        
+        // cannot resize to the left of the window
+        guard xCoordinate > 0 else {
+            return
+        }
+        
+        // do not resize to the left of leftPanels minimumWidth
+        if let leftPanel = leftPanel {
             
-            //left panel
-            if let leftPanel = panels.first(where: { (panel) -> Bool in
-                panel.position == .left
-            }) {
-                replace(contentsOf: leftPanelView, with: leftPanel.viewController?.view)
-            }
-            
-            //main panel
-            if let mainPanel = panels.first(where: { (panel) -> Bool in
-                panel.position == .main
-            }) {
-                replace(contentsOf: mainPanelView, with: mainPanel.viewController?.view)
-            }
-            
-            //right panel
-            if let rightPanel = panels.first(where: { (panel) -> Bool in
-                panel.position == .right
-            }) {
-                replace(contentsOf: rightPanelView, with: rightPanel.viewController?.view)
+            guard xCoordinate > leftPanel.minimumWidth else {
+                
+                return
             }
         }
+        
+        // do not resize to the right of mainPanels minimumWidth
+        if let mainPanel = mainPanel {
+            
+            guard xCoordinate < mainPanelView.frame.maxX - mainPanel.minimumWidth else {
+                
+                return
+            }
+        }
+        
+        // do not allow resizing to the right of the main panel
+        guard xCoordinate < leftPanelView.frame.width + mainPanelView.frame.width else {
+            return
+        }
+        
+        leftPanelViewWidthConstraint.constant = sender.location(in: contentView).x
     }
     
-    // MARK: - Methods
-    // helper function
+    @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        let xCoordinate = sender.location(in: contentView).x
+        
+        // mainPanel and rightPanel must both be resizeable
+        guard mainPanel?.resizeable == true && rightPanel?.resizeable == true else {
+            return
+        }
+        
+        // cannot resize to the right of the window
+        guard xCoordinate < contentView.frame.width else {
+            return
+        }
+        
+        // do not allow resizing to the left of the main panel
+        guard xCoordinate > leftPanelView.frame.width else {
+            return
+        }
+        
+        // do not allow resizing to the left of the main panel's minimum width
+        if let mainPanel = mainPanel {
+            guard xCoordinate > leftPanelView.frame.width + mainPanel.minimumWidth else {
+                return
+            }
+        }
+        
+        // do not allow resizing to the right of rightPanel's minimum width
+        if let rightPanel = rightPanel {
+            
+            guard xCoordinate < contentView.frame.width - rightPanel.minimumWidth else {
+                return
+            }
+        }
+        
+        
+        rightPanelWidthConstraint.constant = contentView.frame.width - sender.location(in: contentView).x
+        
+    }
+    
+    // helper method
     private func replace(contentsOf view: NSView, with newView: NSView?) {
         
         for view in view.subviews {
