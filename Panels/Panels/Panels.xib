@@ -11,6 +11,8 @@
                 <outlet property="leftPanelView" destination="JQh-tB-bkV" id="ikH-Cu-ZNw"/>
                 <outlet property="leftPanelViewWidthConstraint" destination="AsA-Uc-ed1" id="7Lm-Zi-tqS"/>
                 <outlet property="mainPanelView" destination="oxJ-Ja-5H9" id="Odq-Hd-tIa"/>
+                <outlet property="resizeBarLeft" destination="0g0-8J-8VK" id="98y-nV-FUA"/>
+                <outlet property="resizeBarRight" destination="lcU-R6-SMf" id="vnn-2m-U19"/>
                 <outlet property="rightPanelView" destination="Qae-ig-qO0" id="6fs-MY-3Xn"/>
                 <outlet property="rightPanelWidthConstraint" destination="lX5-UC-qql" id="VvF-DE-yOv"/>
             </connections>
@@ -36,7 +38,7 @@
                         <constraint firstAttribute="width" constant="332" id="lX5-UC-qql"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="0g0-8J-8VK">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="0g0-8J-8VK" customClass="ResizeBar" customModule="Panels" customModuleProvider="target">
                     <rect key="frame" x="322" y="0.0" width="20" height="329"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="b38-DX-1GP"/>
@@ -49,7 +51,7 @@
                         </panGestureRecognizer>
                     </gestureRecognizers>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="lcU-R6-SMf">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="lcU-R6-SMf" customClass="ResizeBar" customModule="Panels" customModuleProvider="target">
                     <rect key="frame" x="654" y="0.0" width="20" height="329"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="QF1-uw-Aye"/>

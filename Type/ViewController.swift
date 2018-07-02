@@ -11,6 +11,9 @@ import Panels
 
 class ViewController: NSViewController {
 
+    override func mouseMoved(with event: NSEvent) {
+        print("")
+    }
     @IBAction func buttonClicked(_ sender: Any) {
         print("")
     }

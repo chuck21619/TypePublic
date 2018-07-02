@@ -10,7 +10,6 @@ import Foundation
 
 public class Panels: NSView, PanelsInterface {
     
-    
     // MARK: - public interface
     public func set(panels: [Panel]) {
         
@@ -73,9 +72,19 @@ public class Panels: NSView, PanelsInterface {
     @IBOutlet weak var mainPanelView: NSView!
     @IBOutlet weak var rightPanelView: NSView!
     
+    @IBOutlet weak var resizeBarLeft: ResizeBar!
+    @IBOutlet weak var resizeBarRight: ResizeBar!
+    
     // MARK: - Methods
     // resizeGestures
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        if sender.state == .began {
+            NSCursor.hide()
+        }
+        else if sender.state == .ended {
+            NSCursor.unhide()
+        }
         
         let xCoordinate = sender.location(in: contentView).x
         
@@ -111,6 +120,13 @@ public class Panels: NSView, PanelsInterface {
     }
     
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        if sender.state == .began {
+            NSCursor.hide()
+        }
+        else if sender.state == .ended {
+            NSCursor.unhide()
+        }
         
         let xCoordinate = sender.location(in: contentView).x
         

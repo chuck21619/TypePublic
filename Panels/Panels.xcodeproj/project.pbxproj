@@ -12,6 +12,7 @@
 		A3828C0320E5612A000FDA72 /* Panels.h in Headers */ = {isa = PBXBuildFile; fileRef = A3828BF520E5612A000FDA72 /* Panels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3828C1920E563DC000FDA72 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3828C1820E563DC000FDA72 /* Panels.swift */; };
 		A3986E9F20E58A5B00098A81 /* PanelsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3986E9E20E58A5B00098A81 /* PanelsInterface.swift */; };
+		A3B0278520EAE24A00A5C912 /* ResizeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0278420EAE24A00A5C912 /* ResizeBar.swift */; };
 		A3C325D220E56E65007DFCE4 /* Panels.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3C325D120E56E65007DFCE4 /* Panels.xib */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		A3828BF620E5612A000FDA72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3828C1820E563DC000FDA72 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		A3986E9E20E58A5B00098A81 /* PanelsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsInterface.swift; sourceTree = "<group>"; };
+		A3B0278420EAE24A00A5C912 /* ResizeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBar.swift; sourceTree = "<group>"; };
 		A3C325D120E56E65007DFCE4 /* Panels.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Panels.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,9 +72,18 @@
 				A3986E9E20E58A5B00098A81 /* PanelsInterface.swift */,
 				A3828C1820E563DC000FDA72 /* Panels.swift */,
 				A3C325D120E56E65007DFCE4 /* Panels.xib */,
+				A3B0278320EAE23800A5C912 /* ResizeBar */,
 				A37658C120E80C4000BD76B9 /* Panel */,
 			);
 			path = Panels;
+			sourceTree = "<group>";
+		};
+		A3B0278320EAE23800A5C912 /* ResizeBar */ = {
+			isa = PBXGroup;
+			children = (
+				A3B0278420EAE24A00A5C912 /* ResizeBar.swift */,
+			);
+			path = ResizeBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +171,7 @@
 				A3986E9F20E58A5B00098A81 /* PanelsInterface.swift in Sources */,
 				A3828C1920E563DC000FDA72 /* Panels.swift in Sources */,
 				A37658BE20E8092700BD76B9 /* Panel.swift in Sources */,
+				A3B0278520EAE24A00A5C912 /* ResizeBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
