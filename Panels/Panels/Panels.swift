@@ -222,7 +222,7 @@ public class Panels: NSView, PanelsInterface {
     }
     
     fileprivate func expandWindowIfNeededToIncludeRightPanel() {
-        // expand window if panels minimium sizes dont fit
+        
         let minimumWidthForBothPanels = (rightPanel?.minimumSize().width ?? 0) + (mainPanel?.minimumSize().width ?? 0)
         if mainPanelView.frame.width < minimumWidthForBothPanels {
             if let frame = self.window?.frame {
@@ -237,7 +237,7 @@ public class Panels: NSView, PanelsInterface {
     }
     
     fileprivate func showRightPanel() {
-        //show right panel
+        
         rightPanelViewTrailingConstraint.constant = 0
         
         NSAnimationContext.runAnimationGroup({ (context) in
@@ -253,7 +253,6 @@ public class Panels: NSView, PanelsInterface {
         
         let xCoordinate = sender.location(in: contentView).x
         
-        
         // hide right panel if cursor is passed threshold
         if xCoordinate > contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
             
@@ -264,7 +263,6 @@ public class Panels: NSView, PanelsInterface {
         if xCoordinate < contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
             
             if rightPanelViewTrailingConstraint.constant != 0 {
-                
                 
                 guard animatingRightPanel == false else {
                     return
