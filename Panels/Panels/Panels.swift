@@ -96,6 +96,7 @@ public class Panels: NSView, PanelsInterface {
             let minimumWidth = leftPanel?.minimumSize().width ?? 0
             
             if leftPanelViewWidthConstraint.constant != minimumWidth {
+                
                 leftPanelViewWidthConstraint.constant = minimumWidth
             }
             
@@ -112,6 +113,7 @@ public class Panels: NSView, PanelsInterface {
                 let minimumWidth = leftPanel.minimumSize().width
                 
                 if leftPanelViewWidthConstraint.constant != minimumWidth {
+                    
                     leftPanelViewWidthConstraint.constant = minimumWidth
                 }
                 
@@ -122,7 +124,14 @@ public class Panels: NSView, PanelsInterface {
         // do not resize to the right of mainPanels minimumWidth
         if let mainPanel = mainPanel {
             
-            guard xCoordinate < mainPanelView.frame.maxX - mainPanel.minimumSize().width else {
+            let maximumValidConstraint = mainPanelView.frame.maxX - mainPanel.minimumSize().width
+            
+            guard xCoordinate < maximumValidConstraint else {
+                
+                if leftPanelViewWidthConstraint.constant != maximumValidConstraint {
+                    
+                    leftPanelViewWidthConstraint.constant = maximumValidConstraint
+                }
                 
                 return
             }
@@ -133,7 +142,7 @@ public class Panels: NSView, PanelsInterface {
             return
         }
         
-        leftPanelViewWidthConstraint.constant = sender.location(in: contentView).x
+        leftPanelViewWidthConstraint.constant = xCoordinate
     }
     
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
@@ -155,19 +164,23 @@ public class Panels: NSView, PanelsInterface {
             let minimumWidth = rightPanel?.minimumSize().width ?? 0
             
             if rightPanelViewWidthConstraint.constant != minimumWidth {
+                
                 rightPanelViewWidthConstraint.constant = minimumWidth
             }
             
             return
         }
         
-        // do not allow resizing to the left of the main panel
-        guard xCoordinate > leftPanelView.frame.width else {
-            return
-        }
-        
         // do not allow resizing to the left of the main panel's minimum width
-        guard xCoordinate > leftPanelView.frame.width + (mainPanel?.minimumSize().width ?? 0) else {
+        let minimumValidXCoord = leftPanelView.frame.width + (mainPanel?.minimumSize().width ?? 0)
+        
+        guard xCoordinate > minimumValidXCoord else {
+            
+            if rightPanelViewWidthConstraint.constant != contentView.frame.width - (minimumValidXCoord) {
+                
+                rightPanelViewWidthConstraint.constant = contentView.frame.width - (minimumValidXCoord)
+            }
+            
             return
         }
         
@@ -179,13 +192,14 @@ public class Panels: NSView, PanelsInterface {
             let minimumWidth = rightPanel?.minimumSize().width ?? 0
             
             if rightPanelViewWidthConstraint.constant != minimumWidth {
+                
                 rightPanelViewWidthConstraint.constant = minimumWidth
             }
             
             return
         }
         
-        rightPanelViewWidthConstraint.constant = contentView.frame.width - sender.location(in: contentView).x
+        rightPanelViewWidthConstraint.constant = contentView.frame.width - xCoordinate
         
     }
     
