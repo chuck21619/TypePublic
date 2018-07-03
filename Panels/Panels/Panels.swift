@@ -64,7 +64,7 @@ public class Panels: NSView, PanelsInterface {
     // MARK: - properties
     // outlets
     @IBOutlet weak var leftPanelViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var rightPanelWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightPanelViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet var contentView: NSView!
     
@@ -147,10 +147,6 @@ public class Panels: NSView, PanelsInterface {
         
         let xCoordinate = sender.location(in: contentView).x
         
-        if xCoordinate < 0 {
-            print("a")
-        }
-        
         // cannot resize to the right of the window
         guard xCoordinate < contentView.frame.width else {
             
@@ -158,8 +154,8 @@ public class Panels: NSView, PanelsInterface {
             // set the panel to its minimum width if the curser is passed a valid rezizing point
             let minimumWidth = rightPanel?.minimumSize().width ?? 0
             
-            if rightPanelWidthConstraint.constant != minimumWidth {
-                rightPanelWidthConstraint.constant = minimumWidth
+            if rightPanelViewWidthConstraint.constant != minimumWidth {
+                rightPanelViewWidthConstraint.constant = minimumWidth
             }
             
             return
@@ -182,17 +178,18 @@ public class Panels: NSView, PanelsInterface {
             // set the panel to its minimum width if the curser is passed a valid rezizing point
             let minimumWidth = rightPanel?.minimumSize().width ?? 0
             
-            if rightPanelWidthConstraint.constant != minimumWidth {
-                rightPanelWidthConstraint.constant = minimumWidth
+            if rightPanelViewWidthConstraint.constant != minimumWidth {
+                rightPanelViewWidthConstraint.constant = minimumWidth
             }
             
             return
         }
         
-        rightPanelWidthConstraint.constant = contentView.frame.width - sender.location(in: contentView).x
+        rightPanelViewWidthConstraint.constant = contentView.frame.width - sender.location(in: contentView).x
         
     }
     
+    // MARK: etc
     // helper method
     private func replace(contentsOf view: NSView, with newView: NSView?) {
         

@@ -14,7 +14,7 @@
                 <outlet property="resizeBarLeft" destination="0g0-8J-8VK" id="98y-nV-FUA"/>
                 <outlet property="resizeBarRight" destination="lcU-R6-SMf" id="vnn-2m-U19"/>
                 <outlet property="rightPanelView" destination="Qae-ig-qO0" id="6fs-MY-3Xn"/>
-                <outlet property="rightPanelWidthConstraint" destination="lX5-UC-qql" id="VvF-DE-yOv"/>
+                <outlet property="rightPanelViewWidthConstraint" destination="lX5-UC-qql" id="VvF-DE-yOv"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
