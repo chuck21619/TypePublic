@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A327F21920EC02710003B829 /* PanelPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A327F21820EC02710003B829 /* PanelPosition.swift */; };
 		A37658BE20E8092700BD76B9 /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37658BD20E8092700BD76B9 /* Panel.swift */; };
 		A37658C420E80C6800BD76B9 /* PanelInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37658C320E80C6800BD76B9 /* PanelInterface.swift */; };
 		A3828C0320E5612A000FDA72 /* Panels.h in Headers */ = {isa = PBXBuildFile; fileRef = A3828BF520E5612A000FDA72 /* Panels.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A327F21820EC02710003B829 /* PanelPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelPosition.swift; sourceTree = "<group>"; };
 		A37658BD20E8092700BD76B9 /* Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
 		A37658C320E80C6800BD76B9 /* PanelInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelInterface.swift; sourceTree = "<group>"; };
 		A3828BF220E5612A000FDA72 /* Panels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Panels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,8 +44,9 @@
 		A37658C120E80C4000BD76B9 /* Panel */ = {
 			isa = PBXGroup;
 			children = (
-				A37658BD20E8092700BD76B9 /* Panel.swift */,
 				A37658C320E80C6800BD76B9 /* PanelInterface.swift */,
+				A37658BD20E8092700BD76B9 /* Panel.swift */,
+				A327F21820EC02710003B829 /* PanelPosition.swift */,
 			);
 			path = Panel;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				A37658C420E80C6800BD76B9 /* PanelInterface.swift in Sources */,
 				A3986E9F20E58A5B00098A81 /* PanelsInterface.swift in Sources */,
 				A3828C1920E563DC000FDA72 /* Panels.swift in Sources */,
+				A327F21920EC02710003B829 /* PanelPosition.swift in Sources */,
 				A37658BE20E8092700BD76B9 /* Panel.swift in Sources */,
 				A3B0278520EAE24A00A5C912 /* ResizeBar.swift in Sources */,
 			);

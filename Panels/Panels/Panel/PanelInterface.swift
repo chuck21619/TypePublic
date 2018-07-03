@@ -8,12 +8,6 @@
 
 import Foundation
 
-public enum PanelPosition: String {
-    case left
-    case main
-    case right
-}
-
 public protocol PanelInterface {
     
     // contructors
@@ -21,6 +15,7 @@ public protocol PanelInterface {
     
     // properties
     var position: PanelPosition { get }
+    var hidden: Bool { get set }
     var viewController: NSViewController? { get set }
     
     // methods

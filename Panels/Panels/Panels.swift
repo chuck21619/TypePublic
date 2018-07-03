@@ -64,7 +64,9 @@ public class Panels: NSView, PanelsInterface {
     // MARK: - properties
     // outlets
     @IBOutlet weak var leftPanelViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftPanelViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightPanelViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightPanelViewTrailingConstraint: NSLayoutConstraint!
     
     @IBOutlet var contentView: NSView!
     
@@ -77,105 +79,146 @@ public class Panels: NSView, PanelsInterface {
     
     // MARK: - Methods
     // MARK: Resizing gestures
+    var animatingLeftPanel = false
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
-        
-//        if sender.state == .began {
-//            NSCursor.hide()
-//        }
-//        else if sender.state == .ended {
-//            NSCursor.unhide()
-//        }
         
         let xCoordinate = sender.location(in: contentView).x
         
-        // cannot resize to the left of the window
-        guard xCoordinate > 0 else {
+        // hide left panel if cursor is passed threshold
+        if xCoordinate < leftPanel?.hidingThreshold ?? 0 {
+            
+            let constraintConstantToHideLeftView = -(leftPanel?.minimumSize().width ?? 0)
+            
+            if leftPanelViewLeadingConstraint.constant != constraintConstantToHideLeftView {
+                
+                guard animatingLeftPanel == false else {
+                    return
+                }
+                animatingLeftPanel = true
+                
+                
+                leftPanelViewLeadingConstraint.constant = constraintConstantToHideLeftView
+                
+                NSAnimationContext.runAnimationGroup({ (context) in
+                    context.duration = 0.25
+                    context.allowsImplicitAnimation = true
+                    self.contentView.layoutSubtreeIfNeeded()
+                }) {
+                    self.animatingLeftPanel = false
+                }
+            }
+        }
+        // show left panel is cursor is within threshold
+        if xCoordinate > leftPanel?.hidingThreshold ?? 0 {
+            
+            if leftPanelViewLeadingConstraint.constant != 0 {
+                
+                guard animatingLeftPanel == false else {
+                    return
+                }
+                animatingLeftPanel = true
+                
+                leftPanelViewLeadingConstraint.constant = 0
+                
+                NSAnimationContext.runAnimationGroup({ (context) in
+                    context.duration = 0.25
+                    context.allowsImplicitAnimation = true
+                    self.contentView.layoutSubtreeIfNeeded()
+                }) {
+                    self.animatingLeftPanel = false
+                }
+            }
+        }
+        
+        
+        // do not resize to the left of leftPanel's minimumWidth
+        let minimumWidth = leftPanel?.minimumSize().width ?? 0
+        guard xCoordinate > minimumWidth  else {
             
             // the gesture event may not update at the exact time the curser is on the edge
-            // set the panel to its minimum width if the curser is passed a valid rezizing point
-            let minimumWidth = leftPanel?.minimumSize().width ?? 0
-            
             if leftPanelViewWidthConstraint.constant != minimumWidth {
                 
                 leftPanelViewWidthConstraint.constant = minimumWidth
             }
             
+            //if xcoord is passed threshold
+                //hide left panel
+            
             return
         }
         
-        // do not resize to the left of leftPanels minimumWidth
-        if let leftPanel = leftPanel {
-            
-            guard xCoordinate > leftPanel.minimumSize().width else {
-                
-                // the gesture event may not update at the exact time the curser is on the edge
-                // set the panel to its minimum width if the curser is passed a valid rezizing point
-                let minimumWidth = leftPanel.minimumSize().width
-                
-                if leftPanelViewWidthConstraint.constant != minimumWidth {
-                    
-                    leftPanelViewWidthConstraint.constant = minimumWidth
-                }
-                
-                return
-            }
-        }
-        
         // do not resize to the right of mainPanels minimumWidth
-        if let mainPanel = mainPanel {
+        let maximumValidConstraint = mainPanelView.frame.maxX - (mainPanel?.minimumSize().width ?? 0)
+        guard xCoordinate < maximumValidConstraint else {
             
-            let maximumValidConstraint = mainPanelView.frame.maxX - mainPanel.minimumSize().width
-            
-            guard xCoordinate < maximumValidConstraint else {
+            // the gesture event may not update at the exact time the curser is on the edge
+            if leftPanelViewWidthConstraint.constant != maximumValidConstraint {
                 
-                if leftPanelViewWidthConstraint.constant != maximumValidConstraint {
-                    
-                    leftPanelViewWidthConstraint.constant = maximumValidConstraint
-                }
-                
-                return
+                leftPanelViewWidthConstraint.constant = maximumValidConstraint
             }
-        }
-        
-        // do not allow resizing to the right of the main panel
-        guard xCoordinate < leftPanelView.frame.width + mainPanelView.frame.width else {
             return
         }
         
         leftPanelViewWidthConstraint.constant = xCoordinate
     }
     
+    var animatingRightPanel = false
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
-        
-//        if sender.state == .began {
-//            NSCursor.hide()
-//        }
-//        else if sender.state == .ended {
-//            NSCursor.unhide()
-//        }
         
         let xCoordinate = sender.location(in: contentView).x
         
-        // cannot resize to the right of the window
-        guard xCoordinate < contentView.frame.width else {
+        
+        // hide right panel if cursor is passed threshold
+        if xCoordinate > contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
             
-            // the gesture event may not update at the exact time the curser is on the edge
-            // set the panel to its minimum width if the curser is passed a valid rezizing point
-            let minimumWidth = rightPanel?.minimumSize().width ?? 0
+            let constraintConstantToHideRightView = -(rightPanel?.minimumSize().width ?? 0)
             
-            if rightPanelViewWidthConstraint.constant != minimumWidth {
+            if rightPanelViewTrailingConstraint.constant != constraintConstantToHideRightView {
                 
-                rightPanelViewWidthConstraint.constant = minimumWidth
+                guard animatingRightPanel == false else {
+                    return
+                }
+                animatingRightPanel = true
+                
+                
+                rightPanelViewTrailingConstraint.constant = constraintConstantToHideRightView
+                
+                NSAnimationContext.runAnimationGroup({ (context) in
+                    context.duration = 0.25
+                    context.allowsImplicitAnimation = true
+                    self.contentView.layoutSubtreeIfNeeded()
+                }) {
+                    self.animatingRightPanel = false
+                }
             }
+        }
+        // show right panel is cursor is within threshold
+        if xCoordinate < contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
             
-            return
+            if rightPanelViewTrailingConstraint.constant != 0 {
+                
+                guard animatingRightPanel == false else {
+                    return
+                }
+                animatingRightPanel = true
+                
+                rightPanelViewTrailingConstraint.constant = 0
+                
+                NSAnimationContext.runAnimationGroup({ (context) in
+                    context.duration = 0.25
+                    context.allowsImplicitAnimation = true
+                    self.contentView.layoutSubtreeIfNeeded()
+                }) {
+                    self.animatingRightPanel = false
+                }
+            }
         }
         
-        // do not allow resizing to the left of the main panel's minimum width
+        // do not resize to the left of the mainPanel's minimum width
         let minimumValidXCoord = leftPanelView.frame.width + (mainPanel?.minimumSize().width ?? 0)
-        
         guard xCoordinate > minimumValidXCoord else {
             
+            // the gesture event may not update at the exact time the curser is on the edge
             if rightPanelViewWidthConstraint.constant != contentView.frame.width - (minimumValidXCoord) {
                 
                 rightPanelViewWidthConstraint.constant = contentView.frame.width - (minimumValidXCoord)
@@ -184,13 +227,11 @@ public class Panels: NSView, PanelsInterface {
             return
         }
         
-        // do not allow resizing to the right of rightPanel's minimum width
-        guard xCoordinate < contentView.frame.width - (rightPanel?.minimumSize().width ?? 0) else {
+        // do not resize to the right of rightPanel's minimum width
+        let minimumWidth = rightPanel?.minimumSize().width ?? 0
+        guard xCoordinate < contentView.frame.width - minimumWidth else {
             
             // the gesture event may not update at the exact time the curser is on the edge
-            // set the panel to its minimum width if the curser is passed a valid rezizing point
-            let minimumWidth = rightPanel?.minimumSize().width ?? 0
-            
             if rightPanelViewWidthConstraint.constant != minimumWidth {
                 
                 rightPanelViewWidthConstraint.constant = minimumWidth
@@ -200,7 +241,6 @@ public class Panels: NSView, PanelsInterface {
         }
         
         rightPanelViewWidthConstraint.constant = contentView.frame.width - xCoordinate
-        
     }
     
     // MARK: etc

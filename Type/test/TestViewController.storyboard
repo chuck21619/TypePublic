@@ -9,14 +9,14 @@
         <scene sceneID="v9Q-8k-tm3">
             <objects>
                 <viewController storyboardIdentifier="testVC" id="xk1-Xr-Zch" customClass="TestViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="vYQ-Fu-Svd">
-                        <rect key="frame" x="0.0" y="0.0" width="66" height="300"/>
+                    <view key="view" misplaced="YES" id="vYQ-Fu-Svd">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eLT-ve-GFe">
-                                <rect key="frame" x="-3" y="-3" width="72" height="306"/>
+                                <rect key="frame" x="-3" y="-3" width="106" height="306"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="66" id="7Ca-w8-pHW"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="7Ca-w8-pHW"/>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" image="egg-icon" id="7ex-nx-T1g"/>
                             </imageView>

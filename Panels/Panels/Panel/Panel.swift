@@ -11,9 +11,8 @@ import Foundation
 public class Panel: PanelInterface {
     
     public let position: PanelPosition
+    public var hidden: Bool = true
     public var viewController: NSViewController?
-    
-    var resizeable: Bool = true
     
     public required init(position: PanelPosition, viewController: NSViewController?) {
         
@@ -24,6 +23,10 @@ public class Panel: PanelInterface {
     public func minimumSize() -> NSSize {
         
         return self.viewController?.view.fittingSize ?? .zero
+    }
+    
+    var hidingThreshold: CGFloat {
+        return minimumSize().width/2
     }
 }
 
