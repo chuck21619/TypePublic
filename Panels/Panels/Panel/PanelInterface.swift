@@ -15,7 +15,6 @@ public protocol PanelInterface {
     
     // properties
     var position: PanelPosition { get }
-    var hidden: Bool { get set }
     var viewController: NSViewController? { get set }
     
     // methods

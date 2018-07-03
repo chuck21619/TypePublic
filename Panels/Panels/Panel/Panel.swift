@@ -11,7 +11,6 @@ import Foundation
 public class Panel: PanelInterface {
     
     public let position: PanelPosition
-    public var hidden: Bool = true
     public var viewController: NSViewController?
     
     public required init(position: PanelPosition, viewController: NSViewController?) {

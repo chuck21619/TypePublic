@@ -18,6 +18,7 @@ public class Panels: NSView, PanelsInterface {
             panel.position == .left
         }) {
             self.leftPanel = leftPanel
+            self.leftPanelViewWidthConstraint.constant = leftPanel.minimumSize().width
         }
         
         //main panel
@@ -32,6 +33,7 @@ public class Panels: NSView, PanelsInterface {
             panel.position == .right
         }) {
             self.rightPanel = rightPanel
+            self.rightPanelViewWidthConstraint.constant = rightPanel.minimumSize().width
         }
     }
     
@@ -77,9 +79,66 @@ public class Panels: NSView, PanelsInterface {
     @IBOutlet weak var resizeBarLeft: ResizeBar!
     @IBOutlet weak var resizeBarRight: ResizeBar!
     
+    // resizing
+    var animatingLeftPanel = false
+    var animatingRightPanel = false
+    
     // MARK: - Methods
     // MARK: Resizing gestures
-    var animatingLeftPanel = false
+    // MARK: - left methods
+    fileprivate func hideLeftPanel() {
+        
+        let constraintConstantToHideLeftView = -(leftPanel?.minimumSize().width ?? 0)
+        
+        if leftPanelViewLeadingConstraint.constant != constraintConstantToHideLeftView {
+            
+            guard animatingLeftPanel == false else {
+                return
+            }
+            
+            animatingLeftPanel = true
+            
+            leftPanelViewLeadingConstraint.constant = constraintConstantToHideLeftView
+            
+            NSAnimationContext.runAnimationGroup({ (context) in
+                context.duration = 0.25
+                context.allowsImplicitAnimation = true
+                self.contentView.layoutSubtreeIfNeeded()
+            }) {
+                self.animatingLeftPanel = false
+            }
+        }
+    }
+    
+    fileprivate func expandWindowIfNeededToIncludeLeftPanel() {
+        // expand window if panels minimium sizes dont fit
+        let minimumWidthForBothPanels = (leftPanel?.minimumSize().width ?? 0) + (mainPanel?.minimumSize().width ?? 0)
+        if mainPanelView.frame.width < minimumWidthForBothPanels {
+            
+            if let frame = self.window?.frame {
+                
+                let newFrame = NSRect(x: frame.minX,
+                                      y: frame.minY,
+                                      width: frame.width+(leftPanel?.minimumSize().width ?? 0),
+                                      height: frame.height)
+                
+                self.window?.setFrame(newFrame, display: true, animate: true)
+            }
+        }
+    }
+    
+    fileprivate func showLeftPanel() {
+        leftPanelViewLeadingConstraint.constant = 0
+        
+        NSAnimationContext.runAnimationGroup({ (context) in
+            context.duration = 0.25
+            context.allowsImplicitAnimation = true
+            self.contentView.layoutSubtreeIfNeeded()
+        }) {
+            self.animatingLeftPanel = false
+        }
+    }
+    
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
         
         let xCoordinate = sender.location(in: contentView).x
@@ -87,46 +146,24 @@ public class Panels: NSView, PanelsInterface {
         // hide left panel if cursor is passed threshold
         if xCoordinate < leftPanel?.hidingThreshold ?? 0 {
             
-            let constraintConstantToHideLeftView = -(leftPanel?.minimumSize().width ?? 0)
-            
-            if leftPanelViewLeadingConstraint.constant != constraintConstantToHideLeftView {
-                
-                guard animatingLeftPanel == false else {
-                    return
-                }
-                animatingLeftPanel = true
-                
-                
-                leftPanelViewLeadingConstraint.constant = constraintConstantToHideLeftView
-                
-                NSAnimationContext.runAnimationGroup({ (context) in
-                    context.duration = 0.25
-                    context.allowsImplicitAnimation = true
-                    self.contentView.layoutSubtreeIfNeeded()
-                }) {
-                    self.animatingLeftPanel = false
-                }
-            }
+            hideLeftPanel()
         }
+        
         // show left panel is cursor is within threshold
         if xCoordinate > leftPanel?.hidingThreshold ?? 0 {
+            
             
             if leftPanelViewLeadingConstraint.constant != 0 {
                 
                 guard animatingLeftPanel == false else {
                     return
                 }
+                
+                expandWindowIfNeededToIncludeLeftPanel()
+                
                 animatingLeftPanel = true
                 
-                leftPanelViewLeadingConstraint.constant = 0
-                
-                NSAnimationContext.runAnimationGroup({ (context) in
-                    context.duration = 0.25
-                    context.allowsImplicitAnimation = true
-                    self.contentView.layoutSubtreeIfNeeded()
-                }) {
-                    self.animatingLeftPanel = false
-                }
+                showLeftPanel()
             }
         }
         
@@ -140,9 +177,6 @@ public class Panels: NSView, PanelsInterface {
                 
                 leftPanelViewWidthConstraint.constant = minimumWidth
             }
-            
-            //if xcoord is passed threshold
-                //hide left panel
             
             return
         }
@@ -162,7 +196,59 @@ public class Panels: NSView, PanelsInterface {
         leftPanelViewWidthConstraint.constant = xCoordinate
     }
     
-    var animatingRightPanel = false
+    //MARK: right methods
+    fileprivate func hideRightPanel() {
+        
+        let constraintConstantToHideRightView = -(rightPanel?.minimumSize().width ?? 0)
+        
+        if rightPanelViewTrailingConstraint.constant != constraintConstantToHideRightView {
+            
+                guard animatingRightPanel == false else {
+                    return
+                }
+            
+                animatingRightPanel = true
+            
+            rightPanelViewTrailingConstraint.constant = constraintConstantToHideRightView
+            
+            NSAnimationContext.runAnimationGroup({ (context) in
+                context.duration = 0.25
+                context.allowsImplicitAnimation = true
+                self.contentView.layoutSubtreeIfNeeded()
+            }) {
+                self.animatingRightPanel = false
+            }
+        }
+    }
+    
+    fileprivate func expandWindowIfNeededToIncludeRightPanel() {
+        // expand window if panels minimium sizes dont fit
+        let minimumWidthForBothPanels = (rightPanel?.minimumSize().width ?? 0) + (mainPanel?.minimumSize().width ?? 0)
+        if mainPanelView.frame.width < minimumWidthForBothPanels {
+            if let frame = self.window?.frame {
+                
+                let newFrame = NSRect(x: frame.minX-(minimumWidthForBothPanels-mainPanelView.frame.width),
+                                      y: frame.minY,
+                                      width: frame.width+(rightPanel?.minimumSize().width ?? 0),
+                                      height: frame.height)
+                self.window?.setFrame(newFrame, display: true, animate: true)
+            }
+        }
+    }
+    
+    fileprivate func showRightPanel() {
+        //show right panel
+        rightPanelViewTrailingConstraint.constant = 0
+        
+        NSAnimationContext.runAnimationGroup({ (context) in
+            context.duration = 0.25
+            context.allowsImplicitAnimation = true
+            self.contentView.layoutSubtreeIfNeeded()
+        }) {
+            self.animatingRightPanel = false
+        }
+    }
+    
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
         
         let xCoordinate = sender.location(in: contentView).x
@@ -171,52 +257,35 @@ public class Panels: NSView, PanelsInterface {
         // hide right panel if cursor is passed threshold
         if xCoordinate > contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
             
-            let constraintConstantToHideRightView = -(rightPanel?.minimumSize().width ?? 0)
-            
-            if rightPanelViewTrailingConstraint.constant != constraintConstantToHideRightView {
-                
-                guard animatingRightPanel == false else {
-                    return
-                }
-                animatingRightPanel = true
-                
-                
-                rightPanelViewTrailingConstraint.constant = constraintConstantToHideRightView
-                
-                NSAnimationContext.runAnimationGroup({ (context) in
-                    context.duration = 0.25
-                    context.allowsImplicitAnimation = true
-                    self.contentView.layoutSubtreeIfNeeded()
-                }) {
-                    self.animatingRightPanel = false
-                }
-            }
+            hideRightPanel()
         }
+        
         // show right panel is cursor is within threshold
         if xCoordinate < contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
             
             if rightPanelViewTrailingConstraint.constant != 0 {
                 
+                
                 guard animatingRightPanel == false else {
                     return
                 }
+                
+                expandWindowIfNeededToIncludeRightPanel()
+                
                 animatingRightPanel = true
                 
-                rightPanelViewTrailingConstraint.constant = 0
-                
-                NSAnimationContext.runAnimationGroup({ (context) in
-                    context.duration = 0.25
-                    context.allowsImplicitAnimation = true
-                    self.contentView.layoutSubtreeIfNeeded()
-                }) {
-                    self.animatingRightPanel = false
-                }
+                showRightPanel()
             }
         }
         
         // do not resize to the left of the mainPanel's minimum width
-        let minimumValidXCoord = leftPanelView.frame.width + (mainPanel?.minimumSize().width ?? 0)
+        let minimumValidXCoord = leftPanelView.frame.maxX + (mainPanel?.minimumSize().width ?? 0)
         guard xCoordinate > minimumValidXCoord else {
+            
+            // if the rightPanel is hidden. dont bother
+            guard rightPanelViewTrailingConstraint.constant != -(rightPanel?.minimumSize().width ?? 0) else {
+                return
+            }
             
             // the gesture event may not update at the exact time the curser is on the edge
             if rightPanelViewWidthConstraint.constant != contentView.frame.width - (minimumValidXCoord) {
@@ -243,7 +312,7 @@ public class Panels: NSView, PanelsInterface {
         rightPanelViewWidthConstraint.constant = contentView.frame.width - xCoordinate
     }
     
-    // MARK: etc
+    // MARK: - etc
     // helper method
     private func replace(contentsOf view: NSView, with newView: NSView?) {
         
