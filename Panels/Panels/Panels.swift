@@ -79,17 +79,26 @@ public class Panels: NSView, PanelsInterface {
     // MARK: Resizing gestures
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
         
-        if sender.state == .began {
-            NSCursor.hide()
-        }
-        else if sender.state == .ended {
-            NSCursor.unhide()
-        }
+//        if sender.state == .began {
+//            NSCursor.hide()
+//        }
+//        else if sender.state == .ended {
+//            NSCursor.unhide()
+//        }
         
         let xCoordinate = sender.location(in: contentView).x
         
         // cannot resize to the left of the window
         guard xCoordinate > 0 else {
+            
+            // the gesture event may not update at the exact time the curser is on the edge
+            // set the panel to its minimum width if the curser is passed a valid rezizing point
+            let minimumWidth = leftPanel?.minimumSize().width ?? 0
+            
+            if leftPanelViewWidthConstraint.constant != minimumWidth {
+                leftPanelViewWidthConstraint.constant = minimumWidth
+            }
+            
             return
         }
         
@@ -97,6 +106,14 @@ public class Panels: NSView, PanelsInterface {
         if let leftPanel = leftPanel {
             
             guard xCoordinate > leftPanel.minimumSize().width else {
+                
+                // the gesture event may not update at the exact time the curser is on the edge
+                // set the panel to its minimum width if the curser is passed a valid rezizing point
+                let minimumWidth = leftPanel.minimumSize().width
+                
+                if leftPanelViewWidthConstraint.constant != minimumWidth {
+                    leftPanelViewWidthConstraint.constant = minimumWidth
+                }
                 
                 return
             }
@@ -121,17 +138,30 @@ public class Panels: NSView, PanelsInterface {
     
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
         
-        if sender.state == .began {
-            NSCursor.hide()
-        }
-        else if sender.state == .ended {
-            NSCursor.unhide()
-        }
+//        if sender.state == .began {
+//            NSCursor.hide()
+//        }
+//        else if sender.state == .ended {
+//            NSCursor.unhide()
+//        }
         
         let xCoordinate = sender.location(in: contentView).x
         
+        if xCoordinate < 0 {
+            print("a")
+        }
+        
         // cannot resize to the right of the window
         guard xCoordinate < contentView.frame.width else {
+            
+            // the gesture event may not update at the exact time the curser is on the edge
+            // set the panel to its minimum width if the curser is passed a valid rezizing point
+            let minimumWidth = rightPanel?.minimumSize().width ?? 0
+            
+            if rightPanelWidthConstraint.constant != minimumWidth {
+                rightPanelWidthConstraint.constant = minimumWidth
+            }
+            
             return
         }
         
@@ -147,6 +177,15 @@ public class Panels: NSView, PanelsInterface {
         
         // do not allow resizing to the right of rightPanel's minimum width
         guard xCoordinate < contentView.frame.width - (rightPanel?.minimumSize().width ?? 0) else {
+            
+            // the gesture event may not update at the exact time the curser is on the edge
+            // set the panel to its minimum width if the curser is passed a valid rezizing point
+            let minimumWidth = rightPanel?.minimumSize().width ?? 0
+            
+            if rightPanelWidthConstraint.constant != minimumWidth {
+                rightPanelWidthConstraint.constant = minimumWidth
+            }
+            
             return
         }
         
