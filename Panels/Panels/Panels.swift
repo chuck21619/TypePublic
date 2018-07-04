@@ -90,13 +90,7 @@ public class Panels: NSView, PanelsInterface {
     // MARK: - left methods
     
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
-        
-        let xCoordinate = sender.location(in: contentView).x
-        
-        guard xCoordinate > 0 else {
-            return
-        }
-        
+    
         if sender.state == .began {
             
             self.initialLeftPanelViewWidth = leftPanelView.frame.width
@@ -105,29 +99,28 @@ public class Panels: NSView, PanelsInterface {
             return
         }
         
-        let theDiff = NSEvent.mouseLocation.x - initialMouseLocation.x
+        var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
+        
+        if initialLeftPanelViewWidth + mouseLocationDifference < 0 {
+            
+            mouseLocationDifference = -initialLeftPanelViewWidth
+        }
         
         if let frame = window?.frame {
             
             let newFrame = NSRect(x: frame.minX,
                                   y: frame.minY,
-                                  width: self.initialResizingFrame.width + theDiff,
+                                  width: self.initialResizingFrame.width + mouseLocationDifference,
                                   height: frame.height)
             
             self.window?.setFrame(newFrame, display: true, animate: false)
         }
         
-        leftPanelViewWidthConstraint.constant = initialLeftPanelViewWidth + theDiff
+        leftPanelViewWidthConstraint.constant = initialLeftPanelViewWidth + mouseLocationDifference
     }
     
     //MARK: right methods
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
-        
-        let xCoordinate = sender.location(in: contentView).x
-        
-        guard xCoordinate < self.contentView.frame.width else {
-            return
-        }
         
         if sender.state == .began {
             
@@ -137,22 +130,25 @@ public class Panels: NSView, PanelsInterface {
             return
         }
         
-        let theDiff = NSEvent.mouseLocation.x - initialMouseLocation.x
+        var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
-        print(theDiff)
+        if initialRightPanelViewWidth - mouseLocationDifference < 0 {
+            
+            mouseLocationDifference -= (mouseLocationDifference - initialRightPanelViewWidth)
+        }
         
         if let frame = window?.frame {
             
-            let newFrame = NSRect(x: self.initialResizingFrame.minX + theDiff,
+            let newFrame = NSRect(x: self.initialResizingFrame.minX + mouseLocationDifference,
                                   y: frame.minY,
-                                  width: self.initialResizingFrame.width - theDiff,
+                                  width: self.initialResizingFrame.width - mouseLocationDifference,
                                   height: frame.height)
             
             self.window?.setFrame(newFrame, display: true, animate: false)
         }
         
-        rightPanelViewWidthConstraint.constant = initialRightPanelViewWidth - theDiff
         
+        rightPanelViewWidthConstraint.constant = initialRightPanelViewWidth - mouseLocationDifference
     }
     
     // MARK: - etc
