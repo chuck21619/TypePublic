@@ -78,223 +78,81 @@ public class Panels: NSView, PanelsInterface {
     @IBOutlet weak var resizeBarRight: ResizeBar!
     
     // resizing
+    var initialLeftPanelViewWidth: CGFloat = 0
+    var initialRightPanelViewWidth: CGFloat = 0
+    var initialResizingFrame: NSRect = .zero
+    var initialMouseLocation: NSPoint = .zero
     var animatingLeftPanel = false
     var animatingRightPanel = false
     
     // MARK: - Methods
     // MARK: Resizing gestures
     // MARK: - left methods
-    fileprivate func hideLeftPanel() {
-        
-        let constraintConstantToHideLeftView: CGFloat = 0
-        
-        if leftPanelViewWidthConstraint.constant != constraintConstantToHideLeftView {
-            
-            guard animatingLeftPanel == false else {
-                return
-            }
-            
-            animatingLeftPanel = true
-            
-            leftPanelViewWidthConstraint.constant = constraintConstantToHideLeftView
-            
-            NSAnimationContext.runAnimationGroup({ (context) in
-                context.duration = 0.25
-                context.allowsImplicitAnimation = true
-                self.contentView.layoutSubtreeIfNeeded()
-            }) {
-                self.animatingLeftPanel = false
-            }
-        }
-    }
-    
-    fileprivate func expandWindowIfNeededToIncludeLeftPanel() {
-        
-        let minimumWidthForBothPanels = (leftPanel?.hidingThreshold ?? 0) + (mainPanel?.minimumSize().width ?? 0)
-        if mainPanelView.frame.width < minimumWidthForBothPanels {
-            
-            if let frame = self.window?.frame {
-                
-                let newFrame = NSRect(x: frame.minX,
-                                      y: frame.minY,
-                                      width: frame.width+(leftPanel?.hidingThreshold ?? 0),
-                                      height: frame.height)
-                
-                self.window?.setFrame(newFrame, display: true, animate: true)
-            }
-        }
-    }
-    
-    fileprivate func showLeftPanel() {
-        
-        self.animatingLeftPanel = true
-        
-        leftPanelViewWidthConstraint.constant = leftPanel?.defaultWidth ?? leftPanelViewWidthConstraint.constant
-        
-        NSAnimationContext.runAnimationGroup({ (context) in
-            context.duration = 0.25
-            context.allowsImplicitAnimation = true
-            self.contentView.layoutSubtreeIfNeeded()
-        }) {
-            self.animatingLeftPanel = false
-        }
-    }
     
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
         
         let xCoordinate = sender.location(in: contentView).x
         
-        if sender.state == .ended {
-            
-            // hide left panel if cursor is below hidden threshold
-            if xCoordinate < leftPanel?.hidingThreshold ?? 0 {
-                
-                hideLeftPanel()
-                
-                return
-            }
-            
-            // expand left panel if cursor below default width && passed hidden threshold
-            if xCoordinate > (leftPanel?.hidingThreshold ?? 0)
-                && xCoordinate < (leftPanel?.defaultWidth ?? 0) {
-                
-                expandWindowIfNeededToIncludeLeftPanel()
-                
-                showLeftPanel()
-                
-                return
-            }
-        }
-        
-        // do not resize to the left of the window
-        guard xCoordinate > 0  else {
-
-            // the gesture event may not update at the exact time the curser is on the edge
-            if leftPanelViewWidthConstraint.constant != 0 {
-
-                leftPanelViewWidthConstraint.constant = 0
-            }
-
+        guard xCoordinate > 0 else {
             return
         }
         
-        leftPanelViewWidthConstraint.constant = xCoordinate
+        if sender.state == .began {
+            
+            self.initialLeftPanelViewWidth = leftPanelView.frame.width
+            self.initialResizingFrame = self.window?.frame ?? .zero
+            self.initialMouseLocation = NSEvent.mouseLocation
+            return
+        }
+        
+        let theDiff = NSEvent.mouseLocation.x - initialMouseLocation.x
+        
+        if let frame = window?.frame {
+            
+            let newFrame = NSRect(x: frame.minX,
+                                  y: frame.minY,
+                                  width: self.initialResizingFrame.width + theDiff,
+                                  height: frame.height)
+            
+            self.window?.setFrame(newFrame, display: true, animate: false)
+        }
+        
+        leftPanelViewWidthConstraint.constant = initialLeftPanelViewWidth + theDiff
     }
     
     //MARK: right methods
-    fileprivate func hideRightPanel() {
-        
-        let constraintConstantToHideRightView: CGFloat = 0
-        
-        if rightPanelViewWidthConstraint.constant != constraintConstantToHideRightView {
-            
-                guard animatingRightPanel == false else {
-                    return
-                }
-            
-                animatingRightPanel = true
-            
-            rightPanelViewWidthConstraint.constant = constraintConstantToHideRightView
-            
-            NSAnimationContext.runAnimationGroup({ (context) in
-                context.duration = 0.25
-                context.allowsImplicitAnimation = true
-                self.contentView.layoutSubtreeIfNeeded()
-            }) {
-                self.animatingRightPanel = false
-            }
-        }
-    }
-    
-    fileprivate func expandWindowIfNeededToIncludeRightPanel() {
-        
-        let minimumWidthForBothPanels = (rightPanel?.hidingThreshold ?? 0) + (mainPanel?.minimumSize().width ?? 0)
-        if mainPanelView.frame.width < minimumWidthForBothPanels {
-            if let frame = self.window?.frame {
-                
-                let newFrame = NSRect(x: frame.minX-(minimumWidthForBothPanels-mainPanelView.frame.width),
-                                      y: frame.minY,
-                                      width: frame.width+(rightPanel?.hidingThreshold ?? 0),
-                                      height: frame.height)
-                self.window?.setFrame(newFrame, display: true, animate: true)
-            }
-        }
-    }
-    
-    fileprivate func showRightPanel() {
-        
-        self.animatingRightPanel = true
-        
-        rightPanelViewWidthConstraint.constant = rightPanel?.defaultWidth ?? rightPanelViewWidthConstraint.constant
-        
-        NSAnimationContext.runAnimationGroup({ (context) in
-            context.duration = 0.25
-            context.allowsImplicitAnimation = true
-            self.contentView.layoutSubtreeIfNeeded()
-        }) {
-            self.animatingRightPanel = false
-        }
-    }
-    
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
         
         let xCoordinate = sender.location(in: contentView).x
         
-        if sender.state == .ended {
-            
-            // hide right panel if cursor is passed hidden threshold
-            if xCoordinate > contentView.frame.width - (rightPanel?.hidingThreshold ?? 0) {
-                
-                hideRightPanel()
-                return
-            }
-            
-            // expand right panel if cursor is passed default width && below hidden threshold
-            if xCoordinate < contentView.frame.width - (rightPanel?.hidingThreshold ?? 0)
-                && xCoordinate > contentView.frame.width - (rightPanel?.defaultWidth ?? 0) {
-                
-                expandWindowIfNeededToIncludeRightPanel()
-                
-                showRightPanel()
-                
-                return
-            }
-        }
-        
-        // do not resize to the right of the window
-        guard xCoordinate < contentView.frame.width else {
-            
-            // the gesture event may not update at the exact time the curser is on the edge
-            if rightPanelViewWidthConstraint.constant != 0 {
-                
-                rightPanelViewWidthConstraint.constant = 0
-            }
-            
+        guard xCoordinate < self.contentView.frame.width else {
             return
         }
         
-        // expand the window towards the left when hitting the limit of the mainPanel's minimum width
-        guard xCoordinate > (mainPanelView.frame.minX + (mainPanel?.minimumSize().width ?? 0)) else {
+        if sender.state == .began {
             
-            if let frame = self.window?.frame {
-                
-                let theDiff = mainPanelView.frame.maxX - xCoordinate
-                
-                let newFrame = NSRect(x: frame.minX - theDiff,
-                                      y: frame.minY,
-                                      width: frame.width + theDiff,
-                                      height: frame.height)
-                
-                self.window?.setFrame(newFrame, display: true, animate: false)
-                
-                
-                rightPanelViewWidthConstraint.constant += theDiff
-                
-            }
+            self.initialRightPanelViewWidth = rightPanelView.frame.width
+            self.initialResizingFrame = self.window?.frame ?? .zero
+            self.initialMouseLocation = NSEvent.mouseLocation
             return
         }
         
-        rightPanelViewWidthConstraint.constant = contentView.frame.width - xCoordinate
+        let theDiff = NSEvent.mouseLocation.x - initialMouseLocation.x
+        
+        print(theDiff)
+        
+        if let frame = window?.frame {
+            
+            let newFrame = NSRect(x: self.initialResizingFrame.minX + theDiff,
+                                  y: frame.minY,
+                                  width: self.initialResizingFrame.width - theDiff,
+                                  height: frame.height)
+            
+            self.window?.setFrame(newFrame, display: true, animate: false)
+        }
+        
+        rightPanelViewWidthConstraint.constant = initialRightPanelViewWidth - theDiff
+        
     }
     
     // MARK: - etc

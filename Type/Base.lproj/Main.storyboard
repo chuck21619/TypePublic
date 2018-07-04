@@ -713,21 +713,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </customView>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4K-02-NzU">
-                                <rect key="frame" x="199" y="118" width="81" height="32"/>
-                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZUe-sH-PFv">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="buttonClicked:" target="XfG-lQ-9wD" id="Eqg-VT-ZHB"/>
-                                </connections>
-                            </button>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="r4K-02-NzU" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="CRD-mj-FYq"/>
-                            <constraint firstItem="r4K-02-NzU" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Qtq-Uq-bRj"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="panels" destination="qfj-Su-nV2" id="xcp-5U-tlJ"/>
