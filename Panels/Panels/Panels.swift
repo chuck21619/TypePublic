@@ -18,7 +18,7 @@ public class Panels: NSView, PanelsInterface {
             panel.position == .left
         }) {
             self.leftPanel = leftPanel
-            self.leftPanelViewWidthConstraint.constant = leftPanel.minimumSize().width
+            self.leftPanelViewWidthConstraint.constant = leftPanel.defaultWidth
         }
         
         //main panel
@@ -33,7 +33,7 @@ public class Panels: NSView, PanelsInterface {
             panel.position == .right
         }) {
             self.rightPanel = rightPanel
-            self.rightPanelViewWidthConstraint.constant = rightPanel.minimumSize().width
+            self.rightPanelViewWidthConstraint.constant = rightPanel.defaultWidth
         }
     }
     

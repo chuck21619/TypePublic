@@ -10,14 +10,14 @@
             <objects>
                 <viewController id="xwX-6i-Tec" sceneMemberID="viewController">
                     <view key="view" id="cTQ-Ib-vVp">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="509"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1xJ-el-OZo">
-                                <rect key="frame" x="-2" y="141" width="254" height="17"/>
+                                <rect key="frame" x="-2" y="350" width="504" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="kYi-XL-Avo"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="xWS-wI-6x5"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="xWS-wI-6x5"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="O5G-Gq-Rc1">
                                     <font key="font" metaFont="system"/>
@@ -30,7 +30,7 @@
                             <constraint firstItem="1xJ-el-OZo" firstAttribute="leading" secondItem="cTQ-Ib-vVp" secondAttribute="leading" id="Bst-WZ-mB5"/>
                             <constraint firstItem="1xJ-el-OZo" firstAttribute="top" secondItem="cTQ-Ib-vVp" secondAttribute="top" constant="142" id="JWZ-8h-CKs"/>
                             <constraint firstAttribute="trailing" secondItem="1xJ-el-OZo" secondAttribute="trailing" id="PKD-My-uxq"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1xJ-el-OZo" secondAttribute="bottom" constant="141" id="jy4-MT-xja"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1xJ-el-OZo" secondAttribute="bottom" constant="350" id="jy4-MT-xja"/>
                         </constraints>
                     </view>
                 </viewController>
