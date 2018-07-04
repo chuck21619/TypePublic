@@ -121,27 +121,65 @@ public class Panels: NSView, PanelsInterface {
         //auto-hide/show
         if sender.state == .ended {
             
+            //hide
             if leftPanelViewWidthConstraint.constant < (leftPanel?.hidingThreshold ?? 0) {
                 
-                let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
-                NSAnimationContext.runAnimationGroup({ (context) in
+                //calculate new frame
+                var newFrame: NSRect = .zero
+                if let frame = self.window?.frame {
                     
-                    NSAnimationContext.current.duration = 0.25
-                    widthConstraint.isActive = true
-                    leftPanelViewWidthConstraint.animator().setValue(CGFloat(1), forKey: "constant")
-                }) {
+                    let widthToSubtract = leftPanelViewWidthConstraint.constant
                     
-                    self.mainPanelView.removeConstraint(widthConstraint)
-                    self.leftPanelViewWidthConstraint.constant = 0
+                    let newOrigin = NSPoint(x: frame.minX, y: frame.minY)
+                    let newSize = NSSize(width: frame.width - widthToSubtract, height: frame.height)
+                    newFrame = NSRect(origin: newOrigin, size: newSize)
                 }
-            }
-            else if leftPanelViewWidthConstraint.constant < (leftPanel?.defaultWidth ?? 0) {
+                
+                //configure constraints for animating
+                let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
+                widthConstraint.isActive = true
+                leftPanelViewWidthConstraint.isActive = false
                 
                 NSAnimationContext.runAnimationGroup({ (context) in
                     
-                    NSAnimationContext.current.duration = 0.25
-                    leftPanelViewWidthConstraint.animator().setValue(CGFloat(leftPanel?.defaultWidth ?? 0), forKey: "constant")
-                })
+                    context.duration = 0.25
+                    self.window?.animator().setFrame(newFrame, display: true)
+                }) {
+                    //reset constraints
+                    self.mainPanelView.removeConstraint(widthConstraint)
+                    self.leftPanelViewWidthConstraint.constant = 0//self.rightPanelView.frame.width
+                    self.leftPanelViewWidthConstraint.isActive = true
+                }
+            }
+            //show
+            else if leftPanelViewWidthConstraint.constant < (leftPanel?.defaultWidth ?? 0) {
+                
+                //calculate new frame
+                var newFrame: NSRect = .zero
+                if let frame = self.window?.frame {
+                    
+                    let widthToAdd = ((leftPanel?.defaultWidth ?? 0) - leftPanelViewWidthConstraint.constant)
+                    
+                    let newOrigin = NSPoint(x: frame.minX, y: frame.minY)
+                    let newSize = NSSize(width: frame.width + widthToAdd, height: frame.height)
+                    newFrame = NSRect(origin: newOrigin, size: newSize)
+                }
+                
+                //configure constraints for animating
+                let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
+                widthConstraint.isActive = true
+                leftPanelViewWidthConstraint.isActive = false
+                
+                NSAnimationContext.runAnimationGroup({ (context) in
+                    
+                    context.duration = 0.25
+                    self.window?.animator().setFrame(newFrame, display: true)
+                }) {
+                    //reset constraints
+                    self.mainPanelView.removeConstraint(widthConstraint)
+                    self.leftPanelViewWidthConstraint.constant = self.leftPanelView.frame.width
+                    self.leftPanelViewWidthConstraint.isActive = true
+                }
             }
         }
     }
@@ -180,46 +218,23 @@ public class Panels: NSView, PanelsInterface {
         //auto-hide/show
         if sender.state == .ended {
             
+            //hide
             if rightPanelViewWidthConstraint.constant < (rightPanel?.hidingThreshold ?? 0) {
                 
-                if let frame = self.window?.frame {
-                    
-                    let newOrigin = NSPoint(x: frame.minX + rightPanelViewWidthConstraint.constant, y: frame.minY)
-                    let newSize = NSSize(width: frame.width - rightPanelViewWidthConstraint.constant, height: frame.height)
-                    let newFrame = NSRect(origin: newOrigin, size: newSize)
-                    
-                    NSAnimationContext.beginGrouping()
-                    NSAnimationContext.current.duration = 0.25
-                    self.window?.animator().setFrame(newFrame, display: true)
-                    NSAnimationContext.endGrouping()
-                }
-                
-                let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
-                NSAnimationContext.runAnimationGroup({ (context) in
-                    
-                    NSAnimationContext.current.duration = 0.25
-                    
-                    widthConstraint.isActive = true
-                    rightPanelViewWidthConstraint.animator().setValue(CGFloat(1), forKey: "constant")
-                }) {
-                    
-                    self.mainPanelView.removeConstraint(widthConstraint)
-                    self.rightPanelViewWidthConstraint.constant = 0
-                }
-            }
-            else if rightPanelViewWidthConstraint.constant < (rightPanel?.defaultWidth ?? 0) {
-                
+                //calculate new frame
                 var newFrame: NSRect = .zero
                 if let frame = self.window?.frame {
                     
-                    let newOrigin = NSPoint(x: frame.minX - ((rightPanel?.defaultWidth ?? 0) - rightPanelViewWidthConstraint.constant), y: frame.minY)
-                    let newSize = NSSize(width: frame.width + ((rightPanel?.defaultWidth ?? 0) - rightPanelViewWidthConstraint.constant), height: frame.height)
+                    let widthToSubtract = rightPanelViewWidthConstraint.constant
+                    
+                    let newOrigin = NSPoint(x: frame.minX + widthToSubtract, y: frame.minY)
+                    let newSize = NSSize(width: frame.width - widthToSubtract, height: frame.height)
                     newFrame = NSRect(origin: newOrigin, size: newSize)
                 }
                 
+                //configure constraints for animating
                 let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
                 widthConstraint.isActive = true
-                
                 rightPanelViewWidthConstraint.isActive = false
                 
                 NSAnimationContext.runAnimationGroup({ (context) in
@@ -227,9 +242,40 @@ public class Panels: NSView, PanelsInterface {
                     context.duration = 0.25
                     self.window?.animator().setFrame(newFrame, display: true)
                 }) {
+                    //reset constraints
+                    self.mainPanelView.removeConstraint(widthConstraint)
+                    self.rightPanelViewWidthConstraint.constant = 0//self.rightPanelView.frame.width
+                    self.rightPanelViewWidthConstraint.isActive = true
+                }
+            }
+            //show
+            else if rightPanelViewWidthConstraint.constant < (rightPanel?.defaultWidth ?? 0) {
+                
+                //calculate new frame
+                var newFrame: NSRect = .zero
+                if let frame = self.window?.frame {
+                    
+                    let widthToAdd = ((rightPanel?.defaultWidth ?? 0) - rightPanelViewWidthConstraint.constant)
+                    
+                    let newOrigin = NSPoint(x: frame.minX - widthToAdd, y: frame.minY)
+                    let newSize = NSSize(width: frame.width + widthToAdd, height: frame.height)
+                    newFrame = NSRect(origin: newOrigin, size: newSize)
+                }
+                
+                //configure constraints for animating
+                let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
+                widthConstraint.isActive = true
+                rightPanelViewWidthConstraint.isActive = false
+                
+                NSAnimationContext.runAnimationGroup({ (context) in
+                    
+                    context.duration = 0.25
+                    self.window?.animator().setFrame(newFrame, display: true)
+                }) {
+                    //reset constraints
+                    self.mainPanelView.removeConstraint(widthConstraint)
                     self.rightPanelViewWidthConstraint.constant = self.rightPanelView.frame.width
                     self.rightPanelViewWidthConstraint.isActive = true
-                    self.mainPanelView.removeConstraint(widthConstraint)
                 }
             }
         }
