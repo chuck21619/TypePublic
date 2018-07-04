@@ -9,13 +9,11 @@
             <connections>
                 <outlet property="contentView" destination="c22-O7-iKe" id="v9e-lS-qYZ"/>
                 <outlet property="leftPanelView" destination="JQh-tB-bkV" id="ikH-Cu-ZNw"/>
-                <outlet property="leftPanelViewLeadingConstraint" destination="CCo-Pr-ycL" id="TdS-Jc-I8r"/>
                 <outlet property="leftPanelViewWidthConstraint" destination="AsA-Uc-ed1" id="7Lm-Zi-tqS"/>
                 <outlet property="mainPanelView" destination="oxJ-Ja-5H9" id="Odq-Hd-tIa"/>
                 <outlet property="resizeBarLeft" destination="0g0-8J-8VK" id="98y-nV-FUA"/>
                 <outlet property="resizeBarRight" destination="lcU-R6-SMf" id="vnn-2m-U19"/>
                 <outlet property="rightPanelView" destination="Qae-ig-qO0" id="6fs-MY-3Xn"/>
-                <outlet property="rightPanelViewTrailingConstraint" destination="SJd-6W-Fg9" id="hxx-dJ-Rdz"/>
                 <outlet property="rightPanelViewWidthConstraint" destination="lX5-UC-qql" id="VvF-DE-yOv"/>
             </connections>
         </customObject>
@@ -31,14 +29,14 @@
                         <constraint firstAttribute="width" constant="332" id="AsA-Uc-ed1"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="oxJ-Ja-5H9">
-                    <rect key="frame" x="332" y="0.0" width="332" height="329"/>
-                </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qae-ig-qO0">
                     <rect key="frame" x="664" y="0.0" width="332" height="329"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="332" id="lX5-UC-qql"/>
                     </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="oxJ-Ja-5H9">
+                    <rect key="frame" x="332" y="0.0" width="332" height="329"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="0g0-8J-8VK" customClass="ResizeBar" customModule="Panels" customModuleProvider="target">
                     <rect key="frame" x="322" y="0.0" width="20" height="329"/>

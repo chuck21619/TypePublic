@@ -25,7 +25,9 @@ public class Panel: PanelInterface {
     }
     
     var hidingThreshold: CGFloat {
-        return minimumSize().width/2
+        return 65
     }
+    
+    var defaultWidth: CGFloat = 200
 }
 
