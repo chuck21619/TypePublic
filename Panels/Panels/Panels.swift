@@ -65,8 +65,8 @@ public class Panels: NSView, PanelsInterface {
     // MARK: - implementation
     // MARK: - properties
     // outlets
-    @IBOutlet weak var leftPanelViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var rightPanelViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var leftPanelViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var rightPanelViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet var contentView: NSView!
     
@@ -209,25 +209,26 @@ public class Panels: NSView, PanelsInterface {
             }
             else if rightPanelViewWidthConstraint.constant < (rightPanel?.defaultWidth ?? 0) {
                 
+                var newFrame: NSRect = .zero
                 if let frame = self.window?.frame {
                     
                     let newOrigin = NSPoint(x: frame.minX - ((rightPanel?.defaultWidth ?? 0) - rightPanelViewWidthConstraint.constant), y: frame.minY)
                     let newSize = NSSize(width: frame.width + ((rightPanel?.defaultWidth ?? 0) - rightPanelViewWidthConstraint.constant), height: frame.height)
-                    let newFrame = NSRect(origin: newOrigin, size: newSize)
-                    
-                    NSAnimationContext.beginGrouping()
-                    NSAnimationContext.current.duration = 0.25
-                    self.window?.animator().setFrame(newFrame, display: true)
-                    NSAnimationContext.endGrouping()
+                    newFrame = NSRect(origin: newOrigin, size: newSize)
                 }
                 
                 let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
+                widthConstraint.isActive = true
+                
+                rightPanelViewWidthConstraint.isActive = false
+                
                 NSAnimationContext.runAnimationGroup({ (context) in
                     
-                    NSAnimationContext.current.duration = 0.25
-                    widthConstraint.isActive = true
-                    rightPanelViewWidthConstraint.animator().setValue(CGFloat(leftPanel?.defaultWidth ?? 0), forKey: "constant")
+                    context.duration = 0.25
+                    self.window?.animator().setFrame(newFrame, display: true)
                 }) {
+                    self.rightPanelViewWidthConstraint.constant = self.rightPanelView.frame.width
+                    self.rightPanelViewWidthConstraint.isActive = true
                     self.mainPanelView.removeConstraint(widthConstraint)
                 }
             }
