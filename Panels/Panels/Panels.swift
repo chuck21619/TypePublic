@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Panels: NSView, PanelsInterface {
+public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
     
     // MARK: - public interface
     public func set(panels: [Panel]) {
@@ -78,27 +78,41 @@ public class Panels: NSView, PanelsInterface {
     @IBOutlet weak var resizeBarRight: ResizeBar!
     
     // resizing
-    var initialLeftPanelViewWidth: CGFloat = 0
-    var initialRightPanelViewWidth: CGFloat = 0
-    var initialResizingFrame: NSRect = .zero
-    var initialMouseLocation: NSPoint = .zero
-    var animatingLeftPanel = false
-    var animatingRightPanel = false
+    private var initialLeftPanelViewWidth: CGFloat = 0
+    private var initialRightPanelViewWidth: CGFloat = 0
+    private var initialResizingFrame: NSRect = .zero
+    private var initialMouseLocation: NSPoint = .zero
+    private var elasticity: Float = 0.25
+    private var resizeBehavior: ResizeBehavior?
     
     // MARK: - Methods
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        resizeBehavior = ResizeWindowBehavior(delegate: self)
+    }
+    
     // MARK: Resizing gestures
     // MARK: - left methods
     
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
     
+        guard let leftPanel = leftPanel else {
+            return
+        }
+        
+        resizeBehavior?.handleResizeLeft(sender, leftPanel: leftPanel)
+        /*
         if sender.state == .began {
             
-            self.initialLeftPanelViewWidth = leftPanelView.frame.width
+            self.initialLeftPanelViewWidth = leftPanelViewWidthConstraint.constant
             self.initialResizingFrame = self.window?.frame ?? .zero
             self.initialMouseLocation = NSEvent.mouseLocation
             return
         }
         
+        
+        
+        //standard resizing
         var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
         if initialLeftPanelViewWidth + mouseLocationDifference < 0 {
@@ -147,7 +161,7 @@ public class Panels: NSView, PanelsInterface {
                 }) {
                     //reset constraints
                     self.mainPanelView.removeConstraint(widthConstraint)
-                    self.leftPanelViewWidthConstraint.constant = 0//self.rightPanelView.frame.width
+                    self.leftPanelViewWidthConstraint.constant = 0//self.leftPanelView.frame.width
                     self.leftPanelViewWidthConstraint.isActive = true
                 }
             }
@@ -181,12 +195,19 @@ public class Panels: NSView, PanelsInterface {
                     self.leftPanelViewWidthConstraint.isActive = true
                 }
             }
-        }
+        }*/
     }
     
     //MARK: right methods
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
         
+        guard let rightPanel = rightPanel else {
+            return
+        }
+        
+        resizeBehavior?.handleResizeRight(sender, rightPanel: rightPanel)
+        
+        /*
         if sender.state == .began {
             
             self.initialRightPanelViewWidth = rightPanelView.frame.width
@@ -195,6 +216,7 @@ public class Panels: NSView, PanelsInterface {
             return
         }
         
+        //standard resizing
         var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
         if initialRightPanelViewWidth - mouseLocationDifference < 0 {
@@ -279,6 +301,7 @@ public class Panels: NSView, PanelsInterface {
                 }
             }
         }
+ */
     }
     
     // MARK: - etc
@@ -330,5 +353,67 @@ public class Panels: NSView, PanelsInterface {
     required public init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         commonInit()
+    }
+    
+    //MARK: - Resize Behavior Delegate
+    func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
+        
+        if animated {
+            
+            let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
+            widthConstraint.isActive = true
+            NSAnimationContext.runAnimationGroup({ (context) in
+                
+                context.duration = 0.25
+                
+                if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
+                    
+                    self.window?.animator().setFrame(windowFrame, display: true)
+                }
+                
+                if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
+                    
+                    leftPanelViewWidthConstraint.isActive = false
+                }
+                
+                if let rightPanelWidth = panelsDimensions.rightPanelWidth, rightPanelWidth != rightPanelViewWidthConstraint.constant {
+                    
+                    rightPanelViewWidthConstraint.isActive = false
+                }
+            }) {
+                widthConstraint.isActive = false
+                
+                self.leftPanelViewWidthConstraint.constant = max(0, self.leftPanelView.frame.width)
+                self.leftPanelViewWidthConstraint.isActive = true
+                
+                self.rightPanelViewWidthConstraint.constant = max(0, self.rightPanelView.frame.width)
+                self.rightPanelViewWidthConstraint.isActive = true
+            }
+            return
+        }
+ 
+        if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
+            
+            self.window?.setFrame(windowFrame, display: true, animate: animated)
+        }
+        
+        if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
+            
+            leftPanelViewWidthConstraint.constant = leftPanelWidth
+        }
+        
+        if let rightPanelWidth = panelsDimensions.rightPanelWidth, rightPanelWidth != rightPanelViewWidthConstraint.constant {
+            
+            rightPanelViewWidthConstraint.constant = rightPanelWidth
+        }
+    }
+
+    func currentPanelsDimensions() -> PanelsDimensions {
+        
+        let leftPanelWidth = self.leftPanelView.frame.width
+        let rightPanelWidth = self.rightPanelView.frame.width
+        let windowFrame = self.window?.frame
+        
+        return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: rightPanelWidth)
     }
 }

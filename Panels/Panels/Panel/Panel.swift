@@ -8,26 +8,19 @@
 
 import Foundation
 
-public class Panel: PanelInterface {
+public struct Panel {
     
     public let position: PanelPosition
     public var viewController: NSViewController?
+    public var hidingThreshold: CGFloat
+    public var defaultWidth: CGFloat
     
-    public required init(position: PanelPosition, viewController: NSViewController?) {
+    public init(position: PanelPosition, viewController: NSViewController?, hidingThreshold: CGFloat = 65, defaultWidth: CGFloat = 200) {
         
         self.position = position
         self.viewController = viewController
+        self.hidingThreshold = hidingThreshold
+        self.defaultWidth = defaultWidth
     }
- 
-    public func minimumSize() -> NSSize {
-        
-        return self.viewController?.view.fittingSize ?? .zero
-    }
-    
-    var hidingThreshold: CGFloat {
-        return 65
-    }
-    
-    var defaultWidth: CGFloat = 200
 }
 

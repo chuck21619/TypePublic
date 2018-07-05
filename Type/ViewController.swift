@@ -9,12 +9,14 @@
 import Cocoa
 import Panels
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSWindowDelegate {
 
     @IBOutlet weak var panels: Panels!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.view.window?.delegate = self
         
         let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
         
@@ -22,7 +24,7 @@ class ViewController: NSViewController {
         
         let leftPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let leftPanel = Panel(position: .left, viewController: leftPanelViewController)
-
+        
         let rightPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
         
@@ -38,6 +40,11 @@ class ViewController: NSViewController {
         }
     }
 
+    //
+//    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+//        print(frameSize)
+//        return frameSize
+//    }
 
 }
 
