@@ -17,6 +17,9 @@ class ResizeWindowBehavior: ResizeBehavior {
     private var initialResizingFrame: NSRect = .zero
     private var initialMouseLocation: NSPoint = .zero
     
+    private var magneticWhileResizing: Bool = true
+    private var magneticWhileResizingThreshold: CGFloat = 30
+    
     required init(delegate: ResizeBehaviorDelegate) {
         
         self.delegate = delegate
@@ -34,13 +37,43 @@ class ResizeWindowBehavior: ResizeBehavior {
             return
         }
         
+        var animated = false
+        
         //standard resizing
         var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
+        // do not allow resizing the left the window
         if initialLeftPanelViewWidth + mouseLocationDifference < 0 {
             
             mouseLocationDifference = -initialLeftPanelViewWidth
         }
+        
+        if magneticWhileResizing {
+            
+            let width = initialLeftPanelViewWidth + mouseLocationDifference
+            
+            //magnetic towards default width
+            let defaultWidthDifference = width - leftPanel.defaultWidth
+            let absoluteDefaultWidthDifference = abs(defaultWidthDifference)
+            
+            if absoluteDefaultWidthDifference <= magneticWhileResizingThreshold {
+                mouseLocationDifference -= defaultWidthDifference
+//                animated = true
+            }
+            
+            //magnetic towards hidden width
+            let hiddenWidthDifference = width - 0 //0 is a hidden width
+            let absoluteHiddenWidthDifference = abs(hiddenWidthDifference)
+            
+            if absoluteHiddenWidthDifference <= magneticWhileResizingThreshold {
+                mouseLocationDifference -= hiddenWidthDifference
+//                animated = true
+            }
+        }
+        
+//        if currentPanelsDimensions.leftPanelWidth == leftPanel.defaultWidth {
+//            animated = true
+//        }
         
         var newFrame: NSRect?
         if let frame = currentPanelsDimensions.windowFrame {
@@ -54,11 +87,13 @@ class ResizeWindowBehavior: ResizeBehavior {
         let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
                                                 leftPanelWidth: initialLeftPanelViewWidth + mouseLocationDifference,
                                                 rightPanelWidth: currentPanelsDimensions.rightPanelWidth)
-        self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
+        self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: animated)
         
         
         //auto-hide/show
         if sender.state == .ended {
+            
+            animated = true
             
             //hide
             if currentPanelsDimensions.leftPanelWidth ?? 0 < leftPanel.hidingThreshold {
@@ -77,7 +112,7 @@ class ResizeWindowBehavior: ResizeBehavior {
                 let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
                                                         leftPanelWidth: 0,
                                                         rightPanelWidth: currentPanelsDimensions.rightPanelWidth)
-                self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
+                self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: animated)
             }
                 //show
             else if (currentPanelsDimensions.leftPanelWidth ?? 0) < leftPanel.defaultWidth {
@@ -96,7 +131,7 @@ class ResizeWindowBehavior: ResizeBehavior {
                 let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
                                                         leftPanelWidth: leftPanel.defaultWidth,
                                                         rightPanelWidth: currentPanelsDimensions.rightPanelWidth)
-                self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
+                self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: animated)
             }
         }
     }
@@ -116,9 +151,31 @@ class ResizeWindowBehavior: ResizeBehavior {
         //standard resizing
         var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
+        //do not allow resizing to the right of the window
         if initialRightPanelViewWidth - mouseLocationDifference < 0 {
             
             mouseLocationDifference -= (mouseLocationDifference - initialRightPanelViewWidth)
+        }
+        
+        if magneticWhileResizing {
+            
+            let width = initialRightPanelViewWidth - mouseLocationDifference
+            
+            //magnetic towards default width
+            let defaultWidthDifference = width - rightPanel.defaultWidth
+            let absoluteDefaultWidthDifference = abs(defaultWidthDifference)
+            
+            if absoluteDefaultWidthDifference <= magneticWhileResizingThreshold {
+                mouseLocationDifference += defaultWidthDifference
+            }
+            
+            //magnetic towards hidden width
+            let hiddenWidthDifference = width - 0 //0 is a hidden width
+            let absoluteHiddenWidthDifference = abs(hiddenWidthDifference)
+            
+            if absoluteHiddenWidthDifference <= magneticWhileResizingThreshold {
+                mouseLocationDifference += hiddenWidthDifference
+            }
         }
         
         var newFrame: NSRect?
