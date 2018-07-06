@@ -8,6 +8,8 @@
 
 import Foundation
 
+//TODO: look at initial panel commits, extract behavior into this class
+
 class ResizeMainPanelBehavior: ResizeBehavior {
     
     var delegate: ResizeBehaviorDelegate
