@@ -16,14 +16,34 @@ class ResizeWindowBehavior: ResizeBehavior {
     private var initialRightPanelViewWidth: CGFloat = 0
     private var initialResizingFrame: NSRect = .zero
     private var initialMouseLocation: NSPoint = .zero
+    private var animatingSnap = false
     
-    private var magneticWhileResizing: Bool = true
-    private var magneticWhileResizingThreshold: CGFloat = 30
+    var magneticWhileResizing: Bool = true
+    var magneticWhileResizingThreshold: CGFloat = 30
     
     required init(delegate: ResizeBehaviorDelegate) {
         
         self.delegate = delegate
     }
+    
+//    func animate(to width: CGFloat, from gesture: NSPanGestureRecognizer) {
+//
+//        guard animatingSnap == false else {
+//
+//            return
+//        }
+//
+//        animatingSnap = true
+//
+//        var leftWidth = self.delegate.currentPanelsDimensions().leftPanelWidth ?? 0
+//
+//        while abs(leftWidth-width) >= 10 {
+//
+//
+//        }
+//
+//        animatingSnap = false
+//    }
     
     func handleResizeLeft(_ sender: NSPanGestureRecognizer, leftPanel: Panel) {
         
@@ -58,7 +78,12 @@ class ResizeWindowBehavior: ResizeBehavior {
             
             if absoluteDefaultWidthDifference <= magneticWhileResizingThreshold {
                 mouseLocationDifference -= defaultWidthDifference
-//                animated = true
+                
+                if (currentPanelsDimensions.leftPanelWidth ?? 0 ) != leftPanel.defaultWidth {
+                    
+//                    animate(to: leftPanel.defaultWidth, from: sender)
+                    print("snapped to default width \(width)")
+                }
             }
             
             //magnetic towards hidden width
@@ -67,28 +92,35 @@ class ResizeWindowBehavior: ResizeBehavior {
             
             if absoluteHiddenWidthDifference <= magneticWhileResizingThreshold {
                 mouseLocationDifference -= hiddenWidthDifference
-//                animated = true
+                
+                if (currentPanelsDimensions.leftPanelWidth ?? 0) != 0 {
+                    
+//                    animate(to: 0, from: sender)
+                    print("snapped to hidden width \(width)")
+                }
+            }
+            
+            if (currentPanelsDimensions.leftPanelWidth ?? 0) == leftPanel.defaultWidth && (initialLeftPanelViewWidth + mouseLocationDifference) != leftPanel.defaultWidth {
+                
+                print("snapped away from default width")
+            }
+            
+            if (currentPanelsDimensions.leftPanelWidth ?? 0) == 0 && (initialLeftPanelViewWidth + mouseLocationDifference) != 0{
+                
+                print("snapped away from hidden width")
             }
         }
         
-//        if currentPanelsDimensions.leftPanelWidth == leftPanel.defaultWidth {
-//            animated = true
-//        }
-        
-        var newFrame: NSRect?
-        if let frame = currentPanelsDimensions.windowFrame {
-            
-            newFrame = NSRect(x: frame.minX,
-                                  y: frame.minY,
-                                  width: self.initialResizingFrame.width + mouseLocationDifference,
-                                  height: frame.height)
-        }
+        let frame = currentPanelsDimensions.windowFrame ?? .zero
+        let newFrame = NSRect(x: frame.minX,
+                              y: frame.minY,
+                              width: self.initialResizingFrame.width + mouseLocationDifference,
+                              height: frame.height)
         
         let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
                                                 leftPanelWidth: initialLeftPanelViewWidth + mouseLocationDifference,
                                                 rightPanelWidth: currentPanelsDimensions.rightPanelWidth)
         self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: animated)
-        
         
         //auto-hide/show
         if sender.state == .ended {
