@@ -25,34 +25,14 @@ class RightResizeHandler: ResizeHandler {
         return calcRightPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference) ?? 0
     }
     
-    func adjustmentToSnapToHiddenWidth(hiddenWidthDifference: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
-        
-        return mouseXCoordinateDifference + hiddenWidthDifference
-    }
-    
-    func adjustmentToSnapToDefaultWidth(defaultWidthDifference: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
-        
-        return mouseXCoordinateDifference + defaultWidthDifference
-    }
-    
     func relevantPanelWidth(panelsDimensions: PanelsDimensions) -> CGFloat? {
         
         return panelsDimensions.rightPanelWidth
     }
     
-    func adjustmentToPreventResizingPastWindow(initialPanelWidth: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
-        
-        if initialPanelWidth - mouseXCoordinateDifference < 0 {
-            
-            return mouseXCoordinateDifference - (mouseXCoordinateDifference - initialPanelWidth)
-        }
-        
-        return mouseXCoordinateDifference
-    }
-    
     func calcRightPanelWidth(initialPanelWidth: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat? {
         
-        return initialPanelWidth - mouseXCoordinateDifference
+        return max(0, initialPanelWidth - mouseXCoordinateDifference)
     }
     
     func calcLeftPanelWidth(initialPanelWidth: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat? {
@@ -60,11 +40,19 @@ class RightResizeHandler: ResizeHandler {
         return nil
     }
     
-    func calcWindowXCoordinate(initialWindowMinX: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func calcWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
-        return initialWindowMinX + mouseXCoordinateDifference
+        let minimumWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.rightPanelWidth ?? 0)
+        return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) - mouseXCoordinateDifference)
     }
     
+    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+        
+        let maxXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
+        return min(maxXCoordinate, (initialPanelsDimensions.windowFrame?.minX ?? 0) + mouseXCoordinateDifference)
+    }
+    
+    // auto hide/show
     func calcWindowXCoordinate(initialWindowMinX: CGFloat, widthToSubtract: CGFloat) -> CGFloat {
         
         return initialWindowMinX + widthToSubtract
@@ -73,10 +61,5 @@ class RightResizeHandler: ResizeHandler {
     func calcWindowXCoordinate(initialWindowMinX: CGFloat, widthToAdd: CGFloat) -> CGFloat {
         
         return initialWindowMinX - widthToAdd
-    }
-    
-    func calcWindowWidth(initialWindowWidth: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
-        
-        return initialWindowWidth - mouseXCoordinateDifference
     }
 }

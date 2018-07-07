@@ -15,6 +15,7 @@ class ResizeWindowBehavior: ResizeBehavior {
     private var initialPanelWidth: CGFloat = 0
     private var initialResizingFrame: NSRect = .zero
     private var initialMouseLocation: NSPoint = .zero
+    private var initialPanelsDimensions = PanelsDimensions(windowFrame: nil, leftPanelWidth: nil, rightPanelWidth: nil)
     private var animatingSnap = false
     
     var magneticWhileResizing: Bool = false
@@ -43,6 +44,7 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         if gesture.state == .began {
             
+            self.initialPanelsDimensions = self.delegate.currentPanelsDimensions()
             self.initialPanelWidth = resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0
             self.initialResizingFrame = currentPanelsDimensions.windowFrame ?? .zero
             self.initialMouseLocation = NSEvent.mouseLocation
@@ -50,55 +52,7 @@ class ResizeWindowBehavior: ResizeBehavior {
         }
         
         //standard resizing
-        var mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
-        
-        // do not allow resizing past window
-        mouseLocationDifference = resizeHandler.adjustmentToPreventResizingPastWindow(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference)
-        
-        if magneticWhileResizing {
-            
-            let width = resizeHandler.calcRelevantPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference)
-            
-            //magnetic towards default width
-            let defaultWidthDifference = width - panel.defaultWidth
-            let absoluteDefaultWidthDifference = abs(defaultWidthDifference)
-            
-            if absoluteDefaultWidthDifference <= magneticWhileResizingThreshold {
-                
-                mouseLocationDifference = resizeHandler.adjustmentToSnapToDefaultWidth(defaultWidthDifference: defaultWidthDifference, mouseXCoordinateDifference: mouseLocationDifference)
-                
-                if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) != panel.defaultWidth {
-                    
-                    print("snapped to default width \(width)")
-                }
-            }
-            
-            //magnetic towards hidden width
-            let hiddenWidthDifference = width - 0 //0 is a hidden width
-            let absoluteHiddenWidthDifference = abs(hiddenWidthDifference)
-            
-            if absoluteHiddenWidthDifference <= magneticWhileResizingThreshold {
-                mouseLocationDifference = resizeHandler.adjustmentToSnapToHiddenWidth(hiddenWidthDifference: hiddenWidthDifference, mouseXCoordinateDifference: mouseLocationDifference)
-                
-                if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) != 0 {
-                    
-                    print("snapped to hidden width \(width)")
-                }
-            }
-            
-            let relevantPanelWidth = (resizeHandler.calcRelevantPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference))
-            if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) == panel.defaultWidth &&
-                 relevantPanelWidth != panel.defaultWidth {
-                
-                print("snapped away from default width")
-            }
-            
-            if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) == 0 &&
-                relevantPanelWidth != 0 {
-                
-                print("snapped away from hidden width")
-            }
-        }
+        let mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
         let panelsDimensions = newPanelsDimensions(currentPanelsDimensions: currentPanelsDimensions, resizeHandler: resizeHandler, mouseXCoordinateDifference: mouseLocationDifference)
         self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
@@ -142,10 +96,9 @@ class ResizeWindowBehavior: ResizeBehavior {
     func newPanelsDimensions(currentPanelsDimensions: PanelsDimensions, resizeHandler: ResizeHandler, mouseXCoordinateDifference: CGFloat) -> PanelsDimensions {
         
         let frame = currentPanelsDimensions.windowFrame ?? .zero
-        let width = resizeHandler.calcWindowWidth(initialWindowWidth: self.initialResizingFrame.width, mouseXCoordinateDifference: mouseXCoordinateDifference)
-        let xCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: self.initialResizingFrame.minX, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let width = resizeHandler.calcWindowWidth(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let xCoordinate = resizeHandler.calcWindowXCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinateDifference: mouseXCoordinateDifference)
         let newFrame = NSRect(x: xCoordinate, y: frame.minY, width: width, height: frame.height)
-        
         let leftPanelWidth = resizeHandler.calcLeftPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference)
         let rightPanelWidth = resizeHandler.calcRightPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference)
         let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
