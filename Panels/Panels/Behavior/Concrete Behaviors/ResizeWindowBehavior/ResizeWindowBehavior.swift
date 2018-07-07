@@ -17,33 +17,13 @@ class ResizeWindowBehavior: ResizeBehavior {
     private var initialMouseLocation: NSPoint = .zero
     private var animatingSnap = false
     
-    var magneticWhileResizing: Bool = true
+    var magneticWhileResizing: Bool = false
     var magneticWhileResizingThreshold: CGFloat = 30
     
     required init(delegate: ResizeBehaviorDelegate) {
         
         self.delegate = delegate
     }
-    
-    //    func animate(to width: CGFloat, from gesture: NSPanGestureRecognizer) {
-    //
-    //        guard animatingSnap == false else {
-    //
-    //            return
-    //        }
-    //
-    //        animatingSnap = true
-    //
-    //        var leftWidth = self.delegate.currentPanelsDimensions().leftPanelWidth ?? 0
-    //
-    //        while abs(leftWidth-width) >= 10 {
-    //
-    //
-    //        }
-    //
-    //        animatingSnap = false
-    //    }
-    
     
     func handleResizeLeft(_ sender: NSPanGestureRecognizer, leftPanel: Panel) {
         
@@ -89,7 +69,6 @@ class ResizeWindowBehavior: ResizeBehavior {
                 
                 if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) != panel.defaultWidth {
                     
-                    //                    animate(to: rightPanel.defaultWidth, from: sender)
                     print("snapped to default width \(width)")
                 }
             }
@@ -103,34 +82,25 @@ class ResizeWindowBehavior: ResizeBehavior {
                 
                 if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) != 0 {
                     
-                    //                    animate(to: 0, from: sender)
                     print("snapped to hidden width \(width)")
                 }
             }
             
+            let relevantPanelWidth = (resizeHandler.calcRelevantPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference))
             if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) == panel.defaultWidth &&
-                (initialPanelWidth + mouseLocationDifference) != panel.defaultWidth {
+                 relevantPanelWidth != panel.defaultWidth {
                 
                 print("snapped away from default width")
             }
             
             if (resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0) == 0 &&
-                (resizeHandler.calcRelevantPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference)) != 0{
+                relevantPanelWidth != 0 {
                 
                 print("snapped away from hidden width")
             }
         }
         
-        let frame = currentPanelsDimensions.windowFrame ?? .zero
-        let width = resizeHandler.calcWindowWidth(initialWindowWidth: self.initialResizingFrame.width, mouseXCoordinateDifference: mouseLocationDifference)
-        let xCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: self.initialResizingFrame.minX, mouseXCoordinateDifference: mouseLocationDifference)
-        let newFrame = NSRect(x: xCoordinate, y: frame.minY, width: width, height: frame.height)
-        
-        let leftPanelWidth = resizeHandler.calcLeftPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference)
-        let rightPanelWidth = resizeHandler.calcRightPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseLocationDifference)
-        let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
-                                                leftPanelWidth: leftPanelWidth,
-                                                rightPanelWidth: rightPanelWidth)
+        let panelsDimensions = newPanelsDimensions(currentPanelsDimensions: currentPanelsDimensions, resizeHandler: resizeHandler, mouseXCoordinateDifference: mouseLocationDifference)
         self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
         
         //auto-hide/show
@@ -167,5 +137,20 @@ class ResizeWindowBehavior: ResizeBehavior {
                 self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
             }
         }
+    }
+    
+    func newPanelsDimensions(currentPanelsDimensions: PanelsDimensions, resizeHandler: ResizeHandler, mouseXCoordinateDifference: CGFloat) -> PanelsDimensions {
+        
+        let frame = currentPanelsDimensions.windowFrame ?? .zero
+        let width = resizeHandler.calcWindowWidth(initialWindowWidth: self.initialResizingFrame.width, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let xCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: self.initialResizingFrame.minX, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let newFrame = NSRect(x: xCoordinate, y: frame.minY, width: width, height: frame.height)
+        
+        let leftPanelWidth = resizeHandler.calcLeftPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let rightPanelWidth = resizeHandler.calcRightPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let panelsDimensions = PanelsDimensions(windowFrame: newFrame,
+                                                leftPanelWidth: leftPanelWidth,
+                                                rightPanelWidth: rightPanelWidth)
+        return panelsDimensions
     }
 }

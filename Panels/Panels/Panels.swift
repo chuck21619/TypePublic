@@ -164,23 +164,6 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
     var animating = false
     func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
         
-        //only the left and right panels can be animated
-        //only one panel can be animated at a time (this is only assumed, it should be protected against)
-        //in order to provide the smoothest animation:
-        //    1) the main panel is provided a temporary width constraint
-        //    2) the constraint on the side panel deactivated
-        //    3) the window is animated
-        //    4) the temporary main panel's width constraint is removed
-        //    5) the constraint on the side panel is recalculated, and reactivated
-        
-        
-        
-//        guard animating == false else {
-//            
-//            NSAnimationContext.current
-//            return
-//        }
-        
         if animated {
             
             animating = true
