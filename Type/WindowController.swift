@@ -8,19 +8,42 @@
 
 import Foundation
 import AppKit
+import Panels
 
 class WindowController: NSWindowController, NSWindowDelegate {
-
-//    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-//        print(frameSize)
-//        return frameSize
+    
+    
+//    func windowWillStartLiveResize(_ notification: Notification) {
+//        print("start resizing: \(notification)")
+////        NotificationCenter.default.post(notification)
+//    }
+//
+//    func windowDidEndLiveResize(_ notification: Notification) {
+//        print("end resizing: \(notification)")
 //    }
     
-    func windowWillStartLiveResize(_ notification: Notification) {
-        print("start resizing: \(notification)")
+    
+    override func windowDidLoad() {
+        
+        if let panels = (contentViewController as? ViewController)?.panels {
+            
+            self.window?.delegate = panels
+        }
     }
     
-    func windowDidEndLiveResize(_ notification: Notification) {
-        print("end resizing: \(notification)")
-    }
+//     MARK: Constructors
+//    override init(window: NSWindow?) {
+//        super.init(window: window)
+//        commonInit()
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        commonInit()
+//    }
+//    
+//    private func commonInit() {
+//
+//        print("a")
+//    }
 }

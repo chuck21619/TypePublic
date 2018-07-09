@@ -10,6 +10,17 @@ import Foundation
 
 class RightResizeHandler: ResizeHandler {
     
+    func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
+        
+        let newWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.rightPanelWidth ?? 0)
+        let newXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
+        let newWindowFrame = NSRect(x: newXCoordinate,
+                                    y: initialPanelsDimensions.windowFrame?.minY ?? 0,
+                                    width: newWindowWidth,
+                                    height: initialPanelsDimensions.windowFrame?.height ?? 0)
+        return self.calcHiddenPanelPanelsDimensions(windowFrame: newWindowFrame)
+    }
+    
     func calcDefaultPanelPanelsDimensions(windowFrame: NSRect, panel: Panel) -> PanelsDimensions {
         
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: nil, rightPanelWidth: panel.defaultWidth)
@@ -46,10 +57,22 @@ class RightResizeHandler: ResizeHandler {
         return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) - mouseXCoordinateDifference)
     }
     
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
         let maxXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
-        return min(maxXCoordinate, (initialPanelsDimensions.windowFrame?.minX ?? 0) + mouseXCoordinateDifference)
+        
+        let rightEdgeOfFrame = initialPanelsDimensions.windowFrame?.maxX ?? 0
+        let mouseXCoordinateToRightEdgeDifference = mouseXCoordinate - rightEdgeOfFrame
+        
+        let nonElasticXCoordinate = min(maxXCoordinate, (initialPanelsDimensions.windowFrame?.minX ?? 0) + mouseXCoordinateDifference)
+        if mouseXCoordinateToRightEdgeDifference < 0 {
+            return nonElasticXCoordinate
+        }
+        
+        let elasticDifference = pow(mouseXCoordinateToRightEdgeDifference, 0.7)
+        let elasticXCoordinate = nonElasticXCoordinate + elasticDifference
+        
+        return elasticXCoordinate
     }
     
     // auto hide/show

@@ -18,9 +18,6 @@ class ResizeWindowBehavior: ResizeBehavior {
     private var initialPanelsDimensions = PanelsDimensions(windowFrame: nil, leftPanelWidth: nil, rightPanelWidth: nil)
     private var animatingSnap = false
     
-    var magneticWhileResizing: Bool = false
-    var magneticWhileResizingThreshold: CGFloat = 30
-    
     required init(delegate: ResizeBehaviorDelegate) {
         
         self.delegate = delegate
@@ -36,6 +33,12 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         let resizeHandler = RightResizeHandler()
         handleResize(gesture: sender, resizeHandler: resizeHandler, panel: rightPanel)
+    }
+    
+    func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
+        
+        let width = max(minimumSize.width, frameSize.width)
+        return NSSize(width: width, height: frameSize.height)
     }
     
     func handleResize(gesture: NSPanGestureRecognizer, resizeHandler: ResizeHandler, panel: Panel) {
@@ -54,50 +57,56 @@ class ResizeWindowBehavior: ResizeBehavior {
         //standard resizing
         let mouseLocationDifference = NSEvent.mouseLocation.x - initialMouseLocation.x
         
-        let panelsDimensions = newPanelsDimensions(currentPanelsDimensions: currentPanelsDimensions, resizeHandler: resizeHandler, mouseXCoordinateDifference: mouseLocationDifference)
+        let panelsDimensions = newPanelsDimensions(currentPanelsDimensions: currentPanelsDimensions, resizeHandler: resizeHandler, mouseXCoordinate: NSEvent.mouseLocation.x, mouseXCoordinateDifference: mouseLocationDifference)
         self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
         
-        //auto-hide/show
         if gesture.state == .ended {
             
             let panelWidth = resizeHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0
             
-            //hide
-            if panelWidth < panel.hidingThreshold {
-                
-                //calculate new frame
-                let frame = currentPanelsDimensions.windowFrame ?? .zero
-                
-                let newXCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: frame.minX, widthToSubtract: panelWidth)
-                let newOrigin = NSPoint(x: newXCoordinate, y: frame.minY)
-                let newSize = NSSize(width: frame.width - panelWidth, height: frame.height)
-                let newFrame = NSRect(origin: newOrigin, size: newSize)
-                
-                let panelsDimensions = resizeHandler.calcHiddenPanelPanelsDimensions(windowFrame: newFrame)
-                self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
+            //TODO: move auto-hide/show into resizeHandler?
+            //animate panel hidden when under threshold
+            if panelWidth > 0 {
+                if panelWidth < panel.hidingThreshold {
+                    
+                    //calculate new frame
+                    let frame = currentPanelsDimensions.windowFrame ?? .zero
+                    
+                    let newXCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: frame.minX, widthToSubtract: panelWidth)
+                    let newOrigin = NSPoint(x: newXCoordinate, y: frame.minY)
+                    let newSize = NSSize(width: frame.width - panelWidth, height: frame.height)
+                    let newFrame = NSRect(origin: newOrigin, size: newSize)
+                    
+                    let panelsDimensions = resizeHandler.calcHiddenPanelPanelsDimensions(windowFrame: newFrame)
+                    self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
+                }
+                    //animate panel to default width when within threshold
+                else if panelWidth < panel.defaultWidth {
+                    
+                    //calculate new frame
+                    let frame = currentPanelsDimensions.windowFrame ?? .zero
+                    let widthToAdd = panel.defaultWidth - panelWidth
+                    let newXCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: frame.minX, widthToAdd: widthToAdd)
+                    let newOrigin = NSPoint(x: newXCoordinate, y: frame.minY)
+                    let newSize = NSSize(width: frame.width + widthToAdd, height: frame.height)
+                    let newFrame = NSRect(origin: newOrigin, size: newSize)
+                    
+                    let panelsDimensions = resizeHandler.calcDefaultPanelPanelsDimensions(windowFrame: newFrame, panel: panel)
+                    self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
+                }
             }
-                //show
-            else if panelWidth < panel.defaultWidth {
+            else if panelWidth == 0, let elasticEndFrame = resizeHandler.calcElasticEndFrame(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinate: NSEvent.mouseLocation.x) {
                 
-                //calculate new frame
-                let frame = currentPanelsDimensions.windowFrame ?? .zero
-                let widthToAdd = panel.defaultWidth - panelWidth
-                let newXCoordinate = resizeHandler.calcWindowXCoordinate(initialWindowMinX: frame.minX, widthToAdd: widthToAdd)
-                let newOrigin = NSPoint(x: newXCoordinate, y: frame.minY)
-                let newSize = NSSize(width: frame.width + widthToAdd, height: frame.height)
-                let newFrame = NSRect(origin: newOrigin, size: newSize)
-                
-                let panelsDimensions = resizeHandler.calcDefaultPanelPanelsDimensions(windowFrame: newFrame, panel: panel)
-                self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
+                self.delegate.didUpdate(panelsDimensions: elasticEndFrame, animated: true)
             }
         }
     }
     
-    func newPanelsDimensions(currentPanelsDimensions: PanelsDimensions, resizeHandler: ResizeHandler, mouseXCoordinateDifference: CGFloat) -> PanelsDimensions {
+    func newPanelsDimensions(currentPanelsDimensions: PanelsDimensions, resizeHandler: ResizeHandler, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> PanelsDimensions {
         
         let frame = currentPanelsDimensions.windowFrame ?? .zero
         let width = resizeHandler.calcWindowWidth(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinateDifference: mouseXCoordinateDifference)
-        let xCoordinate = resizeHandler.calcWindowXCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinateDifference: mouseXCoordinateDifference)
+        let xCoordinate = resizeHandler.calcWindowXCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinate: NSEvent.mouseLocation.x, mouseXCoordinateDifference: mouseXCoordinateDifference)
         let newFrame = NSRect(x: xCoordinate, y: frame.minY, width: width, height: frame.height)
         let leftPanelWidth = resizeHandler.calcLeftPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference)
         let rightPanelWidth = resizeHandler.calcRightPanelWidth(initialPanelWidth: initialPanelWidth, mouseXCoordinateDifference: mouseXCoordinateDifference)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
+public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDelegate {
     
     // MARK: - public interface
     public func set(panels: [Panel]) {
@@ -61,7 +61,6 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
         }
     }
     
-    
     // MARK: - implementation
     // MARK: - properties
     // outlets
@@ -82,11 +81,6 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
     private var resizeBehavior: ResizeBehavior?
     
     // MARK: - Methods
-    public override func awakeFromNib() {
-        super.awakeFromNib()
-        resizeBehavior = ResizeWindowBehavior(delegate: self)
-    }
-    
     // MARK: Resizing gestures
     // MARK: - left methods
     
@@ -133,6 +127,8 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
         
         contentView.frame = self.bounds
         addSubview(contentView)
+        
+        resizeBehavior = ResizeWindowBehavior(delegate: self)
         
         // debug border colors
 //        contentView.wantsLayer = true
@@ -227,5 +223,17 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate {
         let windowFrame = self.window?.frame
         
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: rightPanelWidth)
+    }
+    
+    // MARK: - NSWindowDelegate
+    public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+        
+        let minimumFrameWidth = (currentPanelsDimensions().leftPanelWidth ?? 0) +
+                                (currentPanelsDimensions().rightPanelWidth ?? 0) +
+                                (self.mainPanel?.defaultWidth ?? 0)
+
+        let minimumSize = NSSize(width: minimumFrameWidth, height: 0)
+
+        return resizeBehavior?.handleWindowResize(frameSize: frameSize, minimumSize: minimumSize) ?? frameSize
     }
 }

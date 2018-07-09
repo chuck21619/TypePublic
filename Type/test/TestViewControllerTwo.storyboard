@@ -17,7 +17,6 @@
                                 <rect key="frame" x="-2" y="350" width="504" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="kYi-XL-Avo"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="xWS-wI-6x5"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="O5G-Gq-Rc1">
                                     <font key="font" metaFont="system"/>

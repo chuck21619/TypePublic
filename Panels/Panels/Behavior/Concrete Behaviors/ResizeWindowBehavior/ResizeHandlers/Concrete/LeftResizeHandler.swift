@@ -10,6 +10,16 @@ import Foundation
 
 class LeftResizeHandler: ResizeHandler {
     
+    func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
+        
+        let newWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.leftPanelWidth ?? 0)
+        let newWindowFrame = NSRect(x: initialPanelsDimensions.windowFrame?.minX ?? 0,
+                                    y: initialPanelsDimensions.windowFrame?.minY ?? 0,
+                                    width: newWindowWidth,
+                                    height: initialPanelsDimensions.windowFrame?.height ?? 0)
+        return self.calcHiddenPanelPanelsDimensions(windowFrame: newWindowFrame)
+    }
+    
     func calcDefaultPanelPanelsDimensions(windowFrame: NSRect, panel: Panel) -> PanelsDimensions {
         
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: panel.defaultWidth, rightPanelWidth: nil)
@@ -40,9 +50,20 @@ class LeftResizeHandler: ResizeHandler {
         return max(0, initialPanelWidth + mouseXCoordinateDifference)
     }
     
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
-        return initialPanelsDimensions.windowFrame?.minX ?? 0
+        let nonElasticXCoordinate = initialPanelsDimensions.windowFrame?.minX ?? 0
+        
+        let mouseXCoordinateToLeftEdgeDifference = mouseXCoordinate - nonElasticXCoordinate
+        
+        if mouseXCoordinateToLeftEdgeDifference > 0 {
+            return nonElasticXCoordinate
+        }
+
+        let elasticDifference = pow(abs(mouseXCoordinateToLeftEdgeDifference), 0.7)
+        let elasticXCoordinate = nonElasticXCoordinate - elasticDifference
+
+        return elasticXCoordinate
     }
     
     func calcWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {

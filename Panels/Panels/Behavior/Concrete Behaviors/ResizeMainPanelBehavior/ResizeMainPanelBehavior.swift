@@ -12,6 +12,16 @@ import Foundation
 
 class ResizeMainPanelBehavior: ResizeBehavior {
     
+    func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
+        
+        return  frameSize
+    }
+    
+    func handleWindowResized(window: NSWindow) {
+        //
+    }
+    
+    
     var delegate: ResizeBehaviorDelegate
     
     required init(delegate: ResizeBehaviorDelegate) {

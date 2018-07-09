@@ -9,14 +9,12 @@
 import Cocoa
 import Panels
 
-class ViewController: NSViewController, NSWindowDelegate {
+class ViewController: NSViewController {
 
     @IBOutlet weak var panels: Panels!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.view.window?.delegate = self
         
         let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
         
@@ -29,22 +27,9 @@ class ViewController: NSViewController, NSWindowDelegate {
         let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
         
         let mainPanelViewController = storyboard2.instantiateInitialController() as? NSViewController
-        let mainPanel = Panel(position: .main, viewController: mainPanelViewController)
+        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
         
         panels.set(panels: [leftPanel, rightPanel, mainPanel])
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-
-    //
-//    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-//        print(frameSize)
-//        return frameSize
-//    }
-
 }
 
