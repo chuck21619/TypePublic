@@ -15,6 +15,6 @@ class TestViewController: NSViewController {
     }
     
     override func mouseMoved(with event: NSEvent) {
-        print("")
+        
     }
 }

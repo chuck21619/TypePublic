@@ -79,6 +79,7 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     // resizing
     private var elasticity: Float = 0.25
     private var resizeBehavior: ResizeBehavior?
+    private var animating = false
     
     // MARK: - Methods
     // MARK: Resizing gestures
@@ -157,7 +158,6 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     }
     
     //MARK: - Resize Behavior Delegate
-    var animating = false
     func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
         
         if animated {
@@ -235,5 +235,46 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         let minimumSize = NSSize(width: minimumFrameWidth, height: 0)
 
         return resizeBehavior?.handleWindowResize(frameSize: frameSize, minimumSize: minimumSize) ?? frameSize
+    }
+    
+    public override func viewWillStartLiveResize() {
+        
+        guard animating == false else {
+            return
+        }
+        
+        let leftEdge = self.window?.frame.minX ?? 0
+        
+        let rightEdge = self.window?.frame.maxX ?? 0
+        
+        let mouseX = NSEvent.mouseLocation.x
+        
+        let leftDifference = abs(mouseX - leftEdge)
+        let rightDifference = abs(mouseX - rightEdge)
+        
+        let side: Side
+        if leftDifference < rightDifference {
+            side = .left
+        }
+        else {
+            side = .right
+        }
+        
+        resizeBehavior?.didStartWindowResize(side)
+    }
+    
+    public override func viewDidEndLiveResize() {
+        
+        guard animating == false else {
+            return
+        }
+        
+        let minimumFrameWidth = (currentPanelsDimensions().leftPanelWidth ?? 0) +
+                                (currentPanelsDimensions().rightPanelWidth ?? 0) +
+                                (self.mainPanel?.defaultWidth ?? 0)
+        
+        let minimumSize = NSSize(width: minimumFrameWidth, height: 0)
+        
+        resizeBehavior?.didEndWindowResize(minimumSize: minimumSize)
     }
 }
