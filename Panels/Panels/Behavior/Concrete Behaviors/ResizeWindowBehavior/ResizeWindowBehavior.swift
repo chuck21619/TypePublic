@@ -78,6 +78,7 @@ class ResizeWindowBehavior: ResizeBehavior {
     func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
         
         let width = max(minimumSize.width, frameSize.width)
+        let currentPanelDimensions = self.delegate.currentPanelsDimensions()
         
         if frameSize.width < minimumSize.width {
             
@@ -92,9 +93,9 @@ class ResizeWindowBehavior: ResizeBehavior {
                 let widthDifference = (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
                 
                 let newFrame = NSRect(x: (self.initialPanelsDimensions.windowFrame?.minX ?? 0) + widthDifference + elasticDifference,
-                                      y: (self.initialPanelsDimensions.windowFrame?.minY ?? 0),
+                                      y: (currentPanelDimensions.windowFrame?.minY ?? 0),
                                       width: width,
-                                      height: (self.initialPanelsDimensions.windowFrame?.height ?? 0))
+                                      height: (currentPanelDimensions.windowFrame?.height ?? 0))
                 
                 let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
                 self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
@@ -106,14 +107,15 @@ class ResizeWindowBehavior: ResizeBehavior {
                 let elasticDifference = pow(abs(mouseXCoordinateToRightEdgeDifference), 0.7)
                 
                 let newFrame = NSRect(x: (self.initialPanelsDimensions.windowFrame?.minX ?? 0) - elasticDifference,
-                                      y: (self.initialPanelsDimensions.windowFrame?.minY ?? 0),
+                                      y: (currentPanelDimensions.windowFrame?.minY ?? 0),
                                       width: width,
-                                      height: (self.initialPanelsDimensions.windowFrame?.height ?? 0))
+                                      height: (currentPanelDimensions.windowFrame?.height ?? 0))
                 
                 let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
                 self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
                 
             default:
+                
                 return frameSize
             }
         }
