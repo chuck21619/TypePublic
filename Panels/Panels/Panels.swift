@@ -119,6 +119,11 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         }
     }
     
+    public func minimumFrameWidth() -> CGFloat {
+        
+        return (leftPanel?.defaultWidth ?? 0) + (rightPanel?.defaultWidth ?? 0) + (mainPanel?.defaultWidth ?? 0)
+    }
+    
     // MARK: Constructors
     private func commonInit() {
         
