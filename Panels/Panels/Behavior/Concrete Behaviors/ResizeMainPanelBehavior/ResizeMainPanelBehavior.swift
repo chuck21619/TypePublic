@@ -12,19 +12,17 @@ import Foundation
 
 class ResizeMainPanelBehavior: ResizeBehavior {
     
-    func didEndWindowResize(minimumSize: NSSize) {
+    func didStartWindowResize(_ sides: [Side]) {
         //
     }
     
-    
-    func didStartWindowResize(_ side: Side) {
+    func didEndWindowResize(minimumSize: NSSize) {
         //
     }
     
     func didEndWindowResize() {
         //
     }
-    
     
     func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
         
@@ -34,7 +32,6 @@ class ResizeMainPanelBehavior: ResizeBehavior {
     func handleWindowResized(window: NSWindow) {
         //
     }
-    
     
     var delegate: ResizeBehaviorDelegate
     

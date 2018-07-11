@@ -17,7 +17,7 @@ class ResizeWindowBehavior: ResizeBehavior {
     private var initialMouseLocation: NSPoint = .zero
     private var initialPanelsDimensions = PanelsDimensions(windowFrame: nil, leftPanelWidth: nil, rightPanelWidth: nil)
     private var animatingSnap = false
-    private var resizingFromSide: Side = .left
+    private var resizingSides: [Side] = []
     
     required init(delegate: ResizeBehaviorDelegate) {
         
@@ -36,9 +36,10 @@ class ResizeWindowBehavior: ResizeBehavior {
         handleResize(gesture: sender, resizeHandler: resizeHandler, panel: rightPanel)
     }
     
-    func didStartWindowResize(_ side: Side) {
+    func didStartWindowResize(_ sides: [Side]) {
         
-        self.resizingFromSide = side
+        self.initialMouseLocation = NSEvent.mouseLocation
+        self.resizingSides = sides
         self.initialPanelsDimensions = self.delegate.currentPanelsDimensions()
     }
     
@@ -49,7 +50,7 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         if (currentPanelsDimensions.windowFrame?.width ?? 0) <= (minimumSize.width + bufferWidth) {
                 
-            if resizingFromSide == .left {
+            if resizingSides.contains(.left) {
                 
                 let widthDifference = (initialPanelsDimensions.windowFrame?.width ?? 0) - (currentPanelsDimensions.windowFrame?.width ?? 0)
                 let newXCoordinate = (self.initialPanelsDimensions.windowFrame?.minX ?? 0) + widthDifference
@@ -82,48 +83,69 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         if frameSize.width < minimumSize.width {
             
-            //when resizing from the left size
-            switch resizingFromSide {
-            case .left:
-    
+            self.delegate.setStandardResizing(false)
+            
+            if resizingSides.contains(.left) {
+                
                 let mouseXCoordinateToLeftEdgeDifference = width - frameSize.width
                 
                 let elasticDifference = pow(abs(mouseXCoordinateToLeftEdgeDifference), 0.7)
                 
                 let widthDifference = (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
                 
+                var newY: CGFloat = 0
+                if resizingSides.contains(.bottom) {
+                    
+                    let yToSubtract = frameSize.height - (self.initialPanelsDimensions.windowFrame?.height ?? 0)
+                    newY = (self.initialPanelsDimensions.windowFrame?.minY ?? 0) - yToSubtract
+                }
+                else if resizingSides.contains(.top) {
+                    
+                    newY = (self.initialPanelsDimensions.windowFrame?.minY ?? 0)
+                }
+                
                 let newFrame = NSRect(x: (self.initialPanelsDimensions.windowFrame?.minX ?? 0) + widthDifference + elasticDifference,
-                                      y: (currentPanelDimensions.windowFrame?.minY ?? 0),
+                                      y: newY,
                                       width: width,
-                                      height: (currentPanelDimensions.windowFrame?.height ?? 0))
+                                      height: frameSize.height)
                 
                 let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
                 self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
-                
-            case .right:
+            }
+            else if resizingSides.contains(.right) {
                 
                 let mouseXCoordinateToRightEdgeDifference = width - frameSize.width
                 
                 let elasticDifference = pow(abs(mouseXCoordinateToRightEdgeDifference), 0.7)
                 
+                
+                var newY: CGFloat = 0
+                if resizingSides.contains(.bottom) {
+                    
+                    let yToSubtract = frameSize.height - (self.initialPanelsDimensions.windowFrame?.height ?? 0)
+                    newY = (self.initialPanelsDimensions.windowFrame?.minY ?? 0) - yToSubtract
+                }
+                else if resizingSides.contains(.top) {
+                    
+                    newY = (self.initialPanelsDimensions.windowFrame?.minY ?? 0)
+                }
+                
                 let newFrame = NSRect(x: (self.initialPanelsDimensions.windowFrame?.minX ?? 0) - elasticDifference,
-                                      y: (currentPanelDimensions.windowFrame?.minY ?? 0),
+                                      y: newY,
                                       width: width,
-                                      height: (currentPanelDimensions.windowFrame?.height ?? 0))
+                                      height: frameSize.height)
                 
                 let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
                 self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
                 
-            default:
-                
-                return frameSize
             }
         }
         else {
             
+            self.delegate.setStandardResizing(true)
             return frameSize
         }
-    
+
         return NSSize(width: width, height: frameSize.height)
     }
     

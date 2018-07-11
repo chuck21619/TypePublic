@@ -207,7 +207,9 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
  
         if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
             
-            self.window?.setFrame(windowFrame, display: true)
+            if let window = self.window as? Window {
+                window.setFrameTest(windowFrame, display: false)
+            }
         }
         
         if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
@@ -230,6 +232,14 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: rightPanelWidth)
     }
     
+    func setStandardResizing(_ enabled: Bool) {
+        
+        if let window = self.window as? Window {
+            
+            window.ignoreStandardResize = !enabled
+        }
+    }
+    
     // MARK: - NSWindowDelegate
     public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
         
@@ -249,29 +259,45 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         }
         
         let leftEdge = self.window?.frame.minX ?? 0
-        
         let rightEdge = self.window?.frame.maxX ?? 0
+        let topEdge = self.window?.frame.maxY ?? 0
+        let bottomEdge = self.window?.frame.minY ?? 0
         
         let mouseX = NSEvent.mouseLocation.x
+        let mouseY = NSEvent.mouseLocation.y
         
         let leftDifference = abs(mouseX - leftEdge)
         let rightDifference = abs(mouseX - rightEdge)
+        let topDifference = abs(mouseY - topEdge)
+        let bottomDifference = abs(mouseY - bottomEdge)
         
-        let side: Side
+        var sides: [Side] = []
         if leftDifference < rightDifference {
-            side = .left
+            sides.append(.left)
         }
         else {
-            side = .right
+            sides.append(.right)
         }
         
-        resizeBehavior?.didStartWindowResize(side)
+        if topDifference < bottomDifference {
+            sides.append(.top)
+        }
+        else {
+            sides.append(.bottom)
+        }
+        
+        resizeBehavior?.didStartWindowResize(sides)
     }
     
     public override func viewDidEndLiveResize() {
         
         guard animating == false else {
             return
+        }
+        
+        if let window = self.window as? Window {
+            
+            window.ignoreStandardResize = false
         }
         
         let minimumFrameWidth = (currentPanelsDimensions().leftPanelWidth ?? 0) +

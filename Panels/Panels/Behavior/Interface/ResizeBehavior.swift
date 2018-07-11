@@ -23,7 +23,7 @@ protocol ResizeBehavior {
     
     // resizing from window edges
     func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize
-    func didStartWindowResize(_ side: Side)
+    func didStartWindowResize(_ sides: [Side])
     func didEndWindowResize(minimumSize: NSSize)
     
     //
