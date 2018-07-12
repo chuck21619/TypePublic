@@ -36,7 +36,6 @@
                             <constraint firstItem="1xJ-el-OZo" firstAttribute="leading" secondItem="cTQ-Ib-vVp" secondAttribute="leading" id="Bst-WZ-mB5"/>
                             <constraint firstItem="1xJ-el-OZo" firstAttribute="top" secondItem="cTQ-Ib-vVp" secondAttribute="top" constant="142" id="JWZ-8h-CKs"/>
                             <constraint firstAttribute="trailing" secondItem="1xJ-el-OZo" secondAttribute="trailing" id="PKD-My-uxq"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1xJ-el-OZo" secondAttribute="bottom" constant="350" id="jy4-MT-xja"/>
                             <constraint firstItem="p5Y-RF-XsJ" firstAttribute="centerX" secondItem="cTQ-Ib-vVp" secondAttribute="centerX" id="stK-75-8nz"/>
                             <constraint firstItem="p5Y-RF-XsJ" firstAttribute="centerY" secondItem="cTQ-Ib-vVp" secondAttribute="centerY" id="wpK-Xe-hhY"/>
                         </constraints>
