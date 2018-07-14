@@ -15,9 +15,8 @@ class TopResizingHandler: VerticalResizingHandler {
         return ((initialPanelsDimensions.windowFrame?.minY ?? 0) - elasticDifference)
     }
     
-    func calcHeightDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat {
+    func clacWindowYCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat {
         
-        return 0
-//        return (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
+        return (initialPanelsDimensions.windowFrame?.minY ?? 0)
     }
 }

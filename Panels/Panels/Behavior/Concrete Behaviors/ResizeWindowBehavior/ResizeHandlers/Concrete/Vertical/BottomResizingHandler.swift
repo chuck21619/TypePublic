@@ -12,12 +12,13 @@ class BottomResizingHandler: VerticalResizingHandler {
     
     func calcWindowYCoordinate(initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
         
-        return (initialPanelsDimensions.windowFrame?.minY ?? 0) + elasticDifference
+        let heightDifference = (initialPanelsDimensions.windowFrame?.height ?? 0) - minimumSize.height
+        return (initialPanelsDimensions.windowFrame?.minY ?? 0) + heightDifference + elasticDifference
     }
     
-    func calcHeightDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat {
+    func clacWindowYCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat {
         
-        return 0
-        //        return (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
+        let heightDifference = (initialPanelsDimensions.windowFrame?.height ?? 0) - (currentPanelsDimensions.windowFrame?.height ?? 0)
+        return (initialPanelsDimensions.windowFrame?.minY ?? 0) + heightDifference
     }
 }

@@ -305,7 +305,8 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
                                 (currentPanelsDimensions().rightPanelWidth ?? 0) +
                                 (self.mainPanel?.defaultWidth ?? 0)
         
-        let minimumSize = NSSize(width: minimumFrameWidth, height: 0)
+        //TODO: define minimum height in Panel(s)
+        let minimumSize = NSSize(width: minimumFrameWidth, height: 600)
         
         resizeBehavior?.didEndWindowResize(minimumSize: minimumSize)
     }

@@ -13,6 +13,6 @@ protocol VerticalResizingHandler {
     func calcWindowYCoordinate(initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat
     
     //elastic
-//    func clacWindowYCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat
+    func clacWindowYCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat
 //    func calcHeightDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat
 }

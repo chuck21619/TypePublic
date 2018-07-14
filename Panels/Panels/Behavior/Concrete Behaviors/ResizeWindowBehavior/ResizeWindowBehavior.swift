@@ -168,31 +168,34 @@ class ResizeWindowBehavior: ResizeBehavior {
         let currentPanelsDimensions = self.delegate.currentPanelsDimensions()
         let bufferEdge: CGFloat = 1
         
-        if (currentPanelsDimensions.windowFrame?.width ?? 0) <= (minimumSize.width + bufferEdge) {
+        let widthSmallerThanMinimumSize = (currentPanelsDimensions.windowFrame?.width ?? 0) <= (minimumSize.width + bufferEdge)
+        let heightSmallerThanMinimumSize = (currentPanelsDimensions.windowFrame?.height ?? 0) <= (minimumSize.height + bufferEdge)
+        
+        var newXCoordinate = (currentPanelsDimensions.windowFrame?.minX ?? 0)
+        var newYCoordinate = (currentPanelsDimensions.windowFrame?.minY ?? 0)
+        
+        if widthSmallerThanMinimumSize {
             
             let horizontalResizingHandler: HorizontalResizingHandler = resizingSides.contains(.left) ? LeftResizingHandler() : RightResizingHandler()
             
-            let newXCoordinate = horizontalResizingHandler.clacWindowXCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions)
+            newXCoordinate = horizontalResizingHandler.clacWindowXCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions)
+        }
+        
+        if heightSmallerThanMinimumSize {
+
+            let verticalResizingHandler: VerticalResizingHandler = resizingSides.contains(.top) ? TopResizingHandler() : BottomResizingHandler()
+
+            newYCoordinate = verticalResizingHandler.clacWindowYCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions)
+        }
+        
+        if widthSmallerThanMinimumSize || heightSmallerThanMinimumSize {
             let newFrame = NSRect(x: newXCoordinate,
-                                  y: (currentPanelsDimensions.windowFrame?.minY ?? 0),
+                                  y: newYCoordinate,
                                   width: (currentPanelsDimensions.windowFrame?.width ?? 0),
                                   height: (currentPanelsDimensions.windowFrame?.height ?? 0))
             let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
             self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
         }
-        
-//        if (currentPanelsDimensions.windowFrame?.height ?? 0) <= (minimumSize.height + bufferEdge) {
-//
-//            let verticalResizingHandler: VerticalResizingHandler = resizingSides.contains(.top) ? TopResizingHandler() : BottomResizingHandler()
-//
-//            let newYCoordinate = verticalResizingHandler.clacWindowYCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions)
-//            let newFrame = NSRect(x: (currentPanelsDimensions.windowFrame?.minX ?? 0),
-//                                  y: newYCoordinate,
-//                                  width: (currentPanelsDimensions.windowFrame?.width ?? 0),
-//                                  height: (currentPanelsDimensions.windowFrame?.height ?? 0))
-//            let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
-//            self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
-//        }
     }
         
     func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
@@ -200,15 +203,18 @@ class ResizeWindowBehavior: ResizeBehavior {
         let width = max(minimumSize.width, frameSize.width)
         let height = max(minimumSize.height, frameSize.height)
         
+        let frameWidthSmallerThanMinimumWidth = frameSize.width < minimumSize.width
+        let frameHeightSmallerThanMinimumHeight = frameSize.height < minimumSize.height
+        
         // if attempting to resize to a width smaller than allowed - move window frame instead (elastically)
-        if frameSize.width < minimumSize.width || frameSize.height < minimumSize.height {
+        if frameWidthSmallerThanMinimumWidth || frameHeightSmallerThanMinimumHeight {
             
             self.delegate.setStandardResizing(false)
             
             var newX: CGFloat = (self.delegate.currentPanelsDimensions().windowFrame?.minX ?? 0)
             var newY: CGFloat = (self.delegate.currentPanelsDimensions().windowFrame?.minY ?? 0)
             
-            if frameSize.width < minimumSize.width {
+            if frameWidthSmallerThanMinimumWidth {
                 
                 let horizontalResizingHandler: HorizontalResizingHandler = resizingSides.contains(.left) ? LeftResizingHandler() : RightResizingHandler()
                 
@@ -218,8 +224,15 @@ class ResizeWindowBehavior: ResizeBehavior {
                 let widthDifference = horizontalResizingHandler.calcWidthDifference(initialPanelsDimensions: self.initialPanelsDimensions, minimumSize: minimumSize)
                 newX = horizontalResizingHandler.calcWindowXCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, widthDifference: widthDifference, elasticDifference: elasticDifferenceX)
             }
+            else {
+                
+                if resizingSides.contains(.left) {
+                    
+                    newX = (initialPanelsDimensions.windowFrame?.minX ?? 0) - (frameSize.width - (self.initialPanelsDimensions.windowFrame?.width ?? 0))
+                }
+            }
             
-            if frameSize.height < minimumSize.height {
+            if frameHeightSmallerThanMinimumHeight {
                 
                 let mouseYCoordinateToEdgeDifference = height - frameSize.height
                 let elasticDifferenceY = pow(abs(mouseYCoordinateToEdgeDifference), 0.7)
@@ -227,6 +240,13 @@ class ResizeWindowBehavior: ResizeBehavior {
                 let verticalResizingHandler: VerticalResizingHandler = resizingSides.contains(.top) ? TopResizingHandler() : BottomResizingHandler()
                 
                 newY = verticalResizingHandler.calcWindowYCoordinate(initialPanelsDimensions: self.initialPanelsDimensions, newFrameSize: frameSize, elasticDifference: elasticDifferenceY, minimumSize: minimumSize)
+            }
+            else {
+                
+                if resizingSides.contains(.bottom) {
+                    
+                    newY = (initialPanelsDimensions.windowFrame?.minY ?? 0) - (frameSize.height - (self.initialPanelsDimensions.windowFrame?.height ?? 0))
+                }
             }
             
             
