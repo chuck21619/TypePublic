@@ -28,7 +28,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
         if let panels = (contentViewController as? ViewController)?.panels {
             
             self.window?.delegate = panels
-            let frame = NSRect(origin: self.window?.frame.origin ?? .zero, size: NSSize(width: panels.minimumFrameWidth(), height: self.window?.frame.height ?? 0))
+            //TODO: deal with minimumHeight
+            let frame = NSRect(origin: self.window?.frame.origin ?? .zero, size: NSSize(width: panels.minimumFrameWidth(), height: 600))
             self.window?.setFrame(frame, display: true)
         }
     }
