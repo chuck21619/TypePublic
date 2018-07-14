@@ -85,8 +85,34 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     // MARK: Resizing gestures
     // MARK: - left methods
     
-    @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
+    var preventPanelResizing = false
     
+    @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        if sender.state == .began {
+        let mouseLocationY = NSEvent.mouseLocation.y
+        
+        let topOfWindow = (self.window?.frame.maxY ?? 0)
+        
+        if (topOfWindow - mouseLocationY) <= 25 {
+            preventPanelResizing = true
+            return
+        }
+        }
+        
+//        if (self.frame.height - sender.locationInWindow.y) <= 50 {
+//            preventPanelResizing = true
+//        }
+        
+        if sender.state == .ended && preventPanelResizing == true {
+            preventPanelResizing = false
+            return
+        }
+        
+        guard preventPanelResizing == false else {
+            return
+        }
+        
         guard let leftPanel = leftPanel else {
             return
         }
@@ -96,6 +122,26 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     
     //MARK: right methods
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        if sender.state == .began {
+            let mouseLocationY = NSEvent.mouseLocation.y
+            
+            let topOfWindow = (self.window?.frame.maxY ?? 0)
+            
+            if (topOfWindow - mouseLocationY) <= 25 {
+                preventPanelResizing = true
+                return
+            }
+        }
+        
+        if sender.state == .ended && preventPanelResizing == true {
+            preventPanelResizing = false
+            return
+        }
+        
+        guard preventPanelResizing == false else {
+            return
+        }
         
         guard let rightPanel = rightPanel else {
             return
