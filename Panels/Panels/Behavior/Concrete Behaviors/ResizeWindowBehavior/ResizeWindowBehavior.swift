@@ -132,7 +132,10 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         if hidden {
             
-            return horizontalResizingHandler.calcWindowXCoordinate(initialWindowMinX: currentFrame.minX, widthToSubtract: panelWidth)
+            //TODO: pass in initialParameters?
+            let initialX = (self.initialPanelsDimensions.windowFrame?.minX ?? 0)
+            let initialPanelWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: self.initialPanelsDimensions) ?? 0
+            return horizontalResizingHandler.calcWindowXCoordinate(initialWindowMinX: initialX, widthToSubtract: initialPanelWidth)
         }
         else {
             
