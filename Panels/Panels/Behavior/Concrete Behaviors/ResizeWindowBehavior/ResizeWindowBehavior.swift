@@ -107,55 +107,23 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         let panelWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0
         let currentFrame = currentPanelsDimensions.windowFrame ?? .zero
-        let newXCoordinate = self.calcWindowXCoordinate(hidden: hidden, horizontalResizingHandler: horizontalResizingHandler, panel: panel, panelWidth: panelWidth, currentFrame: currentFrame, widthDifference: panelWidth)
+        let newXCoordinate = horizontalResizingHandler.calcWindowXCoordinate(hidden: hidden, initialPanelDimensions: self.initialPanelsDimensions, defaultWidth: panel.defaultWidth)
         let newOrigin = NSPoint(x: newXCoordinate, y: currentFrame.minY)
-        let newSize = self.calcNewSize(hidden: hidden, currentFrame: currentFrame, panelWidth: panelWidth, panel: panel)
+        let newSize = self.calcNewSize(hidden: hidden, horizontalResizingHandler: horizontalResizingHandler, currentFrame: currentFrame, panelWidth: panelWidth, panel: panel)
         let newFrame = NSRect(origin: newOrigin, size: newSize)
-        let panelsDimensions = self.calcPanelsDimensions(hidden: hidden, horizontalResizingHandler: horizontalResizingHandler,  newFrame: newFrame, panel: panel)
+        let panelsDimensions = horizontalResizingHandler.calcPanelsDimensions(hidden: hidden, windowFrame: newFrame, defaultWidth: panel.defaultWidth)
         
         self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: animated)
     }
     
-    private func calcPanelsDimensions(hidden: Bool, horizontalResizingHandler: HorizontalResizingHandler, newFrame: NSRect, panel: Panel) -> PanelsDimensions {
-    
-        if hidden {
-            
-            return horizontalResizingHandler.calcHiddenPanelPanelsDimensions(windowFrame: newFrame)
-        }
-        else {
-            
-            return horizontalResizingHandler.calcDefaultPanelPanelsDimensions(windowFrame: newFrame, panel: panel)
-        }
-    }
-    
-    private func calcWindowXCoordinate(hidden: Bool, horizontalResizingHandler: HorizontalResizingHandler, panel: Panel, panelWidth: CGFloat, currentFrame: NSRect, widthDifference: CGFloat) -> CGFloat {
+    private func calcNewSize(hidden: Bool, horizontalResizingHandler: HorizontalResizingHandler, currentFrame: NSRect, panelWidth: CGFloat, panel: Panel) -> NSSize {
         
-        if hidden {
-            
-            //TODO: pass in initialParameters?
-            let initialX = (self.initialPanelsDimensions.windowFrame?.minX ?? 0)
-            let initialPanelWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: self.initialPanelsDimensions) ?? 0
-            return horizontalResizingHandler.calcWindowXCoordinate(initialWindowMinX: initialX, widthToSubtract: initialPanelWidth)
-        }
-        else {
-            
-            
-            let widthToAdd = panel.defaultWidth - panelWidth
-            return horizontalResizingHandler.calcWindowXCoordinate(initialWindowMinX: currentFrame.minX, widthToAdd: widthToAdd)
-        }
-    }
-    
-    private func calcNewSize(hidden: Bool, currentFrame: NSRect, panelWidth: CGFloat, panel: Panel) -> NSSize {
+        let height = (self.initialPanelsDimensions.windowFrame?.height ?? 0)
         
-        if hidden {
-            
-            return NSSize(width: currentFrame.width - panelWidth, height: currentFrame.height)
-        }
-        else {
-            
-            let widthToAdd = panel.defaultWidth - panelWidth
-            return NSSize(width: currentFrame.width + widthToAdd, height: currentFrame.height)
-        }
+        let widthWithoutPanel = (self.initialPanelsDimensions.windowFrame?.width ?? 0) - (horizontalResizingHandler.relevantPanelWidth(panelsDimensions: self.initialPanelsDimensions) ?? 0)
+        let width = hidden ? widthWithoutPanel : widthWithoutPanel + panel.defaultWidth
+        
+        return NSSize(width: width, height: height)
     }
     
     // MARK: - Window Resizing

@@ -10,7 +10,12 @@ import Foundation
 
 class LeftResizingHandler: HorizontalResizingHandler {
     
-    // resizing from resize bars
+    func relevantPanelWidth(panelsDimensions: PanelsDimensions) -> CGFloat? {
+        
+        return panelsDimensions.leftPanelWidth
+    }
+    
+    // MARK: - resizing from resize bars
     func calcRightPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
         
         return nil
@@ -30,22 +35,8 @@ class LeftResizingHandler: HorizontalResizingHandler {
                                     y: initialPanelsDimensions.windowFrame?.minY ?? 0,
                                     width: newWindowWidth,
                                     height: initialPanelsDimensions.windowFrame?.height ?? 0)
-        return self.calcHiddenPanelPanelsDimensions(windowFrame: newWindowFrame)
-    }
-    
-    func calcDefaultPanelPanelsDimensions(windowFrame: NSRect, panel: Panel) -> PanelsDimensions {
         
-        return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: panel.defaultWidth, rightPanelWidth: nil)
-    }
-    
-    func calcHiddenPanelPanelsDimensions(windowFrame: NSRect) -> PanelsDimensions {
-        
-        return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: 0, rightPanelWidth: nil)
-    }
-    
-    func relevantPanelWidth(panelsDimensions: PanelsDimensions) -> CGFloat? {
-        
-        return panelsDimensions.leftPanelWidth
+        return self.calcPanelsDimensions(hidden: true, windowFrame: newWindowFrame, defaultWidth: nil)
     }
     
     func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
@@ -70,18 +61,20 @@ class LeftResizingHandler: HorizontalResizingHandler {
         return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) + mouseXCoordinateDifference)
     }
     
-    // auto hide/show
-    func calcWindowXCoordinate(initialWindowMinX: CGFloat, widthToSubtract: CGFloat) -> CGFloat {
+    // MARK: - auto hide/show
+    func calcWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat {
         
-        return initialWindowMinX
+        return initialPanelDimensions.windowFrame?.minX ?? 0
     }
     
-    func calcWindowXCoordinate(initialWindowMinX: CGFloat, widthToAdd: CGFloat) -> CGFloat {
+    func calcPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions {
         
-        return initialWindowMinX
+        let leftPanelWidth = hidden ? 0 : (defaultWidth ?? 0)
+        
+        return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: nil)
     }
     
-    // resizing from window
+    // MARK: - resizing from window
     func calcWidthDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat {
         
         return (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width

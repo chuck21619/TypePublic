@@ -10,6 +10,8 @@ import Foundation
 
 protocol HorizontalResizingHandler {
     
+    func relevantPanelWidth(panelsDimensions: PanelsDimensions) -> CGFloat?
+    
     // resizing from resize bars
     func calcLeftPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat?
     func calcRightPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat?
@@ -19,11 +21,8 @@ protocol HorizontalResizingHandler {
     func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions?
     
     // auto hide/show
-    func relevantPanelWidth(panelsDimensions: PanelsDimensions) -> CGFloat?
-    func calcHiddenPanelPanelsDimensions(windowFrame: NSRect) -> PanelsDimensions
-    func calcDefaultPanelPanelsDimensions(windowFrame: NSRect, panel: Panel) -> PanelsDimensions
-    func calcWindowXCoordinate(initialWindowMinX: CGFloat, widthToSubtract: CGFloat) -> CGFloat
-    func calcWindowXCoordinate(initialWindowMinX: CGFloat, widthToAdd: CGFloat) -> CGFloat
+    func calcPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions
+    func calcWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat
     
     // resizing from window
     func calcWidthDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat
