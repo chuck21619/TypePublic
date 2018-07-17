@@ -132,16 +132,13 @@ class ResizeWindowBehavior: ResizeBehavior {
         // if attempting to resize to a width or height smaller than allowed - move window frame instead (elastically)
         if shouldCalculateAxesElastically.x || shouldCalculateAxesElastically.y {
             
-            let newSize = self.resizingCalculator.windowResizeSize(frameSize: frameSize, minimumSize: minimumSize)
-            
             self.delegate.setStandardResizing(false)
             
-            let newOrigin = self.resizingCalculator.calcElasticOrigin(shouldCalculateAxesElastically.x, newSize.width, frameSize, minimumSize, shouldCalculateAxesElastically.y, newSize.height, self.delegate.currentPanelsDimensions(), self.initialPanelsDimensions, self.resizingSides)
-            let newFrame = NSRect(origin: newOrigin, size: newSize)
+            let newFrame = self.resizingCalculator.calcElasticWindowFrame(shouldCalculateAxesElastically.x, frameSize, minimumSize, shouldCalculateAxesElastically.y, self.delegate.currentPanelsDimensions(), self.initialPanelsDimensions, self.resizingSides)
             let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
-            
             self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
-            return newSize
+            
+            return newFrame.size
         }
         else {
             

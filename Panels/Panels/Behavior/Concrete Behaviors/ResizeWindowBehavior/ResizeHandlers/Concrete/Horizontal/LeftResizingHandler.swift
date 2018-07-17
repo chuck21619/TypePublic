@@ -74,14 +74,10 @@ class LeftResizingHandler: HorizontalResizingHandler {
         return initialPanelDimensions.windowFrame?.minX ?? 0
     }
     
-    // MARK: - resizing from window
-    func calcWidthDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat {
+    // MARK: - resizing from window    
+    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
         
-        return (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
-    }
-    
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, widthDifference: CGFloat, elasticDifference: CGFloat) -> CGFloat {
-        
+        let widthDifference = (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
         return (initialPanelsDimensions.windowFrame?.minX ?? 0) + widthDifference + elasticDifference
     }
     

@@ -120,7 +120,7 @@ class ResizingCalculator {
         return newFrame
     }
     
-    func windowResizeSize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
+    private func windowResizeSize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
         
         let width = max(minimumSize.width, frameSize.width)
         let height = max(minimumSize.height, frameSize.height)
@@ -137,62 +137,43 @@ class ResizingCalculator {
         return (x: shouldCalculateXCoordinateElastically, y: shouldCalculateYCoordinateElastically)
     }
     
-    
-    private func calcElasticXCoordinate(_ frameWidthSmallerThanMinimumWidth: Bool, _ width: CGFloat, _ frameSize: NSSize, _ minimumSize: NSSize, _ currentPanelsDimensions: PanelsDimensions, _ initialPanelsDimensions: PanelsDimensions, _ resizingSides: [Side]) -> CGFloat {
+    private func calcElasticCoordinate(axis: Axis, _ newSizeIsSmallerThanMinimumSize: Bool, _ size: CGFloat, _ frameSize: NSSize, _ minimumSize: NSSize, _ currentPanelsDimensions: PanelsDimensions, _ initialPanelsDimensions: PanelsDimensions, _ resizingSides: [Side]) -> CGFloat {
         
-        var newX: CGFloat = (currentPanelsDimensions.windowFrame?.minX ?? 0)
+        var newAxisOrigin = axis.origin(rect: (currentPanelsDimensions.windowFrame ?? .zero))
         
-        if frameWidthSmallerThanMinimumWidth {
+        if newSizeIsSmallerThanMinimumSize {
             
-            let horizontalResizingHandler: HorizontalResizingHandler = resizingSides.contains(.left) ? LeftResizingHandler() : RightResizingHandler()
+            let mouseToEdgeDifference = size - axis.size(size: frameSize)
+            let elasticDifference = pow(abs(mouseToEdgeDifference), 0.7)
             
-            let mouseXCoordinateToEdgeDifference = width - frameSize.width
-            let elasticDifferenceX = pow(abs(mouseXCoordinateToEdgeDifference), 0.7)
-            
-            let widthDifference = horizontalResizingHandler.calcWidthDifference(initialPanelsDimensions: initialPanelsDimensions, minimumSize: minimumSize)
-            newX = horizontalResizingHandler.calcWindowXCoordinate(initialPanelsDimensions: initialPanelsDimensions, widthDifference: widthDifference, elasticDifference: elasticDifferenceX)
-        }
-        else {
-            
-            if resizingSides.contains(.left) {
-                
-                newX = (initialPanelsDimensions.windowFrame?.minX ?? 0) - (frameSize.width - (initialPanelsDimensions.windowFrame?.width ?? 0))
-            }
-        }
-        
-        return newX
-    }
-    
-    private func calcElasticYCoordinate(_ frameHeightSmallerThanMinimumHeight: Bool, _ height: CGFloat, _ frameSize: NSSize, _ minimumSize: NSSize, _ currentPanelsDimensions: PanelsDimensions, _ initialPanelsDimensions: PanelsDimensions, _ resizingSides: [Side]) -> CGFloat {
-        
-        var newY: CGFloat = (currentPanelsDimensions.windowFrame?.minY ?? 0)
-        
-        if frameHeightSmallerThanMinimumHeight {
-            
-            let mouseYCoordinateToEdgeDifference = height - frameSize.height
-            let elasticDifferenceY = pow(abs(mouseYCoordinateToEdgeDifference), 0.7)
-            
-            let verticalResizingHandler: VerticalResizingHandler = resizingSides.contains(.top) ? TopResizingHandler() : BottomResizingHandler()
-            
-            newY = verticalResizingHandler.calcWindowYCoordinate(initialPanelsDimensions: initialPanelsDimensions, newFrameSize: frameSize, elasticDifference: elasticDifferenceY, minimumSize: minimumSize)
+            newAxisOrigin = axis.calcNewOrigin(resizingSides: resizingSides, initialPanelsDimensions: initialPanelsDimensions, newFrameSize: frameSize, elasticDifference: elasticDifference, mininumSize: minimumSize)
         }
         else {
             
             if resizingSides.contains(.bottom) {
                 
-                newY = (initialPanelsDimensions.windowFrame?.minY ?? 0) - (frameSize.height - (initialPanelsDimensions.windowFrame?.height ?? 0))
+                newAxisOrigin = (axis.origin(rect: (initialPanelsDimensions.windowFrame ?? .zero))) - (axis.size(size: frameSize) - (axis.size(size: (initialPanelsDimensions.windowFrame?.size ?? .zero))))
             }
         }
         
-        return newY
+        return newAxisOrigin
     }
     
-    func calcElasticOrigin(_ frameWidthSmallerThanMinimumWidth: Bool, _ width: CGFloat, _ frameSize: NSSize, _ minimumSize: NSSize, _ frameHeightSmallerThanMinimumHeight: Bool, _ height: CGFloat, _ currentPanelsDimensions: PanelsDimensions, _ initialPanelsDimensions: PanelsDimensions, _ resizingSides: [Side]) -> NSPoint {
+    private func calcElasticOrigin(_ frameWidthSmallerThanMinimumWidth: Bool, _ width: CGFloat, _ frameSize: NSSize, _ minimumSize: NSSize, _ frameHeightSmallerThanMinimumHeight: Bool, _ height: CGFloat, _ currentPanelsDimensions: PanelsDimensions, _ initialPanelsDimensions: PanelsDimensions, _ resizingSides: [Side]) -> NSPoint {
         
-        let newX = calcElasticXCoordinate(frameWidthSmallerThanMinimumWidth, width, frameSize, minimumSize, currentPanelsDimensions, initialPanelsDimensions, resizingSides)
+        let newX = calcElasticCoordinate(axis: X(), frameWidthSmallerThanMinimumWidth, width, frameSize, minimumSize, currentPanelsDimensions, initialPanelsDimensions, resizingSides)
         
-        let newY = calcElasticYCoordinate(frameHeightSmallerThanMinimumHeight, height, frameSize, minimumSize, currentPanelsDimensions, initialPanelsDimensions, resizingSides)
+        let newY = calcElasticCoordinate(axis: Y(), frameHeightSmallerThanMinimumHeight, height, frameSize, minimumSize, currentPanelsDimensions, initialPanelsDimensions, resizingSides)
         
         return NSPoint(x: newX, y: newY)
+    }
+    
+    func calcElasticWindowFrame(_ frameWidthSmallerThanMinimumWidth: Bool, _ frameSize: NSSize, _ minimumSize: NSSize, _ frameHeightSmallerThanMinimumHeight: Bool, _ currentPanelsDimensions: PanelsDimensions, _ initialPanelsDimensions: PanelsDimensions, _ resizingSides: [Side]) -> NSRect {
+        
+        let size = self.windowResizeSize(frameSize: frameSize, minimumSize: minimumSize)
+        let origin = self.calcElasticOrigin(frameWidthSmallerThanMinimumWidth, size.width, frameSize, minimumSize, frameHeightSmallerThanMinimumHeight, size.height, currentPanelsDimensions, initialPanelsDimensions, resizingSides)
+        let frame = NSRect(origin: origin, size: size)
+        
+        return frame
     }
 }

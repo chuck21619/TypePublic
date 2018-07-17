@@ -87,12 +87,7 @@ class RightResizingHandler: HorizontalResizingHandler {
     }
     
     // MARK: - resizing from window
-    func calcWidthDifference(initialPanelsDimensions: PanelsDimensions, minimumSize: NSSize) -> CGFloat {
-        
-        return 0
-    }
-    
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, widthDifference: CGFloat, elasticDifference: CGFloat) -> CGFloat {
+    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
         
         return (initialPanelsDimensions.windowFrame?.minX ?? 0) - elasticDifference
     }
