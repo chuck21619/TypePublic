@@ -28,18 +28,6 @@ class RightResizingHandler: HorizontalResizingHandler {
         return max(0, initialPanelWidth - mouseXCoordinateDifference)
     }
     
-    func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
-        
-        let newWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.rightPanelWidth ?? 0)
-        let newXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
-        let newWindowFrame = NSRect(x: newXCoordinate,
-                                    y: initialPanelsDimensions.windowFrame?.minY ?? 0,
-                                    width: newWindowWidth,
-                                    height: initialPanelsDimensions.windowFrame?.height ?? 0)
-        
-        return self.calcPanelsDimensions(hidden: true, windowFrame: newWindowFrame, defaultWidth: nil)
-    }
-    
     func calcWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
         let minimumWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.rightPanelWidth ?? 0)
@@ -64,7 +52,26 @@ class RightResizingHandler: HorizontalResizingHandler {
         return elasticXCoordinate
     }
     
+    func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
+        
+        let newWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.rightPanelWidth ?? 0)
+        let newXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
+        let newWindowFrame = NSRect(x: newXCoordinate,
+                                    y: initialPanelsDimensions.windowFrame?.minY ?? 0,
+                                    width: newWindowWidth,
+                                    height: initialPanelsDimensions.windowFrame?.height ?? 0)
+        
+        return self.calcPanelsDimensions(hidden: true, windowFrame: newWindowFrame, defaultWidth: nil)
+    }
+    
     // MARK: - auto hide/show
+    func calcPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions {
+        
+        let rightPanelWidth = hidden ? 0 : (defaultWidth ?? 0)
+        
+        return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: nil, rightPanelWidth: rightPanelWidth)
+    }
+    
     func calcWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat {
         
         if hidden {
@@ -77,13 +84,6 @@ class RightResizingHandler: HorizontalResizingHandler {
             let xCoordinateWithoutPanel = (initialPanelDimensions.windowFrame?.minX ?? 0) + (initialPanelDimensions.rightPanelWidth ?? 0)
             return xCoordinateWithoutPanel - defaultWidth
         }
-    }
-    
-    func calcPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions {
-        
-        let rightPanelWidth = hidden ? 0 : (defaultWidth ?? 0)
-        
-        return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: nil, rightPanelWidth: rightPanelWidth)
     }
     
     // MARK: - resizing from window

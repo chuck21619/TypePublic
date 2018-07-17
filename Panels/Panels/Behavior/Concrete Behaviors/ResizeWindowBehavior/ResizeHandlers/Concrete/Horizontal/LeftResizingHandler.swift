@@ -16,16 +16,38 @@ class LeftResizingHandler: HorizontalResizingHandler {
     }
     
     // MARK: - resizing from resize bars
-    func calcRightPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
-        
-        return nil
-    }
-    
     func calcLeftPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
         
         let mouseXCoordinateDifference = currentMouseXCoordinate - initialMouseXCoordinate
         let initialPanelWidth = initialPanelsDimensions.leftPanelWidth ?? 0
         return max(0, initialPanelWidth + mouseXCoordinateDifference)
+    }
+    
+    func calcRightPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
+        
+        return nil
+    }
+    
+    func calcWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+        
+        let minimumWindowWidth = max(0, (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.leftPanelWidth ?? 0))
+        return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) + mouseXCoordinateDifference)
+    }
+    
+    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+        
+        let nonElasticXCoordinate = initialPanelsDimensions.windowFrame?.minX ?? 0
+        
+        let mouseXCoordinateToLeftEdgeDifference = mouseXCoordinate - nonElasticXCoordinate
+        
+        if mouseXCoordinateToLeftEdgeDifference > 0 {
+            return nonElasticXCoordinate
+        }
+        
+        let elasticDifference = pow(abs(mouseXCoordinateToLeftEdgeDifference), 0.7)
+        let elasticXCoordinate = nonElasticXCoordinate - elasticDifference
+        
+        return elasticXCoordinate
     }
     
     func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
@@ -39,39 +61,17 @@ class LeftResizingHandler: HorizontalResizingHandler {
         return self.calcPanelsDimensions(hidden: true, windowFrame: newWindowFrame, defaultWidth: nil)
     }
     
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
-        
-        let nonElasticXCoordinate = initialPanelsDimensions.windowFrame?.minX ?? 0
-        
-        let mouseXCoordinateToLeftEdgeDifference = mouseXCoordinate - nonElasticXCoordinate
-        
-        if mouseXCoordinateToLeftEdgeDifference > 0 {
-            return nonElasticXCoordinate
-        }
-
-        let elasticDifference = pow(abs(mouseXCoordinateToLeftEdgeDifference), 0.7)
-        let elasticXCoordinate = nonElasticXCoordinate - elasticDifference
-
-        return elasticXCoordinate
-    }
-    
-    func calcWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
-        
-        let minimumWindowWidth = max(0, (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.leftPanelWidth ?? 0))
-        return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) + mouseXCoordinateDifference)
-    }
-    
     // MARK: - auto hide/show
-    func calcWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat {
-        
-        return initialPanelDimensions.windowFrame?.minX ?? 0
-    }
-    
     func calcPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions {
         
         let leftPanelWidth = hidden ? 0 : (defaultWidth ?? 0)
         
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: nil)
+    }
+    
+    func calcWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat {
+        
+        return initialPanelDimensions.windowFrame?.minX ?? 0
     }
     
     // MARK: - resizing from window
