@@ -33,7 +33,7 @@ class RightResizingHandler: HorizontalResizingHandler {
         return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) - mouseXCoordinateDifference)
     }
     
-    func nonElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func panelResizingNonElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
         let maxXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
         let nonElasticXCoordinate = min(maxXCoordinate, (initialPanelsDimensions.windowFrame?.minX ?? 0) + mouseXCoordinateDifference)
@@ -41,7 +41,7 @@ class RightResizingHandler: HorizontalResizingHandler {
         return nonElasticXCoordinate
     }
     
-    func mouseToEdgeDifference(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> CGFloat {
+    func panelResizingMouseToEdgeDifference(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> CGFloat {
         
         let rightEdgeOfFrame = initialPanelsDimensions.windowFrame?.maxX ?? 0
         let mouseXCoordinateToRightEdgeDifference = mouseXCoordinate - rightEdgeOfFrame
@@ -49,12 +49,12 @@ class RightResizingHandler: HorizontalResizingHandler {
         return mouseXCoordinateToRightEdgeDifference
     }
     
-    func elasticXCoordinate(nonElasticCoordinate: CGFloat, elasticDifference: CGFloat) -> CGFloat {
+    func panelResizingElasticXCoordinate(nonElasticCoordinate: CGFloat, elasticDifference: CGFloat) -> CGFloat {
         
         return nonElasticCoordinate + elasticDifference
     }
     
-    func mouseIsPassedWindowEdge(mouseToEdgeDifference: CGFloat) -> Bool {
+    func panelResizingMouseIsPassedWindowEdge(mouseToEdgeDifference: CGFloat) -> Bool {
         
         return mouseToEdgeDifference < 0
     }

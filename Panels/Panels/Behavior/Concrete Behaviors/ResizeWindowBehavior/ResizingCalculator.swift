@@ -11,6 +11,7 @@ import Foundation
 class ResizingCalculator {
     
     let bufferEdge: CGFloat = 1
+    let elasticity: CGFloat = 0.7
     
     // MARK: - Panel Resizing
     func panelResizingWindowFrame(horizontalResizingHandler: HorizontalResizingHandler, initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> NSRect {
@@ -26,16 +27,16 @@ class ResizingCalculator {
     
     private func panelResizingXCoordinate(horizontalResizingHandler: HorizontalResizingHandler, initialPanelsDimensions: PanelsDimensions, currentMouseXCoordinate: CGFloat, mouseLocationDifference: CGFloat) -> CGFloat {
         
-        let nonElasticXCoordinate = horizontalResizingHandler.nonElasticXCoordinate(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinateDifference: mouseLocationDifference)
+        let nonElasticXCoordinate = horizontalResizingHandler.panelResizingNonElasticXCoordinate(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinateDifference: mouseLocationDifference)
         
-        let mouseToEdgeDifference = horizontalResizingHandler.mouseToEdgeDifference(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinate: currentMouseXCoordinate)
+        let mouseToEdgeDifference = horizontalResizingHandler.panelResizingMouseToEdgeDifference(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinate: currentMouseXCoordinate)
         
-        if horizontalResizingHandler.mouseIsPassedWindowEdge(mouseToEdgeDifference: mouseToEdgeDifference) {
+        if horizontalResizingHandler.panelResizingMouseIsPassedWindowEdge(mouseToEdgeDifference: mouseToEdgeDifference) {
             return nonElasticXCoordinate
         }
         
-        let elasticDifference = pow(abs(mouseToEdgeDifference), 0.7)
-        let elasticXCoordinate = horizontalResizingHandler.elasticXCoordinate(nonElasticCoordinate: nonElasticXCoordinate, elasticDifference: elasticDifference)
+        let elasticDifference = pow(abs(mouseToEdgeDifference), elasticity)
+        let elasticXCoordinate = horizontalResizingHandler.panelResizingElasticXCoordinate(nonElasticCoordinate: nonElasticXCoordinate, elasticDifference: elasticDifference)
         
         return elasticXCoordinate
     }
@@ -153,7 +154,7 @@ class ResizingCalculator {
         if shouldCalculateElastically {
             
             let mouseToEdgeDifference = size - axis.size(size: frameSize)
-            let elasticDifference = pow(abs(mouseToEdgeDifference), 0.7)
+            let elasticDifference = pow(abs(mouseToEdgeDifference), elasticity)
             
             newAxisOrigin = axis.elasticOrigin(resizingSides: resizingSides, initialPanelsDimensions: initialPanelsDimensions, newFrameSize: frameSize, elasticDifference: elasticDifference, mininumSize: minimumSize)
         }
