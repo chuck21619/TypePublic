@@ -61,7 +61,6 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         }
     }
     
-    // MARK: - implementation
     // MARK: - properties
     // outlets
     @IBOutlet var leftPanelViewWidthConstraint: NSLayoutConstraint!
@@ -80,70 +79,50 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     private var elasticity: Float = 0.25
     private var resizeBehavior: ResizeBehavior?
     private var animating = false
+    private var preventPanelResizing = false
     
-    // MARK: - Methods
     // MARK: Resizing gestures
-    // MARK: - left methods
-    
-    var preventPanelResizing = false
-    
-    @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
+    private func shouldResizePanel(_ sender: NSPanGestureRecognizer) -> Bool {
         
+        // when mouse clicks are on the title bar, the window is being moved
+        // so panel resizing should be disabled
         if sender.state == .began {
-        let mouseLocationY = NSEvent.mouseLocation.y
-        
-        let topOfWindow = (self.window?.frame.maxY ?? 0)
-        
-        if (topOfWindow - mouseLocationY) <= 25 {
-            preventPanelResizing = true
-            return
-        }
-        }
-        
-//        if (self.frame.height - sender.locationInWindow.y) <= 50 {
-//            preventPanelResizing = true
-//        }
-        
-        if sender.state == .ended && preventPanelResizing == true {
-            preventPanelResizing = false
-            return
-        }
-        
-        guard preventPanelResizing == false else {
-            return
-        }
-        
-        guard let leftPanel = leftPanel else {
-            return
-        }
-        
-        resizeBehavior?.handleResizeLeft(sender, leftPanel: leftPanel)
-    }
-    
-    //MARK: right methods
-    @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
-        
-        if sender.state == .began {
+            
             let mouseLocationY = NSEvent.mouseLocation.y
             
             let topOfWindow = (self.window?.frame.maxY ?? 0)
             
             if (topOfWindow - mouseLocationY) <= 25 {
                 preventPanelResizing = true
-                return
+                return false
             }
         }
         
         if sender.state == .ended && preventPanelResizing == true {
             preventPanelResizing = false
-            return
+            return false
         }
         
         guard preventPanelResizing == false else {
+            return false
+        }
+        
+        return true
+    }
+    
+    
+    @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        guard shouldResizePanel(sender) == true, let leftPanel = self.leftPanel else {
             return
         }
         
-        guard let rightPanel = rightPanel else {
+        resizeBehavior?.handleResizeLeft(sender, leftPanel: leftPanel)
+    }
+    
+    @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
+        
+        guard shouldResizePanel(sender) == true, let rightPanel = self.rightPanel else {
             return
         }
         
@@ -165,9 +144,23 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         }
     }
     
-    public func minimumFrameWidth() -> CGFloat {
+    public func defaultSize() -> NSSize {
         
-        return (leftPanel?.defaultWidth ?? 0) + (rightPanel?.defaultWidth ?? 0) + (mainPanel?.defaultWidth ?? 0)
+        let defaultWidth = (leftPanel?.defaultWidth ?? 0) + (rightPanel?.defaultWidth ?? 0) + (mainPanel?.defaultWidth ?? 0)
+        let defaultHeight = minimumFrameSize().height
+        
+        return NSSize(width: defaultWidth, height: defaultHeight)
+    }
+    
+    public func minimumFrameSize() -> NSSize {
+        
+        let minimumFrameWidth = (currentPanelsDimensions().leftPanelWidth ?? 0) +
+                                (currentPanelsDimensions().rightPanelWidth ?? 0) +
+                                (self.mainPanel?.defaultWidth ?? 0)
+        
+        let minimumFrameHeight = max((leftPanel?.minimumHeight ?? 0), (rightPanel?.minimumHeight ?? 0), (mainPanel?.minimumHeight ?? 0))
+        
+        return NSSize(width: minimumFrameWidth, height: minimumFrameHeight)
     }
     
     // MARK: Constructors
@@ -187,15 +180,15 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
 //        contentView.layer?.borderWidth = 1
 //        contentView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 1, alpha: 1)
         
-        leftPanelView.wantsLayer = true
-        leftPanelView.layer?.borderWidth = 2
-        leftPanelView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 0, alpha: 1)
-        mainPanelView.wantsLayer = true
-        mainPanelView.layer?.borderWidth = 2
-        mainPanelView.layer?.borderColor = CGColor(red: 0, green: 1, blue: 0, alpha: 1)
-        rightPanelView.wantsLayer = true
-        rightPanelView.layer?.borderWidth = 2
-        rightPanelView.layer?.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 1)
+//        leftPanelView.wantsLayer = true
+//        leftPanelView.layer?.borderWidth = 2
+//        leftPanelView.layer?.borderColor = CGColor(red: 1, green: 0, blue: 0, alpha: 1)
+//        mainPanelView.wantsLayer = true
+//        mainPanelView.layer?.borderWidth = 2
+//        mainPanelView.layer?.borderColor = CGColor(red: 0, green: 1, blue: 0, alpha: 1)
+//        rightPanelView.wantsLayer = true
+//        rightPanelView.layer?.borderWidth = 2
+//        rightPanelView.layer?.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 1)
     }
     
     public override init(frame frameRect: NSRect) {
@@ -253,9 +246,11 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
  
         if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
             
-            if let window = self.window as? Window {
-                window.setFrameTest(windowFrame, display: false)
+            guard let window = self.window as? PanelsWindow else {
+                return
             }
+            
+            window.setFrameOverride(windowFrame, display: false)
         }
         
         if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
@@ -280,23 +275,17 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     
     func setAutomaticResizing(_ enabled: Bool) {
         
-        if let window = self.window as? Window {
-            
-            window.ignoreStandardResize = !enabled
+        guard let panelsWindow = self.window as? PanelsWindow else {
+            return
         }
+        
+        panelsWindow.ignoreStandardResize = !enabled
     }
     
     // MARK: - NSWindowDelegate
     public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-        
-        let minimumFrameWidth = (currentPanelsDimensions().leftPanelWidth ?? 0) +
-                                (currentPanelsDimensions().rightPanelWidth ?? 0) +
-                                (self.mainPanel?.defaultWidth ?? 0)
 
-        //TODO: define minimum height in Panel(s)
-        let minimumSize = NSSize(width: minimumFrameWidth, height: 600)
-
-        return resizeBehavior?.handleWindowResize(frameSize: frameSize, minimumSize: minimumSize) ?? frameSize
+        return resizeBehavior?.handleWindowResize(frameSize: frameSize, minimumSize: self.minimumFrameSize()) ?? frameSize
     }
     
     public override func viewWillStartLiveResize() {
@@ -342,18 +331,11 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
             return
         }
         
-        if let window = self.window as? Window {
+        if let window = self.window as? PanelsWindow {
             
             window.ignoreStandardResize = false
         }
         
-        let minimumFrameWidth = (currentPanelsDimensions().leftPanelWidth ?? 0) +
-                                (currentPanelsDimensions().rightPanelWidth ?? 0) +
-                                (self.mainPanel?.defaultWidth ?? 0)
-        
-        //TODO: define minimum height in Panel(s)
-        let minimumSize = NSSize(width: minimumFrameWidth, height: 600)
-        
-        resizeBehavior?.didEndWindowResize(minimumSize: minimumSize)
+        resizeBehavior?.didEndWindowResize(minimumSize: self.minimumFrameSize())
     }
 }

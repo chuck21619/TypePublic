@@ -17,7 +17,7 @@
 		A36CD4D720EDA4A500ED46FA /* ResizeMainPanelBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D620EDA4A500ED46FA /* ResizeMainPanelBehavior.swift */; };
 		A36CD4D920EDA88E00ED46FA /* ResizeBehaviorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */; };
 		A36CD4DB20EDA9D300ED46FA /* PanelsDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */; };
-		A374633420F548A3000E43C2 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374633320F548A3000E43C2 /* Window.swift */; };
+		A374633420F548A3000E43C2 /* PanelsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374633320F548A3000E43C2 /* PanelsWindow.swift */; };
 		A3754DF120F59F3200EF286A /* VerticalResizingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3754DF020F59F3200EF286A /* VerticalResizingHandler.swift */; };
 		A3754DF520F59FE300EF286A /* TopResizingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3754DF420F59FE300EF286A /* TopResizingHandler.swift */; };
 		A3754DF720F59FFB00EF286A /* BottomResizingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3754DF620F59FFB00EF286A /* BottomResizingHandler.swift */; };
@@ -43,7 +43,7 @@
 		A36CD4D620EDA4A500ED46FA /* ResizeMainPanelBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeMainPanelBehavior.swift; sourceTree = "<group>"; };
 		A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBehaviorDelegate.swift; sourceTree = "<group>"; };
 		A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsDimensions.swift; sourceTree = "<group>"; };
-		A374633320F548A3000E43C2 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		A374633320F548A3000E43C2 /* PanelsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsWindow.swift; sourceTree = "<group>"; };
 		A3754DF020F59F3200EF286A /* VerticalResizingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalResizingHandler.swift; sourceTree = "<group>"; };
 		A3754DF420F59FE300EF286A /* TopResizingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopResizingHandler.swift; sourceTree = "<group>"; };
 		A3754DF620F59FFB00EF286A /* BottomResizingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomResizingHandler.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 				A3828C1820E563DC000FDA72 /* Panels.swift */,
 				A3C325D120E56E65007DFCE4 /* Panels.xib */,
 				A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */,
-				A374633320F548A3000E43C2 /* Window.swift */,
+				A374633320F548A3000E43C2 /* PanelsWindow.swift */,
 				A36CD4D120EDA3D800ED46FA /* Behavior */,
 				A3B0278320EAE23800A5C912 /* ResizeBar */,
 				A37658C120E80C4000BD76B9 /* Panel */,
@@ -316,7 +316,7 @@
 				A3763DD920EF6F74009C84C7 /* RightResizingHandler.swift in Sources */,
 				A327F21920EC02710003B829 /* PanelPosition.swift in Sources */,
 				A32FFE5920FEB95000D4BA58 /* X.swift in Sources */,
-				A374633420F548A3000E43C2 /* Window.swift in Sources */,
+				A374633420F548A3000E43C2 /* PanelsWindow.swift in Sources */,
 				A37658BE20E8092700BD76B9 /* Panel.swift in Sources */,
 				A36CD4D720EDA4A500ED46FA /* ResizeMainPanelBehavior.swift in Sources */,
 				A32FFE5720FEB93A00D4BA58 /* Y.swift in Sources */,

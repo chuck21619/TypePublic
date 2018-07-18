@@ -13,7 +13,6 @@
 		A327176420E55CA200AD89A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A327176220E55CA200AD89A0 /* Main.storyboard */; };
 		A327177020E55CA200AD89A0 /* TypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A327176F20E55CA200AD89A0 /* TypeTests.swift */; };
 		A36CD4D020ED9B9500ED46FA /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4CF20ED9B9500ED46FA /* WindowController.swift */; };
-		A374633220F5473D000E43C2 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374633120F5473D000E43C2 /* Window.swift */; };
 		A3828C2220E56CA1000FDA72 /* Panels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3828C2120E56C89000FDA72 /* Panels.framework */; };
 		A3828C2320E56CA1000FDA72 /* Panels.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A3828C2120E56C89000FDA72 /* Panels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3986EBD20E6B59A00098A81 /* TestViewController.swift */; };
@@ -295,7 +294,6 @@
 				A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */,
 				A327175D20E55CA100AD89A0 /* AppDelegate.swift in Sources */,
 				A3B0277F20EAC0C300A5C912 /* TestViewControllerTwo.swift in Sources */,
-				A374633220F5473D000E43C2 /* Window.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

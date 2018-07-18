@@ -10,26 +10,15 @@ import Foundation
 import AppKit
 import Panels
 
-class WindowController: NSWindowController, NSWindowDelegate {
-    
-    
-//    func windowWillStartLiveResize(_ notification: Notification) {
-//        print("start resizing: \(notification)")
-////        NotificationCenter.default.post(notification)
-//    }
-//
-//    func windowDidEndLiveResize(_ notification: Notification) {
-//        print("end resizing: \(notification)")
-//    }
-    
+class WindowController: NSWindowController {
     
     override func windowDidLoad() {
         
         if let panels = (contentViewController as? ViewController)?.panels {
             
             self.window?.delegate = panels
-            //TODO: deal with minimumHeight
-            let frame = NSRect(origin: self.window?.frame.origin ?? .zero, size: NSSize(width: panels.minimumFrameWidth(), height: 600))
+            
+            let frame = NSRect(origin: self.window?.frame.origin ?? .zero, size: panels.defaultSize())
             self.window?.setFrame(frame, display: true)
         }
     }

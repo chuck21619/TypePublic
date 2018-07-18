@@ -1,5 +1,5 @@
 //
-//  Window.swift
+//  PanelsWindow.swift
 //  Type
 //
 //  Created by charles johnston on 7/10/18.
@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 
-class Window: NSWindow {
+class PanelsWindow: NSWindow {
     
     var ignoreStandardResize = false
     
@@ -22,7 +22,7 @@ class Window: NSWindow {
         super.setFrame(frameRect, display: flag)
     }
     
-    func setFrameTest(_ frameRect: NSRect, display flag: Bool) {
+    func setFrameOverride(_ frameRect: NSRect, display flag: Bool) {
         
         super.setFrame(frameRect, display: flag)
     }
