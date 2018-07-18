@@ -71,7 +71,6 @@
 		A327176F20E55CA200AD89A0 /* TypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTests.swift; sourceTree = "<group>"; };
 		A327177120E55CA200AD89A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A36CD4CF20ED9B9500ED46FA /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
-		A374633120F5473D000E43C2 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Window.swift; path = ../../Panels/Panels/Window.swift; sourceTree = "<group>"; };
 		A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Panels.xcodeproj; path = ../Panels/Panels.xcodeproj; sourceTree = "<group>"; };
 		A3986EBD20E6B59A00098A81 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewControllerTwo.storyboard; sourceTree = "<group>"; };
@@ -145,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				A3C325D320E57115007DFCE4 /* TestViewController.storyboard */,
-				A374633120F5473D000E43C2 /* Window.swift */,
 				A3986EBD20E6B59A00098A81 /* TestViewController.swift */,
 				A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */,
 				A3B0277E20EAC0C300A5C912 /* TestViewControllerTwo.swift */,

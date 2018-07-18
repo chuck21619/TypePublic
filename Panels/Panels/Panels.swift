@@ -163,6 +163,39 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         return NSSize(width: minimumFrameWidth, height: minimumFrameHeight)
     }
     
+    private func resizingSides() -> [Side] {
+        
+        let leftEdge = self.window?.frame.minX ?? 0
+        let rightEdge = self.window?.frame.maxX ?? 0
+        let topEdge = self.window?.frame.maxY ?? 0
+        let bottomEdge = self.window?.frame.minY ?? 0
+        
+        let mouseX = NSEvent.mouseLocation.x
+        let mouseY = NSEvent.mouseLocation.y
+        
+        let leftDifference = abs(mouseX - leftEdge)
+        let rightDifference = abs(mouseX - rightEdge)
+        let topDifference = abs(mouseY - topEdge)
+        let bottomDifference = abs(mouseY - bottomEdge)
+        
+        var sides: [Side] = []
+        if leftDifference < rightDifference {
+            sides.append(.left)
+        }
+        else {
+            sides.append(.right)
+        }
+        
+        if topDifference < bottomDifference {
+            sides.append(.top)
+        }
+        else {
+            sides.append(.bottom)
+        }
+        
+        return sides
+    }
+    
     // MARK: Constructors
     private func commonInit() {
         
@@ -204,17 +237,25 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
     //MARK: - Resize Behavior Delegate
     func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
         
+        guard animating == false else {
+            return
+        }
+        
         if animated {
             
             animating = true
             
-            let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelView.frame.width)
+            let newLeftPanelWidth = panelsDimensions.leftPanelWidth ?? leftPanelViewWidthConstraint.constant
+            let newRightPanelWidth = panelsDimensions.rightPanelWidth ?? rightPanelViewWidthConstraint.constant
+            let mainPanelWidth = (panelsDimensions.windowFrame?.width ?? 0) - (newLeftPanelWidth + newRightPanelWidth)
+            let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelWidth)
             widthConstraint.isActive = true
             
             NSAnimationContext.runAnimationGroup({ (context) in
                 
-                context.allowsImplicitAnimation = true
+                context.allowsImplicitAnimation = false
                 context.duration = 0.25
+                context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
                 
                 if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
                     
@@ -231,6 +272,7 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
                     rightPanelViewWidthConstraint.isActive = false
                 }
             }) {
+                
                 widthConstraint.isActive = false
                 
                 self.leftPanelViewWidthConstraint.constant = max(0, self.leftPanelView.frame.width)
@@ -244,6 +286,7 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
             return
         }
  
+//        non-animated
         if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
             
             guard let window = self.window as? PanelsWindow else {
@@ -294,35 +337,7 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
             return
         }
         
-        let leftEdge = self.window?.frame.minX ?? 0
-        let rightEdge = self.window?.frame.maxX ?? 0
-        let topEdge = self.window?.frame.maxY ?? 0
-        let bottomEdge = self.window?.frame.minY ?? 0
-        
-        let mouseX = NSEvent.mouseLocation.x
-        let mouseY = NSEvent.mouseLocation.y
-        
-        let leftDifference = abs(mouseX - leftEdge)
-        let rightDifference = abs(mouseX - rightEdge)
-        let topDifference = abs(mouseY - topEdge)
-        let bottomDifference = abs(mouseY - bottomEdge)
-        
-        var sides: [Side] = []
-        if leftDifference < rightDifference {
-            sides.append(.left)
-        }
-        else {
-            sides.append(.right)
-        }
-        
-        if topDifference < bottomDifference {
-            sides.append(.top)
-        }
-        else {
-            sides.append(.bottom)
-        }
-        
-        resizeBehavior?.didStartWindowResize(sides)
+        resizeBehavior?.didStartWindowResize(resizingSides())
     }
     
     public override func viewDidEndLiveResize() {

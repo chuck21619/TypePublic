@@ -13,31 +13,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="500" height="509"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1xJ-el-OZo">
-                                <rect key="frame" x="-2" y="350" width="504" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="kYi-XL-Avo"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="O5G-Gq-Rc1">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p5Y-RF-XsJ">
-                                <rect key="frame" x="210" y="237" width="81" height="32"/>
-                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7jz-SE-b4D">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VE0-th-GWP">
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="474"/>
+                                <clipView key="contentView" id="VGS-VM-3DL">
+                                    <rect key="frame" x="1" y="1" width="498" height="472"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="aCO-ay-zl6">
+                                            <rect key="frame" x="0.0" y="0.0" width="498" height="472"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="498" height="472"/>
+                                            <size key="maxSize" width="498" height="10000000"/>
+                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="zFC-Ba-ifs">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="QLZ-hx-U8Y">
+                                    <rect key="frame" x="483" y="1" width="16" height="472"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="1xJ-el-OZo" firstAttribute="leading" secondItem="cTQ-Ib-vVp" secondAttribute="leading" id="Bst-WZ-mB5"/>
-                            <constraint firstItem="1xJ-el-OZo" firstAttribute="top" secondItem="cTQ-Ib-vVp" secondAttribute="top" constant="142" id="JWZ-8h-CKs"/>
-                            <constraint firstAttribute="trailing" secondItem="1xJ-el-OZo" secondAttribute="trailing" id="PKD-My-uxq"/>
-                            <constraint firstItem="p5Y-RF-XsJ" firstAttribute="centerX" secondItem="cTQ-Ib-vVp" secondAttribute="centerX" id="stK-75-8nz"/>
-                            <constraint firstItem="p5Y-RF-XsJ" firstAttribute="centerY" secondItem="cTQ-Ib-vVp" secondAttribute="centerY" id="wpK-Xe-hhY"/>
+                            <constraint firstAttribute="bottom" secondItem="VE0-th-GWP" secondAttribute="bottom" id="3k4-Zo-FJY"/>
+                            <constraint firstItem="VE0-th-GWP" firstAttribute="leading" secondItem="cTQ-Ib-vVp" secondAttribute="leading" id="TYT-K9-wLr"/>
+                            <constraint firstItem="VE0-th-GWP" firstAttribute="top" secondItem="cTQ-Ib-vVp" secondAttribute="top" constant="35" id="ZbM-Io-MOs"/>
+                            <constraint firstAttribute="trailing" secondItem="VE0-th-GWP" secondAttribute="trailing" id="qTd-U5-y3X"/>
                         </constraints>
                     </view>
                 </viewController>
