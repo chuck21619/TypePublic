@@ -18,10 +18,26 @@ class ResizingCalculator {
         let mouseLocationDifference = currentMouseXCoordinate - initialMouseXCoordinate
         let frame = currentPanelsDimensions.windowFrame ?? .zero
         let width = horizontalResizingHandler.panelResizingWindowWidth(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinateDifference: mouseLocationDifference)
-        let xCoordinate = horizontalResizingHandler.panelResizingWindowXCoordinate(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinate: currentMouseXCoordinate, mouseXCoordinateDifference: mouseLocationDifference)
+        let xCoordinate = panelResizingXCoordinate(horizontalResizingHandler: horizontalResizingHandler, initialPanelsDimensions: initialPanelsDimensions, currentMouseXCoordinate: currentMouseXCoordinate, mouseLocationDifference: mouseLocationDifference)
         let newFrame = NSRect(x: xCoordinate, y: frame.minY, width: width, height: frame.height)
         
         return newFrame
+    }
+    
+    private func panelResizingXCoordinate(horizontalResizingHandler: HorizontalResizingHandler, initialPanelsDimensions: PanelsDimensions, currentMouseXCoordinate: CGFloat, mouseLocationDifference: CGFloat) -> CGFloat {
+        
+        let nonElasticXCoordinate = horizontalResizingHandler.nonElasticXCoordinate(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinateDifference: mouseLocationDifference)
+        
+        let mouseToEdgeDifference = horizontalResizingHandler.mouseToEdgeDifference(initialPanelsDimensions: initialPanelsDimensions, mouseXCoordinate: currentMouseXCoordinate)
+        
+        if horizontalResizingHandler.mouseIsPassedWindowEdge(mouseToEdgeDifference: mouseToEdgeDifference) {
+            return nonElasticXCoordinate
+        }
+        
+        let elasticDifference = pow(abs(mouseToEdgeDifference), 0.7)
+        let elasticXCoordinate = horizontalResizingHandler.elasticXCoordinate(nonElasticCoordinate: nonElasticXCoordinate, elasticDifference: elasticDifference)
+        
+        return elasticXCoordinate
     }
     
     func panelResizingLeftPanelWidth(horizontalResizingHandler: HorizontalResizingHandler, initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {

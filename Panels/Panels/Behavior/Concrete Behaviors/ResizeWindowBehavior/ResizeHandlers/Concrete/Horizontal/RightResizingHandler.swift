@@ -33,22 +33,30 @@ class RightResizingHandler: HorizontalResizingHandler {
         return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) - mouseXCoordinateDifference)
     }
     
-    func panelResizingWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func nonElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
         let maxXCoordinate = (initialPanelsDimensions.windowFrame?.minX ?? 0) + (initialPanelsDimensions.rightPanelWidth ?? 0)
+        let nonElasticXCoordinate = min(maxXCoordinate, (initialPanelsDimensions.windowFrame?.minX ?? 0) + mouseXCoordinateDifference)
+        
+        return nonElasticXCoordinate
+    }
+    
+    func mouseToEdgeDifference(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> CGFloat {
         
         let rightEdgeOfFrame = initialPanelsDimensions.windowFrame?.maxX ?? 0
         let mouseXCoordinateToRightEdgeDifference = mouseXCoordinate - rightEdgeOfFrame
         
-        let nonElasticXCoordinate = min(maxXCoordinate, (initialPanelsDimensions.windowFrame?.minX ?? 0) + mouseXCoordinateDifference)
-        if mouseXCoordinateToRightEdgeDifference < 0 {
-            return nonElasticXCoordinate
-        }
+        return mouseXCoordinateToRightEdgeDifference
+    }
+    
+    func elasticXCoordinate(nonElasticCoordinate: CGFloat, elasticDifference: CGFloat) -> CGFloat {
         
-        let elasticDifference = pow(mouseXCoordinateToRightEdgeDifference, 0.7)
-        let elasticXCoordinate = nonElasticXCoordinate + elasticDifference
+        return nonElasticCoordinate + elasticDifference
+    }
+    
+    func mouseIsPassedWindowEdge(mouseToEdgeDifference: CGFloat) -> Bool {
         
-        return elasticXCoordinate
+        return mouseToEdgeDifference < 0
     }
     
     func panelResizingFrameToBounceBackTo(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
