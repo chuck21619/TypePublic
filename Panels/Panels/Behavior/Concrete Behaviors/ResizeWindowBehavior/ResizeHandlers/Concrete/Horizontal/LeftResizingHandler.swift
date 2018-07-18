@@ -16,25 +16,25 @@ class LeftResizingHandler: HorizontalResizingHandler {
     }
     
     // MARK: - resizing from resize bars
-    func calcLeftPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
+    func panelResizingLeftPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
         
         let mouseXCoordinateDifference = currentMouseXCoordinate - initialMouseXCoordinate
         let initialPanelWidth = initialPanelsDimensions.leftPanelWidth ?? 0
         return max(0, initialPanelWidth + mouseXCoordinateDifference)
     }
     
-    func calcRightPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
+    func panelResizingRightPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
         
         return nil
     }
     
-    func calcWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func panelResizingWindowWidth(initialPanelsDimensions: PanelsDimensions, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
         let minimumWindowWidth = max(0, (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.leftPanelWidth ?? 0))
         return max(minimumWindowWidth, (initialPanelsDimensions.windowFrame?.width ?? 0) + mouseXCoordinateDifference)
     }
     
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
+    func panelResizingWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat, mouseXCoordinateDifference: CGFloat) -> CGFloat {
         
         let nonElasticXCoordinate = initialPanelsDimensions.windowFrame?.minX ?? 0
         
@@ -50,7 +50,7 @@ class LeftResizingHandler: HorizontalResizingHandler {
         return elasticXCoordinate
     }
     
-    func calcElasticEndFrame(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
+    func panelResizingFrameToBounceBackTo(initialPanelsDimensions: PanelsDimensions, mouseXCoordinate: CGFloat) -> PanelsDimensions? {
         
         let newWindowWidth = (initialPanelsDimensions.windowFrame?.width ?? 0) - (initialPanelsDimensions.leftPanelWidth ?? 0)
         let newWindowFrame = NSRect(x: initialPanelsDimensions.windowFrame?.minX ?? 0,
@@ -58,30 +58,30 @@ class LeftResizingHandler: HorizontalResizingHandler {
                                     width: newWindowWidth,
                                     height: initialPanelsDimensions.windowFrame?.height ?? 0)
         
-        return self.calcPanelsDimensions(hidden: true, windowFrame: newWindowFrame, defaultWidth: nil)
+        return self.panelResizingHiddenPanelPanelsDimensions(hidden: true, windowFrame: newWindowFrame, defaultWidth: nil)
     }
     
     // MARK: - auto hide/show
-    func calcPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions {
+    func panelResizingHiddenPanelPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions {
         
         let leftPanelWidth = hidden ? 0 : (defaultWidth ?? 0)
         
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: nil)
     }
     
-    func calcWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat {
+    func panelResizingHiddenPanelWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat {
         
         return initialPanelDimensions.windowFrame?.minX ?? 0
     }
     
     // MARK: - resizing from window    
-    func calcWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
+    func windowResizingElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
         
         let widthDifference = (initialPanelsDimensions.windowFrame?.width ?? 0) - minimumSize.width
         return (initialPanelsDimensions.windowFrame?.minX ?? 0) + widthDifference + elasticDifference
     }
     
-    func clacWindowXCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat {
+    func windowResizingXCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat {
         
         let widthDifference = (initialPanelsDimensions.windowFrame?.width ?? 0) - (currentPanelsDimensions.windowFrame?.width ?? 0)
         return (initialPanelsDimensions.windowFrame?.minX ?? 0) + widthDifference

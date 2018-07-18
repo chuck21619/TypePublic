@@ -12,5 +12,5 @@ protocol ResizeBehaviorDelegate {
     
     func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool)
     func currentPanelsDimensions() -> PanelsDimensions
-    func setStandardResizing(_ enabled: Bool)
+    func setAutomaticResizing(_ enabled: Bool)
 }

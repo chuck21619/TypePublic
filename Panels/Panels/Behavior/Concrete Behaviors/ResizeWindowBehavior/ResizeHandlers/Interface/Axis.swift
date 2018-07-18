@@ -12,6 +12,7 @@ protocol Axis {
     
     func size(size: NSSize) -> CGFloat
     func origin(rect: NSRect) -> CGFloat
+    func containsOriginSide(sides: [Side]) -> Bool
     
-    func calcNewOrigin(resizingSides: [Side], initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, mininumSize: NSSize) -> CGFloat
+    func elasticOrigin(resizingSides: [Side], initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, mininumSize: NSSize) -> CGFloat
 }

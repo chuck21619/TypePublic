@@ -18,7 +18,11 @@ class Y: Axis {
         return size.height
     }
     
-    func calcNewOrigin(resizingSides: [Side], initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, mininumSize: NSSize) -> CGFloat {
+    func containsOriginSide(sides: [Side]) -> Bool {
+        return sides.contains(.bottom)
+    }
+    
+    func elasticOrigin(resizingSides: [Side], initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, mininumSize: NSSize) -> CGFloat {
         
         let verticalResizingHandler: VerticalResizingHandler = resizingSides.contains(.top) ? TopResizingHandler() : BottomResizingHandler()
         let newAxisOrigin = verticalResizingHandler.calcWindowYCoordinate(initialPanelsDimensions: initialPanelsDimensions, newFrameSize: newFrameSize, elasticDifference: elasticDifference, minimumSize: mininumSize)

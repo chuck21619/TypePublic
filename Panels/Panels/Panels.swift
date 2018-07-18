@@ -278,7 +278,7 @@ public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDe
         return PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: rightPanelWidth)
     }
     
-    func setStandardResizing(_ enabled: Bool) {
+    func setAutomaticResizing(_ enabled: Bool) {
         
         if let window = self.window as? Window {
             

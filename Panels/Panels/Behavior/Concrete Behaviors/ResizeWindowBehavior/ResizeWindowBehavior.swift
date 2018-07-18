@@ -46,11 +46,11 @@ class ResizeWindowBehavior: ResizeBehavior {
             return
         }
         
-        let windowFrame = self.resizingCalculator.calcWindowFrame(horizontalResizingHandler: resizeHandler, initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions, initialMouseXCoordinate: self.initialMouseLocation.x, currentMouseXCoordinate: NSEvent.mouseLocation.x)
+        let windowFrame = self.resizingCalculator.panelResizingWindowFrame(horizontalResizingHandler: resizeHandler, initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions, initialMouseXCoordinate: self.initialMouseLocation.x, currentMouseXCoordinate: NSEvent.mouseLocation.x)
         
-        let leftPanelWidth = self.resizingCalculator.calcLeftPanelWidth(horizontalResizingHandler: resizeHandler, initialPanelsDimensions: self.initialPanelsDimensions, initialMouseXCoordinate: self.initialMouseLocation.x, currentMouseXCoordinate: NSEvent.mouseLocation.x)
+        let leftPanelWidth = self.resizingCalculator.panelResizingLeftPanelWidth(horizontalResizingHandler: resizeHandler, initialPanelsDimensions: self.initialPanelsDimensions, initialMouseXCoordinate: self.initialMouseLocation.x, currentMouseXCoordinate: NSEvent.mouseLocation.x)
         
-        let rightPanelWidth = self.resizingCalculator.calcRightPanelWidth(horizontalResizingHandler: resizeHandler, initialPanelsDimensions: self.initialPanelsDimensions, initialMouseXCoordinate: self.initialMouseLocation.x, currentMouseXCoordinate: NSEvent.mouseLocation.x)
+        let rightPanelWidth = self.resizingCalculator.panelResizingRightPanelWidth(horizontalResizingHandler: resizeHandler, initialPanelsDimensions: self.initialPanelsDimensions, initialMouseXCoordinate: self.initialMouseLocation.x, currentMouseXCoordinate: NSEvent.mouseLocation.x)
         
         let panelsDimensions = PanelsDimensions(windowFrame: windowFrame, leftPanelWidth: leftPanelWidth, rightPanelWidth: rightPanelWidth)
         
@@ -66,17 +66,16 @@ class ResizeWindowBehavior: ResizeBehavior {
         
         self.initialPanelsDimensions = self.delegate.currentPanelsDimensions()
         self.initialMouseLocation = NSEvent.mouseLocation
-        self.delegate.setStandardResizing(true)
+        self.delegate.setAutomaticResizing(true)
     }
     
-    // MARK: auto hide/show
     private func handleEndOfPanelResizing(horizontalResizingHandler: HorizontalResizingHandler, panel: Panel, currentPanelsDimensions: PanelsDimensions) {
         
         let panelWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0
         
-        let shouldHidePanel = self.resizingCalculator.shouldHidePanel(panelWidth, panel)
-        let shouldExpandPanel = self.resizingCalculator.shouldExpandPanel(panelWidth, panel)
-        let shouldBounceBackFromElasticity = self.resizingCalculator.shouldBounceBackFromElasticity(panelWidth)
+        let shouldHidePanel = self.resizingCalculator.shouldHidePanel(panelWidth: panelWidth, panel: panel)
+        let shouldExpandPanel = self.resizingCalculator.shouldExpandPanel(panelWidth: panelWidth, panel: panel)
+        let shouldBounceBackFromElasticity = self.resizingCalculator.shouldBounceBackFromElasticity(panelWidth: panelWidth)
         
         if shouldHidePanel || shouldExpandPanel {
             
@@ -84,18 +83,18 @@ class ResizeWindowBehavior: ResizeBehavior {
         }
         else if shouldBounceBackFromElasticity {
             
-            guard let elasticEndFrame = self.resizingCalculator.elasticEndFrame(horizontalResizingHandler: horizontalResizingHandler, initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinate: NSEvent.mouseLocation.x) else {
+            guard let newFrame = horizontalResizingHandler.panelResizingFrameToBounceBackTo(initialPanelsDimensions: self.initialPanelsDimensions, mouseXCoordinate: NSEvent.mouseLocation.x) else {
                 
                 return
             }
             
-            self.delegate.didUpdate(panelsDimensions: elasticEndFrame, animated: true)
+            self.delegate.didUpdate(panelsDimensions: newFrame, animated: true)
         }
     }
     
     private func setPanelHidden(hidden: Bool, panel: Panel, animated: Bool, horizontalResizingHandler: HorizontalResizingHandler) {
         
-        let panelsDimensions = self.resizingCalculator.panelsDimensions(panel: panel, hidden: hidden, horizontalResizingHandler: horizontalResizingHandler, initialPanelsDimensions: self.initialPanelsDimensions)
+        let panelsDimensions = self.resizingCalculator.panelResizingHiddenPanelPanelsDimensions(panel: panel, hidden: hidden, horizontalResizingHandler: horizontalResizingHandler, initialPanelsDimensions: self.initialPanelsDimensions)
         
         self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: animated)
     }
@@ -111,14 +110,11 @@ class ResizeWindowBehavior: ResizeBehavior {
     func didEndWindowResize(minimumSize: NSSize) {
         
         let currentPanelsDimensions = self.delegate.currentPanelsDimensions()
+        let shouldBounceBack = self.resizingCalculator.windowResizingShouldCalculateElastically(frameSize: (currentPanelsDimensions.windowFrame?.size ?? .zero), minimumSize: minimumSize)
         
-        let shouldBounceBackVertically = self.resizingCalculator.windowResizingWidthIsLessThanMinimumWidth(currentPanelsDimensions, minimumSize)
-        let shouldBounceBackHorizontally = self.resizingCalculator.windowResizingHeightIsLessThanMinimumHeight(currentPanelsDimensions, minimumSize)
-        let shouldBounceBack = shouldBounceBackVertically || shouldBounceBackHorizontally
-        
-        if shouldBounceBack {
+        if shouldBounceBack.x || shouldBounceBack.y {
             
-            let newFrame = self.resizingCalculator.calcWindowResizingCoordinates(initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions, minimumSize: minimumSize, resizingSides: self.resizingSides)
+            let newFrame = self.resizingCalculator.windowResizingFrame(initialPanelsDimensions: self.initialPanelsDimensions, currentPanelsDimensions: currentPanelsDimensions, minimumSize: minimumSize, resizingSides: self.resizingSides)
             
             let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
             self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: true)
@@ -127,14 +123,13 @@ class ResizeWindowBehavior: ResizeBehavior {
     
     func handleWindowResize(frameSize: NSSize, minimumSize: NSSize) -> NSSize {
         
-        let shouldCalculateAxesElastically = self.resizingCalculator.shouldCalculateAxesElastically(frameSize, minimumSize)
+        let shouldCalculateElastically = self.resizingCalculator.windowResizingShouldCalculateElastically(frameSize: frameSize, minimumSize: minimumSize)
         
         // if attempting to resize to a width or height smaller than allowed - move window frame instead (elastically)
-        if shouldCalculateAxesElastically.x || shouldCalculateAxesElastically.y {
+        if shouldCalculateElastically.x || shouldCalculateElastically.y {
             
-            self.delegate.setStandardResizing(false)
-            
-            let newFrame = self.resizingCalculator.calcElasticWindowFrame(shouldCalculateAxesElastically.x, frameSize, minimumSize, shouldCalculateAxesElastically.y, self.delegate.currentPanelsDimensions(), self.initialPanelsDimensions, self.resizingSides)
+            self.delegate.setAutomaticResizing(false)
+            let newFrame = self.resizingCalculator.windowResizingElasticFrame(shouldCalculateXAxisElastically: shouldCalculateElastically.x, frameSize: frameSize, minimumSize: minimumSize, shouldCalculateYAxisElastically: shouldCalculateElastically.y, currentPanelsDimensions: self.delegate.currentPanelsDimensions(), initialPanelsDimensions: self.initialPanelsDimensions, resizingSides: self.resizingSides)
             let panelsDimensions = PanelsDimensions(windowFrame: newFrame, leftPanelWidth: nil, rightPanelWidth: nil)
             self.delegate.didUpdate(panelsDimensions: panelsDimensions, animated: false)
             
@@ -142,7 +137,7 @@ class ResizeWindowBehavior: ResizeBehavior {
         }
         else {
             
-            self.delegate.setStandardResizing(true)
+            self.delegate.setAutomaticResizing(true)
             return frameSize
         }
     }

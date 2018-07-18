@@ -18,10 +18,14 @@ class X: Axis {
         return size.width
     }
     
-    func calcNewOrigin(resizingSides: [Side], initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, mininumSize: NSSize) -> CGFloat {
+    func containsOriginSide(sides: [Side]) -> Bool {
+        return sides.contains(.left)
+    }
+    
+    func elasticOrigin(resizingSides: [Side], initialPanelsDimensions: PanelsDimensions, newFrameSize: NSSize, elasticDifference: CGFloat, mininumSize: NSSize) -> CGFloat {
         
         let horizontalResizingHandler: HorizontalResizingHandler = resizingSides.contains(.left) ? LeftResizingHandler() : RightResizingHandler()
-        let newAxisOrigin = horizontalResizingHandler.calcWindowXCoordinate(initialPanelsDimensions: initialPanelsDimensions, elasticDifference: elasticDifference, minimumSize: mininumSize)
+        let newAxisOrigin = horizontalResizingHandler.windowResizingElasticXCoordinate(initialPanelsDimensions: initialPanelsDimensions, elasticDifference: elasticDifference, minimumSize: mininumSize)
         
         return newAxisOrigin
     }
