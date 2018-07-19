@@ -19,6 +19,8 @@
 		A3B0277D20EAC0B800A5C912 /* TestViewControllerTwo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */; };
 		A3B0277F20EAC0C300A5C912 /* TestViewControllerTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0277E20EAC0C300A5C912 /* TestViewControllerTwo.swift */; };
 		A3C325D420E57115007DFCE4 /* TestViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C325D320E57115007DFCE4 /* TestViewController.storyboard */; };
+		A3F5215D2100784600204312 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3886F93210053F1009E0420 /* TextEditor.framework */; };
+		A3F5215E2100784600204312 /* TextEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A3886F93210053F1009E0420 /* TextEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,27 @@
 			remoteGlobalIDString = A3828BF120E5612A000FDA72;
 			remoteInfo = Panels;
 		};
+		A3886F92210053F1009E0420 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3C316C820FFF7BA0028D466 /* TextEditor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A3C316AE20FFF7BA0028D466;
+			remoteInfo = TextEditor;
+		};
+		A3886F94210053F1009E0420 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3C316C820FFF7BA0028D466 /* TextEditor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A3C316B720FFF7BA0028D466;
+			remoteInfo = TextEditorTests;
+		};
+		A3F5215F2100784600204312 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3C316C820FFF7BA0028D466 /* TextEditor.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A3C316AD20FFF7BA0028D466;
+			remoteInfo = TextEditor;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +75,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A3F5215E2100784600204312 /* TextEditor.framework in Embed Frameworks */,
 				A3828C2320E56CA1000FDA72 /* Panels.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -75,6 +99,7 @@
 		A3986EBD20E6B59A00098A81 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewControllerTwo.storyboard; sourceTree = "<group>"; };
 		A3B0277E20EAC0C300A5C912 /* TestViewControllerTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewControllerTwo.swift; sourceTree = "<group>"; };
+		A3C316C820FFF7BA0028D466 /* TextEditor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextEditor.xcodeproj; path = ../TextEditor/TextEditor.xcodeproj; sourceTree = "<group>"; };
 		A3C325D320E57115007DFCE4 /* TestViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3F5215D2100784600204312 /* TextEditor.framework in Frameworks */,
 				A3828C2220E56CA1000FDA72 /* Panels.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +180,7 @@
 		A3828C1C20E56C81000FDA72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A3C316C820FFF7BA0028D466 /* TextEditor.xcodeproj */,
 				A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */,
 			);
 			path = Frameworks;
@@ -163,6 +190,15 @@
 			isa = PBXGroup;
 			children = (
 				A3828C2120E56C89000FDA72 /* Panels.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A3886F8E210053EF009E0420 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3886F93210053F1009E0420 /* TextEditor.framework */,
+				A3886F95210053F1009E0420 /* TextEditorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +219,7 @@
 			);
 			dependencies = (
 				A3828C2520E56CA1000FDA72 /* PBXTargetDependency */,
+				A3F521602100784600204312 /* PBXTargetDependency */,
 			);
 			name = Type;
 			productName = Type;
@@ -242,6 +279,10 @@
 					ProductGroup = A3828C1D20E56C89000FDA72 /* Products */;
 					ProjectRef = A3828C0C20E5612A000FDA72 /* Panels.xcodeproj */;
 				},
+				{
+					ProductGroup = A3886F8E210053EF009E0420 /* Products */;
+					ProjectRef = A3C316C820FFF7BA0028D466 /* TextEditor.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -257,6 +298,20 @@
 			fileType = wrapper.framework;
 			path = Panels.framework;
 			remoteRef = A3828C2020E56C89000FDA72 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A3886F93210053F1009E0420 /* TextEditor.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TextEditor.framework;
+			remoteRef = A3886F92210053F1009E0420 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A3886F95210053F1009E0420 /* TextEditorTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TextEditorTests.xctest;
+			remoteRef = A3886F94210053F1009E0420 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -315,6 +370,11 @@
 			isa = PBXTargetDependency;
 			name = Panels;
 			targetProxy = A3828C2420E56CA1000FDA72 /* PBXContainerItemProxy */;
+		};
+		A3F521602100784600204312 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TextEditor;
+			targetProxy = A3F5215F2100784600204312 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

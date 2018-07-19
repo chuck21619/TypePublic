@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Panels: NSView, PanelsInterface, ResizeBehaviorDelegate, NSWindowDelegate {
+public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     
     // MARK: - public interface
     public func set(panels: [Panel]) {

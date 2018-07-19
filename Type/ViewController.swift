@@ -8,6 +8,7 @@
 
 import Cocoa
 import Panels
+import TextEditor
 
 class ViewController: NSViewController {
 
@@ -18,17 +19,19 @@ class ViewController: NSViewController {
         
         let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
         
-        let storyboard2 = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewControllerTwo"), bundle: Bundle.main)
-        
         let leftPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let leftPanel = Panel(position: .left, viewController: leftPanelViewController)
         
         let rightPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
         
-        let mainPanelViewController = storyboard2.instantiateInitialController() as? NSViewController
-        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
         
+        guard let mainPanelViewController = TextEditorViewController.gimme() else {
+            return
+        }
+        
+        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
+
         panels.set(panels: [leftPanel, rightPanel, mainPanel])
     }
 }
