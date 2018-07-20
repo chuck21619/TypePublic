@@ -141,4 +141,40 @@ class ResizeWindowBehavior: ResizeBehavior {
             return frameSize
         }
     }
+    
+    // MARK: - Toggle Panels
+    func toggleLeftPanel(_ panel: Panel) {
+        
+        let resizingHandler = LeftResizingHandler()
+        togglePanel(panel, horizontalResizingHandler: resizingHandler)
+    }
+    
+    func toggleRightPanel(_ panel: Panel) {
+        
+        let resizingHandler = RightResizingHandler()
+        togglePanel(panel, horizontalResizingHandler: resizingHandler)
+    }
+    
+    private func togglePanel(_ panel: Panel, horizontalResizingHandler: HorizontalResizingHandler) {
+        
+        var newPanelsDimensions = self.delegate.currentPanelsDimensions()
+        
+        if panelIsHidden(horizontalResizingHandler) {
+            
+            newPanelsDimensions = horizontalResizingHandler.setRelevantPanelWidth(panelsDimensions: newPanelsDimensions, width: panel.defaultWidth)
+            newPanelsDimensions.windowFrame = newPanelsDimensions.windowFrame?.addedWidth(panel.defaultWidth)
+        }
+        else {
+            
+            let currentWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: newPanelsDimensions) ?? 0
+            newPanelsDimensions = horizontalResizingHandler.setRelevantPanelWidth(panelsDimensions: newPanelsDimensions, width: 0)
+            newPanelsDimensions.windowFrame = newPanelsDimensions.windowFrame?.subtractedWidth(currentWidth)
+        }
+        
+        self.delegate.didUpdate(panelsDimensions: newPanelsDimensions, animated: true)
+    }
+    
+    private func panelIsHidden(_ horizontalResizingHandler: HorizontalResizingHandler) -> Bool {
+        return horizontalResizingHandler.relevantPanelWidth(panelsDimensions: self.delegate.currentPanelsDimensions()) ?? 0 < 1
+    }
 }

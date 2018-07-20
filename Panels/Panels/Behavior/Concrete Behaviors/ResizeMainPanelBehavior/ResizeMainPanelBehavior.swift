@@ -9,6 +9,14 @@
 import Foundation
 
 class ResizeMainPanelBehavior: ResizeBehavior {
+    func toggleLeftPanel(_ panel: Panel) {
+        //
+    }
+    
+    func toggleRightPanel(_ panel: Panel) {
+        //
+    }
+    
     
     func didStartWindowResize(_ sides: [Side]) {
         //

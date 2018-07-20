@@ -15,6 +15,14 @@ class LeftResizingHandler: HorizontalResizingHandler {
         return panelsDimensions.leftPanelWidth
     }
     
+    func setRelevantPanelWidth(panelsDimensions: PanelsDimensions, width: CGFloat) -> PanelsDimensions {
+        
+        var newPanelsDimensions = panelsDimensions
+        newPanelsDimensions.leftPanelWidth = width
+        
+        return newPanelsDimensions
+    }
+    
     // MARK: - resizing from resize bars
     func panelResizingLeftPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat? {
         

@@ -26,6 +26,10 @@ protocol ResizeBehavior {
     func didStartWindowResize(_ sides: [Side])
     func didEndWindowResize(minimumSize: NSSize)
     
+    // toggle panels
+    func toggleLeftPanel(_ panel: Panel)
+    func toggleRightPanel(_ panel: Panel)    
+    
     //
     var delegate: ResizeBehaviorDelegate { get }
     

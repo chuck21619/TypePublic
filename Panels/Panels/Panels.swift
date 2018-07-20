@@ -63,54 +63,20 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     
     public func toggleLeftPanel() {
         
-        if leftPanelViewWidthConstraint.constant < 1 {
+        guard let leftPanel = self.leftPanel else {
+            return
+        }
         
-            var newPanelsDimensions = currentPanelsDimensions()
-            newPanelsDimensions.leftPanelWidth = leftPanel?.defaultWidth
-            newPanelsDimensions.windowFrame = NSRect(x: newPanelsDimensions.windowFrame?.minX ?? 0,
-                                                     y: newPanelsDimensions.windowFrame?.minY ?? 0,
-                                                     width: (newPanelsDimensions.windowFrame?.width ?? 0) + (leftPanel?.defaultWidth ?? 0),
-                                                     height: newPanelsDimensions.windowFrame?.height ?? 0)
-            
-            self.didUpdate(panelsDimensions: newPanelsDimensions, animated: true)
-        }
-        else {
-            
-            var newPanelsDimensions = currentPanelsDimensions()
-            newPanelsDimensions.leftPanelWidth = 0
-            newPanelsDimensions.windowFrame = NSRect(x: newPanelsDimensions.windowFrame?.minX ?? 0,
-                                                     y: newPanelsDimensions.windowFrame?.minY ?? 0,
-                                                     width: (newPanelsDimensions.windowFrame?.width ?? 0) - (leftPanelViewWidthConstraint.constant),
-                                                     height: newPanelsDimensions.windowFrame?.height ?? 0)
-            
-            self.didUpdate(panelsDimensions: newPanelsDimensions, animated: true)
-        }
+        self.resizeBehavior?.toggleLeftPanel(leftPanel)
     }
     
     public func toggleRightPanel() {
         
-        if rightPanelViewWidthConstraint.constant < 1 {
-            
-            var newPanelsDimensions = currentPanelsDimensions()
-            newPanelsDimensions.rightPanelWidth = rightPanel?.defaultWidth
-            newPanelsDimensions.windowFrame = NSRect(x: newPanelsDimensions.windowFrame?.minX ?? 0,
-                                                     y: newPanelsDimensions.windowFrame?.minY ?? 0,
-                                                     width: (newPanelsDimensions.windowFrame?.width ?? 0) + (rightPanel?.defaultWidth ?? 0),
-                                                     height: newPanelsDimensions.windowFrame?.height ?? 0)
-            
-            self.didUpdate(panelsDimensions: newPanelsDimensions, animated: true)
+        guard let rightPanel = self.rightPanel else {
+            return
         }
-        else {
-            
-            var newPanelsDimensions = currentPanelsDimensions()
-            newPanelsDimensions.rightPanelWidth = 0
-            newPanelsDimensions.windowFrame = NSRect(x: newPanelsDimensions.windowFrame?.minX ?? 0,
-                                                     y: newPanelsDimensions.windowFrame?.minY ?? 0,
-                                                     width: (newPanelsDimensions.windowFrame?.width ?? 0) - (rightPanelViewWidthConstraint.constant),
-                                                     height: newPanelsDimensions.windowFrame?.height ?? 0)
-            
-            self.didUpdate(panelsDimensions: newPanelsDimensions, animated: true)
-        }
+        
+        self.resizeBehavior?.toggleRightPanel(rightPanel)
     }
     
     // MARK: - properties

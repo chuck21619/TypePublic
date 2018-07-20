@@ -11,6 +11,7 @@ import Foundation
 protocol HorizontalResizingHandler {
     
     func relevantPanelWidth(panelsDimensions: PanelsDimensions) -> CGFloat?
+    func setRelevantPanelWidth(panelsDimensions: PanelsDimensions, width: CGFloat) -> PanelsDimensions
     
     // panel resizing
     func panelResizingLeftPanelWidth(initialPanelsDimensions: PanelsDimensions, initialMouseXCoordinate: CGFloat, currentMouseXCoordinate: CGFloat) -> CGFloat?

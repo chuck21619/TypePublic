@@ -25,6 +25,7 @@
 		A3763DD720EF6F60009C84C7 /* LeftResizingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3763DD620EF6F60009C84C7 /* LeftResizingHandler.swift */; };
 		A3763DD920EF6F74009C84C7 /* RightResizingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3763DD820EF6F74009C84C7 /* RightResizingHandler.swift */; };
 		A37658BE20E8092700BD76B9 /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37658BD20E8092700BD76B9 /* Panel.swift */; };
+		A37EEB2421018E170068D447 /* NSRect+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EEB2321018E170068D447 /* NSRect+Helpers.swift */; };
 		A3828C0320E5612A000FDA72 /* Panels.h in Headers */ = {isa = PBXBuildFile; fileRef = A3828BF520E5612A000FDA72 /* Panels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3828C1920E563DC000FDA72 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3828C1820E563DC000FDA72 /* Panels.swift */; };
 		A3B0278520EAE24A00A5C912 /* ResizeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0278420EAE24A00A5C912 /* ResizeBar.swift */; };
@@ -50,6 +51,7 @@
 		A3763DD620EF6F60009C84C7 /* LeftResizingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftResizingHandler.swift; sourceTree = "<group>"; };
 		A3763DD820EF6F74009C84C7 /* RightResizingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightResizingHandler.swift; sourceTree = "<group>"; };
 		A37658BD20E8092700BD76B9 /* Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
+		A37EEB2321018E170068D447 /* NSRect+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Helpers.swift"; sourceTree = "<group>"; };
 		A3828BF220E5612A000FDA72 /* Panels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Panels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3828BF520E5612A000FDA72 /* Panels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Panels.h; sourceTree = "<group>"; };
 		A3828BF620E5612A000FDA72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -179,6 +181,14 @@
 			path = Panel;
 			sourceTree = "<group>";
 		};
+		A37EEB2221018DFD0068D447 /* Helper Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A37EEB2321018E170068D447 /* NSRect+Helpers.swift */,
+			);
+			path = "Helper Extensions";
+			sourceTree = "<group>";
+		};
 		A3828BE820E5612A000FDA72 = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +214,7 @@
 				A3C325D120E56E65007DFCE4 /* Panels.xib */,
 				A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */,
 				A374633320F548A3000E43C2 /* PanelsWindow.swift */,
+				A37EEB2221018DFD0068D447 /* Helper Extensions */,
 				A36CD4D120EDA3D800ED46FA /* Behavior */,
 				A3B0278320EAE23800A5C912 /* ResizeBar */,
 				A37658C120E80C4000BD76B9 /* Panel */,
@@ -305,6 +316,7 @@
 				A3763DD720EF6F60009C84C7 /* LeftResizingHandler.swift in Sources */,
 				A36CD4D920EDA88E00ED46FA /* ResizeBehaviorDelegate.swift in Sources */,
 				A32FFE5220FE680D00D4BA58 /* ResizingCalculator.swift in Sources */,
+				A37EEB2421018E170068D447 /* NSRect+Helpers.swift in Sources */,
 				A3763DD320EF6F30009C84C7 /* HorizontalResizingHandler.swift in Sources */,
 				A3828C1920E563DC000FDA72 /* Panels.swift in Sources */,
 				A32FFE5420FEB91700D4BA58 /* Axis.swift in Sources */,
