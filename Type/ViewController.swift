@@ -13,6 +13,51 @@ import TextEditor
 class ViewController: NSViewController {
 
     @IBOutlet weak var panels: Panels!
+    @IBOutlet weak var slider: NSSlider!
+    @IBAction func sliderChanged(_ sender: Any) {
+        print("")
+        print(sender)
+        let floatversion = Float((sender as! NSSlider).stringValue)!/100.0
+        self.sliderLabel.stringValue = "\(floatversion)"
+        panels.animationSpeed = TimeInterval(floatversion)
+    }
+    
+    @IBAction func curveSlected(_ sender: NSPopUpButton) {
+        print("")
+        let title = sender.selectedItem?.title ?? ""
+        
+        if title == "linear" {
+            
+            panels.animationCurve = kCAMediaTimingFunctionLinear
+        }
+        else if title == "ease in" {
+            
+            panels.animationCurve = kCAMediaTimingFunctionEaseIn
+            
+        }
+        else if title == "ease out" {
+            
+            panels.animationCurve = kCAMediaTimingFunctionEaseOut
+            
+        }
+        else if title == "ease in and out" {
+            
+            panels.animationCurve = kCAMediaTimingFunctionEaseInEaseOut
+            
+        }
+    }
+    @IBOutlet weak var sliderLabel: NSTextField!
+    @IBAction func buttonPushed(_ sender: Any) {
+        
+        //right
+        panels.toggleRightPanel()
+    }
+    
+    @IBAction func leftButtonPushed(_ sender: Any) {
+        
+//        panels.togg
+        panels.toggleLeftPanel()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
