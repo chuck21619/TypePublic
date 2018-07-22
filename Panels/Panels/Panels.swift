@@ -135,6 +135,16 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
             return
         }
         
+        if sender.state == .began {
+            
+            self.leftPanelViewWidthConstraint.isActive = false
+            beginPanelResizing()
+        }
+        else if sender.state == .ended {
+            
+            endPanelResizing()
+        }
+        
         resizeBehavior?.handleResizeLeft(sender, leftPanel: leftPanel)
     }
     
@@ -144,7 +154,43 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
             return
         }
         
+        if sender.state == .began {
+            
+            self.rightPanelViewWidthConstraint.isActive = false
+            beginPanelResizing()
+        }
+        else if sender.state == .ended {
+            
+            endPanelResizing()
+        }
+        
         resizeBehavior?.handleResizeRight(sender, rightPanel: rightPanel)
+    }
+    
+    var widthhhhConstraint: NSLayoutConstraint? = nil
+    func beginPanelResizing() {
+        
+        let newLeftPanelWidth = leftPanelViewWidthConstraint.constant
+        let newRightPanelWidth = rightPanelViewWidthConstraint.constant
+        let mainPanelWidth = (self.window?.frame.width ?? 0) - (newLeftPanelWidth + newRightPanelWidth)
+        widthhhhConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelWidth)
+        
+        if !isFullScreen() {
+            widthhhhConstraint?.isActive = true
+        }
+    }
+    
+    func endPanelResizing() {
+        
+        rightPanelViewWidthConstraint.constant = rightPanelView.frame.width
+        leftPanelViewWidthConstraint.constant = leftPanelView.frame.width
+        
+        leftPanelViewWidthConstraint.isActive = true
+        rightPanelViewWidthConstraint.isActive = true
+        
+        if !self.isFullScreen() {
+            widthhhhConstraint?.isActive = false
+        }
     }
     
     // MARK: - etc
@@ -259,78 +305,81 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     }
     
     //MARK: - Resize Behavior Delegate
-    func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
+    fileprivate func animateUI(_ panelsDimensions: PanelsDimensions) {
+        animating = true
         
-        guard animating == false else {
-            return
+        let newLeftPanelWidth = panelsDimensions.leftPanelWidth ?? leftPanelViewWidthConstraint.constant
+        let newRightPanelWidth = panelsDimensions.rightPanelWidth ?? rightPanelViewWidthConstraint.constant
+        let mainPanelWidth = (panelsDimensions.windowFrame?.width ?? 0) - (newLeftPanelWidth + newRightPanelWidth)
+        let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelWidth)
+        
+        if !isFullScreen() {
+            widthConstraint.isActive = true
         }
         
-        if animated {
+        NSAnimationContext.runAnimationGroup({ (context) in
             
-            animating = true
+            context.allowsImplicitAnimation = false
+            context.duration = 0.17
+            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
             
-            let newLeftPanelWidth = panelsDimensions.leftPanelWidth ?? leftPanelViewWidthConstraint.constant
-            let newRightPanelWidth = panelsDimensions.rightPanelWidth ?? rightPanelViewWidthConstraint.constant
-            let mainPanelWidth = (panelsDimensions.windowFrame?.width ?? 0) - (newLeftPanelWidth + newRightPanelWidth)
-            let widthConstraint = mainPanelView.widthAnchor.constraint(equalToConstant: mainPanelWidth)
+            if isFullScreen() {
+                
+                if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
+                    
+                    leftPanelViewWidthConstraint.animator().setValue(leftPanelWidth, forKey: "constant")
+                }
+                
+                if let rightPanelWidth = panelsDimensions.rightPanelWidth, rightPanelWidth != rightPanelViewWidthConstraint.constant {
+                    
+                    rightPanelViewWidthConstraint.animator().setValue(rightPanelWidth, forKey: "constant")
+                }
+            }
+            else {
+                
+                if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
+                    
+                    leftPanelViewWidthConstraint.isActive = false
+                }
+                
+                if let rightPanelWidth = panelsDimensions.rightPanelWidth, rightPanelWidth != rightPanelViewWidthConstraint.constant {
+                    
+                    rightPanelViewWidthConstraint.isActive = false
+                }
+                
+                if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
+                    
+                    self.window?.animator().setFrame(windowFrame, display: true)
+                }
+            }
+        }) {
             
-            if !isFullScreen() {
-                widthConstraint.isActive = true
+            if !self.isFullScreen() {
+                widthConstraint.isActive = false
+                
+                self.leftPanelViewWidthConstraint.constant = max(0, self.leftPanelView.frame.width)
+                self.leftPanelViewWidthConstraint.isActive = true
+                
+                self.rightPanelViewWidthConstraint.constant = max(0, self.rightPanelView.frame.width)
+                self.rightPanelViewWidthConstraint.isActive = true
             }
             
-            NSAnimationContext.runAnimationGroup({ (context) in
-                
-                context.allowsImplicitAnimation = false
-                context.duration = 0.17
-                context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-                
-                if isFullScreen() {
-                    
-                    if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
-                        
-                        leftPanelViewWidthConstraint.animator().setValue(leftPanelWidth, forKey: "constant")
-                    }
-                    
-                    if let rightPanelWidth = panelsDimensions.rightPanelWidth, rightPanelWidth != rightPanelViewWidthConstraint.constant {
-                        
-                        rightPanelViewWidthConstraint.animator().setValue(rightPanelWidth, forKey: "constant")
-                    }
-                }
-                else {
-                    
-                    if let leftPanelWidth = panelsDimensions.leftPanelWidth, leftPanelWidth != leftPanelViewWidthConstraint.constant {
-                        
-                        leftPanelViewWidthConstraint.isActive = false
-                    }
-                    
-                    if let rightPanelWidth = panelsDimensions.rightPanelWidth, rightPanelWidth != rightPanelViewWidthConstraint.constant {
-                        
-                        rightPanelViewWidthConstraint.isActive = false
-                    }
-                    
-                    if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame {
-                        
-                        self.window?.animator().setFrame(windowFrame, display: true)
-                    }
-                }
-            }) {
-                
-                if !self.isFullScreen() {
-                    widthConstraint.isActive = false
-                    
-                    self.leftPanelViewWidthConstraint.constant = max(0, self.leftPanelView.frame.width)
-                    self.leftPanelViewWidthConstraint.isActive = true
-                    
-                    self.rightPanelViewWidthConstraint.constant = max(0, self.rightPanelView.frame.width)
-                    self.rightPanelViewWidthConstraint.isActive = true
-                }
-                
-                self.animating = false
-            }
-            return
+            self.animating = false
         }
- 
-        // non-animated
+        return
+    }
+    
+    fileprivate func updateUI(_ panelsDimensions: PanelsDimensions) {
+        
+        if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame, !isFullScreen() {
+            
+            guard let window = self.window as? PanelsWindow else {
+                return
+            }
+            
+            window.setFrameOverride(windowFrame, display: false)
+        }
+        /*
         if let windowFrame = panelsDimensions.windowFrame, windowFrame != self.window?.frame, !isFullScreen() {
             
             guard let window = self.window as? PanelsWindow else {
@@ -360,6 +409,23 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
             }
             
             rightPanelViewWidthConstraint.constant = rightPanelWidth
+        }
+ */
+    }
+    
+    func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
+        
+        guard animating == false else {
+            return
+        }
+        
+        if animated {
+            
+            return animateUI(panelsDimensions)
+        }
+        else {
+            
+            updateUI(panelsDimensions)
         }
     }
 
