@@ -14,18 +14,6 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var panels: Panels!
     
-    @IBAction func rightButtonPushed(_ sender: Any) {
-        
-        //right
-        panels.toggleRightPanel()
-    }
-    
-    @IBAction func leftButtonPushed(_ sender: Any) {
-        
-//        panels.togg
-        panels.toggleLeftPanel()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

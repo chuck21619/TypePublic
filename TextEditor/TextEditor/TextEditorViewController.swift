@@ -10,6 +10,7 @@ import Foundation
 
 public class TextEditorViewController: NSViewController {
     
+    @IBOutlet var textEditorView: TextEditorView!
     // MARK: - Constructors
 //    public init() {
 //        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: String(describing: TextEditorViewController.self)), bundle: Bundle.main)

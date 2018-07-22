@@ -8,27 +8,25 @@
 
 import Foundation
 
-class TextEditorView: NSView {
+class TextEditorView: NSTextView {
     
     // MARK: constructors
-    init() {
-        super.init(frame: NSRect(x: 0, y: 0, width: 100, height: 100))
-        self.commonInit()
-    }
-    
-    
-    required init?(coder decoder: NSCoder) {
-        super.init(coder: decoder)
-        self.commonInit()
-    }
-    
-    func commonInit() {
-        
-        let textView = NSTextView(frame: .zero)
-        self.addSubview(textView)
-//        textView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-//        textView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-//        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-//        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
+//    override init(frame frameRect: NSRect) {
+//        super.init(frame: frameRect)
+//        self.commonInit()
+//    }
+//    
+//    
+//    required init?(coder decoder: NSCoder) {
+//        super.init(coder: decoder)
+//        self.commonInit()
+//    }
+//    
+//    func commonInit() {
+//        
+////        textView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+////        textView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+////        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+////        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+//    }
 }
