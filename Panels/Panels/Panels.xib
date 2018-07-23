@@ -11,6 +11,7 @@
                 <outlet property="leftPanelView" destination="JQh-tB-bkV" id="ikH-Cu-ZNw"/>
                 <outlet property="leftPanelViewWidthConstraint" destination="AsA-Uc-ed1" id="7Lm-Zi-tqS"/>
                 <outlet property="mainPanelView" destination="oxJ-Ja-5H9" id="Odq-Hd-tIa"/>
+                <outlet property="mainPanelViewWidthConstraint" destination="W7D-ve-TMo" id="qSv-X7-Nzt"/>
                 <outlet property="resizeBarLeft" destination="0g0-8J-8VK" id="98y-nV-FUA"/>
                 <outlet property="resizeBarRight" destination="lcU-R6-SMf" id="vnn-2m-U19"/>
                 <outlet property="rightPanelView" destination="Qae-ig-qO0" id="6fs-MY-3Xn"/>
@@ -37,6 +38,9 @@
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="oxJ-Ja-5H9">
                     <rect key="frame" x="332" y="0.0" width="332" height="329"/>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="250" constant="332" id="W7D-ve-TMo"/>
+                    </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="0g0-8J-8VK" customClass="ResizeBar" customModule="Panels" customModuleProvider="target">
                     <rect key="frame" x="322" y="0.0" width="20" height="329"/>
