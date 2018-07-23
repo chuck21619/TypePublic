@@ -39,8 +39,8 @@ public class TextEditorViewController: NSViewController {
     func commonInit() {
         
         print("common init")
-        let view = TextEditorView()
-        self.view.addSubview(view)
+//        let view = TextEditorView()
+//        self.view.addSubview(view)
 //        view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
 //        view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
 //        view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
