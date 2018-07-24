@@ -80,7 +80,8 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     override func processEditing() {
-        performReplacementsForRange(changedRange: self.editedRange)
         super.processEditing()
+        performReplacementsForRange(changedRange: self.editedRange)
     }
+    
 }
