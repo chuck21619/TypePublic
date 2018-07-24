@@ -26,7 +26,7 @@ class ViewController: NSViewController {
         let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
         
         
-        guard let mainPanelViewController = TextEditorViewController.gimme() else {
+        guard let mainPanelViewController = TextEditorViewController.createInstance() else {
             return
         }
         

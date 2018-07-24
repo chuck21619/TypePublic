@@ -8,18 +8,14 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate {
     
-    @IBOutlet var textEditorView: TextEditorView!
+    // MARK: - Properties
+    var textEditorView: TextEditorView!
+    var textStorage: TextEditorTextStorage!
+    
     // MARK: - Constructors
-//    public init() {
-//        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: String(describing: TextEditorViewController.self)), bundle: Bundle.main)
-//
-//        let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
-//        self.commonInit()
-//    }
-    
-    public static func gimme() -> TextEditorViewController? {
+    public static func createInstance() -> TextEditorViewController? {
         
         let bundle = Bundle(for: TextEditorViewController.self)
         let storyboardName = NSStoryboard.Name(rawValue: String(describing: TextEditorViewController.self))
@@ -31,19 +27,66 @@ public class TextEditorViewController: NSViewController {
         return viewController
     }
 
-//    required public init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        self.commonInit()
-//    }
-//    
-    func commonInit() {
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.commonInit()
+    }
+    
+    private func commonInit() {
+        //
+    }
+    
+    public override func viewDidLoad() {
         
-        print("common init")
-//        let view = TextEditorView()
-//        self.view.addSubview(view)
-//        view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-//        view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-//        view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-//        view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        createTextView()
+    }
+    
+    private func createTextView() {
+    
+        // 1. create text storage that backs the editor
+        //TODO: hook font up to settings/preferences
+        let attributes = [NSAttributedStringKey.font : NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)]
+        //TODO: hook string up to opened file
+        let string = ""
+        
+        let attributedString = NSAttributedString(string: string, attributes: attributes)
+        textStorage = TextEditorTextStorage()
+        textStorage.append(attributedString)
+        
+        let scrollViewRect = view.bounds
+        
+        // 2. create the layout manager
+        let layoutManager = NSLayoutManager()
+        
+        // 3. create a text container
+        let containerSize = CGSize(width: scrollViewRect.width, height: CGFloat.greatestFiniteMagnitude)
+        let container = NSTextContainer(size: containerSize)
+        container.widthTracksTextView = true
+        
+        // 4. assemble
+        layoutManager.addTextContainer(container)
+        textStorage.addLayoutManager(layoutManager)
+        
+        // 5. put textView in scrollView
+        let scrollView = NSScrollView(frame: scrollViewRect)
+        let contentSize = scrollView.contentSize
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = false
+        scrollView.autoresizingMask = [.width, .height]
+        
+        // 6. create textview
+        let textEditorViewFrame = NSRect(origin: .zero, size: contentSize)
+        textEditorView = TextEditorView(frame: textEditorViewFrame, textContainer: container)
+        textEditorView.minSize = NSSize(width: 0, height: contentSize.height)
+        textEditorView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        textEditorView.isVerticallyResizable = true
+        textEditorView.isHorizontallyResizable = false
+        textEditorView.autoresizingMask = .width
+        textEditorView.delegate = self
+        
+        // 7. assemble
+        scrollView.documentView = textEditorView
+        
+        view.addSubview(scrollView)
     }
 }

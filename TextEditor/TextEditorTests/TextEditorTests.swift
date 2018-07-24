@@ -11,12 +11,10 @@ import XCTest
 
 class TextEditorTests: XCTestCase {
     
-    
-    
-    func testExample() {
-                    guard let mpvc = TextEditorViewController.gimme() else {
-                        return
-                    }
-                    print(mpvc)
+    func testInit() {
+        guard let mpvc = TextEditorViewController.createInstance() else {
+            return
+        }
+        print(mpvc)
     }
 }

@@ -8,9 +8,12 @@
 
 import Foundation
 
-class TextEditorView: NSTextView {
+class TextEditorView: NSTextView/*, NSTextStorageDelegate, SyntaxParserDelgate*/ {
     
-    // MARK: constructors
+    // MARK: - Properties
+//    var syntaxParser: SyntaxParser?//(delegate: self)
+//    
+//    // MARK: - Constructors
 //    override init(frame frameRect: NSRect) {
 //        super.init(frame: frameRect)
 //        self.commonInit()
@@ -24,9 +27,21 @@ class TextEditorView: NSTextView {
 //    
 //    func commonInit() {
 //        
-////        textView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-////        textView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-////        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-////        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+//        self.textStorage?.delegate = self
+//        self.syntaxParser = SyntaxParser(delegate: self)
+//    }
+//    
+//    // MARK: - NSTextStorageDelegate
+//    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+//        
+//        syntaxParser?.parseText(self.string)
+//    }
+//    
+//    // MARK: - SyntaxParserDelgate
+//    func didParseSyntax(string: NSAttributedString) {
+//        
+//        let range = NSRange(location: 0, length: 0)
+//        self.textStorage?.replaceCharacters(in: range, with: string)
+////        self.textStorage?.setAttributedString(string)
 //    }
 }
