@@ -39,4 +39,48 @@ class TextEditorTextStorage: NSTextStorage {
         edited(.editedAttributes, range: range, changeInLength: 0)
         endEditing()
     }
+    
+    // testing
+    func applyStylesToRange(searchRange: NSRange) {
+        
+        // 1. create some fonts
+        let boldFont = NSFont.boldSystemFont(ofSize: NSFont.smallSystemFontSize)
+        let normalFont = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        
+        // 2. match items surrounded by asterisks
+        let regexStr = "(\\*\\w+(\\s\\w+)*\\*)"
+        guard let regex = try? NSRegularExpression(pattern: regexStr, options: .caseInsensitive) else {
+            return
+        }
+        let boldAttributes = [NSAttributedStringKey.font : boldFont]
+        let normalAttributes = [NSAttributedStringKey.font : normalFont]
+        
+        // 3. iterate over each match, making the text bold
+        regex.enumerateMatches(in: backingStore.string, range: searchRange) { (match, flags, stop) in
+            
+            guard let match = match else {
+                return
+            }
+            
+            let matchRange = match.range(at: 1)
+            self.addAttributes(boldAttributes, range: matchRange)
+            
+            // 4. reset the style to the original
+            let maxRange = matchRange.location + matchRange.length
+            if maxRange + 1 < self.length {
+                self.addAttributes(normalAttributes, range: NSMakeRange(maxRange, 1))
+            }
+        }
+    }
+    
+    func performReplacementsForRange(changedRange: NSRange) {
+        var extendedRange = NSUnionRange(changedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(changedRange.location, 0)))
+        extendedRange = NSUnionRange(changedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(NSMaxRange(changedRange), 0)))
+        applyStylesToRange(searchRange: extendedRange)
+    }
+    
+    override func processEditing() {
+        performReplacementsForRange(changedRange: self.editedRange)
+        super.processEditing()
+    }
 }
