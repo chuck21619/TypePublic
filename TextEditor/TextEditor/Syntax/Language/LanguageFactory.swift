@@ -18,8 +18,15 @@ class LanguageFactory {
             
         case .Markdown:
             
-            let keyword = Keyword(stringValue: "blue", color: .blue)
-            let keywords: [Keyword] = [keyword]
+            let attribute = Attribute(key: .foregroundColor, value: NSColor.blue)
+            let regexPattern = RegularExpressionPatternFactory.pattern(keyword: "blue")
+            let keyword = Keyword(regexPattern: regexPattern, attribute: attribute)
+            
+            let attribute2 = Attribute(key: .foregroundColor, value: NSColor.brown)
+            let regexPattern2 = RegularExpressionPatternFactory.pattern(beginning: "^s*#", ending: "")
+            let keyword2 = Keyword(regexPattern: regexPattern2, attribute: attribute2)
+            
+            let keywords: [Keyword] = [keyword, keyword2]
             let language = Language(name: "Markdown", definedLanguage: .Markdown, keywords: keywords)
             return language
         }

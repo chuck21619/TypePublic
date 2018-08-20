@@ -10,6 +10,6 @@ import Foundation
 
 struct Keyword {
     
-    let stringValue: String
-    let color: NSColor
+    let regexPattern: String
+    let attribute: Attribute
 }

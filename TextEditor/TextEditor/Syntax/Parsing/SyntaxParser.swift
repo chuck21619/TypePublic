@@ -11,30 +11,44 @@ import Foundation
 class SyntaxParser {
     
     // MARK: - Constructors
-    convenience init(delegate: SyntaxParserDelgate) {
+    convenience init() {
         let languageFactory = LanguageFactory()
         let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
-        self.init(delegate: delegate, language: language)
+        self.init(language: language)
     }
     
-    init(delegate: SyntaxParserDelgate, language: Language) {
-        self.delegate = delegate
+    init(language: Language) {
         self.language = language
     }
     
     // MARK: - Properties
-    var delegate: SyntaxParserDelgate
     var language: Language
     
-    func parseText(_ string: String) {
+    func attributes(for string: String, changedRange: NSRange) -> [(attribute: Attribute, range: NSRange)] {
         
-//        let range = NSRange(location: 0, length: 1)
-//        let attributedString = NSMutableAttributedString(string: string)
-//        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: NSColor.blue, range: range)
-
+        var attributes: [(attribute: Attribute, range: NSRange)] = []
         
-        let attributedString = NSAttributedString(string: "test")
+        for keyword in language.keywords {
+            
+            let regexStr = keyword.regexPattern
+//            let regexStr = "^s*-.*"
+            
+//            let regexStr = "\\b(\(keyword.stringValue))\\b"
+            
+            guard let regex = try? NSRegularExpression(pattern: regexStr) else {
+                return []
+            }
+            
+            regex.enumerateMatches(in: string, range: changedRange) { (match, flags, stop) in
+                
+                guard let match = match else {
+                    return
+                }
+                
+                attributes.append((attribute: keyword.attribute, range: match.range))
+            }
+        }
         
-        self.delegate.didParseSyntax(string: attributedString)
+        return attributes
     }
 }
