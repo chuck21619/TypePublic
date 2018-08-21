@@ -20,6 +20,6 @@ class RegularExpressionPatternFactory {
     
     static func pattern(beginning: String, ending: String) -> String {
         
-        return "\(beginning).*\(ending)"
+        return "^\\s*\(beginning).*\(ending)"
     }
 }
