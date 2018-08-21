@@ -10,9 +10,6 @@ import Foundation
 
 class RegularExpressionPatternFactory {
     
-    //            let regexStr = "^s*-.*"
-    
-    //            let regexStr = "\\b(\(keyword.stringValue))\\b"
     static func pattern(keyword: String) -> String {
         
         return "\\b(\(keyword))\\b"
