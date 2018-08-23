@@ -12,11 +12,28 @@ class RegularExpressionPatternFactory {
     
     static func pattern(keyword: String) -> String {
         
-        return "\\b(\(keyword))\\b"
+        let escapedKeyword = RegularExpressionPatternFactory.escapeSpecialCharacters(keyword)
+        return "\\b(\(escapedKeyword))\\b"
     }
     
     static func pattern(beginning: String, ending: String) -> String {
         
-        return "^\\s*\(beginning).*\(ending)"
+        let escapedBeginning = RegularExpressionPatternFactory.escapeSpecialCharacters(beginning)
+        let escapedEnding = RegularExpressionPatternFactory.escapeSpecialCharacters(beginning)
+        return "\(escapedBeginning).*\(escapedEnding)"
+    }
+    
+    static func pattern(lineBeginning: String) -> String {
+        
+        let escapedLineBeginning = RegularExpressionPatternFactory.escapeSpecialCharacters(lineBeginning)
+        return "^\\s*\(escapedLineBeginning).*"
+    }
+    
+    private static func escapeSpecialCharacters(_ string: String) -> String {
+        
+        var escapedString = string
+        escapedString = escapedString.replacingOccurrences(of: "*", with: "\\*")
+        escapedString = escapedString.replacingOccurrences(of: "+", with: "\\+")
+        return escapedString
     }
 }

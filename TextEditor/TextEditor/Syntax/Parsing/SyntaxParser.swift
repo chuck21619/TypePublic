@@ -26,14 +26,15 @@ class SyntaxParser {
     
     func attributes(for string: String, changedRange: NSRange) -> [(attribute: Attribute, range: NSRange)] {
         
+        //ask the language for attributes
+//        language.attributes(for)
+        
         var attributes: [(attribute: Attribute, range: NSRange)] = []
         
         for keyword in language.keywords {
             
             let regexStr = keyword.regexPattern
-//            let regexStr = "^s*-.*"
             
-//            let regexStr = "\\b(\(keyword.stringValue))\\b"
             
             guard let regex = try? NSRegularExpression(pattern: regexStr) else {
                 return []

@@ -23,6 +23,7 @@
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316D520FFFBF10028D466 /* TextEditorView.swift */; };
 		A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316DC210000610028D466 /* TextEditorViewController.swift */; };
+		A3EABCDB212C99F400B55541 /* Markdown.json in Resources */ = {isa = PBXBuildFile; fileRef = A3EABCDA212C99F400B55541 /* Markdown.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		A3C316BE20FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3C316D520FFFBF10028D466 /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
 		A3C316DC210000610028D466 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
+		A3EABCDA212C99F400B55541 /* Markdown.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Markdown.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				A36E72B721066E2600D8BDA1 /* Keyword.swift */,
 				A3357899212B7471000773C7 /* RegularExpressionPatternFactory.swift */,
 				A3357896212B635C000773C7 /* Attribute.swift */,
+				A3EABCD4212C928B00B55541 /* Languages */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -147,6 +150,14 @@
 				A3C316BE20FFF7BA0028D466 /* Info.plist */,
 			);
 			path = TextEditorTests;
+			sourceTree = "<group>";
+		};
+		A3EABCD4212C928B00B55541 /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				A3EABCDA212C99F400B55541 /* Markdown.json */,
+			);
+			path = Languages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3EABCDB212C99F400B55541 /* Markdown.json in Resources */,
 				A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
