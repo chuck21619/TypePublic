@@ -11,10 +11,10 @@ import Foundation
 class CustomAttributeApplicationsProvider: AttributeApplicationsProvider {
     
     // MARK: Properties
-    var provider: (String, NSRange)->[AttributeApplication]
+    var provider: (Keyword, String, NSRange)->[AttributeApplication]
     
     // MARK: Constructors
-    init(provider: @escaping (String, NSRange)->[AttributeApplication]) {
+    init(provider: @escaping (Keyword, String, NSRange)->[AttributeApplication]) {
         
         self.provider = provider
     }
@@ -22,7 +22,7 @@ class CustomAttributeApplicationsProvider: AttributeApplicationsProvider {
     // MARK: Methods
     func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeApplication] {
         
-        let attributes = provider(string, changedRange)
+        let attributes = provider(keyword, string, changedRange)
         return attributes
     }
 }

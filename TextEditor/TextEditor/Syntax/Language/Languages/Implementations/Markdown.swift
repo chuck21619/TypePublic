@@ -32,6 +32,40 @@ class Markdown: Language {
             return keyword
         }
         
+        let linksAttributeApplicationsProvider = CustomAttributeApplicationsProvider { (keyword, string, changedRange) -> [AttributeApplication] in
+            
+            var attributeApplications: [AttributeApplication] = []
+            
+            let regexStr = keyword.regexPattern
+            
+            guard let regex = try? NSRegularExpression(pattern: regexStr) else {
+                return []
+            }
+            
+            regex.enumerateMatches(in: string, range: changedRange) { (match, flags, stop) in
+                
+                guard let match = match else {
+                    return
+                }
+                
+                let titleAttribute = Attribute(key: .foregroundColor, value: NSColor.systemGreen)
+                let titleRange = match.range(withName: "linkTitle")
+                
+                let addressAttribute = Attribute(key: .foregroundColor, value: NSColor.systemYellow)
+                let addressRange = match.range(withName: "linkAddress")
+                
+                let attributeApplication1 = AttributeApplication(attribute: titleAttribute, range: titleRange)
+                let attributeApplication2 = AttributeApplication(attribute: addressAttribute, range: addressRange)
+                
+                attributeApplications.append(attributeApplication1)
+                attributeApplications.append(attributeApplication2)
+            }
+            
+            return attributeApplications
+        }
+        let linksRegexPattern = "(?<linkTitle>\\[(?=[^\\(\\)\\[\\]]*\\]\\().*?\\])(?<linkAddress>\\(.*?\\))"
+        let linksKeyword = Keyword(regexPattern: linksRegexPattern, attributeApplicationsProvider: linksAttributeApplicationsProvider)
+        
         keywords = [// #h1 titles, ##h2 titles,  etc.
                     makeKeyword("^\\s*#+", .foregroundColor, NSColor.brown),
     
@@ -52,39 +86,19 @@ class Markdown: Language {
     
                     // 1. list items
                     makeKeyword("^\\s*[0-9]\\. ", .foregroundColor, NSColor.red),
+                    
+                    // [link title](www.linkAddress.com)
+                    linksKeyword
                     ]
+        
+       
+        
+        
     }
     
     func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication] {
         
         var attributeApplications: [AttributeApplication] = []
-        
-
-        let regexStr = "(?<linkTitle>\\[(?=[^\\(\\)\\[\\]]*\\]\\().*?\\])(?<linkAddress>\\(.*?\\))"
-        
-        guard let regex = try? NSRegularExpression(pattern: regexStr) else {
-            return []
-        }
-        
-        regex.enumerateMatches(in: string, range: changedRange) { (match, flags, stop) in
-            
-            guard let match = match else {
-                return
-            }
-            
-            let titleAttribute = Attribute(key: .foregroundColor, value: NSColor.systemGreen)
-            let titleRange = match.range(withName: "linkTitle")
-            
-            let addressAttribute = Attribute(key: .foregroundColor, value: NSColor.systemYellow)
-            let addressRange = match.range(withName: "linkAddress")
-            
-            let attributeApplication1 = AttributeApplication(attribute: titleAttribute, range: titleRange)
-            let attributeApplication2 = AttributeApplication(attribute: addressAttribute, range: addressRange)
-            
-            attributeApplications.append(attributeApplication1)
-            attributeApplications.append(attributeApplication2)
-        }
-        
         
         for keyword in keywords {
             

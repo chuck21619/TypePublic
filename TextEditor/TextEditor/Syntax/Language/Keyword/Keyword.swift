@@ -10,14 +10,28 @@ import Foundation
 
 struct Keyword {
     
+    // MARK: Properties
     let regexPattern: String
-    let attribute: Attribute
+    let attribute: Attribute?
     let attributeApplicationsProvider: AttributeApplicationsProvider
     
-    init(regexPattern: String, attribute: Attribute, attributeApplicationsProvider: AttributeApplicationsProvider = SimpleAttributeApplicationsProvider()) {
+    // MARK: Constructors
+    // must be initialized with either an Attribute or an AttributeApplicationsProvider
+    
+    private init(regexPattern: String, attribute: Attribute?, attributeApplicationsProvider: AttributeApplicationsProvider) {
         
         self.regexPattern = regexPattern
         self.attribute = attribute
         self.attributeApplicationsProvider = attributeApplicationsProvider
+    }
+    
+    init(regexPattern: String, attribute: Attribute) {
+
+        self.init(regexPattern: regexPattern, attribute: attribute, attributeApplicationsProvider: SimpleAttributeApplicationsProvider())
+    }
+    
+    init(regexPattern: String, attributeApplicationsProvider: AttributeApplicationsProvider) {
+
+        self.init(regexPattern: regexPattern, attribute: nil, attributeApplicationsProvider: attributeApplicationsProvider)
     }
 }
