@@ -24,9 +24,9 @@
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316D520FFFBF10028D466 /* TextEditorView.swift */; };
 		A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316DC210000610028D466 /* TextEditorViewController.swift */; };
-		A3F0F46B2134818800FA0A74 /* NSAttributeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46A2134818800FA0A74 /* NSAttributeProvider.swift */; };
-		A3F0F4702134823300FA0A74 /* SimpleNSAttributeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46F2134823300FA0A74 /* SimpleNSAttributeProvider.swift */; };
-		A3F0F4722134826000FA0A74 /* CustomNSAttributeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4712134826000FA0A74 /* CustomNSAttributeProvider.swift */; };
+		A3F0F46B2134818800FA0A74 /* AttributeApplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46A2134818800FA0A74 /* AttributeApplicationProvider.swift */; };
+		A3F0F4702134823300FA0A74 /* SimpleAttributeApplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46F2134823300FA0A74 /* SimpleAttributeApplicationProvider.swift */; };
+		A3F0F4722134826000FA0A74 /* CustomAttributeApplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4712134826000FA0A74 /* CustomAttributeApplicationProvider.swift */; };
 		A3F0F4742134883B00FA0A74 /* AttributeApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4732134883B00FA0A74 /* AttributeApplication.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,9 +61,9 @@
 		A3C316BE20FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3C316D520FFFBF10028D466 /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
 		A3C316DC210000610028D466 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
-		A3F0F46A2134818800FA0A74 /* NSAttributeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributeProvider.swift; sourceTree = "<group>"; };
-		A3F0F46F2134823300FA0A74 /* SimpleNSAttributeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNSAttributeProvider.swift; sourceTree = "<group>"; };
-		A3F0F4712134826000FA0A74 /* CustomNSAttributeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNSAttributeProvider.swift; sourceTree = "<group>"; };
+		A3F0F46A2134818800FA0A74 /* AttributeApplicationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeApplicationProvider.swift; sourceTree = "<group>"; };
+		A3F0F46F2134823300FA0A74 /* SimpleAttributeApplicationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAttributeApplicationProvider.swift; sourceTree = "<group>"; };
+		A3F0F4712134826000FA0A74 /* CustomAttributeApplicationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAttributeApplicationProvider.swift; sourceTree = "<group>"; };
 		A3F0F4732134883B00FA0A74 /* AttributeApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,7 +206,7 @@
 		A3F0F46D213481D200FA0A74 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				A3F0F46A2134818800FA0A74 /* NSAttributeProvider.swift */,
+				A3F0F46A2134818800FA0A74 /* AttributeApplicationProvider.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -214,8 +214,8 @@
 		A3F0F46E213481DA00FA0A74 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				A3F0F46F2134823300FA0A74 /* SimpleNSAttributeProvider.swift */,
-				A3F0F4712134826000FA0A74 /* CustomNSAttributeProvider.swift */,
+				A3F0F46F2134823300FA0A74 /* SimpleAttributeApplicationProvider.swift */,
+				A3F0F4712134826000FA0A74 /* CustomAttributeApplicationProvider.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -331,7 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
-				A3F0F46B2134818800FA0A74 /* NSAttributeProvider.swift in Sources */,
+				A3F0F46B2134818800FA0A74 /* AttributeApplicationProvider.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
 				A36E72C82106833500D8BDA1 /* TextEditorTextStorage.swift in Sources */,
 				A3357897212B635C000773C7 /* Attribute.swift in Sources */,
@@ -340,8 +340,8 @@
 				A335789A212B7471000773C7 /* RegularExpressionPatternFactory.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeApplication.swift in Sources */,
-				A3F0F4702134823300FA0A74 /* SimpleNSAttributeProvider.swift in Sources */,
-				A3F0F4722134826000FA0A74 /* CustomNSAttributeProvider.swift in Sources */,
+				A3F0F4702134823300FA0A74 /* SimpleAttributeApplicationProvider.swift in Sources */,
+				A3F0F4722134826000FA0A74 /* CustomAttributeApplicationProvider.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
 				A37FAFEE212F798B00BDABC2 /* Markdown.swift in Sources */,
