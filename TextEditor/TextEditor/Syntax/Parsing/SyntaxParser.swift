@@ -25,7 +25,7 @@ class SyntaxParser {
     }
     
     // MARK: - Methods
-    func attributes(for string: String, changedRange: NSRange) -> [(attribute: Attribute, range: NSRange)] {
+    func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication] {
         
         let attributes = language.attributes(for: string, changedRange: changedRange)
         return attributes

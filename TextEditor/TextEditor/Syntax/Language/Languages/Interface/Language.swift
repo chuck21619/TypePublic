@@ -14,24 +14,5 @@ protocol Language {
     var definedLanguage: DefinedLanguage { get }
     var keywords: [Keyword] { get }
     
-    func attributes(for string: String, changedRange: NSRange) -> [(attribute: Attribute, range: NSRange)]
+    func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication]
 }
-
-//class Language {
-//
-//    let name: String
-//    let definedLanguage: DefinedLanguage
-//    let keywords: [Keyword]
-//
-//    init(name: String, definedLanguage: DefinedLanguage, keywords: [Keyword]) {
-//
-//        self.name = name
-//        self.definedLanguage = definedLanguage
-//        self.keywords = keywords
-//    }
-//
-//    func attributes(for string: String, changedRange: NSRange) -> [(attribute: Attribute, range: NSRange)] {
-//
-//        retu
-//    }
-//}

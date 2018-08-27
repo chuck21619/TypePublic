@@ -24,6 +24,10 @@
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316D520FFFBF10028D466 /* TextEditorView.swift */; };
 		A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316DC210000610028D466 /* TextEditorViewController.swift */; };
+		A3F0F46B2134818800FA0A74 /* NSAttributeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46A2134818800FA0A74 /* NSAttributeProvider.swift */; };
+		A3F0F4702134823300FA0A74 /* SimpleNSAttributeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46F2134823300FA0A74 /* SimpleNSAttributeProvider.swift */; };
+		A3F0F4722134826000FA0A74 /* CustomNSAttributeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4712134826000FA0A74 /* CustomNSAttributeProvider.swift */; };
+		A3F0F4742134883B00FA0A74 /* AttributeApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4732134883B00FA0A74 /* AttributeApplication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +61,10 @@
 		A3C316BE20FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3C316D520FFFBF10028D466 /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
 		A3C316DC210000610028D466 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
+		A3F0F46A2134818800FA0A74 /* NSAttributeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributeProvider.swift; sourceTree = "<group>"; };
+		A3F0F46F2134823300FA0A74 /* SimpleNSAttributeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNSAttributeProvider.swift; sourceTree = "<group>"; };
+		A3F0F4712134826000FA0A74 /* CustomNSAttributeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNSAttributeProvider.swift; sourceTree = "<group>"; };
+		A3F0F4732134883B00FA0A74 /* AttributeApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,9 +116,8 @@
 			children = (
 				A36E72B921066F2100D8BDA1 /* DefinedLanguage.swift */,
 				A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */,
-				A36E72B721066E2600D8BDA1 /* Keyword.swift */,
+				A3F0F4692134817600FA0A74 /* Keyword */,
 				A3357899212B7471000773C7 /* RegularExpressionPatternFactory.swift */,
-				A3357896212B635C000773C7 /* Attribute.swift */,
 				A3EABCD4212C928B00B55541 /* Languages */,
 			);
 			path = Language;
@@ -174,6 +181,43 @@
 				A325E5742131826500226D63 /* Implementations */,
 			);
 			path = Languages;
+			sourceTree = "<group>";
+		};
+		A3F0F4692134817600FA0A74 /* Keyword */ = {
+			isa = PBXGroup;
+			children = (
+				A36E72B721066E2600D8BDA1 /* Keyword.swift */,
+				A3F0F46C213481C600FA0A74 /* Attributes */,
+			);
+			path = Keyword;
+			sourceTree = "<group>";
+		};
+		A3F0F46C213481C600FA0A74 /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				A3357896212B635C000773C7 /* Attribute.swift */,
+				A3F0F4732134883B00FA0A74 /* AttributeApplication.swift */,
+				A3F0F46D213481D200FA0A74 /* Interface */,
+				A3F0F46E213481DA00FA0A74 /* Implementation */,
+			);
+			path = Attributes;
+			sourceTree = "<group>";
+		};
+		A3F0F46D213481D200FA0A74 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				A3F0F46A2134818800FA0A74 /* NSAttributeProvider.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		A3F0F46E213481DA00FA0A74 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				A3F0F46F2134823300FA0A74 /* SimpleNSAttributeProvider.swift */,
+				A3F0F4712134826000FA0A74 /* CustomNSAttributeProvider.swift */,
+			);
+			path = Implementation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
+				A3F0F46B2134818800FA0A74 /* NSAttributeProvider.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
 				A36E72C82106833500D8BDA1 /* TextEditorTextStorage.swift in Sources */,
 				A3357897212B635C000773C7 /* Attribute.swift in Sources */,
@@ -294,6 +339,9 @@
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
 				A335789A212B7471000773C7 /* RegularExpressionPatternFactory.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
+				A3F0F4742134883B00FA0A74 /* AttributeApplication.swift in Sources */,
+				A3F0F4702134823300FA0A74 /* SimpleNSAttributeProvider.swift in Sources */,
+				A3F0F4722134826000FA0A74 /* CustomNSAttributeProvider.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
 				A37FAFEE212F798B00BDABC2 /* Markdown.swift in Sources */,

@@ -52,28 +52,14 @@ class Markdown: Language {
     
                     // 1. list items
                     makeKeyword("^\\s*[0-9]\\. ", .foregroundColor, NSColor.red),
-
-                    //[link title](www.linkAddress.com)
-//                    makeKeyword("(\\[(?!.*\\[.*\\]).*\\])\\s*(\\(.*?\\))",
-                    //(\[(?!.*\[.*\]).*\])\s*(\(.*?\))
-                    
-//                    // [link title](www.linkAddress.com) // this is for the link title
-//                    makeKeyword("(?<=\\[)(.*?)(?=\\])(?=\\]\\(.*\\))", .foregroundColor, NSColor.purple),
-    
-//                             //[link title](www.linkAddress.com) // this is for the link address
-//                            makeKeyword("(?<=\\[.*\\].*\\()(.*?)(?=\\))", .foregroundColor, NSColor.purple)
                     ]
     }
     
-    func attributes(for string: String, changedRange: NSRange) -> [(attribute: Attribute, range: NSRange)] {
+    func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication] {
         
-        var attributes: [(attribute: Attribute, range: NSRange)] = []
+        var attributeApplications: [AttributeApplication] = []
         
-        
-        
-        
-        
-        //(\\(.*?\\))
+
         let regexStr = "(?<linkTitle>\\[(?=[^\\(\\)\\[\\]]*\\]\\().*?\\])(?<linkAddress>\\(.*?\\))"
         
         guard let regex = try? NSRegularExpression(pattern: regexStr) else {
@@ -86,21 +72,18 @@ class Markdown: Language {
                 return
             }
             
-            print("")
-            
             let titleAttribute = Attribute(key: .foregroundColor, value: NSColor.systemGreen)
             let titleRange = match.range(withName: "linkTitle")
             
             let addressAttribute = Attribute(key: .foregroundColor, value: NSColor.systemYellow)
             let addressRange = match.range(withName: "linkAddress")
             
-            attributes.append((attribute: titleAttribute, range: titleRange))
-            attributes.append((attribute: addressAttribute, range: addressRange))
+            let attributeApplication1 = AttributeApplication(attribute: titleAttribute, range: titleRange)
+            let attributeApplication2 = AttributeApplication(attribute: addressAttribute, range: addressRange)
+            
+            attributeApplications.append(attributeApplication1)
+            attributeApplications.append(attributeApplication2)
         }
-        
-        
-        
-        
         
         
         for keyword in keywords {
@@ -118,10 +101,11 @@ class Markdown: Language {
                     return
                 }
                 
-                attributes.append((attribute: keyword.attribute, range: match.range))
+                let attributeApplication = AttributeApplication(attribute: keyword.attribute, range: match.range)
+                attributeApplications.append(attributeApplication)
             }
         }
         
-        return attributes
+        return attributeApplications
     }
 }
