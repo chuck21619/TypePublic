@@ -16,7 +16,6 @@
 		A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */; };
 		A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */; };
 		A36E72C82106833500D8BDA1 /* TextEditorTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */; };
-		A37FAFEE212F798B00BDABC2 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37FAFED212F798B00BDABC2 /* Markdown.swift */; };
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
 		A3C316B820FFF7BA0028D466 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C316AE20FFF7BA0028D466 /* TextEditor.framework */; };
 		A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316BC20FFF7BA0028D466 /* TextEditorTests.swift */; };
@@ -49,7 +48,6 @@
 		A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParser.swift; sourceTree = "<group>"; };
 		A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParserTests.swift; sourceTree = "<group>"; };
 		A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTextStorage.swift; sourceTree = "<group>"; };
-		A37FAFED212F798B00BDABC2 /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
 		A3C316AE20FFF7BA0028D466 /* TextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C316B120FFF7BA0028D466 /* TextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextEditor.h; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		A325E5742131826500226D63 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				A37FAFED212F798B00BDABC2 /* Markdown.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -340,7 +337,6 @@
 				A3F0F4722134826000FA0A74 /* CustomAttributeApplicationsProvider.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
-				A37FAFEE212F798B00BDABC2 /* Markdown.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

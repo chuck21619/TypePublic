@@ -8,11 +8,30 @@
 
 import Foundation
 
-protocol Language {
+class Language {
     
-    var name: String { get }
-    var definedLanguage: DefinedLanguage { get }
-    var keywords: [Keyword] { get }
+    let name: String
+    let definedLanguage: DefinedLanguage
+    let keywords: [Keyword]
     
-    func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication]
+    init(name: String, definedLanguage: DefinedLanguage, keywords: [Keyword]) {
+        
+        self.name = name
+        self.definedLanguage = definedLanguage
+        self.keywords = keywords
+    }
+    
+    func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication] {
+        
+        var attributeApplications: [AttributeApplication] = []
+        
+        for keyword in keywords {
+            
+            let attributeApplicationsProvider = keyword.attributeApplicationsProvider
+            let attributeApplicationsToAppend = attributeApplicationsProvider.attributes(for: keyword, in: string, changedRange: changedRange)
+            attributeApplications.append(contentsOf: attributeApplicationsToAppend)
+        }
+        
+        return attributeApplications
+    }
 }
