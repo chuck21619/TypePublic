@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SimpleAttributeApplicationProvider: AttributeApplicationProvider {
+class SimpleAttributeApplicationsProvider: AttributeApplicationsProvider {
     
     func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeApplication] {
         

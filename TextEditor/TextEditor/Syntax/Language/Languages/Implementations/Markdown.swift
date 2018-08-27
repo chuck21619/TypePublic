@@ -88,22 +88,9 @@ class Markdown: Language {
         
         for keyword in keywords {
             
-            let regexStr = keyword.regexPattern
-            
-            
-            guard let regex = try? NSRegularExpression(pattern: regexStr) else {
-                return []
-            }
-            
-            regex.enumerateMatches(in: string, range: changedRange) { (match, flags, stop) in
-                
-                guard let match = match else {
-                    return
-                }
-                
-                let attributeApplication = AttributeApplication(attribute: keyword.attribute, range: match.range)
-                attributeApplications.append(attributeApplication)
-            }
+            let attributeApplicationsProvider = keyword.attributeApplicationsProvider
+            let attributeApplicationsToAppend = attributeApplicationsProvider.attributes(for: keyword, in: string, changedRange: changedRange)
+            attributeApplications.append(contentsOf: attributeApplicationsToAppend)
         }
         
         return attributeApplications

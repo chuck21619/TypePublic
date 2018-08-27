@@ -1,5 +1,5 @@
 //
-//  CustomAttributeApplicationProvider.swift
+//  CustomAttributeApplicationsProvider.swift
 //  TextEditor
 //
 //  Created by charles johnston on 8/27/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CustomAttributeApplicationProvider: AttributeApplicationProvider {
+class CustomAttributeApplicationsProvider: AttributeApplicationsProvider {
     
     // MARK: Properties
     var provider: (String, NSRange)->[AttributeApplication]

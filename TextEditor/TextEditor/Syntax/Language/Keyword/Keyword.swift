@@ -12,4 +12,12 @@ struct Keyword {
     
     let regexPattern: String
     let attribute: Attribute
+    let attributeApplicationsProvider: AttributeApplicationsProvider
+    
+    init(regexPattern: String, attribute: Attribute, attributeApplicationsProvider: AttributeApplicationsProvider = SimpleAttributeApplicationsProvider()) {
+        
+        self.regexPattern = regexPattern
+        self.attribute = attribute
+        self.attributeApplicationsProvider = attributeApplicationsProvider
+    }
 }

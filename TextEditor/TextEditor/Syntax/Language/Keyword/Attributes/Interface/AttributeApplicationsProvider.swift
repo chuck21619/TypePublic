@@ -1,5 +1,5 @@
 //
-//  AttributeApplicationProvider.swift
+//  AttributeApplicationsProvider.swift
 //  TextEditor
 //
 //  Created by charles johnston on 8/27/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AttributeApplicationProvider {
+protocol AttributeApplicationsProvider {
     
     func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeApplication]
 }
