@@ -90,13 +90,6 @@
 			path = Interface;
 			sourceTree = "<group>";
 		};
-		A325E5742131826500226D63 /* Implementations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Implementations;
-			sourceTree = "<group>";
-		};
 		A36E72B621066E1A00D8BDA1 /* Syntax */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				A325E5732131826000226D63 /* Interface */,
-				A325E5742131826500226D63 /* Implementations */,
 			);
 			path = Languages;
 			sourceTree = "<group>";
