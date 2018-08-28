@@ -53,9 +53,9 @@ class TextEditorTextStorage: NSTextStorage {
         // get attributes from syntax parser
         let attributes = syntaxParser.attributes(for: self.backingStore.string, changedRange: searchRange)
         
-        for attributeApplication in attributes {
+        for attributeOccurence in attributes {
             
-            self.addAttributes(attributeApplication.attribute.NSAttribute(), range: attributeApplication.range)
+            self.addAttributes(attributeOccurence.attribute.NSAttribute(), range: attributeOccurence.range)
         }
     }
     

@@ -22,7 +22,7 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     // MARK: Methods
     func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence] {
         
-        var attributeApplications: [AttributeOccurrence] = []
+        var attributeOccurences: [AttributeOccurrence] = []
         
         let regexStr = keyword.regexPattern
         
@@ -36,10 +36,10 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
                 return
             }
             
-            let attributeApplication = enumerator(match)
-            attributeApplications.append(contentsOf: attributeApplication)
+            let attributeOccurence = enumerator(match)
+            attributeOccurences.append(contentsOf: attributeOccurence)
         }
         
-        return attributeApplications
+        return attributeOccurences
     }
 }

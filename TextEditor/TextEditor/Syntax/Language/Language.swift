@@ -23,15 +23,15 @@ class Language {
     
     func attributes(for string: String, changedRange: NSRange) -> [AttributeOccurrence] {
         
-        var attributeApplications: [AttributeOccurrence] = []
+        var attributeOccurences: [AttributeOccurrence] = []
         
         for keyword in keywords {
             
-            let attributeApplicationsProvider = keyword.attributeApplicationsProvider
-            let attributeApplicationsToAppend = attributeApplicationsProvider.attributes(for: keyword, in: string, changedRange: changedRange)
-            attributeApplications.append(contentsOf: attributeApplicationsToAppend)
+            let attributeOccurencesProvider = keyword.attributeOccurencesProvider
+            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, changedRange: changedRange)
+            attributeOccurences.append(contentsOf: attributeOccurencesToAppend)
         }
         
-        return attributeApplications
+        return attributeOccurences
     }
 }

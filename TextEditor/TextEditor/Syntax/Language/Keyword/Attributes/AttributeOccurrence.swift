@@ -1,5 +1,5 @@
 //
-//  AttributeApplication.swift
+//  AttributeOccurrence.swift
 //  TextEditor
 //
 //  Created by charles johnston on 8/27/18.

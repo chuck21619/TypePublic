@@ -17,7 +17,7 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             return []
         }
         
-        var attributeApplications: [AttributeOccurrence] = []
+        var attributeOccurences: [AttributeOccurrence] = []
         
         let regexStr = keyword.regexPattern
         
@@ -31,10 +31,10 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
                 return
             }
             
-            let attributeApplication = AttributeOccurrence(attribute: attribute, range: match.range)
-            attributeApplications.append(attributeApplication)
+            let attributeOccurence = AttributeOccurrence(attribute: attribute, range: match.range)
+            attributeOccurences.append(attributeOccurence)
         }
         
-        return attributeApplications
+        return attributeOccurences
     }
 }

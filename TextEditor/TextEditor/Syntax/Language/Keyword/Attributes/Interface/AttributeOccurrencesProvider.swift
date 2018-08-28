@@ -1,5 +1,5 @@
 //
-//  AttributeApplicationsProvider.swift
+//  AttributeOccurrencesProvider.swift
 //  TextEditor
 //
 //  Created by charles johnston on 8/27/18.

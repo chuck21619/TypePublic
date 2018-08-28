@@ -94,25 +94,25 @@ class MarkdownFactory {
         
         let linkTitleKeywordRegexLabel = "linkTitle"
         let linkAddressKeywordRegexLabel = "linkAddress"
-        let linksAttributeApplicationsProvider = CustomAttributeOccurrencesProvider { (match) -> [AttributeOccurrence] in
+        let linksAttributeOccurrencesProvider = CustomAttributeOccurrencesProvider { (match) -> [AttributeOccurrence] in
             
-            var attributeApplications: [AttributeOccurrence] = []
+            var attributeOccurences: [AttributeOccurrence] = []
             
             let titleAttribute = Attribute(key: .foregroundColor, value: NSColor.systemGreen)
             let titleRange = match.range(withName: linkTitleKeywordRegexLabel)
-            let titleAttributeApplication = AttributeOccurrence(attribute: titleAttribute, range: titleRange)
-            attributeApplications.append(titleAttributeApplication)
+            let titleAttributeOccurrence = AttributeOccurrence(attribute: titleAttribute, range: titleRange)
+            attributeOccurences.append(titleAttributeOccurrence)
             
             let addressAttribute = Attribute(key: .foregroundColor, value: NSColor.systemYellow)
             let addressRange = match.range(withName: linkAddressKeywordRegexLabel)
-            let addressAttributeApplication = AttributeOccurrence(attribute: addressAttribute, range: addressRange)
-            attributeApplications.append(addressAttributeApplication)
+            let addressAttributeOccurrence = AttributeOccurrence(attribute: addressAttribute, range: addressRange)
+            attributeOccurences.append(addressAttributeOccurrence)
             
-            return attributeApplications
+            return attributeOccurences
         }
         
         let linksRegexPattern = "(?<\(linkTitleKeywordRegexLabel)>\\[(?=[^\\(\\)\\[\\]]*\\]\\().*?\\])(?<\(linkAddressKeywordRegexLabel)>\\(.*?\\))"
-        let linksKeyword = Keyword(regexPattern: linksRegexPattern, attributeApplicationsProvider: linksAttributeApplicationsProvider)
+        let linksKeyword = Keyword(regexPattern: linksRegexPattern, attributeOccurencesProvider: linksAttributeOccurrencesProvider)
         
         return linksKeyword
     }
