@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BettCAAP: AttributeApplicationsProvider {
+class CustomAttributeApplicationsProvider: AttributeApplicationsProvider {
     
     // MARK: Properties
     var enumerator: (NSTextCheckingResult)->[AttributeApplication]
