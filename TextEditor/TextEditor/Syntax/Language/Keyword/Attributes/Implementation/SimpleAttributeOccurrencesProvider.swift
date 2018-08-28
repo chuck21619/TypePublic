@@ -8,16 +8,16 @@
 
 import Foundation
 
-class SimpleAttributeApplicationsProvider: AttributeApplicationsProvider {
+class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     
-    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeApplication] {
+    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence] {
         
         guard let attribute = keyword.attribute else {
             // if the keyword was not initialized with an attribute, then the simple provider should not do anything, as it should not predict any attribute changes (maybe a default attribute should be used?)
             return []
         }
         
-        var attributeApplications: [AttributeApplication] = []
+        var attributeApplications: [AttributeOccurrence] = []
         
         let regexStr = keyword.regexPattern
         
@@ -31,7 +31,7 @@ class SimpleAttributeApplicationsProvider: AttributeApplicationsProvider {
                 return
             }
             
-            let attributeApplication = AttributeApplication(attribute: attribute, range: match.range)
+            let attributeApplication = AttributeOccurrence(attribute: attribute, range: match.range)
             attributeApplications.append(attributeApplication)
         }
         

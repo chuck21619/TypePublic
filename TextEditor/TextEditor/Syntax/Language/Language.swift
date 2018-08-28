@@ -21,9 +21,9 @@ class Language {
         self.keywords = keywords
     }
     
-    func attributes(for string: String, changedRange: NSRange) -> [AttributeApplication] {
+    func attributes(for string: String, changedRange: NSRange) -> [AttributeOccurrence] {
         
-        var attributeApplications: [AttributeApplication] = []
+        var attributeApplications: [AttributeOccurrence] = []
         
         for keyword in keywords {
             

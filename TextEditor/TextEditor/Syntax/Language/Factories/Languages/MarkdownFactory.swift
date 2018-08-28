@@ -94,18 +94,18 @@ class MarkdownFactory {
         
         let linkTitleKeywordRegexLabel = "linkTitle"
         let linkAddressKeywordRegexLabel = "linkAddress"
-        let linksAttributeApplicationsProvider = CustomAttributeApplicationsProvider { (match) -> [AttributeApplication] in
+        let linksAttributeApplicationsProvider = CustomAttributeOccurrencesProvider { (match) -> [AttributeOccurrence] in
             
-            var attributeApplications: [AttributeApplication] = []
+            var attributeApplications: [AttributeOccurrence] = []
             
             let titleAttribute = Attribute(key: .foregroundColor, value: NSColor.systemGreen)
             let titleRange = match.range(withName: linkTitleKeywordRegexLabel)
-            let titleAttributeApplication = AttributeApplication(attribute: titleAttribute, range: titleRange)
+            let titleAttributeApplication = AttributeOccurrence(attribute: titleAttribute, range: titleRange)
             attributeApplications.append(titleAttributeApplication)
             
             let addressAttribute = Attribute(key: .foregroundColor, value: NSColor.systemYellow)
             let addressRange = match.range(withName: linkAddressKeywordRegexLabel)
-            let addressAttributeApplication = AttributeApplication(attribute: addressAttribute, range: addressRange)
+            let addressAttributeApplication = AttributeOccurrence(attribute: addressAttribute, range: addressRange)
             attributeApplications.append(addressAttributeApplication)
             
             return attributeApplications

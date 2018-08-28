@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AttributeApplicationsProvider {
+protocol AttributeOccurrencesProvider {
     
-    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeApplication]
+    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence]
 }

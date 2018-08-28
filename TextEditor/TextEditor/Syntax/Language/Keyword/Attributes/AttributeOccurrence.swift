@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AttributeApplication {
+struct AttributeOccurrence {
     
     let attribute: Attribute
     let range: NSRange

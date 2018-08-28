@@ -8,21 +8,21 @@
 
 import Foundation
 
-class CustomAttributeApplicationsProvider: AttributeApplicationsProvider {
+class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     
     // MARK: Properties
-    var enumerator: (NSTextCheckingResult)->[AttributeApplication]
+    var enumerator: (NSTextCheckingResult)->[AttributeOccurrence]
     
     // MARK: Constructors
-    init(enumerator: @escaping (NSTextCheckingResult)->[AttributeApplication]) {
+    init(enumerator: @escaping (NSTextCheckingResult)->[AttributeOccurrence]) {
         
         self.enumerator = enumerator
     }
     
     // MARK: Methods
-    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeApplication] {
+    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence] {
         
-        var attributeApplications: [AttributeApplication] = []
+        var attributeApplications: [AttributeOccurrence] = []
         
         let regexStr = keyword.regexPattern
         
