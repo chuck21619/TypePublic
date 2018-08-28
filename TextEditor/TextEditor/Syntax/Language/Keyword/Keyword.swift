@@ -16,9 +16,9 @@ struct Keyword {
     let attributeOccurencesProvider: AttributeOccurrencesProvider
     
     // MARK: Constructors
-    // must be initialized with either an Attribute or an AttributeOccurrencesProvider
+    // must be initialized with either an Attribute or AttributeOccurrencesProvider or both
     
-    private init(regexPattern: String, attribute: Attribute?, attributeOccurencesProvider: AttributeOccurrencesProvider) {
+    public init(regexPattern: String, attribute: Attribute? = nil, attributeOccurencesProvider: AttributeOccurrencesProvider) {
         
         self.regexPattern = regexPattern
         self.attribute = attribute
@@ -28,10 +28,5 @@ struct Keyword {
     init(regexPattern: String, attribute: Attribute) {
 
         self.init(regexPattern: regexPattern, attribute: attribute, attributeOccurencesProvider: SimpleAttributeOccurrencesProvider())
-    }
-    
-    init(regexPattern: String, attributeOccurencesProvider: AttributeOccurrencesProvider) {
-
-        self.init(regexPattern: regexPattern, attribute: nil, attributeOccurencesProvider: attributeOccurencesProvider)
     }
 }

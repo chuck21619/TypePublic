@@ -10,6 +10,16 @@ import Foundation
 
 class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     
+    // MARK: properties
+    var searchAllText: Bool
+    
+    // MARK: Constructors
+    init(searchAllText: Bool = false) {
+        
+        self.searchAllText = searchAllText
+    }
+    
+    // MARK: Methods
     func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence] {
         
         guard let attribute = keyword.attribute else {
@@ -25,7 +35,9 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             return []
         }
         
-        regex.enumerateMatches(in: string, range: changedRange) { (match, flags, stop) in
+        let searchRange = rangeToEnumerate(string: string, changedRange: changedRange)
+        
+        regex.enumerateMatches(in: string, range: searchRange) { (match, flags, stop) in
             
             guard let match = match else {
                 return
@@ -36,5 +48,20 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
         }
         
         return attributeOccurences
+    }
+    
+    private func rangeToEnumerate(string: String, changedRange: NSRange) -> NSRange {
+        
+        let rangeToEnumerate: NSRange
+        if searchAllText {
+            
+            rangeToEnumerate = NSRange(string.startIndex.encodedOffset ..< string.endIndex.encodedOffset)
+        }
+        else {
+            
+            rangeToEnumerate = changedRange
+        }
+        
+        return rangeToEnumerate
     }
 }
