@@ -28,7 +28,7 @@ class Language {
         for keyword in keywords {
             
             let attributeOccurencesProvider = keyword.attributeOccurencesProvider
-            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, changedRange: changedRange)
+            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, range: changedRange)
             attributeOccurences.append(contentsOf: attributeOccurencesToAppend)
         }
         

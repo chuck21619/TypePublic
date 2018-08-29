@@ -12,9 +12,4 @@ struct Attribute {
     
     let key: NSAttributedStringKey
     let value: Any
-    
-    func NSAttribute() -> [NSAttributedStringKey : Any] {
-        
-        return [key : value]
-    }
 }

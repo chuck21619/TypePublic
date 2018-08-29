@@ -10,17 +10,8 @@ import Foundation
 
 class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     
-    // MARK: properties
-    var searchAllText: Bool
-    
-    // MARK: Constructors
-    init(searchAllText: Bool = false) {
-        
-        self.searchAllText = searchAllText
-    }
-    
     // MARK: Methods
-    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence] {
+    func attributes(for keyword: Keyword, in string: String, range: NSRange) -> [AttributeOccurrence] {
         
         guard let attribute = keyword.attribute else {
             // if the keyword was not initialized with an attribute, then the simple provider should not do anything, as it should not predict any attribute changes (maybe a default attribute should be used?)
@@ -29,15 +20,13 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
         
         var attributeOccurences: [AttributeOccurrence] = []
         
-        let regexStr = keyword.regexPattern
+        let regexString = keyword.regexPattern
         
-        guard let regex = try? NSRegularExpression(pattern: regexStr) else {
+        guard let regex = try? NSRegularExpression(pattern: regexString) else {
             return []
         }
         
-        let searchRange = rangeToEnumerate(string: string, changedRange: changedRange)
-        
-        regex.enumerateMatches(in: string, range: searchRange) { (match, flags, stop) in
+        regex.enumerateMatches(in: string, range: range) { (match, flags, stop) in
             
             guard let match = match else {
                 return
@@ -48,20 +37,5 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
         }
         
         return attributeOccurences
-    }
-    
-    private func rangeToEnumerate(string: String, changedRange: NSRange) -> NSRange {
-        
-        let rangeToEnumerate: NSRange
-        if searchAllText {
-            
-            rangeToEnumerate = NSRange(string.startIndex.encodedOffset ..< string.endIndex.encodedOffset)
-        }
-        else {
-            
-            rangeToEnumerate = changedRange
-        }
-        
-        return rangeToEnumerate
     }
 }

@@ -20,7 +20,7 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     }
     
     // MARK: Methods
-    func attributes(for keyword: Keyword, in string: String, changedRange: NSRange) -> [AttributeOccurrence] {
+    func attributes(for keyword: Keyword, in string: String, range: NSRange) -> [AttributeOccurrence] {
         
         var attributeOccurences: [AttributeOccurrence] = []
         
@@ -30,7 +30,7 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             return []
         }
         
-        regex.enumerateMatches(in: string, range: changedRange) { (match, flags, stop) in
+        regex.enumerateMatches(in: string, range: range) { (match, flags, stop) in
             
             guard let match = match else {
                 return

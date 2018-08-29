@@ -31,34 +31,36 @@ class MarkdownFactory {
         
         let italicFont = NSFontManager().convert(NSFont.systemFont(ofSize: 11), toHaveTrait: .italicFontMask)
         let boldFont = NSFont.boldSystemFont(ofSize: 11)
-        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
         
         let keywords = [// #h1 titles, ##h2 titles,  etc.
-            createKeyword("^\\s*#+", .foregroundColor, NSColor.brown),
+            createKeyword("(^|\\n)\\s*#+", .foregroundColor, NSColor.brown),
             
             // _italic font_ *italic font*
-            createKeyword("(_|\\*)[^_\\*\\n]+\\1", .font, italicFont),
+            createKeyword("(_|\\*).+\\1", .font, italicFont),
             
             // **bold font** __bold font__
-            createKeyword("(__|\\*\\*)[^_\\*\\n]+\\1", .font, boldFont),
+            createKeyword("(__|\\*\\*).+\\1", .font, boldFont),
             
             // `monospace font` belongs in backticks
-            createKeyword("`[^`\\n]+`", .font, monospaceFont),
+            createKeyword("\\`.+\\`", .foregroundColor, NSColor.systemBlue),
             
             // *** horizontal rule // can use *** or --- or ___
-            createKeyword("^(___+|---+|\\*\\*\\*+)", .foregroundColor, NSColor.magenta),
+            createKeyword("(^|\\n)\\s*(---+|___+|\\*\\*\\*+)\\s*(?=\\n)", .foregroundColor, NSColor.magenta),
             
             // + unordered list items // can use * or - or +
-            createKeyword("^\\s*(\\* |- |\\+ )", .foregroundColor, NSColor.orange),
+            createKeyword("(^|\\n)\\s*\\* |- |\\+ ", .foregroundColor, NSColor.orange),
             
             // 1. list items
-            createKeyword("^\\s*[0-9]\\. ", .foregroundColor, NSColor.red),
+            createKeyword("(^|\\n)\\s*[0-9]\\. ", .foregroundColor, NSColor.red),
             
             // [link title](www.linkAddress.com)
             createLinksKeyword(),
             
-            // 3 or more equal signs denotes the text above it is an H1 title
-            createH1EqualSignsKeyword()
+            // one or more equal signs denotes the text above it is an H1 title
+            createH1EqualSignsKeyword(),
+            
+            // > block quotes are preceded by '>'
+            createKeyword("(^|\\n)\\s*>(.|\\n)*?(?=\\n\\n|$)", .foregroundColor, NSColor.systemGray),
         ]
         
         return keywords
@@ -78,6 +80,9 @@ class MarkdownFactory {
         
         let linkTitleKeywordRegexLabel = "linkTitle"
         let linkAddressKeywordRegexLabel = "linkAddress"
+        
+        let linksRegexPattern = "(?<\(linkTitleKeywordRegexLabel)>\\[(?=[^\\(\\)\\[\\]]*\\]\\().*?\\])(?<\(linkAddressKeywordRegexLabel)>\\(.*?\\))"
+        
         let linksAttributeOccurrencesProvider = CustomAttributeOccurrencesProvider { (match) -> [AttributeOccurrence] in
             
             var attributeOccurences: [AttributeOccurrence] = []
@@ -95,21 +100,19 @@ class MarkdownFactory {
             return attributeOccurences
         }
         
-        let linksRegexPattern = "(?<\(linkTitleKeywordRegexLabel)>\\[(?=[^\\(\\)\\[\\]]*\\]\\().*?\\])(?<\(linkAddressKeywordRegexLabel)>\\(.*?\\))"
         let linksKeyword = Keyword(regexPattern: linksRegexPattern, attributeOccurencesProvider: linksAttributeOccurrencesProvider)
         
         return linksKeyword
     }
     
     
-    // 3 or more equal signs denotes the text above it is an H1 title
+    // 1 or more equal signs denotes the text above it is an H1 title
     func createH1EqualSignsKeyword() -> Keyword {
 
-        let regexPattern = ".+(?=\\n===+\\n)"
-        let provider = SimpleAttributeOccurrencesProvider(searchAllText: true)
+        let regexPattern = "(^|\\n)\\s*.+(?=\\n\\s*=+\\s*(\\n|$))"
         let attribute = Attribute(key: headerTitleAttributeKey, value: headerTitleColor)
         
-        let keyword = Keyword(regexPattern: regexPattern, attribute: attribute, attributeOccurencesProvider: provider)
+        let keyword = Keyword(regexPattern: regexPattern, attribute: attribute)
         
         return keyword
     }

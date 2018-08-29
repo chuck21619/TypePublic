@@ -22,9 +22,9 @@ class TextEditorTextStorage: NSTextStorage {
         return backingStore.attributes(at: location, effectiveRange: range)
     }
     
-    // mandatory overrides
+    // mandatory overrides to use our backingStore.string
     override func replaceCharacters(in range: NSRange, with str: String) {
-        print("replace characters in range:\(range) with string:\(str)")
+//        print("replace characters in range:\(range) with string:\(str)")
         
         beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
@@ -33,7 +33,7 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange) {
-        print("setAttributes:\(attrs ?? [:]) range:\(range)")
+//        print("setAttributes:\(attrs ?? [:]) range:\(range)")
         
         beginEditing()
         backingStore.setAttributes(attrs, range: range)
@@ -41,33 +41,49 @@ class TextEditorTextStorage: NSTextStorage {
         endEditing()
     }
     
-    // testing
+    // methods to apply attributes
     func applyStylesToRange(searchRange: NSRange) {
         
-        // reset to normal
-        let normalFontAttributes = [NSAttributedStringKey.font : NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)]
-        let normalColorAttributes = [NSAttributedStringKey.foregroundColor : NSColor.black]
-        self.addAttributes(normalColorAttributes, range: searchRange)
-        self.addAttributes(normalFontAttributes, range: searchRange)
+        // reset attributes to normal
+        // TODO: get font from settings
+        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
+        let normalFontAttribute = Attribute(key: .font, value: monospaceFont)
+        let normalFontAttributeOccurrence = AttributeOccurrence(attribute: normalFontAttribute, range: searchRange)
+        
+        let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
+        let normalColorAttributeOccurrence = AttributeOccurrence(attribute: normalColorAttribute, range: searchRange)
+        
+        let resetAttributes = [normalFontAttributeOccurrence, normalColorAttributeOccurrence]
         
         // get attributes from syntax parser
-        let attributes = syntaxParser.attributes(for: self.backingStore.string, changedRange: searchRange)
+        let parsedAttributes = syntaxParser.attributes(for: self.backingStore.string, changedRange: searchRange)
+        
+        // all attributes to apply
+        let attributes = resetAttributes + parsedAttributes
         
         for attributeOccurence in attributes {
             
-            self.addAttributes(attributeOccurence.attribute.NSAttribute(), range: attributeOccurence.range)
+            self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
     }
     
-    func performReplacementsForRange(changedRange: NSRange) {
-        var extendedRange = NSUnionRange(changedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(changedRange.location, 0)))
-        extendedRange = NSUnionRange(changedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(NSMaxRange(changedRange), 0)))
-        applyStylesToRange(searchRange: extendedRange)
+    func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
+        
+        //range for all text
+        return NSRange(backingStore.string.startIndex.encodedOffset ..< backingStore.string.endIndex.encodedOffset)
+        
+        //range for only edited text
+//        var extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(editedRange.location, 0)))
+//        extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(NSMaxRange(editedRange), 0)))
+//
+//        return extendedRange
     }
     
     override func processEditing() {
+        
         super.processEditing()
-        performReplacementsForRange(changedRange: self.editedRange)
+        
+        let rangeToApplyAttributes = rangeToPerformAttributeReplacements(editedRange: editedRange)
+        applyStylesToRange(searchRange: rangeToApplyAttributes)
     }
-    
 }
