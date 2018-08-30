@@ -34,7 +34,7 @@ class MarkdownFactory {
         
         let keywords = [            
             // #h1 titles, ##h2 titles,  etc.
-            createKeyword("(^|\\n)\\s*#+", .foregroundColor, NSColor.brown),
+            createKeyword("(^|\\n)\\s*#+(?![^\\s])", .foregroundColor, NSColor.brown),
             
             // _italic font_ *italic font*
             createKeyword("(_|\\*).+\\1", .font, italicFont),
