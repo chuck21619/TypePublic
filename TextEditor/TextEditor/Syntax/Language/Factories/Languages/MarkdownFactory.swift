@@ -36,6 +36,9 @@ class MarkdownFactory {
             // #h1 titles, ##h2 titles,  etc.
             createKeyword("(^|\\n)\\s*#+(?![^\\s])", .foregroundColor, NSColor.brown),
             
+            // TODO: fix italic font issue. type the following line in the editor to see the problem:
+            //  * apples * awef* oranges
+            
             // _italic font_ *italic font*
             createKeyword("(_|\\*).+\\1", .font, italicFont),
             
