@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegate {
     
     // MARK: - Properties
     var textEditorView: TextEditorView!
@@ -51,6 +51,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate {
         
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = TextEditorTextStorage()
+        textStorage.myDelegate = self
         textStorage.append(attributedString)
         
         let scrollViewRect = view.bounds
@@ -88,5 +89,17 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate {
         scrollView.documentView = textEditorView
         
         view.addSubview(scrollView)
+    }
+    
+    // MARK: text storage delegate
+    func didAddAttributes() {
+        
+        guard let textView = self.textEditorView else {
+            return
+        }
+        // TODO: figure out when to invalidate region (currently the markdown block quotes and markdown = signaling a h1 title require additional invalidation)
+        // TODO: figure out the size of the rect to invalidate
+        let rect = NSRect(x: 0, y: 0, width: 1000, height: 1000)
+        textView.setNeedsDisplay(rect)
     }
 }

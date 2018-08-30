@@ -32,7 +32,8 @@ class MarkdownFactory {
         let italicFont = NSFontManager().convert(NSFont.systemFont(ofSize: 11), toHaveTrait: .italicFontMask)
         let boldFont = NSFont.boldSystemFont(ofSize: 11)
         
-        let keywords = [// #h1 titles, ##h2 titles,  etc.
+        let keywords = [            
+            // #h1 titles, ##h2 titles,  etc.
             createKeyword("(^|\\n)\\s*#+", .foregroundColor, NSColor.brown),
             
             // _italic font_ *italic font*
@@ -61,6 +62,7 @@ class MarkdownFactory {
             
             // > block quotes are preceded by '>'
             createKeyword("(^|\\n)\\s*>(.|\\n)*?(?=\\n\\n|$)", .foregroundColor, NSColor.systemGray),
+ 
         ]
         
         return keywords

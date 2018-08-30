@@ -8,10 +8,15 @@
 
 import Foundation
 
+protocol TextStorageDelegate {
+    func didAddAttributes()
+}
+
 class TextEditorTextStorage: NSTextStorage {
 
     let backingStore = NSMutableAttributedString()
     let syntaxParser = SyntaxParser()
+    var myDelegate: TextStorageDelegate? = nil
     
     override var string: String {
         return backingStore.string
@@ -45,7 +50,7 @@ class TextEditorTextStorage: NSTextStorage {
     func applyStylesToRange(searchRange: NSRange) {
         
         // reset attributes to normal
-        // TODO: get font from settings
+        // TODO: get font and color from settings
         let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
         let normalFontAttribute = Attribute(key: .font, value: monospaceFont)
         let normalFontAttributeOccurrence = AttributeOccurrence(attribute: normalFontAttribute, range: searchRange)
@@ -65,6 +70,8 @@ class TextEditorTextStorage: NSTextStorage {
             
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
+        
+        self.myDelegate?.didAddAttributes()
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
@@ -72,7 +79,7 @@ class TextEditorTextStorage: NSTextStorage {
         //range for all text
         return NSRange(backingStore.string.startIndex.encodedOffset ..< backingStore.string.endIndex.encodedOffset)
         
-        //range for only edited text
+        //range for only edited line
 //        var extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(editedRange.location, 0)))
 //        extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(NSMaxRange(editedRange), 0)))
 //
