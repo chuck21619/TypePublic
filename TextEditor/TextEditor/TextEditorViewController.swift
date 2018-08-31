@@ -11,8 +11,13 @@ import Foundation
 public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegate {
     
     // MARK: - Properties
+    // TODO: make these non-optional?
+    // TODO: see if these properties should be moved somewhere more appropriate. maybe they should be here. idk
     var textEditorView: TextEditorView!
     var textStorage: TextEditorTextStorage!
+    
+    var layoutManager: TextEditorLayoutManager? = nil
+    var textContainer: NSTextContainer? = nil
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -58,19 +63,28 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         let scrollViewRect = view.bounds
         
         // 2. create the layout manager
-        let layoutManager = TextEditorLayoutManager()
+        layoutManager = TextEditorLayoutManager()
+        guard let layoutManager = layoutManager else {
+            print("error creating text view - layoutManager")
+            return
+        }
         
         // 3. create a text container
         let containerSize = CGSize(width: scrollViewRect.width, height: CGFloat.greatestFiniteMagnitude)
-        let container = TextEditorTextContainer(size: containerSize)
+        textContainer = TextEditorTextContainer(size: containerSize)
+        guard let textContainer = textContainer else {
+            print("error creating text view - textContainer")
+            return
+        }
         
         // TODO: handle word-wrap
-        container.widthTracksTextView = false
-        container.containerSize = NSSize(width: .greatestFiniteMagnitude, height: containerSize.height)
+        textContainer.widthTracksTextView = false
+        textContainer.containerSize = NSSize(width: .greatestFiniteMagnitude, height: containerSize.height)
 //        container.widthTracksTextView = true
         
         // 4. assemble
-        layoutManager.addTextContainer(container)
+        
+        layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
         
         // 5. put textView in scrollView
@@ -82,7 +96,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         
         // 6. create textview
         let textEditorViewFrame = NSRect(origin: .zero, size: contentSize)
-        textEditorView = TextEditorView(frame: textEditorViewFrame, textContainer: container)
+        textEditorView = TextEditorView(frame: textEditorViewFrame, textContainer: textContainer)
         textEditorView.minSize = NSSize(width: 0, height: contentSize.height)
         textEditorView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         textEditorView.isVerticallyResizable = true
@@ -102,9 +116,12 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         guard let textView = self.textEditorView else {
             return
         }
-        // TODO: figure out when to invalidate region (currently the markdown block quotes and markdown = signaling a h1 title require additional invalidation)
-        // TODO: figure out the size of the rect to invalidate
-        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
-        textView.setNeedsDisplay(rect)
+//        if self.textStorage.backingStore.string.count > 3 {
+//
+//            let glyphRange = NSRange(location: 1, length: 1)
+//            let rect = layoutManager?.boundingRect(forGlyphRange: glyphRange, in: textContainer!)
+//        }
+        let invalidRectangle = InvalidationCalculator().rectangle()
+        textView.setNeedsDisplay(invalidRectangle, avoidAdditionalLayout: true)
     }
 }

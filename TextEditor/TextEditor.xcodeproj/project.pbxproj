@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A31622E92139DCB3004D4076 /* InvalidationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31622E82139DCB3004D4076 /* InvalidationCalculator.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
 		A36E72B321066D1300D8BDA1 /* TextEditorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72B221066D1300D8BDA1 /* TextEditorViewTests.swift */; };
 		A36E72B521066DE400D8BDA1 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72B421066DE400D8BDA1 /* Language.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A31622E82139DCB3004D4076 /* InvalidationCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidationCalculator.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		A36E72B221066D1300D8BDA1 /* TextEditorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewTests.swift; sourceTree = "<group>"; };
 		A36E72B421066DE400D8BDA1 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
@@ -94,7 +96,9 @@
 			isa = PBXGroup;
 			children = (
 				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
+				A31622E82139DCB3004D4076 /* InvalidationCalculator.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
+				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
 			path = Syntax;
 			sourceTree = "<group>";
@@ -105,7 +109,6 @@
 				A36E72B421066DE400D8BDA1 /* Language.swift */,
 				A36E72B921066F2100D8BDA1 /* DefinedLanguage.swift */,
 				A3764B9C2135FEE1006F6675 /* Factories */,
-				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
+				A31622E92139DCB3004D4076 /* InvalidationCalculator.swift in Sources */,
 				A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,

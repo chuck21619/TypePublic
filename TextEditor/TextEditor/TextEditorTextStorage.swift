@@ -16,6 +16,8 @@ class TextEditorTextStorage: NSTextStorage {
 
     let backingStore = NSMutableAttributedString()
     let syntaxParser = SyntaxParser()
+    
+    // TODO: rename delegate
     var myDelegate: TextStorageDelegate? = nil
     
     override var string: String {
@@ -63,6 +65,13 @@ class TextEditorTextStorage: NSTextStorage {
         // get attributes from syntax parser
         let parsedAttributes = syntaxParser.attributes(for: self.backingStore.string, changedRange: searchRange)
         
+        //calculate invalidation rectangles
+        // figure out character range - iterate over the regexMatches on the previous string AND the regexMatches on the new string. if there is a match that encompasses the editedRange(includes the editedRange and beyond (either before or after)) AND that match does not exist on the other set of regexMatches = then proceed with following steps
+        // figure out the range for that regex match
+        // get the glyphRange of that characterRange (layoutManager.glyphRangeForCharacterRange:characterRange, actualCharacterRange:nil)
+        // get the bounding rect of that glyphRange (layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer))
+        // add bounding rect rect to list of rects that need to be invalidated
+        
         // all attributes to apply
         let attributes = resetAttributes + parsedAttributes
         
@@ -71,6 +80,7 @@ class TextEditorTextStorage: NSTextStorage {
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
         
+        //send invalidation rect in delegate callback
         self.myDelegate?.didAddAttributes()
     }
     
