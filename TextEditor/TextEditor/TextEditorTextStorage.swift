@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TextStorageDelegate {
-    func didAddAttributes()
+    func didAddAttributes(invalidRectangle: NSRect?)
 }
 
 class TextEditorTextStorage: NSTextStorage {
@@ -53,6 +53,7 @@ class TextEditorTextStorage: NSTextStorage {
         
         // reset attributes to normal
         // TODO: get font and color from settings
+        // TODO: it may be necessary (to increase performance) to try to use the same logic that InvalidationCalculator is doing in order only add attributes that are different (as opposed to wiping all the attributes with every keystroke, and then re-applying them)
         let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
         let normalFontAttribute = Attribute(key: .font, value: monospaceFont)
         let normalFontAttributeOccurrence = AttributeOccurrence(attribute: normalFontAttribute, range: searchRange)
@@ -65,23 +66,19 @@ class TextEditorTextStorage: NSTextStorage {
         // get attributes from syntax parser
         let parsedAttributes = syntaxParser.attributes(for: self.backingStore.string, changedRange: searchRange)
         
-        //calculate invalidation rectangles
-        // figure out character range - iterate over the regexMatches on the previous string AND the regexMatches on the new string. if there is a match that encompasses the editedRange(includes the editedRange and beyond (either before or after)) AND that match does not exist on the other set of regexMatches = then proceed with following steps
-        // figure out the range for that regex match
-        // get the glyphRange of that characterRange (layoutManager.glyphRangeForCharacterRange:characterRange, actualCharacterRange:nil)
-        // get the bounding rect of that glyphRange (layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer))
-        // add bounding rect rect to list of rects that need to be invalidated
-        
         // all attributes to apply
         let attributes = resetAttributes + parsedAttributes
         
+        // apply the attributes
         for attributeOccurence in attributes {
             
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
         
-        //send invalidation rect in delegate callback
-        self.myDelegate?.didAddAttributes()
+        // get the invalidRectangle representing the area that needs to be re-drawn
+        let invalidRectangle = InvalidationCalculator().rectangle()
+        
+        self.myDelegate?.didAddAttributes(invalidRectangle: invalidRectangle)
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {

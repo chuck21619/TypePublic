@@ -111,17 +111,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     // MARK: text storage delegate
-    func didAddAttributes() {
+    func didAddAttributes(invalidRectangle: NSRect?) {
         
-        guard let textView = self.textEditorView else {
-            return
+        if let invalidRectangle = invalidRectangle {
+            
+            guard let textView = self.textEditorView else {
+                return
+            }
+            
+            textView.setNeedsDisplay(invalidRectangle, avoidAdditionalLayout: true)
         }
-//        if self.textStorage.backingStore.string.count > 3 {
-//
-//            let glyphRange = NSRange(location: 1, length: 1)
-//            let rect = layoutManager?.boundingRect(forGlyphRange: glyphRange, in: textContainer!)
-//        }
-        let invalidRectangle = InvalidationCalculator().rectangle()
-        textView.setNeedsDisplay(invalidRectangle, avoidAdditionalLayout: true)
     }
 }
