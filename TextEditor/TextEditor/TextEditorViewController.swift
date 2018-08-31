@@ -39,6 +39,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     public override func viewDidLoad() {
         
         createTextView()
+        textEditorView.lnv_setUpLineNumberView()
     }
     
     private func createTextView() {
@@ -57,12 +58,16 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         let scrollViewRect = view.bounds
         
         // 2. create the layout manager
-        let layoutManager = NSLayoutManager()
+        let layoutManager = TextEditorLayoutManager()
         
         // 3. create a text container
         let containerSize = CGSize(width: scrollViewRect.width, height: CGFloat.greatestFiniteMagnitude)
-        let container = NSTextContainer(size: containerSize)
-        container.widthTracksTextView = true
+        let container = TextEditorTextContainer(size: containerSize)
+        
+        // TODO: handle word-wrap
+        container.widthTracksTextView = false
+        container.containerSize = NSSize(width: .greatestFiniteMagnitude, height: containerSize.height)
+//        container.widthTracksTextView = true
         
         // 4. assemble
         layoutManager.addTextContainer(container)
@@ -99,7 +104,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         }
         // TODO: figure out when to invalidate region (currently the markdown block quotes and markdown = signaling a h1 title require additional invalidation)
         // TODO: figure out the size of the rect to invalidate
-        let rect = NSRect(x: 0, y: 0, width: 1000, height: 1000)
+        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
         textView.setNeedsDisplay(rect)
     }
 }

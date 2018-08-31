@@ -24,6 +24,9 @@
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316D520FFFBF10028D466 /* TextEditorView.swift */; };
 		A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316DC210000610028D466 /* TextEditorViewController.swift */; };
+		A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E12139CB6000A8A1AF /* LineNumberRulerView.swift */; };
+		A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */; };
+		A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */; };
 		A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46A2134818800FA0A74 /* AttributeOccurrencesProvider.swift */; };
 		A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46F2134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift */; };
 		A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */; };
@@ -60,6 +63,9 @@
 		A3C316BE20FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3C316D520FFFBF10028D466 /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
 		A3C316DC210000610028D466 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
+		A3DF51E12139CB6000A8A1AF /* LineNumberRulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberRulerView.swift; sourceTree = "<group>"; };
+		A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorLayoutManager.swift; sourceTree = "<group>"; };
+		A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTextContainer.swift; sourceTree = "<group>"; };
 		A3F0F46A2134818800FA0A74 /* AttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3F0F46F2134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeOccurrence.swift; sourceTree = "<group>"; };
@@ -87,7 +93,7 @@
 		A36E72B621066E1A00D8BDA1 /* Syntax */ = {
 			isa = PBXGroup;
 			children = (
-				A36E72BE2106722B00D8BDA1 /* Parsing */,
+				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 			);
 			path = Syntax;
@@ -102,15 +108,6 @@
 				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
 			path = Language;
-			sourceTree = "<group>";
-		};
-		A36E72BE2106722B00D8BDA1 /* Parsing */ = {
-			isa = PBXGroup;
-			children = (
-				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
-				A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */,
-			);
-			path = Parsing;
 			sourceTree = "<group>";
 		};
 		A3764B9C2135FEE1006F6675 /* Factories */ = {
@@ -155,7 +152,11 @@
 				A3C316B220FFF7BA0028D466 /* Info.plist */,
 				A3C316D520FFFBF10028D466 /* TextEditorView.swift */,
 				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
+				A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */,
+				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
+				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */,
+				A3DF51E02139CB5200A8A1AF /* Line Numbers */,
 				A36E72B621066E1A00D8BDA1 /* Syntax */,
 			);
 			path = TextEditor;
@@ -170,6 +171,14 @@
 				A3C316BE20FFF7BA0028D466 /* Info.plist */,
 			);
 			path = TextEditorTests;
+			sourceTree = "<group>";
+		};
+		A3DF51E02139CB5200A8A1AF /* Line Numbers */ = {
+			isa = PBXGroup;
+			children = (
+				A3DF51E12139CB6000A8A1AF /* LineNumberRulerView.swift */,
+			);
+			path = "Line Numbers";
 			sourceTree = "<group>";
 		};
 		A3F0F4692134817600FA0A74 /* Keyword */ = {
@@ -327,10 +336,13 @@
 				A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */,
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
+				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
 				A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
+				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,
+				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
 			);
