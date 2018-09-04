@@ -114,31 +114,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     // MARK: text storage delegate
     func didAddAttributes(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence]) {
         
-        guard let layoutManager = self.layoutManager, let textContainer = self.textContainer else {
+        guard let layoutManager = self.layoutManager else {
             return
         }
         
         let changedAttributeOccurrences = lastAttributeOccurrences.difference(from: newAttributeOccurrences)
         
-        textStorage.beginEditing()
         for changedAttributeOccurrence in changedAttributeOccurrences {
 
             layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
         }
-        textStorage.endEditing()
-        
-        
-        
-        
-        // get the invalidRectangle representing the area that needs to be re-drawn
-//        let invalidRectangle = InvalidationCalculator().rectangle(lastAttributeOccurrences: lastAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, layoutManager: layoutManager, textContainer: textContainer)
-//
-//        if let invalidRectangle = invalidRectangle {
-//
-//            guard let textView = self.textEditorView else {
-//                return
-//            }
-//            textView.setNeedsDisplay(invalidRectangle, avoidAdditionalLayout: true)
-//        }
     }
 }
