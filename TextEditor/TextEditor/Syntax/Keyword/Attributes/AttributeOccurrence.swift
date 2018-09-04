@@ -13,3 +13,15 @@ struct AttributeOccurrence {
     let attribute: Attribute
     let range: NSRange
 }
+
+extension AttributeOccurrence: Hashable {
+    
+    var hashValue: Int {
+        // TODO: is this correct?
+        return range.hashValue
+    }
+    
+    static func == (lhs: AttributeOccurrence, rhs: AttributeOccurrence) -> Bool {
+        return lhs.range == rhs.range && lhs.attribute == rhs.attribute
+    }
+}

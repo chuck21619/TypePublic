@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TextStorageDelegate {
-    func didAddAttributes(invalidRectangle: NSRect?)
+    func didAddAttributes(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence])
 }
 
 class TextEditorTextStorage: NSTextStorage {
@@ -49,6 +49,8 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     // methods to apply attributes
+    // TODO: move lastAttributeOccurrences to approprite class?
+    var lastParsedAttributeOccurrences: [AttributeOccurrence] = []
     func applyStylesToRange(searchRange: NSRange) {
         
         // reset attributes to normal
@@ -61,24 +63,23 @@ class TextEditorTextStorage: NSTextStorage {
         let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
         let normalColorAttributeOccurrence = AttributeOccurrence(attribute: normalColorAttribute, range: searchRange)
         
-        let resetAttributes = [normalFontAttributeOccurrence, normalColorAttributeOccurrence]
+        let resetAttributeOccurrences = [normalFontAttributeOccurrence, normalColorAttributeOccurrence]
         
         // get attributes from syntax parser
-        let parsedAttributes = syntaxParser.attributes(for: self.backingStore.string, changedRange: searchRange)
+        let parsedAttributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, changedRange: searchRange)
         
         // all attributes to apply
-        let attributes = resetAttributes + parsedAttributes
+        let attributeOccurrences = resetAttributeOccurrences + parsedAttributeOccurrences
         
         // apply the attributes
-        for attributeOccurence in attributes {
+        for attributeOccurence in attributeOccurrences {
             
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
         
-        // get the invalidRectangle representing the area that needs to be re-drawn
-        let invalidRectangle = InvalidationCalculator().rectangle()
+        self.myDelegate?.didAddAttributes(lastAttributeOccurrences: lastParsedAttributeOccurrences, newAttributeOccurrences: parsedAttributeOccurrences)
         
-        self.myDelegate?.didAddAttributes(invalidRectangle: invalidRectangle)
+        self.lastParsedAttributeOccurrences = parsedAttributeOccurrences
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {

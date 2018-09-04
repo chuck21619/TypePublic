@@ -13,3 +13,12 @@ struct Attribute {
     let key: NSAttributedStringKey
     let value: Any
 }
+
+extension Attribute: Equatable {
+    
+    static func == (lhs: Attribute, rhs: Attribute) -> Bool {
+        // FIXME: this is not really equal
+        // need to find a way to compare the values
+        return lhs.key == rhs.key// && lhs.value == rhs.value
+    }
+}

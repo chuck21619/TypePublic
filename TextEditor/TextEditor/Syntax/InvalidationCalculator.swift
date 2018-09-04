@@ -10,18 +10,40 @@ import Foundation
 
 class InvalidationCalculator {
     
-    func rectangle() -> NSRect {
+    func rectangle(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence], layoutManager: NSLayoutManager, textContainer: NSTextContainer) -> NSRect? {
         
-        return NSRect(x: 0, y: 0, width: 100, height: 100)
+        let changedAttributeOccurrences = lastAttributeOccurrences.difference(from: newAttributeOccurrences)
         
-        //TODO: implement the following:
+        var allInvalidRectangles: [NSRect] = []
+        for changedAttributeOccurrence in changedAttributeOccurrences {
+            
+            let invalidRectangle = calculateInvalidRectangle(changedAttributeOccurrence: changedAttributeOccurrence, layoutManager: layoutManager, textContainer: textContainer)
+            allInvalidRectangles.append(invalidRectangle)
+        }
         
-        //calculate invalid rectangle
-        // figure out character range - iterate over the regexMatches on the previous string AND the regexMatches on the new string. if there is a match that encompasses the editedRange(includes the editedRange and beyond (either before or after)) AND that match does not exist on the other set of regexMatches = then proceed with following steps
-        // figure out the range for that regex match
-        // get the glyphRange of that characterRange (layoutManager.glyphRangeForCharacterRange:characterRange, actualCharacterRange:nil)
-        // get the bounding rect of that glyphRange (layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer))
-        // add bounding rect rect to list of rects that need to be invalidated
-        // calculate one rect from the resulting list of rectangles
+        let rectangleUnion = calculateUnion(of: allInvalidRectangles)
+        
+        return rectangleUnion
+    }
+    
+    private func calculateInvalidRectangle(changedAttributeOccurrence: AttributeOccurrence, layoutManager: NSLayoutManager, textContainer: NSTextContainer) -> NSRect {
+        
+        let characterRange = changedAttributeOccurrence.range
+        let glyphRange = layoutManager.glyphRange(forCharacterRange: characterRange, actualCharacterRange: nil)
+        let invalidRectangle = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+        
+        return invalidRectangle
+    }
+    
+    private func calculateUnion(of rectangles:[NSRect]) -> NSRect? {
+        
+        var rectangleUnion: NSRect? = rectangles.first
+        
+        for rectangle in rectangles {
+            
+            rectangleUnion = rectangleUnion?.union(rectangle)
+        }
+        
+        return rectangleUnion
     }
 }

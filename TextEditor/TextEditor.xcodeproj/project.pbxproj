@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A31622E92139DCB3004D4076 /* InvalidationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31622E82139DCB3004D4076 /* InvalidationCalculator.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
+		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
 		A36E72B321066D1300D8BDA1 /* TextEditorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72B221066D1300D8BDA1 /* TextEditorViewTests.swift */; };
 		A36E72B521066DE400D8BDA1 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72B421066DE400D8BDA1 /* Language.swift */; };
 		A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72B721066E2600D8BDA1 /* Keyword.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		A31622E82139DCB3004D4076 /* InvalidationCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidationCalculator.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
+		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
 		A36E72B221066D1300D8BDA1 /* TextEditorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewTests.swift; sourceTree = "<group>"; };
 		A36E72B421066DE400D8BDA1 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		A36E72B721066E2600D8BDA1 /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
@@ -92,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A3381E0A213F1B9D001C638A /* Helper Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A3381E0B213F1BBD001C638A /* Array+Difference.swift */,
+			);
+			path = "Helper Extensions";
+			sourceTree = "<group>";
+		};
 		A36E72B621066E1A00D8BDA1 /* Syntax */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +169,7 @@
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */,
+				A3381E0A213F1B9D001C638A /* Helper Extensions */,
 				A3DF51E02139CB5200A8A1AF /* Line Numbers */,
 				A36E72B621066E1A00D8BDA1 /* Syntax */,
 			);
@@ -339,6 +350,7 @@
 				A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */,
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
+				A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
 				A31622E92139DCB3004D4076 /* InvalidationCalculator.swift in Sources */,
 				A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */,

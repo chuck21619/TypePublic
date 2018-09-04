@@ -64,6 +64,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         
         // 2. create the layout manager
         layoutManager = TextEditorLayoutManager()
+//        layoutManager?.allowsNonContiguousLayout = true
         guard let layoutManager = layoutManager else {
             print("error creating text view - layoutManager")
             return
@@ -111,15 +112,33 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     // MARK: text storage delegate
-    func didAddAttributes(invalidRectangle: NSRect?) {
+    func didAddAttributes(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence]) {
         
-        if let invalidRectangle = invalidRectangle {
-            
-            guard let textView = self.textEditorView else {
-                return
-            }
-            
-            textView.setNeedsDisplay(invalidRectangle, avoidAdditionalLayout: true)
+        guard let layoutManager = self.layoutManager, let textContainer = self.textContainer else {
+            return
         }
+        
+        let changedAttributeOccurrences = lastAttributeOccurrences.difference(from: newAttributeOccurrences)
+        
+        textStorage.beginEditing()
+        for changedAttributeOccurrence in changedAttributeOccurrences {
+
+            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
+        }
+        textStorage.endEditing()
+        
+        
+        
+        
+        // get the invalidRectangle representing the area that needs to be re-drawn
+//        let invalidRectangle = InvalidationCalculator().rectangle(lastAttributeOccurrences: lastAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, layoutManager: layoutManager, textContainer: textContainer)
+//
+//        if let invalidRectangle = invalidRectangle {
+//
+//            guard let textView = self.textEditorView else {
+//                return
+//            }
+//            textView.setNeedsDisplay(invalidRectangle, avoidAdditionalLayout: true)
+//        }
     }
 }
