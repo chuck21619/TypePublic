@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegate, NSTextStorageDelegate {
     
     // MARK: - Properties
     // TODO: make these non-optional?
@@ -58,6 +58,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = TextEditorTextStorage()
         textStorage.myDelegate = self
+        textStorage.delegate = self
         textStorage.append(attributedString)
         
         let scrollViewRect = view.bounds
@@ -111,7 +112,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         view.addSubview(scrollView)
     }
     
-    // MARK: text storage delegate
+    // MARK: my text storage delegate
     func didAddAttributes(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence]) {
         
         guard let layoutManager = self.layoutManager else {
@@ -122,7 +123,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         
         for changedAttributeOccurrence in changedAttributeOccurrences {
 
-            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
+//            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
+//            layoutManager.invalidateLayout(forCharacterRange: changedAttributeOccurrence.range, actualCharacterRange: nil)
         }
+    }
+    
+    // MARK: NSTextStorage Delegate
+    public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        
+        self.textStorage.doThings()
+//        self.textStorage.applyStylesToRange(searchRange: editedRange)
     }
 }

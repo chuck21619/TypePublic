@@ -63,6 +63,7 @@ class TextEditorTextStorage: NSTextStorage {
         let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
         let normalColorAttributeOccurrence = AttributeOccurrence(attribute: normalColorAttribute, range: searchRange)
         
+        // TODO: use invalidateAttributes instead of applying 'reset' attributes
         let resetAttributeOccurrences = [normalFontAttributeOccurrence, normalColorAttributeOccurrence]
         
         // get attributes from syntax parser
@@ -70,9 +71,16 @@ class TextEditorTextStorage: NSTextStorage {
         
         // all attributes to apply
         let attributeOccurrences = resetAttributeOccurrences + parsedAttributeOccurrences
-        
+
         // apply the attributes
-        for attributeOccurence in attributeOccurrences {
+//        for attributeOccurence in attributeOccurrences {
+//
+//            self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
+//        }
+        
+        let changedAttributeOccurrences = lastParsedAttributeOccurrences.difference(from: parsedAttributeOccurrences)
+        
+        for attributeOccurence in changedAttributeOccurrences {
             
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
@@ -94,11 +102,16 @@ class TextEditorTextStorage: NSTextStorage {
 //        return extendedRange
     }
     
-    override func processEditing() {
-        
-        super.processEditing()
-        
+    func doThings() {
+
         let rangeToApplyAttributes = rangeToPerformAttributeReplacements(editedRange: editedRange)
         applyStylesToRange(searchRange: rangeToApplyAttributes)
     }
+    
+//    override func processEditing() {
+//
+//        super.processEditing()
+//        
+////        applyStylesToRange(searchRange: editedRange)
+//    }
 }
