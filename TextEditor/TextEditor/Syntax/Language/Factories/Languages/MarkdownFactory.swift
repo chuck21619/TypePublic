@@ -11,10 +11,6 @@ import Foundation
 class MarkdownFactory {
     
     // MARK: properties
-    let italicFont = NSFontManager().convert(NSFont.systemFont(ofSize: 11), toHaveTrait: .italicFontMask)
-    let boldFont = NSFont.boldSystemFont(ofSize: 11)
-    let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
-    
     let headerTitleAttributeKey = NSAttributedStringKey.foregroundColor
     let headerTitleColor = NSColor.brown
     
@@ -29,6 +25,7 @@ class MarkdownFactory {
     // MARK: - Keywords
     func createKeywords() -> [Keyword] {
         
+        // TODO: the font should be 'menlo'
         let italicFont = NSFontManager().convert(NSFont.systemFont(ofSize: 11), toHaveTrait: .italicFontMask)
         let boldFont = NSFont.boldSystemFont(ofSize: 11)
         

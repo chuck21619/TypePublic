@@ -26,37 +26,30 @@ class SyntaxParser {
     }
     
     // MARK: - Methods
-    fileprivate func attributeRangeIncludesEditedRange(_ rangeIntersection: NSRange?, _ editedRange: NSRange, _ attributeOccurrenceRange: NSRange) -> Bool {
-        return (rangeIntersection?.length ?? 0) > 0 || NSLocationInRange(editedRange.location, attributeOccurrenceRange)
-    }
-    
-    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange]) {
+    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange]) {
         
-        // append to invalidRanges, all attribute occurrence ranges that include the editedRange
-        // as well as remove those ranges from the lastAttributeOccurences (so any new/existing attributes that are still valid will be appended to the newAttributeOccurrences)
-        var invalidRanges: [NSRange] = []
-        for attributeOccurrence in lastAttributeOccurrences {
-            
-            let attributeOccurrenceRange = attributeOccurrence.range
-            let rangeIntersection = attributeOccurrenceRange.intersection(editedRange)
-            let attributeRangeIsInvalid = attributeRangeIncludesEditedRange(rangeIntersection, editedRange, attributeOccurrenceRange)
-            
-            if attributeRangeIsInvalid {
-                
-                invalidRanges.append(attributeOccurrenceRange)
-                
-                if let attributeOccurrenceIndex = lastAttributeOccurrences.index(of: attributeOccurrence) {
-                    lastAttributeOccurrences.remove(at: attributeOccurrenceIndex)
-                }
-            }
-        }
+        
+        // i dont know why editedRange does not include the change in length
+        let actualEditedRange = NSRange(location: editedRange.location, length: changeInLength)
+        
         
         let allAttributeOccurrences = language.attributes(for: string, changedRange: range)
         
-        // new attribute occurrences to apply
-        let newAttributeOccurrences = lastAttributeOccurrences.difference(from: allAttributeOccurrences)
+        let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
+            attributeOccurrence.intersects(range: actualEditedRange)
+        }
+        
+        
+        
+        let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurence) -> Bool in
+            return attributeOccurence.intersects(range: actualEditedRange)
+        }
+        let invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
+            return attributeOccurrence.range
+        }
         
         self.lastAttributeOccurrences = allAttributeOccurrences
+        
         
         return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
     }

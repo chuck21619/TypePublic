@@ -52,16 +52,20 @@ class TextEditorTextStorage: NSTextStorage {
     func applyStylesToRange(searchRange: NSRange) {
     
         // get attributes from syntax parser
-        let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.editedRange)
+        let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.editedRange, changeInLength: changeInLength)
         let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
         let invalidAttributeRanges = attributeOccurrences.invalidRanges
         
         
         let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
+        //TODO: get font from settings
+        let normalFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
+        let normalFontAttribute = Attribute(key: .font, value: normalFont)
         
         for invalidAttributeRange in invalidAttributeRanges {
             
             self.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
+            self.addAttribute(normalFontAttribute.key, value: normalFontAttribute.value, range: invalidAttributeRange)
         }
         
         
@@ -69,6 +73,9 @@ class TextEditorTextStorage: NSTextStorage {
             
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
+        
+        
+        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: [])
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {

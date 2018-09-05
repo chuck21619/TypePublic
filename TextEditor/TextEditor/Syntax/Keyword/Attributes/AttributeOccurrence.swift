@@ -12,6 +12,32 @@ struct AttributeOccurrence {
     
     let attribute: Attribute
     let range: NSRange
+    
+    func intersects(range: NSRange) -> Bool {
+        
+        if self.range.location >= range.location {
+            
+            if self.range.location <= range.location + range.length {
+                
+                return true
+            }
+            else {
+                
+                return false
+            }
+        }
+        else {
+            
+            if self.range.location + self.range.length >= min(range.location, range.location + range.length) {
+                
+                return true
+            }
+            else {
+                
+                return false
+            }
+        }
+    }
 }
 
 extension AttributeOccurrence: Hashable {
