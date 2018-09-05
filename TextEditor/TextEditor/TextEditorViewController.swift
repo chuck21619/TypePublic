@@ -57,6 +57,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = TextEditorTextStorage()
+        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
+        textStorage.font = monospaceFont
         textStorage.myDelegate = self
         textStorage.delegate = self
         textStorage.append(attributedString)
@@ -113,25 +115,22 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     // MARK: my text storage delegate
-    func didAddAttributes(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence]) {
-        
+    func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence]) {
+
         guard let layoutManager = self.layoutManager else {
             return
         }
         
-        let changedAttributeOccurrences = lastAttributeOccurrences.difference(from: newAttributeOccurrences)
-        
         for changedAttributeOccurrence in changedAttributeOccurrences {
 
-//            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
-//            layoutManager.invalidateLayout(forCharacterRange: changedAttributeOccurrence.range, actualCharacterRange: nil)
+            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
         }
     }
     
     // MARK: NSTextStorage Delegate
     public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
-        self.textStorage.doThings()
+//        self.textStorage.updateAllAttributeOccurrences()
 //        self.textStorage.applyStylesToRange(searchRange: editedRange)
     }
 }

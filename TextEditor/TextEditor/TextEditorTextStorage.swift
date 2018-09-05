@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TextStorageDelegate {
-    func didAddAttributes(lastAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence])
+    func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence])
 }
 
 class TextEditorTextStorage: NSTextStorage {
@@ -49,45 +49,26 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     // methods to apply attributes
-    // TODO: move lastAttributeOccurrences to approprite class?
-    var lastParsedAttributeOccurrences: [AttributeOccurrence] = []
     func applyStylesToRange(searchRange: NSRange) {
+    
+        // get attributes from syntax parser
+        let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.editedRange)
+        let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
+        let invalidAttributeRanges = attributeOccurrences.invalidRanges
         
-        // reset attributes to normal
-        // TODO: get font and color from settings
-        // TODO: it may be necessary (to increase performance) to try to use the same logic that InvalidationCalculator is doing in order only add attributes that are different (as opposed to wiping all the attributes with every keystroke, and then re-applying them)
-        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
-        let normalFontAttribute = Attribute(key: .font, value: monospaceFont)
-        let normalFontAttributeOccurrence = AttributeOccurrence(attribute: normalFontAttribute, range: searchRange)
         
         let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
-        let normalColorAttributeOccurrence = AttributeOccurrence(attribute: normalColorAttribute, range: searchRange)
         
-        // TODO: use invalidateAttributes instead of applying 'reset' attributes
-        let resetAttributeOccurrences = [normalFontAttributeOccurrence, normalColorAttributeOccurrence]
+        for invalidAttributeRange in invalidAttributeRanges {
+            
+            self.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
+        }
         
-        // get attributes from syntax parser
-        let parsedAttributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, changedRange: searchRange)
         
-        // all attributes to apply
-        let attributeOccurrences = resetAttributeOccurrences + parsedAttributeOccurrences
-
-        // apply the attributes
-//        for attributeOccurence in attributeOccurrences {
-//
-//            self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
-//        }
-        
-        let changedAttributeOccurrences = lastParsedAttributeOccurrences.difference(from: parsedAttributeOccurrences)
-        
-        for attributeOccurence in changedAttributeOccurrences {
+        for attributeOccurence in newAttributeOccurrences {
             
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
-        
-        self.myDelegate?.didAddAttributes(lastAttributeOccurrences: lastParsedAttributeOccurrences, newAttributeOccurrences: parsedAttributeOccurrences)
-        
-        self.lastParsedAttributeOccurrences = parsedAttributeOccurrences
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
@@ -102,16 +83,15 @@ class TextEditorTextStorage: NSTextStorage {
 //        return extendedRange
     }
     
-    func doThings() {
+    func updateAllAttributeOccurrences() {
 
         let rangeToApplyAttributes = rangeToPerformAttributeReplacements(editedRange: editedRange)
         applyStylesToRange(searchRange: rangeToApplyAttributes)
     }
     
-//    override func processEditing() {
-//
-//        super.processEditing()
-//        
-////        applyStylesToRange(searchRange: editedRange)
-//    }
+    override func processEditing() {
+
+        super.processEditing()
+        updateAllAttributeOccurrences()
+    }
 }
