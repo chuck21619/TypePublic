@@ -62,6 +62,8 @@ class TextEditorTextStorage: NSTextStorage {
         let normalFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
         let normalFontAttribute = Attribute(key: .font, value: normalFont)
         
+        
+        //TODO: consolidate invalid and new attributes
         for invalidAttributeRange in invalidAttributeRanges {
             
             self.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
@@ -75,7 +77,8 @@ class TextEditorTextStorage: NSTextStorage {
         }
         
         
-        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: [])
+        
+        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: newAttributeOccurrences)
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {

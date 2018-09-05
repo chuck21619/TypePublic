@@ -117,23 +117,23 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     // MARK: my text storage delegate
     func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence]) {
 
-//        guard let layoutManager = self.layoutManager else {
-//            return
-//        }
-//        
-//        for changedAttributeOccurrence in changedAttributeOccurrences {
-//
-//            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
-//        }
-        
-        
-        
-        guard let textView = self.textEditorView else {
+        guard let layoutManager = self.layoutManager else {
             return
         }
         
-        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
-        textView.setNeedsDisplay(rect)
+        for changedAttributeOccurrence in changedAttributeOccurrences {
+
+            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
+        }
+        
+        
+//
+//        guard let textView = self.textEditorView else {
+//            return
+//        }
+//
+//        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
+//        textView.setNeedsDisplay(rect)
     }
     
     // MARK: NSTextStorage Delegate

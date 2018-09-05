@@ -35,6 +35,7 @@ class SyntaxParser {
         
         let allAttributeOccurrences = language.attributes(for: string, changedRange: range)
         
+        //FIXME: the equal sign to create a h1 title - the editedRange does not include the attributeRange
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
             attributeOccurrence.intersects(range: actualEditedRange)
         }
