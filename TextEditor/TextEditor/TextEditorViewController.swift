@@ -121,10 +121,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
             return
         }
         
-        for changedAttributeOccurrence in changedAttributeOccurrences {
-
-            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
-        }
+//        for changedAttributeOccurrence in changedAttributeOccurrences {
+//
+//            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
+//        }
         
         
 //

@@ -46,7 +46,12 @@ class SyntaxParser {
             return attributeOccurence.intersects(range: actualEditedRange)
         }
         let invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
-            return attributeOccurrence.range
+            
+            let attributeRange = attributeOccurrence.range
+            let invalidRangeLength = attributeRange.length + changeInLength
+            let invalidRange = NSRange(location: attributeRange.location, length: invalidRangeLength)
+            
+            return invalidRange
         }
         
         self.lastAttributeOccurrences = allAttributeOccurrences
