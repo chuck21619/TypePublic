@@ -10,6 +10,7 @@ import Foundation
 
 protocol TextStorageDelegate {
     func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence])
+    func invalidateRanges(invalidRanges: [NSRange])
 }
 
 class TextEditorTextStorage: NSTextStorage {
@@ -36,6 +37,7 @@ class TextEditorTextStorage: NSTextStorage {
         beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
+        updateAllAttributeOccurrences()
         endEditing()
     }
     
@@ -77,8 +79,8 @@ class TextEditorTextStorage: NSTextStorage {
         }
         
         
-        
-        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: newAttributeOccurrences)
+        self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
+//        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: newAttributeOccurrences)
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
@@ -99,9 +101,9 @@ class TextEditorTextStorage: NSTextStorage {
         applyStylesToRange(searchRange: rangeToApplyAttributes)
     }
     
-    override func processEditing() {
-
-        super.processEditing()
-        updateAllAttributeOccurrences()
-    }
+//    override func processEditing() {
+//
+//        super.processEditing()
+//        updateAllAttributeOccurrences()
+//    }
 }
