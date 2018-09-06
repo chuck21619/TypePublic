@@ -31,7 +31,7 @@ class MarkdownFactory {
         
         let keywords = [            
             // #h1 titles, ##h2 titles,  etc.
-            createKeyword("(^|\\n)\\s*#+(?![^\\s])", .foregroundColor, NSColor.brown),
+            createKeyword("(^|\\n)\\s*#+(?![^\\s])", headerTitleAttributeKey, headerTitleColor),
             
             // TODO: fix italic font issue. type the following line in the editor to see the problem:
             //  * apples * awef* oranges
@@ -107,11 +107,10 @@ class MarkdownFactory {
         return linksKeyword
     }
     
-    
     // 1 or more equal signs denotes the text above it is an H1 title
     func createH1EqualSignsKeyword() -> Keyword {
 
-        let regexPattern = "(^|\\n)\\s*.+(?=\\n\\s*=+\\s*(\\n|$))"
+        let regexPattern = "(^|\\n)\\s*.+(\\n\\s*=+\\s*(\\n|$))"
         let attribute = Attribute(key: headerTitleAttributeKey, value: headerTitleColor)
         
         let keyword = Keyword(regexPattern: regexPattern, attribute: attribute)
