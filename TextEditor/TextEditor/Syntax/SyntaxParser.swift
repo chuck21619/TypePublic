@@ -37,6 +37,7 @@ class SyntaxParser {
         let allAttributeOccurrences = language.attributes(for: string, changedRange: range)
         
         //FIXME: the equal sign to create a h1 title - the editedRange does not include the attributeRange
+        //^ until this is fixed. the regex has been changed to include the equal signs
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
             attributeOccurrence.intersects(range: actualEditedRange)
         }
@@ -54,6 +55,10 @@ class SyntaxParser {
             
             return invalidRange
         }
+        
+        //TODO: always invalidate the insertion point so new characters will be standard
+//        let insertionPointRange = NSRange(location: editedRange.location, length: 0)
+//        invalidRanges.append(insertionPointRange)
         
         self.lastAttributeOccurrences = allAttributeOccurrences
         

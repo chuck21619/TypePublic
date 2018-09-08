@@ -65,6 +65,7 @@ class TextEditorTextStorage: NSTextStorage {
         let normalFontAttribute = Attribute(key: .font, value: normalFont)
         
         
+        // invalidating must happen first and new attributes may include the invalid ranges
         //TODO: consolidate invalid and new attributes
         for invalidAttributeRange in invalidAttributeRanges {
             

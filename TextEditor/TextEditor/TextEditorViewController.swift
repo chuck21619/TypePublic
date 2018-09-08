@@ -51,13 +51,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     
         // 1. create text storage that backs the editor
         //TODO: hook font up to settings/preferences
-        let attributes = [NSAttributedStringKey.font : NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)]
+        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
+        let attributes = [NSAttributedStringKey.font : monospaceFont]
         //TODO: hook string up to opened file
         let string = ""
         
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = TextEditorTextStorage()
-        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
         textStorage.font = monospaceFont
         textStorage.myDelegate = self
         textStorage.delegate = self
@@ -107,6 +107,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         textEditorView.isHorizontallyResizable = false
         textEditorView.autoresizingMask = .width
         textEditorView.delegate = self
+        textEditorView.typingAttributes = attributes
         
         // 7. assemble
         scrollView.documentView = textEditorView
@@ -137,14 +138,14 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     func invalidateRanges(invalidRanges: [NSRange]) {
-        guard let layoutManager = self.layoutManager else {
-            return
-        }
-        
-        for invalidRange in invalidRanges {
-            
-            layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
-        }
+//        guard let layoutManager = self.layoutManager else {
+//            return
+//        }
+//        
+//        for invalidRange in invalidRanges {
+//            
+//            layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
+//        }
     }
     
     // MARK: NSTextStorage Delegate
