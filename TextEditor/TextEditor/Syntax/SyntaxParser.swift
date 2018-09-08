@@ -47,7 +47,7 @@ class SyntaxParser {
         let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurence) -> Bool in
             return attributeOccurence.intersects(range: actualEditedRange)
         }
-        let invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
+        var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             
             let attributeRange = attributeOccurrence.range
             let invalidRangeLength = attributeRange.length + changeInLength
@@ -57,8 +57,8 @@ class SyntaxParser {
         }
         
         //TODO: always invalidate the insertion point so new characters will be standard
-//        let insertionPointRange = NSRange(location: editedRange.location, length: 0)
-//        invalidRanges.append(insertionPointRange)
+        let insertionPointRange = NSRange(location: editedRange.location, length: 0)
+        invalidRanges.append(insertionPointRange)
         
         self.lastAttributeOccurrences = allAttributeOccurrences
         
