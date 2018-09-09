@@ -21,14 +21,14 @@ class Language {
         self.keywords = keywords
     }
     
-    func attributes(for string: String, changedRange: NSRange) -> [AttributeOccurrence] {
+    func attributes(for string: String, range: NSRange) -> [AttributeOccurrence]? {
         
         var attributeOccurences: [AttributeOccurrence] = []
         
         for keyword in keywords {
             
             let attributeOccurencesProvider = keyword.attributeOccurencesProvider
-            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, range: changedRange)
+            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, range: range)
             attributeOccurences.append(contentsOf: attributeOccurencesToAppend)
         }
         

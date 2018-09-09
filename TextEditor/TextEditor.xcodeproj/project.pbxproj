@@ -21,6 +21,8 @@
 		A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */; };
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
 		A3951DB32144C0F00072095F /* NSRange+Positive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DB22144C0F00072095F /* NSRange+Positive.swift */; };
+		A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DB62144D8470072095F /* String+MaxNSRange.swift */; };
+		A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */; };
 		A3C316B820FFF7BA0028D466 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C316AE20FFF7BA0028D466 /* TextEditor.framework */; };
 		A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316BC20FFF7BA0028D466 /* TextEditorTests.swift */; };
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,6 +61,8 @@
 		A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownFactory.swift; sourceTree = "<group>"; };
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
 		A3951DB22144C0F00072095F /* NSRange+Positive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Positive.swift"; sourceTree = "<group>"; };
+		A3951DB62144D8470072095F /* String+MaxNSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MaxNSRange.swift"; sourceTree = "<group>"; };
+		A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ContainsRange.swift"; sourceTree = "<group>"; };
 		A3C316AE20FFF7BA0028D466 /* TextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C316B120FFF7BA0028D466 /* TextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextEditor.h; sourceTree = "<group>"; };
 		A3C316B220FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 			children = (
 				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
 				A3951DB22144C0F00072095F /* NSRange+Positive.swift */,
+				A3951DB62144D8470072095F /* String+MaxNSRange.swift */,
+				A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
@@ -346,6 +352,7 @@
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
 				A36E72C82106833500D8BDA1 /* TextEditorTextStorage.swift in Sources */,
+				A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */,
 				A3357897212B635C000773C7 /* Attribute.swift in Sources */,
 				A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */,
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
@@ -359,6 +366,7 @@
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
 				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
+				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
 			);

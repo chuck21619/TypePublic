@@ -13,6 +13,7 @@ struct AttributeOccurrence {
     let attribute: Attribute
     let range: NSRange
     
+    // TODO: clean up this method
     func intersects(range: NSRange) -> Bool {
         
         if self.range.location >= range.location {
@@ -37,6 +38,15 @@ struct AttributeOccurrence {
                 return false
             }
         }
+    }
+    
+    func intersects(location: Int) -> Bool {
+        
+        if self.range.contains(location) {
+            return true
+        }
+        
+        return false
     }
 }
 

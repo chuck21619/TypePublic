@@ -26,6 +26,11 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             return []
         }
         
+        guard string.contains(range: range) else {
+            
+            return []
+        }
+        
         regex.enumerateMatches(in: string, range: range) { (match, flags, stop) in
             
             guard let match = match else {

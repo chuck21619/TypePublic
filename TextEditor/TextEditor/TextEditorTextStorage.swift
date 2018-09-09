@@ -57,7 +57,9 @@ class TextEditorTextStorage: NSTextStorage {
     func applyStylesToRange(searchRange: NSRange) {
     
         // get attributes from syntax parser
-        let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength)
+        guard let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength) else {
+            return
+        }
         let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
         let invalidAttributeRanges = attributeOccurrences.invalidRanges
         
@@ -90,7 +92,7 @@ class TextEditorTextStorage: NSTextStorage {
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
         
         //range for all text
-        return NSRange(backingStore.string.startIndex.encodedOffset ..< backingStore.string.endIndex.encodedOffset)
+        return backingStore.string.maxNSRange
         
         //range for only edited line
 //        var extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(editedRange.location, 0)))

@@ -27,14 +27,14 @@ class SyntaxParser {
     
     // MARK: - Methods
     // TODO: rename method - it only returns new attributes occurrences and ranges to invalidate
-    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange]) {
-        
+    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
         
         // i dont know why editedRange does not include the change in length
         let actualEditedRange = NSRange(location: editedRange.location, length: changeInLength)
         
-        
-        let allAttributeOccurrences = language.attributes(for: string, changedRange: range)
+        guard let allAttributeOccurrences = language.attributes(for: string, range: range) else {
+            return nil
+        }
         
         //FIXME: the equal sign to create a h1 title - the editedRange does not include the attributeRange
         //^ until this is fixed. the regex has been changed to include the equal signs
