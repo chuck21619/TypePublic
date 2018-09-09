@@ -51,7 +51,17 @@ class SyntaxParser {
             
             let attributeRange = attributeOccurrence.range
             let invalidRangeLength = attributeRange.length + changeInLength
-            let invalidRange = NSRange(location: attributeRange.location, length: invalidRangeLength)
+            
+            let location: Int
+            if invalidRangeLength < 0 {
+                location = attributeRange.location - invalidRangeLength
+            }
+            else {
+                location = attributeRange.location
+            }
+            
+            let invalidRange = NSRange(location: location, length: abs(invalidRangeLength))
+
             
             return invalidRange
         }

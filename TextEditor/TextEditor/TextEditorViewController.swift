@@ -118,14 +118,14 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     // MARK: my text storage delegate
     func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence]) {
 
-//        guard let layoutManager = self.layoutManager else {
-//            return
-//        }
-//
-//        for changedAttributeOccurrence in changedAttributeOccurrences {
-//
-//            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
-//        }
+        guard let layoutManager = self.layoutManager else {
+            return
+        }
+
+        for changedAttributeOccurrence in changedAttributeOccurrences {
+
+            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
+        }
         
         
 //
@@ -138,14 +138,14 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     func invalidateRanges(invalidRanges: [NSRange]) {
-//        guard let layoutManager = self.layoutManager else {
-//            return
-//        }
-//        
-//        for invalidRange in invalidRanges {
-//            
-//            layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
-//        }
+        guard let layoutManager = self.layoutManager else {
+            return
+        }
+        
+        for invalidRange in invalidRanges {
+            
+            layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
+        }
     }
     
     // MARK: NSTextStorage Delegate
@@ -153,5 +153,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         
 //        self.textStorage.updateAllAttributeOccurrences()
 //        self.textStorage.applyStylesToRange(searchRange: editedRange)
+    }
+    
+    // MARK: NSTextViewDelegate
+    public func textDidChange(_ notification: Notification) {
+        
+        textStorage.updateAllAttributeOccurrences()
     }
 }

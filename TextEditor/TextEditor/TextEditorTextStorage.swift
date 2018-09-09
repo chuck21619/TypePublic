@@ -31,13 +31,16 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     // mandatory overrides to use our backingStore.string
+    var lastEditedRange: NSRange = NSRange(location: 0, length: 0)
+    var lastChangeInLength: Int = 0
     override func replaceCharacters(in range: NSRange, with str: String) {
 //        print("replace characters in range:\(range) with string:\(str)")
         
         beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
-        updateAllAttributeOccurrences()
+        lastEditedRange = editedRange
+        lastChangeInLength = changeInLength
         endEditing()
     }
     
@@ -54,7 +57,7 @@ class TextEditorTextStorage: NSTextStorage {
     func applyStylesToRange(searchRange: NSRange) {
     
         // get attributes from syntax parser
-        let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.editedRange, changeInLength: changeInLength)
+        let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength)
         let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
         let invalidAttributeRanges = attributeOccurrences.invalidRanges
         
@@ -80,7 +83,7 @@ class TextEditorTextStorage: NSTextStorage {
         }
         
         
-        self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
+//        self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
 //        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: newAttributeOccurrences)
     }
     
@@ -98,13 +101,15 @@ class TextEditorTextStorage: NSTextStorage {
     
     func updateAllAttributeOccurrences() {
 
+        beginEditing()
         let rangeToApplyAttributes = rangeToPerformAttributeReplacements(editedRange: editedRange)
         applyStylesToRange(searchRange: rangeToApplyAttributes)
+        endEditing()
     }
     
-//    override func processEditing() {
-//
-//        super.processEditing()
+    override func processEditing() {
+
 //        updateAllAttributeOccurrences()
-//    }
+        super.processEditing()
+    }
 }
