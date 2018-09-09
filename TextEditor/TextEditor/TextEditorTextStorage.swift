@@ -101,15 +101,13 @@ class TextEditorTextStorage: NSTextStorage {
     
     func updateAllAttributeOccurrences() {
 
-        beginEditing()
         let rangeToApplyAttributes = rangeToPerformAttributeReplacements(editedRange: editedRange)
         applyStylesToRange(searchRange: rangeToApplyAttributes)
-        endEditing()
     }
     
     override func processEditing() {
 
-//        updateAllAttributeOccurrences()
+        updateAllAttributeOccurrences()
         super.processEditing()
     }
 }

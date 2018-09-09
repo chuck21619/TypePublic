@@ -20,6 +20,7 @@
 		A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */; };
 		A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */; };
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
+		A3951DB32144C0F00072095F /* NSRange+Positive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DB22144C0F00072095F /* NSRange+Positive.swift */; };
 		A3C316B820FFF7BA0028D466 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C316AE20FFF7BA0028D466 /* TextEditor.framework */; };
 		A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316BC20FFF7BA0028D466 /* TextEditorTests.swift */; };
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,6 +58,7 @@
 		A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownFactory.swift; sourceTree = "<group>"; };
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
+		A3951DB22144C0F00072095F /* NSRange+Positive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Positive.swift"; sourceTree = "<group>"; };
 		A3C316AE20FFF7BA0028D466 /* TextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C316B120FFF7BA0028D466 /* TextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextEditor.h; sourceTree = "<group>"; };
 		A3C316B220FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
+				A3951DB22144C0F00072095F /* NSRange+Positive.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
@@ -349,6 +352,7 @@
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
 				A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
+				A3951DB32144C0F00072095F /* NSRange+Positive.swift in Sources */,
 				A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,
