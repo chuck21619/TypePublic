@@ -26,8 +26,28 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedStringKey : Any] {
-        
+
         return backingStore.attributes(at: location, effectiveRange: range)
+        
+//        var attributes = backingStore.attributes(at: location, effectiveRange: range)
+//
+//        guard let syntaxedAttributes = syntaxParser.attributes(at: location, for: backingStore.string) else {
+//            return attributes
+//        }
+//
+//        // update values
+//        for (key, value) in syntaxedAttributes {
+//            attributes[key] = value
+//        }
+//
+//
+//        guard let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: self.backingStore.string.maxNSRange, editedRange: editedRange, changeInLength: changeInLength) else {
+//            return attributes
+//        }
+//        self.myDelegate?.invalidateRanges(invalidRanges: attributeOccurrences.invalidRanges)
+//        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: attributeOccurrences.newAttributeOccurrences)
+//
+//        return attributes
     }
     
     // mandatory overrides to use our backingStore.string

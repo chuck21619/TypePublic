@@ -62,10 +62,31 @@ class SyntaxParser {
             invalidRanges.append(newCharacterRange)
         }
         
-        
         self.lastAttributeOccurrences = allAttributeOccurrences
         
-        
         return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
+    }
+    
+    func attributes(at location: Int, for string: String) -> [NSAttributedStringKey : Any]? {
+        
+        let range = string.maxNSRange
+        
+        guard let allAttributeOccurrences = language.attributes(for: string, range: range) else {
+            return nil
+        }
+        
+        let occurrencesForLocation = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
+
+            let includesLocation = attributeOccurrence.intersects(location: location)
+            return includesLocation
+        }
+        
+        var dictionary: [NSAttributedStringKey:Any] = [:]
+        for attributeOccurrence in occurrencesForLocation {
+            let attribute = attributeOccurrence.attribute
+            dictionary[attribute.key] = attribute.value
+        }
+        
+        return dictionary
     }
 }
