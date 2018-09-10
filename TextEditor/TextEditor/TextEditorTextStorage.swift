@@ -104,9 +104,29 @@ class TextEditorTextStorage: NSTextStorage {
             self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
         }
         
+        self.invalidRanges = invalidAttributeRanges
+        self.newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
+            return attributeOccurence.range
+        })
         
 //        self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
 //        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: newAttributeOccurrences)
+    }
+    
+    
+    var invalidRanges: [NSRange] = []
+    var newAttributesRanges: [NSRange] = []
+    override func endEditing() {
+        super.endEditing()
+        
+        if !invalidRanges.isEmpty {
+            self.myDelegate?.invalidateRanges(invalidRanges: invalidRanges)
+            invalidRanges = []
+        }
+        if !newAttributesRanges.isEmpty {
+            self.myDelegate?.invalidateRanges(invalidRanges: newAttributesRanges)
+            newAttributesRanges = []
+        }
     }
     
     func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
@@ -129,7 +149,7 @@ class TextEditorTextStorage: NSTextStorage {
     
     override func processEditing() {
 
-        updateAllAttributeOccurrences()
         super.processEditing()
+        updateAllAttributeOccurrences()
     }
 }

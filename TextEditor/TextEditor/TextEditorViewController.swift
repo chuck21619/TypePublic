@@ -138,14 +138,35 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     func invalidateRanges(invalidRanges: [NSRange]) {
-//        guard let layoutManager = self.layoutManager else {
-//            return
-//        }
-//
+        guard let layoutManager = self.layoutManager else {
+            return
+        }
+
+        for invalidRange in invalidRanges {
+
+            layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
+        }
+        
+//        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
+//        self.textEditorView.setNeedsDisplay(rect, avoidAdditionalLayout: true)
+        
+        
+        //calculate rect
 //        for invalidRange in invalidRanges {
 //
-//            layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
+//            let countPointer = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+//            let rectArray = layoutManager.rectArray(forCharacterRange: invalidRange, withinSelectedCharacterRange: self.textStorage.string.maxNSRange, in: textContainer!, rectCount: countPointer)
+//
+//            print(countPointer)
+//            print(rectArray)
+//            
+////            let glyphRange = layoutManager.glyphRange(forCharacterRange: invalidRange, actualCharacterRange: nil)
+////            layoutManager.enumerateEnclosingRects(forGlyphRange: glyphRange, withinSelectedGlyphRange: self.textStorage.string.maxNSRange, in: textContainer!) { (rect, unsafeObjCBoolPointer) in
+////
+////                print("")
+////            }
 //        }
+        
     }
     
     // MARK: NSTextStorage Delegate

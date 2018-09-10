@@ -30,6 +30,9 @@ class SyntaxParser {
     func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
         
         // i dont know why editedRange does not include the change in length
+        // ^ i dont think this is always true. when highlighting a selection and pasting. the actual editedRange only includes the highlightedRange, while the editedRange includes all the pasted characters
+        // ^ i am probly confused about what changeInLength means
+        // TODO: fix this^ (and below where i am appending the new characters to invalidRanges)
         let actualEditedRange = NSRange(location: editedRange.location, length: changeInLength)
         
         guard let allAttributeOccurrences = language.attributes(for: string, range: range) else {
@@ -56,11 +59,18 @@ class SyntaxParser {
             return positiveRange
         }
         
-        //always invalidate new characters
+        // always invalidate new characters
+        // FIXME: see above comments regarding actualEditedRange
         let newCharacterRange = actualEditedRange
         if newCharacterRange.length > 0 {
             invalidRanges.append(newCharacterRange)
         }
+        
+        let alsoNewCharacterRange = editedRange
+        if alsoNewCharacterRange.length > 0 {
+            invalidRanges.append(editedRange)
+        }
+        
         
         self.lastAttributeOccurrences = allAttributeOccurrences
         
