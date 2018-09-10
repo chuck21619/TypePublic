@@ -42,7 +42,8 @@ class SyntaxParser {
         //FIXME: the equal sign to create a h1 title - the editedRange does not include the attributeRange
         //^ until this is fixed. the regex has been changed to include the equal signs
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
-            attributeOccurrence.intersects(range: actualEditedRange)
+            // TODO: refer to earlier comments regarding actualEditedRange and editedRange
+            attributeOccurrence.intersects(range: actualEditedRange) || attributeOccurrence.intersects(range: editedRange)
         }
         
         let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurence) -> Bool in
