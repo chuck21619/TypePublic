@@ -92,42 +92,33 @@ class TextEditorTextStorage: NSTextStorage {
             let normalFontAttribute = Attribute(key: .font, value: normalFont)
             
             guard self.backingStore.string.maxNSRange == searchRange else {
+                //TODO: put this check in more places. particularly the language parsing
                 print("CHECK IT")
                 return
             }
-            // invalidating must happen first and new attributes may include the invalid ranges
-            //TODO: consolidate invalid and new attributes
-            for invalidAttributeRange in invalidAttributeRanges {
-                
-                self.backingStore.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
-                self.backingStore.addAttribute(normalFontAttribute.key, value: normalFontAttribute.value, range: invalidAttributeRange)
-            }
             
-            for attributeOccurence in newAttributeOccurrences {
+            DispatchQueue.main.async {
                 
-                self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
+                // invalidating must happen first and new attributes may include the invalid ranges
+                //TODO: consolidate invalid and new attributes
+                for invalidAttributeRange in invalidAttributeRanges {
+                    
+                    self.backingStore.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
+                    self.backingStore.addAttribute(normalFontAttribute.key, value: normalFontAttribute.value, range: invalidAttributeRange)
+                }
+                
+                for attributeOccurence in newAttributeOccurrences {
+                    
+                    self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
+                }
+                
+                let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
+                    return attributeOccurence.range
+                })
+                
+                self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
+                self.myDelegate?.invalidateRanges(invalidRanges: newAttributesRanges)
             }
-            
-            self.invalidRanges = invalidAttributeRanges
-            self.newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
-                return attributeOccurence.range
-            })
-        }
-    }
-    
-    
-    var invalidRanges: [NSRange] = []
-    var newAttributesRanges: [NSRange] = []
-    override func endEditing() {
-        super.endEditing()
-        
-        if !invalidRanges.isEmpty {
-            self.myDelegate?.invalidateRanges(invalidRanges: invalidRanges)
-            invalidRanges = []
-        }
-        if !newAttributesRanges.isEmpty {
-            self.myDelegate?.invalidateRanges(invalidRanges: newAttributesRanges)
-            newAttributesRanges = []
         }
     }
     
