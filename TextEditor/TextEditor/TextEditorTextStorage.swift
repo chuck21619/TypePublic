@@ -75,42 +75,44 @@ class TextEditorTextStorage: NSTextStorage {
     
     // methods to apply attributes
     func applyStylesToRange(searchRange: NSRange) {
-    
-        // get attributes from syntax parser
-        guard let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength) else {
-            return
-        }
-        let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
-        let invalidAttributeRanges = attributeOccurrences.invalidRanges
         
-        
-        let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
-        //TODO: get font from settings
-        let normalFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
-        let normalFontAttribute = Attribute(key: .font, value: normalFont)
-        
-        
-        // invalidating must happen first and new attributes may include the invalid ranges
-        //TODO: consolidate invalid and new attributes
-        for invalidAttributeRange in invalidAttributeRanges {
+        DispatchQueue.global().async {
             
-            self.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
-            self.addAttribute(normalFontAttribute.key, value: normalFontAttribute.value, range: invalidAttributeRange)
-        }
-        
-        
-        for attributeOccurence in newAttributeOccurrences {
+            // get attributes from syntax parser
+            guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength) else {
+                return
+            }
+            let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
+            let invalidAttributeRanges = attributeOccurrences.invalidRanges
             
-            self.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
+            
+            let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
+            //TODO: get font from settings
+            let normalFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
+            let normalFontAttribute = Attribute(key: .font, value: normalFont)
+            
+            guard self.backingStore.string.maxNSRange == searchRange else {
+                print("CHECK IT")
+                return
+            }
+            // invalidating must happen first and new attributes may include the invalid ranges
+            //TODO: consolidate invalid and new attributes
+            for invalidAttributeRange in invalidAttributeRanges {
+                
+                self.backingStore.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
+                self.backingStore.addAttribute(normalFontAttribute.key, value: normalFontAttribute.value, range: invalidAttributeRange)
+            }
+            
+            for attributeOccurence in newAttributeOccurrences {
+                
+                self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
+            }
+            
+            self.invalidRanges = invalidAttributeRanges
+            self.newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
+                return attributeOccurence.range
+            })
         }
-        
-        self.invalidRanges = invalidAttributeRanges
-        self.newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
-            return attributeOccurence.range
-        })
-        
-//        self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
-//        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: newAttributeOccurrences)
     }
     
     
