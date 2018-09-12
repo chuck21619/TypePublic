@@ -145,6 +145,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         for invalidRange in invalidRanges {
 
             layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
+//            layoutManager.invalidateLayout(forCharacterRange: invalidRange, actualCharacterRange: nil)
         }
         
 //        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)

@@ -47,7 +47,23 @@ class SyntaxParser {
         }
         
         let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurence) -> Bool in
-            return attributeOccurence.intersects(range: actualEditedRange)
+            
+            let attributeIsBeforeInsertionPoint = attributeOccurence.range.location < actualEditedRange.location
+            
+            let locationBeforeChangeInLength: Int
+            let lengthBeforeChangeInLength: Int
+
+            if attributeIsBeforeInsertionPoint {
+                locationBeforeChangeInLength = actualEditedRange.location + changeInLength
+                lengthBeforeChangeInLength = actualEditedRange.length + changeInLength
+            }
+            else {
+                locationBeforeChangeInLength = actualEditedRange.location - changeInLength
+                lengthBeforeChangeInLength = actualEditedRange.length - changeInLength
+            }
+            let rangeBeforeChangeInLength = NSRange(location: locationBeforeChangeInLength, length: lengthBeforeChangeInLength)
+            
+            return attributeOccurence.intersects(range: rangeBeforeChangeInLength)
         }
         var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             

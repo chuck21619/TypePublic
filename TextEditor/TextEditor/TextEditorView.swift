@@ -10,6 +10,12 @@ import Foundation
 
 class TextEditorView: NSTextView/*, NSTextStorageDelegate, SyntaxParserDelgate*/ {
     
+    // prevent pasting rich text. always paste as plaintext
+    override var readablePasteboardTypes: [NSPasteboard.PasteboardType] {
+        
+        return [NSPasteboard.PasteboardType.string]
+    }
+    
     // MARK: - Properties
 //    var syntaxParser: SyntaxParser?//(delegate: self)
 //    

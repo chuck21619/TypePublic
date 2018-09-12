@@ -25,9 +25,9 @@ class MarkdownFactory {
     // MARK: - Keywords
     func createKeywords() -> [Keyword] {
         
-        // TODO: the font should be 'menlo'
-        let italicFont = NSFontManager().convert(NSFont.systemFont(ofSize: 11), toHaveTrait: .italicFontMask)
-        let boldFont = NSFont.boldSystemFont(ofSize: 11)
+        // TODO: get fonts from settings. and dont do force unwrapping
+        let italicFont = NSFont(name: "Menlo-Italic", size: 11)!
+        let boldFont = NSFont(name: "Menlo-Bold", size: 11)!
         
         let keywords = [            
             // #h1 titles, ##h2 titles,  etc.
@@ -78,6 +78,7 @@ class MarkdownFactory {
     // MARK: special keyword cases
     
     // Links //[link title](www.linkAddress.com)
+    // TODO: figure out why links do not get their attributes invalidated
     func createLinksKeyword() -> Keyword {
         
         let linkTitleKeywordRegexLabel = "linkTitle"

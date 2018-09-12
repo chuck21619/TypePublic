@@ -9,6 +9,7 @@
 import Foundation
 
 protocol TextStorageDelegate {
+    
     func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence])
     func invalidateRanges(invalidRanges: [NSRange])
 }
@@ -28,33 +29,12 @@ class TextEditorTextStorage: NSTextStorage {
     override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedStringKey : Any] {
 
         return backingStore.attributes(at: location, effectiveRange: range)
-        
-//        var attributes = backingStore.attributes(at: location, effectiveRange: range)
-//
-//        guard let syntaxedAttributes = syntaxParser.attributes(at: location, for: backingStore.string) else {
-//            return attributes
-//        }
-//
-//        // update values
-//        for (key, value) in syntaxedAttributes {
-//            attributes[key] = value
-//        }
-//
-//
-//        guard let attributeOccurrences = syntaxParser.attributeOccurrences(for: self.backingStore.string, range: self.backingStore.string.maxNSRange, editedRange: editedRange, changeInLength: changeInLength) else {
-//            return attributes
-//        }
-//        self.myDelegate?.invalidateRanges(invalidRanges: attributeOccurrences.invalidRanges)
-//        self.myDelegate?.didChangeAttributeOccurrences(changedAttributeOccurrences: attributeOccurrences.newAttributeOccurrences)
-//
-//        return attributes
     }
     
     // mandatory overrides to use our backingStore.string
     var lastEditedRange: NSRange = NSRange(location: 0, length: 0)
     var lastChangeInLength: Int = 0
     override func replaceCharacters(in range: NSRange, with str: String) {
-//        print("replace characters in range:\(range) with string:\(str)")
         
         beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
@@ -65,19 +45,18 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange) {
-//        print("setAttributes:\(attrs ?? [:]) range:\(range)")
         
-        beginEditing()
+//        beginEditing()
         backingStore.setAttributes(attrs, range: range)
         edited(.editedAttributes, range: range, changeInLength: 0)
-        endEditing()
+//        endEditing()
     }
     
     // methods to apply attributes
     func applyStylesToRange(searchRange: NSRange) {
         
         DispatchQueue.global().async {
-            
+        
             // get attributes from syntax parser
             guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength) else {
                 return
@@ -93,12 +72,13 @@ class TextEditorTextStorage: NSTextStorage {
             
             guard self.backingStore.string.maxNSRange == searchRange else {
                 //TODO: put this check in more places. particularly the language parsing
+                //TODO: when we skip over an iteration. we have to append that iteration's editedRange to the next iteration
                 print("CHECK IT")
                 return
             }
             
             DispatchQueue.main.async {
-                
+        
                 // invalidating must happen first and new attributes may include the invalid ranges
                 //TODO: consolidate invalid and new attributes
                 for invalidAttributeRange in invalidAttributeRanges {
