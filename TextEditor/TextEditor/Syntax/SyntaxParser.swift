@@ -42,38 +42,40 @@ class SyntaxParser {
         //FIXME: the equal sign to create a h1 title - the editedRange does not include the attributeRange
         //^ until this is fixed. the regex has been changed to include the equal signs
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
-            // TODO: refer to earlier comments regarding actualEditedRange and editedRange
-            attributeOccurrence.intersects(range: actualEditedRange) || attributeOccurrence.intersects(range: editedRange)
-        }
-        
-        let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurence) -> Bool in
+            // TODO: cleanup (similar(plus and minus is switched) code as invalidRanges below)
+            let attributeIsBeforeInsertionPoint = attributeOccurrence.range.location < actualEditedRange.location
             
-            let attributeIsBeforeInsertionPoint = attributeOccurence.range.location < actualEditedRange.location
+            // maybe this is calculating the range AFTER the change in length?
+            let locationNotSureChangeInLength: Int
+            let lengthNotSureChangeInLength: Int
             
-            let locationBeforeChangeInLength: Int
-            let lengthBeforeChangeInLength: Int
-
             if attributeIsBeforeInsertionPoint {
-                locationBeforeChangeInLength = actualEditedRange.location + changeInLength
-                lengthBeforeChangeInLength = actualEditedRange.length + changeInLength
+                locationNotSureChangeInLength = actualEditedRange.location - changeInLength
+                lengthNotSureChangeInLength = actualEditedRange.length - changeInLength
             }
             else {
-                locationBeforeChangeInLength = actualEditedRange.location - changeInLength
-                lengthBeforeChangeInLength = actualEditedRange.length - changeInLength
+                locationNotSureChangeInLength = actualEditedRange.location + changeInLength
+                lengthNotSureChangeInLength = actualEditedRange.length + changeInLength
             }
-            let rangeBeforeChangeInLength = NSRange(location: locationBeforeChangeInLength, length: lengthBeforeChangeInLength)
+            let rangeNotSureChangeInLength = NSRange(location: locationNotSureChangeInLength, length: lengthNotSureChangeInLength)
             
-            return attributeOccurence.intersects(range: rangeBeforeChangeInLength)
+            
+            return attributeOccurrence.intersects(range: rangeNotSureChangeInLength) || attributeOccurrence.intersects(range: editedRange)
         }
+        
+        let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
+            
+            return attributeOccurrence.intersects(range: editedRange)
+        }
+        
         var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             
             let attributeRange = attributeOccurrence.range
             let location = attributeRange.location
             let length = attributeRange.length + changeInLength
-            let range = NSRange(location: location, length: length)
-            let positiveRange = range.positive
-
-            return positiveRange
+            let range = NSRange(location: location, length: max(0,length))
+            
+            return range
         }
         
         // always invalidate new characters
@@ -92,28 +94,5 @@ class SyntaxParser {
         self.lastAttributeOccurrences = allAttributeOccurrences
         
         return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
-    }
-    
-    func attributes(at location: Int, for string: String) -> [NSAttributedStringKey : Any]? {
-        
-        let range = string.maxNSRange
-        
-        guard let allAttributeOccurrences = language.attributes(for: string, range: range) else {
-            return nil
-        }
-        
-        let occurrencesForLocation = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
-
-            let includesLocation = attributeOccurrence.intersects(location: location)
-            return includesLocation
-        }
-        
-        var dictionary: [NSAttributedStringKey:Any] = [:]
-        for attributeOccurrence in occurrencesForLocation {
-            let attribute = attributeOccurrence.attribute
-            dictionary[attribute.key] = attribute.value
-        }
-        
-        return dictionary
     }
 }
