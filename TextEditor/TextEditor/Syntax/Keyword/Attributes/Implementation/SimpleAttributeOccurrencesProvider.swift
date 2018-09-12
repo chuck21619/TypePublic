@@ -37,7 +37,7 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
                 return
             }
             
-            let attributeOccurence = AttributeOccurrence(attribute: attribute, range: match.range)
+            let attributeOccurence = AttributeOccurrence(attribute: attribute, attributeRange: match.range)
             attributeOccurences.append(attributeOccurence)
         }
         

@@ -39,11 +39,9 @@ class SyntaxParser {
             return nil
         }
         
-        //FIXME: the equal sign to create a h1 title - the editedRange does not include the attributeRange
-        //^ until this is fixed. the regex has been changed to include the equal signs
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
             // TODO: cleanup (similar(plus and minus is switched) code as invalidRanges below)
-            let attributeIsBeforeInsertionPoint = attributeOccurrence.range.location < actualEditedRange.location
+            let attributeIsBeforeInsertionPoint = attributeOccurrence.effectiveRange.location < actualEditedRange.location
             
             // maybe this is calculating the range AFTER the change in length?
             let locationNotSureChangeInLength: Int
@@ -67,12 +65,12 @@ class SyntaxParser {
             
             return attributeOccurrence.intersects(range: editedRange)
         }
-        
+            
         var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             
-            let attributeRange = attributeOccurrence.range
-            let location = attributeRange.location
-            let length = attributeRange.length + changeInLength
+            let effectiveRange = attributeOccurrence.effectiveRange
+            let location = effectiveRange.location
+            let length = effectiveRange.length + changeInLength
             let range = NSRange(location: location, length: max(0,length))
             
             return range

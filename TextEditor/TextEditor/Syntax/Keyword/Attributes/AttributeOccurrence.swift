@@ -11,14 +11,32 @@ import Foundation
 struct AttributeOccurrence {
     
     let attribute: Attribute
-    let range: NSRange
+    let attributeRange: NSRange
     
+    //range which the attribute effects and is effected by
+    //example: for links [linkName](linkAddress) - the linkName attributeRange is only inside the square brackets [], but is effected by the larger range that includes the linkAddress. The same is true for the linkAddress
+    let effectiveRange: NSRange
+    
+    // MARK: - Constructors
+    init(attribute: Attribute, attributeRange: NSRange) {
+        
+        self.init(attribute: attribute, attributeRange: attributeRange, effectiveRange: attributeRange)
+    }
+    
+    init(attribute: Attribute, attributeRange: NSRange, effectiveRange: NSRange) {
+        
+        self.attribute = attribute
+        self.attributeRange = attributeRange
+        self.effectiveRange = effectiveRange
+    }
+    
+    // MARK: - Methods
     // TODO: clean up this method
     func intersects(range: NSRange) -> Bool {
         
-        if self.range.location >= range.location {
+        if self.effectiveRange.location >= range.location {
             
-            if self.range.location <= range.location + range.length {
+            if self.effectiveRange.location <= range.location + range.length {
                 
                 return true
             }
@@ -29,7 +47,7 @@ struct AttributeOccurrence {
         }
         else {
             
-            if self.range.location + self.range.length >= min(range.location, range.location + range.length) {
+            if self.effectiveRange.location + self.effectiveRange.length >= min(range.location, range.location + range.length) {
                 
                 return true
             }
@@ -42,7 +60,7 @@ struct AttributeOccurrence {
     
     func intersects(location: Int) -> Bool {
         
-        if self.range.contains(location) {
+        if self.effectiveRange.contains(location) {
             return true
         }
         
@@ -54,10 +72,12 @@ extension AttributeOccurrence: Hashable {
     
     var hashValue: Int {
         // TODO: is this correct?
-        return range.hashValue
+        return (attributeRange.hashValue * effectiveRange.hashValue)
     }
     
     static func == (lhs: AttributeOccurrence, rhs: AttributeOccurrence) -> Bool {
-        return lhs.range == rhs.range && lhs.attribute == rhs.attribute
+        return lhs.attributeRange == rhs.attributeRange
+            && lhs.attribute == rhs.attribute
+            && lhs.effectiveRange == rhs.effectiveRange
     }
 }

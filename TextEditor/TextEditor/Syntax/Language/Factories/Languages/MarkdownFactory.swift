@@ -92,12 +92,12 @@ class MarkdownFactory {
             
             let titleAttribute = Attribute(key: .foregroundColor, value: NSColor.systemGreen)
             let titleRange = match.range(withName: linkTitleKeywordRegexLabel)
-            let titleAttributeOccurrence = AttributeOccurrence(attribute: titleAttribute, range: titleRange)
+            let titleAttributeOccurrence = AttributeOccurrence(attribute: titleAttribute, attributeRange: titleRange, effectiveRange: match.range)
             attributeOccurences.append(titleAttributeOccurrence)
             
             let addressAttribute = Attribute(key: .foregroundColor, value: NSColor.systemYellow)
             let addressRange = match.range(withName: linkAddressKeywordRegexLabel)
-            let addressAttributeOccurrence = AttributeOccurrence(attribute: addressAttribute, range: addressRange)
+            let addressAttributeOccurrence = AttributeOccurrence(attribute: addressAttribute, attributeRange: addressRange, effectiveRange: match.range)
             attributeOccurences.append(addressAttributeOccurrence)
             
             return attributeOccurences
@@ -111,10 +111,18 @@ class MarkdownFactory {
     // 1 or more equal signs denotes the text above it is an H1 title
     func createH1EqualSignsKeyword() -> Keyword {
 
-        let regexPattern = "(^|\\n)\\s*.+(\\n\\s*=+\\s*(\\n|$))"
-        let attribute = Attribute(key: headerTitleAttributeKey, value: headerTitleColor)
+        let titleGroup = "titleGroup"
+        let regexPattern = "(?<\(titleGroup)>(^|\\n)\\s*.+)(\\n\\s*=+\\s*(\\n|$))"
+        let provider = CustomAttributeOccurrencesProvider { (match) -> [AttributeOccurrence] in
+            
+            let attribute = Attribute(key: self.headerTitleAttributeKey, value: self.headerTitleColor)
+            let titleRange = match.range(withName: titleGroup)
+            let occurrence = AttributeOccurrence(attribute: attribute, attributeRange: titleRange, effectiveRange: match.range)
+            
+            return [occurrence]
+        }
         
-        let keyword = Keyword(regexPattern: regexPattern, attribute: attribute)
+        let keyword = Keyword(regexPattern: regexPattern, attributeOccurencesProvider: provider)
         
         return keyword
     }

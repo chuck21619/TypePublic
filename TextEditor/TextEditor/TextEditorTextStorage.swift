@@ -89,11 +89,11 @@ class TextEditorTextStorage: NSTextStorage {
                 
                 for attributeOccurence in newAttributeOccurrences {
                     
-                    self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.range)
+                    self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
                 }
                 
                 let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
-                    return attributeOccurence.range
+                    return attributeOccurence.effectiveRange
                 })
                 
                 self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
