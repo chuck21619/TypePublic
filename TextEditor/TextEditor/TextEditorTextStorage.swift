@@ -73,7 +73,6 @@ class TextEditorTextStorage: NSTextStorage {
             guard self.backingStore.string.maxNSRange == searchRange else {
                 //TODO: put this check in more places. particularly the language parsing
                 //TODO: when we skip over an iteration. we have to append that iteration's editedRange to the next iteration
-                //TODO: more async issues: if two passes are happening. the second one is deleting everything and it succeeds first, and the first one then tries to add attributes - im assuming it should/will crash
                 print("CHECK IT")
                 return
             }
