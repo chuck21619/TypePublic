@@ -40,21 +40,21 @@ class SyntaxParser {
         }
         
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
-            // TODO: cleanup (similar(plus and minus is switched) code as invalidRanges below)
-            let attributeIsBeforeInsertionPoint = attributeOccurrence.effectiveRange.location < actualEditedRange.location
+            // TODO: cleanup
+//            let attributeIsBeforeInsertionPoint = attributeOccurrence.effectiveRange.location < actualEditedRange.location
             
             // maybe this is calculating the range AFTER the change in length?
             let locationNotSureChangeInLength: Int
             let lengthNotSureChangeInLength: Int
             
-            if attributeIsBeforeInsertionPoint {
-                locationNotSureChangeInLength = actualEditedRange.location - changeInLength
-                lengthNotSureChangeInLength = actualEditedRange.length - changeInLength
-            }
-            else {
+//            if attributeIsBeforeInsertionPoint {
+//                locationNotSureChangeInLength = actualEditedRange.location - changeInLength
+//                lengthNotSureChangeInLength = actualEditedRange.length - changeInLength
+//            }
+//            else {
                 locationNotSureChangeInLength = actualEditedRange.location + changeInLength
                 lengthNotSureChangeInLength = actualEditedRange.length + changeInLength
-            }
+//            }
             let rangeNotSureChangeInLength = NSRange(location: locationNotSureChangeInLength, length: lengthNotSureChangeInLength)
             
             
@@ -65,10 +65,6 @@ class SyntaxParser {
             
             return attributeOccurrence.intersects(range: editedRange)
         }
-        
-//        print("lao:\n\(self.lastAttributeOccurrences)")
-        //THE ISSUE WHEN PROCESSING THE SECOND PASS:
-        // the lastAttributeOccurences will be invalid. have to somehow use the lastAttributeOccurences from the first pass
         
         var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             
@@ -81,7 +77,7 @@ class SyntaxParser {
         }
         
         // always invalidate new characters
-        // FIXME: see above comments regarding actualEditedRange
+        // TODO: clean up
         let newCharacterRange = actualEditedRange
         if newCharacterRange.length > 0 {
             invalidRanges.append(newCharacterRange)
@@ -91,9 +87,6 @@ class SyntaxParser {
         if alsoNewCharacterRange.length > 0 {
             invalidRanges.append(editedRange)
         }
-        
-        
-//        self.lastAttributeOccurrences = allAttributeOccurrences
         
         return (allAttributeOccurrences: allAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
     }
