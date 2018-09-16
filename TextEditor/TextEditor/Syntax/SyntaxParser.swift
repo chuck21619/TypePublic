@@ -27,7 +27,7 @@ class SyntaxParser {
     
     // MARK: - Methods
     // TODO: rename method - it only returns new attributes occurrences and ranges to invalidate
-    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
+    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (allAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
         
         // i dont know why editedRange does not include the change in length
         // ^ i dont think this is always true. when highlighting a selection and pasting. the actual editedRange only includes the highlightedRange, while the editedRange includes all the pasted characters
@@ -65,7 +65,11 @@ class SyntaxParser {
             
             return attributeOccurrence.intersects(range: editedRange)
         }
-            
+        
+//        print("lao:\n\(self.lastAttributeOccurrences)")
+        //THE ISSUE WHEN PROCESSING THE SECOND PASS:
+        // the lastAttributeOccurences will be invalid. have to somehow use the lastAttributeOccurences from the first pass
+        
         var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             
             let effectiveRange = attributeOccurrence.effectiveRange
@@ -89,8 +93,8 @@ class SyntaxParser {
         }
         
         
-        self.lastAttributeOccurrences = allAttributeOccurrences
+//        self.lastAttributeOccurrences = allAttributeOccurrences
         
-        return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
+        return (allAttributeOccurrences: allAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
     }
 }

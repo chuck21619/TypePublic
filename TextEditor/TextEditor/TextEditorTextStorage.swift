@@ -53,16 +53,43 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     // methods to apply attributes
+    // TODO: cleanup (now there is previousEditedRange and lastEditedRange - that is friggen terrible)
+    // TODO: cleanup (now there is previousChangeInLength and lastChangeInLength - that is friggen terrible)
+    var previousEditedRange: NSRange? = nil
+    var previousChangeInLength: Int? = nil
     func applyStylesToRange(searchRange: NSRange) {
+        
+        if let previousEditedRange = self.previousEditedRange {
+            
+            self.previousEditedRange = previousEditedRange.union(self.lastEditedRange)
+        }
+        else {
+            
+            self.previousEditedRange = self.lastEditedRange
+        }
+        
+        if let previousChangeInLength = self.previousChangeInLength {
+            
+            self.previousChangeInLength = previousChangeInLength + self.lastChangeInLength
+        }
+        else {
+            
+            self.previousChangeInLength = self.lastChangeInLength
+        }
         
         DispatchQueue.global().async {
         
+            // TODO: remove force unwrapping - it is being used for testing
+            let editedRange = self.previousEditedRange!// ?? self.lastEditedRange
+            let changeInLength = self.previousChangeInLength!// ?? self.lastChangeInLength
+            
             // get attributes from syntax parser
-            guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: self.lastEditedRange, changeInLength: self.lastChangeInLength) else {
+            guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: editedRange, changeInLength: changeInLength) else {
                 return
             }
             let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
             let invalidAttributeRanges = attributeOccurrences.invalidRanges
+            let allAttributeOccurrences = attributeOccurrences.allAttributeOccurrences
             
             
             let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
@@ -71,11 +98,61 @@ class TextEditorTextStorage: NSTextStorage {
             let normalFontAttribute = Attribute(key: .font, value: normalFont)
             
             guard self.backingStore.string.maxNSRange == searchRange else {
-                //TODO: put this check in more places. particularly the language parsing
-                //TODO: when we skip over an iteration. we have to append that iteration's editedRange to the next iteration
+                
+                /*
+                 problem:
+                    if the characters are replaced quickly, then this guard condition (self.backingStore.string.maxNSRange == searchRange) will be true which means it is invalid (the string can change but still have the same length). need to find a correct way of checking vailidity
+                 
+                 possible solution:
+                    use dispatchWorkItem
+                    call cancel all on previous workItems at the beginning of each pass
+                 */
+                
+                /*
+                 problem:
+                    when the newest pass completes. it ignores invalidation that should have occurred on previous passes
+                 
+                 possible solution:
+                    save the (editedRange, changeInLength) before entering background queue
+                    include all saved (editedRange, changeInLength) values when calling syntaxParser
+                    set (editedRange, changeInLength) to nil on a successful pass
+                 
+                    problem:
+                        the union of editedRanges may include unchanged ranges
+                 
+                    solution:
+                        change the syntaxParser method to accept an array of ranges
+                        in the syntaxParser
+                            make the current method private, and add a new method with the same signature except that ranges will be an array
+                            if the ranges do not intersect, call the private method with each range and append together in the response
+                            if the ranges do intersect, call the private method with the range.union and return that response
+                 
+                    potential problem:
+                        will the changeInLength be valid when adding to the new pass?
+                 */
+                
+                /*
+                 optimization:
+                    enable abandonment during syntaxParsing
+                 
+                 possible solution:
+                    i believe the workItem must be passed around to whoever wants to cancel it (the syntaxParser.attriubtes method and in-turn the language.attributes method)
+                 */
+                
+                // additionally: could add a failsafe to process every 10 seconds or so
+                
+                
+                
                 print("CHECK IT")
                 return
             }
+            
+            self.previousEditedRange = nil
+            self.previousChangeInLength = nil
+            
+            //TODO: figure out a good way to do this
+            //the reason it was moved it here: when the pass is abandoned, syntax parser still sets the lastAttributes - so when the next successful pass happens, it is basing it's algorithm on invalid data becuase the lastAttributes is used to calcuated what needs to be updated
+            self.syntaxParser.lastAttributeOccurrences = allAttributeOccurrences
             
             DispatchQueue.main.async {
         
