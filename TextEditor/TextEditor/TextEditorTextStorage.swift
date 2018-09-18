@@ -37,12 +37,12 @@ class TextEditorTextStorage: NSTextStorage {
     var lastChangeInLength: Int = 0
     override func replaceCharacters(in range: NSRange, with str: String) {
         
-//        beginEditing()
+        beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
         lastEditedRange = editedRange
         lastChangeInLength = changeInLength
-//        endEditing()
+        endEditing()
     }
     
     override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange) {
