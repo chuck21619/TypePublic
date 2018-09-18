@@ -82,9 +82,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         }
         
         // TODO: handle word-wrap
-        textContainer.widthTracksTextView = false
-        textContainer.containerSize = NSSize(width: .greatestFiniteMagnitude, height: containerSize.height)
-//        container.widthTracksTextView = true
+        textContainer.widthTracksTextView = true
+//        textContainer.containerSize = NSSize(width: .greatestFiniteMagnitude, height: containerSize.height)
+        textContainer.containerSize = containerSize
         
         // 4. assemble
         
