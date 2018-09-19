@@ -33,56 +33,40 @@ class TextEditorTextStorage: NSTextStorage {
     }
     
     // mandatory overrides to use our backingStore.string
-    var lastEditedRange: NSRange = NSRange(location: 0, length: 0)
-    var lastChangeInLength: Int = 0
     override func replaceCharacters(in range: NSRange, with str: String) {
         
         beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
-        lastEditedRange = editedRange
-        lastChangeInLength = changeInLength
         endEditing()
     }
     
     override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange) {
         
-//        beginEditing()
         backingStore.setAttributes(attrs, range: range)
         edited(.editedAttributes, range: range, changeInLength: 0)
-//        endEditing()
     }
     
     // methods to apply attributes
-    // TODO: cleanup (now there is previousEditedRange and lastEditedRange - that is friggen terrible)
-    // TODO: cleanup (now there is previousChangeInLength and lastChangeInLength - that is friggen terrible)
-    var previousEditedRange: NSRange? = nil
-    var previousChangeInLength: Int? = nil
-    func applyStylesToRange(searchRange: NSRange) {
+    var editedRangeSinceLastParsing: NSRange? = nil
+    var changeInLengthSinceLastParsing: Int? = nil
+    
+    var workItem: DispatchWorkItem? = nil
+    
+    func updateSyntax(searchRange: NSRange) {
         
-        if let previousEditedRange = self.previousEditedRange {
-            
-            self.previousEditedRange = previousEditedRange.union(self.lastEditedRange)
-        }
-        else {
-            
-            self.previousEditedRange = self.lastEditedRange
-        }
+        self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
+        self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
         
-        if let previousChangeInLength = self.previousChangeInLength {
-            
-            self.previousChangeInLength = previousChangeInLength + self.lastChangeInLength
-        }
-        else {
-            
-            self.previousChangeInLength = self.lastChangeInLength
-        }
+        workItem?.cancel()
+        var newWorkItem: DispatchWorkItem!
         
-        DispatchQueue.global().async {
+        newWorkItem = DispatchWorkItem {
         
-            // TODO: remove force unwrapping - it is being used for testing
-            let editedRange = self.previousEditedRange!// ?? self.lastEditedRange
-            let changeInLength = self.previousChangeInLength!// ?? self.lastChangeInLength
+            guard let editedRange = self.editedRangeSinceLastParsing,
+                  let changeInLength = self.changeInLengthSinceLastParsing else {
+                return
+            }
             
             // get attributes from syntax parser
             guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: editedRange, changeInLength: changeInLength) else {
@@ -98,7 +82,10 @@ class TextEditorTextStorage: NSTextStorage {
             let normalFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
             let normalFontAttribute = Attribute(key: .font, value: normalFont)
             
-            guard self.backingStore.string.maxNSRange == searchRange else {
+            guard newWorkItem.isCancelled == false else {
+                print("CHECK IT")
+                return
+            }
                 
                 /*
                  problem:
@@ -141,15 +128,9 @@ class TextEditorTextStorage: NSTextStorage {
                  */
                 
                 // additionally: could add a failsafe to process every 10 seconds or so
-                
-                
-                
-                print("CHECK IT")
-                return
-            }
             
-            self.previousEditedRange = nil
-            self.previousChangeInLength = nil
+            self.editedRangeSinceLastParsing = nil
+            self.changeInLengthSinceLastParsing = nil
             
             //TODO: figure out a good way to do this
             //the reason it was moved it here: when the pass is abandoned, syntax parser still sets the lastAttributes - so when the next successful pass happens, it is basing it's algorithm on invalid data becuase the lastAttributes is used to calcuated what needs to be updated
@@ -177,30 +158,18 @@ class TextEditorTextStorage: NSTextStorage {
                 self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
                 self.myDelegate?.invalidateRanges(invalidRanges: newAttributesRanges)
             }
+            
+            newWorkItem = nil
         }
-    }
-    
-    func rangeToPerformAttributeReplacements(editedRange: NSRange) -> NSRange {
         
-        //range for all text
-        return backingStore.string.maxNSRange
+        self.workItem = newWorkItem
         
-        //range for only edited line
-//        var extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(editedRange.location, 0)))
-//        extendedRange = NSUnionRange(editedRange, NSString(string: backingStore.string).lineRange(for: NSMakeRange(NSMaxRange(editedRange), 0)))
-//
-//        return extendedRange
-    }
-    
-    func updateAllAttributeOccurrences() {
-
-        let rangeToApplyAttributes = rangeToPerformAttributeReplacements(editedRange: editedRange)
-        applyStylesToRange(searchRange: rangeToApplyAttributes)
+        DispatchQueue.global().async(execute: newWorkItem)
     }
     
     override func processEditing() {
 
         super.processEditing()
-        updateAllAttributeOccurrences()
+        updateSyntax(searchRange: backingStore.string.maxNSRange)
     }
 }
