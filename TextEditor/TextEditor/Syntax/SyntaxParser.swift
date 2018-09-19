@@ -33,20 +33,44 @@ class SyntaxParser {
             return nil
         }
         
+        let invalidRanges = calcInvalidRanges(editedRange: editedRange, changeInLength: changeInLength)
+
+        let newAttributeOccurrences = calcNewAttributeOccurrences(allAttributeOccurrences: allAttributeOccurrences, editedRange: editedRange, invalidRanges: invalidRanges)
+        
+        return (allAttributeOccurrences: allAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
+    }
+    
+    private func calcNewAttributeOccurrences(allAttributeOccurrences: [AttributeOccurrence], editedRange: NSRange, invalidRanges: [NSRange]) -> [AttributeOccurrence] {
+        
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
             
-            //check if i also need to append any attributes that intersect invalidated ranges
+            let attributeOccurrenceIntersectsEditedRange = attributeOccurrence.intersects(range: editedRange)
+            let attributeOccurrenceIsAdjacentToEditedRange = attributeOccurrence.isAdjacent(to: editedRange)
             
+            var attributeOccurrenceIntersectsInvalidatedRange = false
+            for invalidRange in invalidRanges {
+                
+                if attributeOccurrence.intersects(range: invalidRange) {
+                    attributeOccurrenceIntersectsInvalidatedRange = true
+                    break
+                }
+            }
             
+            let attributeIsAffectedByEdit = attributeOccurrenceIntersectsEditedRange || attributeOccurrenceIsAdjacentToEditedRange || attributeOccurrenceIntersectsInvalidatedRange
             
-            return attributeOccurrence.intersects(range: editedRange)
+            return attributeIsAffectedByEdit
         }
         
-        let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
+        return newAttributeOccurrences
+    }
+    
+    private func calcInvalidRanges(editedRange: NSRange, changeInLength: Int) -> [NSRange] {
+        
+        var invalidRanges = lastAttributeOccurrences.compactMap { (attributeOccurrence) -> NSRange? in
             
-            guard let attributeOccurrenceRangeAfterEdit = calcAttributeRangeAfterEdit(attributeOccurrence: attributeOccurrence, editedRange: editedRange, changeInLength: changeInLength) else {
+            guard let attributeOccurrenceRangeAfterEdit = attributeOccurrence.effectiveRangeAfterEdit(editedRange: editedRange, changeInLength: changeInLength) else {
                 
-                return false
+                return nil
             }
             
             let attributeOccurrenceIntersectsEditedRange = attributeOccurrenceRangeAfterEdit.intersects(editedRange)
@@ -54,12 +78,11 @@ class SyntaxParser {
             
             let isInvalid = attributeOccurrenceIntersectsEditedRange || attributeOccurrenceIsAdjacentToEditedRange
             
-            return isInvalid
-        }
-        
-        var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
+            guard isInvalid else {
+                return nil
+            }
             
-            return calcAttributeRangeAfterEdit(attributeOccurrence: attributeOccurrence, editedRange: editedRange, changeInLength: changeInLength) ?? NSRange(location: 0, length: 0)
+            return attributeOccurrenceRangeAfterEdit
         }
         
         // always invalidate new characters
@@ -67,106 +90,6 @@ class SyntaxParser {
             invalidRanges.append(editedRange)
         }
         
-        return (allAttributeOccurrences: allAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
-    }
-    
-    func calcAttributeRangeAfterEdit(attributeOccurrence: AttributeOccurrence, editedRange: NSRange, changeInLength: Int) -> NSRange? {
-
-        let range: NSRange?
-        
-        //TODO: think about when characters are replaced
-//        if changeInLength == 0 {
-//
-//            range = nil
-//
-//        }
-            //Deleting Characters
-        if changeInLength < 0 {
-            
-            if editedRange.location < attributeOccurrence.effectiveRange.location {
-                
-                //1
-                if editedRange.location - changeInLength < attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length {
-                    
-                    let location = editedRange.location
-                    let overlap = (editedRange.location - changeInLength) - attributeOccurrence.effectiveRange.location
-                    let length = attributeOccurrence.effectiveRange.length - max(overlap, 0)
-                    
-                    range = NSRange(location: location, length: length)
-                }
-                //4
-                else {
-                    
-                    range = nil
-                }
-                
-            }
-            else  {
-                
-                //2
-                if editedRange.location - changeInLength > attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length {
-                    
-                    let location = attributeOccurrence.effectiveRange.location
-                    let overlap = (attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length) - editedRange.location
-                    let length = attributeOccurrence.effectiveRange.length - max(0, overlap)
-                    
-                    range = NSRange(location: location, length: length)
-                }
-                //3
-                else {
-                    
-                    let location = attributeOccurrence.effectiveRange.location
-                    let length = attributeOccurrence.effectiveRange.length + changeInLength
-                    
-                    range = NSRange(location: location, length: length)
-                }
-            }
-        }
-        
-            // Adding characters
-        else {
-            
-            //6
-            if editedRange.location <= attributeOccurrence.effectiveRange.location {
-                
-                let location = attributeOccurrence.effectiveRange.location + changeInLength
-                let length = attributeOccurrence.effectiveRange.length
-                
-                range = NSRange(location: location, length: length)
-            }
-            else {
-
-                //7
-                if editedRange.location > attributeOccurrence.effectiveRange.location && editedRange.location < attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length {
-                    
-                    let location = attributeOccurrence.effectiveRange.location
-                    let length = attributeOccurrence.effectiveRange.length + changeInLength
-                    
-                    range = NSRange(location: location, length: length)
-                    
-                }
-                //8
-                else {
-                    
-                    range = attributeOccurrence.effectiveRange
-                }
-            }
-        }
-        
-        
-        return range
-        
-        
-        
-        
-        
-        
-        
-//        if attributeOccurrence.effectiveRange.location > editedRange.location {
-//
-//            return NSRange(location: attributeOccurrence.effectiveRange.location + changeInLength, length: attributeOccurrence.effectiveRange.length)
-//        }
-//
-//        return attributeOccurrence.effectiveRange
+        return invalidRanges
     }
 }

@@ -31,7 +31,6 @@ struct AttributeOccurrence {
     }
     
     // MARK: - Methods
-    // TODO: clean up this method
     func intersects(range: NSRange) -> Bool {
         
         let effectiveRange = self.effectiveRange
@@ -42,11 +41,102 @@ struct AttributeOccurrence {
     
     func intersects(location: Int) -> Bool {
         
-        if self.effectiveRange.contains(location) {
-            return true
+        let effectiveRange = self.effectiveRange
+        let doesIntersectRange = effectiveRange.contains(location)
+        
+        return doesIntersectRange
+    }
+    
+    func isAdjacent(to range: NSRange) -> Bool {
+        
+        let effectiveRange = self.effectiveRange
+        let isAdjacent = effectiveRange.isAdjacent(to: range)
+        
+        return isAdjacent
+    }
+    
+    func effectiveRangeAfterEdit(editedRange: NSRange, changeInLength: Int) -> NSRange? {
+        
+        let range: NSRange?
+        
+        // Replacing Characters
+        if changeInLength == 0 {
+            
+            range = self.effectiveRange
+            
+        }
+            //Deleting Characters
+        else if changeInLength < 0 {
+            
+            if editedRange.location < self.effectiveRange.location {
+                
+                //1
+                if editedRange.location - changeInLength < self.effectiveRange.location + self.effectiveRange.length {
+                    
+                    let location = editedRange.location
+                    let overlap = (editedRange.location - changeInLength) - self.effectiveRange.location
+                    let length = self.effectiveRange.length - max(overlap, 0)
+                    
+                    range = NSRange(location: location, length: length)
+                }
+                    //4
+                else {
+                    
+                    range = nil
+                }
+            }
+            else  {
+                
+                //2
+                if editedRange.location - changeInLength > self.effectiveRange.location + self.effectiveRange.length {
+                    
+                    let location = self.effectiveRange.location
+                    let overlap = (self.effectiveRange.location + self.effectiveRange.length) - editedRange.location
+                    let length = self.effectiveRange.length - max(0, overlap)
+                    
+                    range = NSRange(location: location, length: length)
+                }
+                    //3
+                else {
+                    
+                    let location = self.effectiveRange.location
+                    let length = self.effectiveRange.length + changeInLength
+                    
+                    range = NSRange(location: location, length: length)
+                }
+            }
+        }
+            // Adding Characters
+        else {
+            
+            //6
+            if editedRange.location <= self.effectiveRange.location {
+                
+                let location = self.effectiveRange.location + changeInLength
+                let length = self.effectiveRange.length
+                
+                range = NSRange(location: location, length: length)
+            }
+            else {
+                
+                //7
+                if editedRange.location > self.effectiveRange.location && editedRange.location < self.effectiveRange.location + self.effectiveRange.length {
+                    
+                    let location = self.effectiveRange.location
+                    let length = self.effectiveRange.length + changeInLength
+                    
+                    range = NSRange(location: location, length: length)
+                    
+                }
+                    //8
+                else {
+                    
+                    range = self.effectiveRange
+                }
+            }
         }
         
-        return false
+        return range
     }
 }
 
