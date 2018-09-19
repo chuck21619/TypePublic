@@ -57,84 +57,22 @@ struct AttributeOccurrence {
     
     func effectiveRangeAfterEdit(editedRange: NSRange, changeInLength: Int) -> NSRange? {
         
-        let range: NSRange?
+        let rangeCalculator: AttributeRangeCalculator
         
-        // Replacing Characters
         if changeInLength == 0 {
             
-            range = self.effectiveRange
-            
+            rangeCalculator = ReplaceRangeCalculator()
         }
-            //Deleting Characters
         else if changeInLength < 0 {
             
-            if editedRange.location < self.effectiveRange.location {
-                
-                //1
-                if editedRange.location - changeInLength < self.effectiveRange.location + self.effectiveRange.length {
-                    
-                    let location = editedRange.location
-                    let overlap = (editedRange.location - changeInLength) - self.effectiveRange.location
-                    let length = self.effectiveRange.length - max(overlap, 0)
-                    
-                    range = NSRange(location: location, length: length)
-                }
-                    //4
-                else {
-                    
-                    range = nil
-                }
-            }
-            else  {
-                
-                //2
-                if editedRange.location - changeInLength > self.effectiveRange.location + self.effectiveRange.length {
-                    
-                    let location = self.effectiveRange.location
-                    let overlap = (self.effectiveRange.location + self.effectiveRange.length) - editedRange.location
-                    let length = self.effectiveRange.length - max(0, overlap)
-                    
-                    range = NSRange(location: location, length: length)
-                }
-                    //3
-                else {
-                    
-                    let location = self.effectiveRange.location
-                    let length = self.effectiveRange.length + changeInLength
-                    
-                    range = NSRange(location: location, length: length)
-                }
-            }
+            rangeCalculator = DeleteRangeCalculator()
         }
-            // Adding Characters
         else {
             
-            //6
-            if editedRange.location <= self.effectiveRange.location {
-                
-                let location = self.effectiveRange.location + changeInLength
-                let length = self.effectiveRange.length
-                
-                range = NSRange(location: location, length: length)
-            }
-            else {
-                
-                //7
-                if editedRange.location > self.effectiveRange.location && editedRange.location < self.effectiveRange.location + self.effectiveRange.length {
-                    
-                    let location = self.effectiveRange.location
-                    let length = self.effectiveRange.length + changeInLength
-                    
-                    range = NSRange(location: location, length: length)
-                    
-                }
-                    //8
-                else {
-                    
-                    range = self.effectiveRange
-                }
-            }
+            rangeCalculator = AddRangeCalculator()
         }
+        
+        let range = rangeCalculator.calcRange(attributeOccurrence: self, editedRange: editedRange, changeInLength: changeInLength)
         
         return range
     }
