@@ -34,28 +34,10 @@ struct AttributeOccurrence {
     // TODO: clean up this method
     func intersects(range: NSRange) -> Bool {
         
-        if self.effectiveRange.location >= range.location {
-            
-            if self.effectiveRange.location <= range.location + range.length {
-                
-                return true
-            }
-            else {
-                
-                return false
-            }
-        }
-        else {
-            
-            if self.effectiveRange.location + self.effectiveRange.length >= min(range.location, range.location + range.length) {
-                
-                return true
-            }
-            else {
-                
-                return false
-            }
-        }
+        let effectiveRange = self.effectiveRange
+        let doesIntersectRange = effectiveRange.intersects(range)
+        
+        return doesIntersectRange
     }
     
     func intersects(location: Int) -> Bool {

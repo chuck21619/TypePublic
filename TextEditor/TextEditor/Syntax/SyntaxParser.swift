@@ -26,68 +26,147 @@ class SyntaxParser {
     }
     
     // MARK: - Methods
-    // TODO: rename method - it only returns new attributes occurrences and ranges to invalidate
+    // TODO: rename method - it only returns NEW attributes occurrences and ranges to invalidate
     func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int) -> (allAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
-        
-        // i dont know why editedRange does not include the change in length
-        // ^ i dont think this is always true. when highlighting a selection and pasting. the actual editedRange only includes the highlightedRange, while the editedRange includes all the pasted characters
-        // ^ i am probly confused about what changeInLength means
-        // TODO: fix this^ (and below where i am appending the new characters to invalidRanges)
-        let actualEditedRange = NSRange(location: editedRange.location, length: changeInLength)
         
         guard let allAttributeOccurrences = language.attributes(for: string, range: range) else {
             return nil
         }
         
         let newAttributeOccurrences = allAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
-            // TODO: cleanup
-//            let attributeIsBeforeInsertionPoint = attributeOccurrence.effectiveRange.location < actualEditedRange.location
             
-            // maybe this is calculating the range AFTER the change in length?
-            let locationNotSureChangeInLength: Int
-            let lengthNotSureChangeInLength: Int
-            
-//            if attributeIsBeforeInsertionPoint {
-//                locationNotSureChangeInLength = actualEditedRange.location - changeInLength
-//                lengthNotSureChangeInLength = actualEditedRange.length - changeInLength
-//            }
-//            else {
-                locationNotSureChangeInLength = actualEditedRange.location + changeInLength
-                lengthNotSureChangeInLength = actualEditedRange.length + changeInLength
-//            }
-            let rangeNotSureChangeInLength = NSRange(location: locationNotSureChangeInLength, length: lengthNotSureChangeInLength)
+            //check if i also need to append any attributes that intersect invalidated ranges
             
             
-            return attributeOccurrence.intersects(range: rangeNotSureChangeInLength) || attributeOccurrence.intersects(range: editedRange)
-        }
-        
-        let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
             
             return attributeOccurrence.intersects(range: editedRange)
         }
         
+        let invalidAttributeOccurences = lastAttributeOccurrences.filter { (attributeOccurrence) -> Bool in
+            
+            guard let attributeOccurrenceRangeAfterEdit = calcAttributeRangeAfterEdit(attributeOccurrence: attributeOccurrence, editedRange: editedRange, changeInLength: changeInLength) else {
+                
+                return false
+            }
+            
+            let attributeOccurrenceIntersectsEditedRange = attributeOccurrenceRangeAfterEdit.intersects(editedRange)
+            let attributeOccurrenceIsAdjacentToEditedRange = attributeOccurrenceRangeAfterEdit.isAdjacent(to: editedRange)
+            
+            let isInvalid = attributeOccurrenceIntersectsEditedRange || attributeOccurrenceIsAdjacentToEditedRange
+            
+            return isInvalid
+        }
+        
         var invalidRanges = invalidAttributeOccurences.map { (attributeOccurrence) -> NSRange in
             
-            let effectiveRange = attributeOccurrence.effectiveRange
-            let location = effectiveRange.location
-            let length = effectiveRange.length + changeInLength
-            let range = NSRange(location: location, length: max(0,length))
-            
-            return range
+            return calcAttributeRangeAfterEdit(attributeOccurrence: attributeOccurrence, editedRange: editedRange, changeInLength: changeInLength) ?? NSRange(location: 0, length: 0)
         }
         
         // always invalidate new characters
-        // TODO: clean up
-        let newCharacterRange = actualEditedRange
-        if newCharacterRange.length > 0 {
-            invalidRanges.append(newCharacterRange)
-        }
-        
-        let alsoNewCharacterRange = editedRange
-        if alsoNewCharacterRange.length > 0 {
+        if editedRange.length > 0 {
             invalidRanges.append(editedRange)
         }
         
         return (allAttributeOccurrences: allAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
+    }
+    
+    func calcAttributeRangeAfterEdit(attributeOccurrence: AttributeOccurrence, editedRange: NSRange, changeInLength: Int) -> NSRange? {
+
+        let range: NSRange?
+        
+        //TODO: think about when characters are replaced
+//        if changeInLength == 0 {
+//
+//            range = nil
+//
+//        }
+            //Deleting Characters
+        if changeInLength < 0 {
+            
+            if editedRange.location < attributeOccurrence.effectiveRange.location {
+                
+                //1
+                if editedRange.location - changeInLength < attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length {
+                    
+                    let location = editedRange.location
+                    let overlap = (editedRange.location - changeInLength) - attributeOccurrence.effectiveRange.location
+                    let length = attributeOccurrence.effectiveRange.length - max(overlap, 0)
+                    
+                    range = NSRange(location: location, length: length)
+                }
+                //4
+                else {
+                    
+                    range = nil
+                }
+                
+            }
+            else  {
+                
+                //2
+                if editedRange.location - changeInLength > attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length {
+                    
+                    let location = attributeOccurrence.effectiveRange.location
+                    let overlap = (attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length) - editedRange.location
+                    let length = attributeOccurrence.effectiveRange.length - max(0, overlap)
+                    
+                    range = NSRange(location: location, length: length)
+                }
+                //3
+                else {
+                    
+                    let location = attributeOccurrence.effectiveRange.location
+                    let length = attributeOccurrence.effectiveRange.length + changeInLength
+                    
+                    range = NSRange(location: location, length: length)
+                }
+            }
+        }
+        
+            // Adding characters
+        else {
+            
+            //6
+            if editedRange.location <= attributeOccurrence.effectiveRange.location {
+                
+                let location = attributeOccurrence.effectiveRange.location + changeInLength
+                let length = attributeOccurrence.effectiveRange.length
+                
+                range = NSRange(location: location, length: length)
+            }
+            else {
+
+                //7
+                if editedRange.location > attributeOccurrence.effectiveRange.location && editedRange.location < attributeOccurrence.effectiveRange.location + attributeOccurrence.effectiveRange.length {
+                    
+                    let location = attributeOccurrence.effectiveRange.location
+                    let length = attributeOccurrence.effectiveRange.length + changeInLength
+                    
+                    range = NSRange(location: location, length: length)
+                    
+                }
+                //8
+                else {
+                    
+                    range = attributeOccurrence.effectiveRange
+                }
+            }
+        }
+        
+        
+        return range
+        
+        
+        
+        
+        
+        
+        
+//        if attributeOccurrence.effectiveRange.location > editedRange.location {
+//
+//            return NSRange(location: attributeOccurrence.effectiveRange.location + changeInLength, length: attributeOccurrence.effectiveRange.length)
+//        }
+//
+//        return attributeOccurrence.effectiveRange
     }
 }
