@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AddRangeCalculator: AttributeRangeCalculator {
+class AttributeAddRangeCalculator: AttributeEditRangeCalculator {
     
     func calcRange(attributeOccurrence: AttributeOccurrence, editedRange: NSRange, changeInLength: Int) -> NSRange? {
         
@@ -18,7 +18,10 @@ class AddRangeCalculator: AttributeRangeCalculator {
         let attributeLength = attributeOccurrence.effectiveRange.length
         let editedLocation = editedRange.location
         
-        if editedLocation <= attributeLocation {
+        let editedLocationIsInBetweenAttributeRange = editedLocation > attributeLocation && editedLocation < attributeLocation + attributeLength
+        let editedLocationIsLessThanAttributeLocation = editedLocation < attributeLocation
+        
+        if editedLocationIsLessThanAttributeLocation {
             
             let location = attributeLocation + changeInLength
             let length = attributeLength
@@ -27,7 +30,7 @@ class AddRangeCalculator: AttributeRangeCalculator {
         }
         else {
             
-            if editedLocation > attributeLocation && editedLocation < attributeLocation + attributeLength {
+            if editedLocationIsInBetweenAttributeRange {
                 
                 let location = attributeLocation
                 let length = attributeLength + changeInLength

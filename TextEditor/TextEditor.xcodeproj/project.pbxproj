@@ -30,11 +30,10 @@
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316D520FFFBF10028D466 /* TextEditorView.swift */; };
 		A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316DC210000610028D466 /* TextEditorViewController.swift */; };
-		A3CF81CD2152CFF500BA4D48 /* EditTypeRangeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CF81CC2152CFF500BA4D48 /* EditTypeRangeCalculator.swift */; };
+		A3CF81CD2152CFF500BA4D48 /* AttributeEditRangeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CF81CC2152CFF500BA4D48 /* AttributeEditRangeCalculator.swift */; };
 		A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CF81CE2152D00500BA4D48 /* DeleteRangeCalculator.swift */; };
 		A3CF81D12152D01500BA4D48 /* AddRangeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CF81D02152D01500BA4D48 /* AddRangeCalculator.swift */; };
 		A3CF81D62152D0A700BA4D48 /* ReplaceRangeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CF81D52152D0A700BA4D48 /* ReplaceRangeCalculator.swift */; };
-		A3CF81DB2152E65800BA4D48 /* LocationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CF81DA2152E65800BA4D48 /* LocationCalculator.swift */; };
 		A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E12139CB6000A8A1AF /* LineNumberRulerView.swift */; };
 		A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */; };
 		A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */; };
@@ -80,11 +79,10 @@
 		A3C316BE20FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3C316D520FFFBF10028D466 /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
 		A3C316DC210000610028D466 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
-		A3CF81CC2152CFF500BA4D48 /* EditTypeRangeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTypeRangeCalculator.swift; sourceTree = "<group>"; };
+		A3CF81CC2152CFF500BA4D48 /* AttributeEditRangeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeEditRangeCalculator.swift; sourceTree = "<group>"; };
 		A3CF81CE2152D00500BA4D48 /* DeleteRangeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRangeCalculator.swift; sourceTree = "<group>"; };
 		A3CF81D02152D01500BA4D48 /* AddRangeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRangeCalculator.swift; sourceTree = "<group>"; };
 		A3CF81D52152D0A700BA4D48 /* ReplaceRangeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceRangeCalculator.swift; sourceTree = "<group>"; };
-		A3CF81DA2152E65800BA4D48 /* LocationCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCalculator.swift; sourceTree = "<group>"; };
 		A3DF51E12139CB6000A8A1AF /* LineNumberRulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberRulerView.swift; sourceTree = "<group>"; };
 		A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorLayoutManager.swift; sourceTree = "<group>"; };
 		A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTextContainer.swift; sourceTree = "<group>"; };
@@ -209,19 +207,19 @@
 			path = TextEditorTests;
 			sourceTree = "<group>";
 		};
-		A3CF81D22152D02700BA4D48 /* AttributeRangeCalculator */ = {
+		A3CF81D22152D02700BA4D48 /* AttributeEditRangeCalculator */ = {
 			isa = PBXGroup;
 			children = (
 				A3CF81D32152D03500BA4D48 /* Interface */,
 				A3CF81D42152D03B00BA4D48 /* Implementation */,
 			);
-			path = AttributeRangeCalculator;
+			path = AttributeEditRangeCalculator;
 			sourceTree = "<group>";
 		};
 		A3CF81D32152D03500BA4D48 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				A3CF81CC2152CFF500BA4D48 /* EditTypeRangeCalculator.swift */,
+				A3CF81CC2152CFF500BA4D48 /* AttributeEditRangeCalculator.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -229,34 +227,9 @@
 		A3CF81D42152D03B00BA4D48 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				A3CF81D72152E60E00BA4D48 /* RangePositionRangeCalculator */,
 				A3CF81CE2152D00500BA4D48 /* DeleteRangeCalculator.swift */,
 				A3CF81D02152D01500BA4D48 /* AddRangeCalculator.swift */,
 				A3CF81D52152D0A700BA4D48 /* ReplaceRangeCalculator.swift */,
-			);
-			path = Implementation;
-			sourceTree = "<group>";
-		};
-		A3CF81D72152E60E00BA4D48 /* RangePositionRangeCalculator */ = {
-			isa = PBXGroup;
-			children = (
-				A3CF81D82152E63D00BA4D48 /* Interface */,
-				A3CF81D92152E64500BA4D48 /* Implementation */,
-			);
-			path = RangePositionRangeCalculator;
-			sourceTree = "<group>";
-		};
-		A3CF81D82152E63D00BA4D48 /* Interface */ = {
-			isa = PBXGroup;
-			children = (
-				A3CF81DA2152E65800BA4D48 /* LocationCalculator.swift */,
-			);
-			path = Interface;
-			sourceTree = "<group>";
-		};
-		A3CF81D92152E64500BA4D48 /* Implementation */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -283,7 +256,7 @@
 			children = (
 				A3357896212B635C000773C7 /* Attribute.swift */,
 				A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */,
-				A3CF81D22152D02700BA4D48 /* AttributeRangeCalculator */,
+				A3CF81D22152D02700BA4D48 /* AttributeEditRangeCalculator */,
 				A3F0F46D213481D200FA0A74 /* Interface */,
 				A3F0F46E213481DA00FA0A74 /* Implementation */,
 			);
@@ -435,14 +408,13 @@
 				A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
 				A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */,
-				A3CF81CD2152CFF500BA4D48 /* EditTypeRangeCalculator.swift in Sources */,
+				A3CF81CD2152CFF500BA4D48 /* AttributeEditRangeCalculator.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
 				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
 				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,
-				A3CF81DB2152E65800BA4D48 /* LocationCalculator.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
 			);

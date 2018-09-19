@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeleteRangeCalculator: AttributeRangeCalculator {
+class AttributeDeleteRangeCalculator: AttributeEditRangeCalculator {
     
     func calcRange(attributeOccurrence: AttributeOccurrence, editedRange: NSRange, changeInLength: Int) -> NSRange? {
         
@@ -18,9 +18,12 @@ class DeleteRangeCalculator: AttributeRangeCalculator {
         let attributeLength = attributeOccurrence.effectiveRange.length
         let editedLocation = editedRange.location
         
-        if editedLocation < attributeLocation {
+        let lastEditedIndexIsLessThanLastAttributeIndex = editedLocation - changeInLength < attributeLocation + attributeLength
+        let editedLocationIsLessThanAttributeLocation = editedLocation < attributeLocation
+        
+        if editedLocationIsLessThanAttributeLocation {
             
-            if editedLocation - changeInLength < attributeLocation + attributeLength {
+            if lastEditedIndexIsLessThanLastAttributeIndex {
                 
                 let location = editedLocation
                 let overlap = (editedLocation - changeInLength) - attributeLocation
@@ -35,18 +38,18 @@ class DeleteRangeCalculator: AttributeRangeCalculator {
         }
         else  {
             
-            if editedLocation - changeInLength > attributeLocation + attributeLength {
+            if lastEditedIndexIsLessThanLastAttributeIndex {
                 
                 let location = attributeLocation
-                let overlap = (attributeLocation + attributeLength) - editedLocation
-                let length = attributeLength - max(0, overlap)
+                let length = attributeLength + changeInLength
                 
                 range = NSRange(location: location, length: length)
             }
             else {
                 
                 let location = attributeLocation
-                let length = attributeLength + changeInLength
+                let overlap = (attributeLocation + attributeLength) - editedLocation
+                let length = attributeLength - max(0, overlap)
                 
                 range = NSRange(location: location, length: length)
             }

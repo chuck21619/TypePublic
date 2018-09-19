@@ -57,19 +57,19 @@ struct AttributeOccurrence {
     
     func effectiveRangeAfterEdit(editedRange: NSRange, changeInLength: Int) -> NSRange? {
         
-        let rangeCalculator: AttributeRangeCalculator
+        let rangeCalculator: AttributeEditRangeCalculator
         
         if changeInLength == 0 {
             
-            rangeCalculator = ReplaceRangeCalculator()
+            rangeCalculator = AttributeReplaceRangeCalculator()
         }
         else if changeInLength < 0 {
             
-            rangeCalculator = DeleteRangeCalculator()
+            rangeCalculator = AttributeDeleteRangeCalculator()
         }
         else {
             
-            rangeCalculator = AddRangeCalculator()
+            rangeCalculator = AttributeAddRangeCalculator()
         }
         
         let range = rangeCalculator.calcRange(attributeOccurrence: self, editedRange: editedRange, changeInLength: changeInLength)

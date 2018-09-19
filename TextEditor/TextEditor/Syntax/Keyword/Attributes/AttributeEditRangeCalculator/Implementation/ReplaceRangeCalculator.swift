@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReplaceRangeCalculator: AttributeRangeCalculator {
+class AttributeReplaceRangeCalculator: AttributeEditRangeCalculator {
     
     func calcRange(attributeOccurrence: AttributeOccurrence, editedRange: NSRange, changeInLength: Int) -> NSRange? {
         

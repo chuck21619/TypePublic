@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AttributeRangeCalculator {
+protocol AttributeEditRangeCalculator {
     
     func calcRange(attributeOccurrence: AttributeOccurrence, editedRange: NSRange, changeInLength: Int) -> NSRange?
 }
