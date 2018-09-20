@@ -69,7 +69,7 @@ class TextEditorTextStorage: NSTextStorage {
             }
             
             // get attributes from syntax parser
-            guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: editedRange, changeInLength: changeInLength) else {
+            guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: self.backingStore.string, range: searchRange, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
                 return
             }
             let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
@@ -83,18 +83,8 @@ class TextEditorTextStorage: NSTextStorage {
             let normalFontAttribute = Attribute(key: .font, value: normalFont)
             
             guard newWorkItem.isCancelled == false else {
-                print("CHECK IT")
                 return
             }
-                
-                /*
-                 problem:
-                    if the characters are replaced quickly, then this guard condition (self.backingStore.string.maxNSRange == searchRange) will be true which means it is invalid (the string can change but still have the same length). need to find a correct way of checking vailidity
-                 
-                 possible solution:
-                    use dispatchWorkItem
-                    call cancel all on previous workItems at the beginning of each pass
-                 */
                 
                 /*
                  problem:
@@ -138,7 +128,7 @@ class TextEditorTextStorage: NSTextStorage {
             
             DispatchQueue.main.async {
         
-                // invalidating must happen first and new attributes may include the invalid ranges
+                // invalidating must happen first and new attributes may include the invalid ranges - this might not be correct
                 //TODO: consolidate invalid and new attributes
                 for invalidAttributeRange in invalidAttributeRanges {
                     
@@ -155,8 +145,9 @@ class TextEditorTextStorage: NSTextStorage {
                     return attributeOccurence.effectiveRange
                 })
                 
-                self.myDelegate?.invalidateRanges(invalidRanges: invalidAttributeRanges)
-                self.myDelegate?.invalidateRanges(invalidRanges: newAttributesRanges)
+                let invalidRanges = invalidAttributeRanges + newAttributesRanges
+                
+                self.myDelegate?.invalidateRanges(invalidRanges: invalidRanges)
             }
             
             newWorkItem = nil

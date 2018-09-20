@@ -11,10 +11,9 @@ import Foundation
 class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     
     // MARK: Methods
-    func attributes(for keyword: Keyword, in string: String, range: NSRange) -> [AttributeOccurrence] {
+    func attributes(for keyword: Keyword, in string: String, range: NSRange, workItem: DispatchWorkItem) -> [AttributeOccurrence] {
         
         guard let attribute = keyword.attribute else {
-            // if the keyword was not initialized with an attribute, then the simple provider should not do anything, as it should not predict any attribute changes (maybe a default attribute should be used?)
             return []
         }
         
@@ -27,7 +26,6 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
         }
         
         guard string.contains(range: range) else {
-            
             return []
         }
         
@@ -39,6 +37,11 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             
             let attributeOccurence = AttributeOccurrence(attribute: attribute, attributeRange: match.range)
             attributeOccurences.append(attributeOccurence)
+            
+            guard workItem.isCancelled == false else {
+                stop.pointee = true
+                return
+            }
         }
         
         return attributeOccurences

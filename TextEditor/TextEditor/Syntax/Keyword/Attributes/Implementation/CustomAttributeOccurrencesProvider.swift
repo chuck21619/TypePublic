@@ -20,13 +20,17 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     }
     
     // MARK: Methods
-    func attributes(for keyword: Keyword, in string: String, range: NSRange) -> [AttributeOccurrence] {
+    func attributes(for keyword: Keyword, in string: String, range: NSRange, workItem: DispatchWorkItem) -> [AttributeOccurrence] {
         
         var attributeOccurences: [AttributeOccurrence] = []
         
         let regexStr = keyword.regexPattern
         
         guard let regex = try? NSRegularExpression(pattern: regexStr) else {
+            return []
+        }
+        
+        guard string.contains(range: range) else {
             return []
         }
         
@@ -38,6 +42,11 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             
             let attributeOccurence = enumerator(match)
             attributeOccurences.append(contentsOf: attributeOccurence)
+            
+            guard workItem.isCancelled == false else {
+                stop.pointee = true
+                return
+            }
         }
         
         return attributeOccurences
