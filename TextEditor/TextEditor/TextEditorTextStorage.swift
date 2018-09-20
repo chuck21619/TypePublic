@@ -121,7 +121,7 @@ class TextEditorTextStorage: NSTextStorage {
         
         self.workItem = newWorkItem
         
-        DispatchQueue.global().async(execute: newWorkItem)
+        DispatchQueue.global(qos: .background).async(execute: newWorkItem)
     }
     
     override func processEditing() {
