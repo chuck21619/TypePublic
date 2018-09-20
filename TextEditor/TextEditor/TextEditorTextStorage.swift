@@ -76,7 +76,6 @@ class TextEditorTextStorage: NSTextStorage {
             let invalidAttributeRanges = attributeOccurrences.invalidRanges
             let allAttributeOccurrences = attributeOccurrences.allAttributeOccurrences
             
-            
             let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
             //TODO: get font from settings
             let normalFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
@@ -85,39 +84,6 @@ class TextEditorTextStorage: NSTextStorage {
             guard newWorkItem.isCancelled == false else {
                 return
             }
-                
-                /*
-                 problem:
-                    when the newest pass completes. it ignores invalidation that should have occurred on previous passes
-                 
-                 possible solution:
-                    save the (editedRange, changeInLength) before entering background queue
-                    include all saved (editedRange, changeInLength) values when calling syntaxParser
-                    set (editedRange, changeInLength) to nil on a successful pass
-                 
-                    problem:
-                        the union of editedRanges may include unchanged ranges
-                 
-                    solution:
-                        change the syntaxParser method to accept an array of ranges
-                        in the syntaxParser
-                            make the current method private, and add a new method with the same signature except that ranges will be an array
-                            if the ranges do not intersect, call the private method with each range and append together in the response
-                            if the ranges do intersect, call the private method with the range.union and return that response
-                 
-                    potential problem:
-                        will the changeInLength be valid when adding to the new pass?
-                 */
-                
-                /*
-                 optimization:
-                    enable abandonment during syntaxParsing
-                 
-                 possible solution:
-                    i believe the workItem must be passed around to whoever wants to cancel it (the syntaxParser.attriubtes method and in-turn the language.attributes method)
-                 */
-                
-                // additionally: could add a failsafe to process every 10 seconds or so
             
             self.editedRangeSinceLastParsing = nil
             self.changeInLengthSinceLastParsing = nil
