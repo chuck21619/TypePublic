@@ -25,6 +25,7 @@
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
 		A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DB62144D8470072095F /* String+MaxNSRange.swift */; };
 		A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */; };
+		A3A95E622154439F0038CD9C /* TextStorageDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */; };
 		A3C316B820FFF7BA0028D466 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C316AE20FFF7BA0028D466 /* TextEditor.framework */; };
 		A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316BC20FFF7BA0028D466 /* TextEditorTests.swift */; };
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,6 +72,7 @@
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
 		A3951DB62144D8470072095F /* String+MaxNSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MaxNSRange.swift"; sourceTree = "<group>"; };
 		A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ContainsRange.swift"; sourceTree = "<group>"; };
+		A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageDelegateHandler.swift; sourceTree = "<group>"; };
 		A3C316AE20FFF7BA0028D466 /* TextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C316B120FFF7BA0028D466 /* TextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextEditor.h; sourceTree = "<group>"; };
 		A3C316B220FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
 				A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */,
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
+				A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */,
 				A3381E0A213F1B9D001C638A /* Helper Extensions */,
@@ -390,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A95E622154439F0038CD9C /* TextStorageDelegateHandler.swift in Sources */,
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
 				A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */,

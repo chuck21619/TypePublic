@@ -8,16 +8,18 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegate, NSTextStorageDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TextStorageDelegateHandlerDelegate {
     
     // MARK: - Properties
     // TODO: make these non-optional?
     // TODO: see if these properties should be moved somewhere more appropriate. maybe they should be here. idk
     var textEditorView: TextEditorView!
-    var textStorage: TextEditorTextStorage!
+    var textStorage: NSTextStorage!
     
     var layoutManager: TextEditorLayoutManager? = nil
     var textContainer: NSTextContainer? = nil
+    
+    let textStorageDelegateHandler = TextStorageDelegateHandler()
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -57,10 +59,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         let string = ""
         
         let attributedString = NSAttributedString(string: string, attributes: attributes)
-        textStorage = TextEditorTextStorage()
+        textStorage = NSTextStorage()
         textStorage.font = monospaceFont
-        textStorage.myDelegate = self
-        textStorage.delegate = self
+//        textStorage.myDelegate = self
+        textStorageDelegateHandler.myDelegate = self
+        textStorage.delegate = textStorageDelegateHandler
         textStorage.append(attributedString)
         
         let scrollViewRect = view.bounds
