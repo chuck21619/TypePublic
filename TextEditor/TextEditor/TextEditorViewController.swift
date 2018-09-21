@@ -70,6 +70,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         // 2. create the layout manager
         layoutManager = TextEditorLayoutManager()
+        layoutManager?.allowsNonContiguousLayout = true
 //        layoutManager?.allowsNonContiguousLayout = true
         guard let layoutManager = layoutManager else {
             print("error creating text view - layoutManager")

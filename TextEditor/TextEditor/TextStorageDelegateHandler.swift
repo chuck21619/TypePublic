@@ -29,6 +29,8 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
     
     func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
+        // TODO: this condition isnt always valid (it does not take attributes into account)
+        // find a better way to do this. the purpose is to prevent an infinite loop
         guard lastParsedString != textStorage.string else {
             return
         }
