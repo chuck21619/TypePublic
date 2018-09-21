@@ -24,14 +24,13 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
     var changeInLength: Int = 0
     var backingStore = NSTextStorage()
     
-    
-    var lastParsedString = ""
+    var skipPass = false
     
     func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
-        // TODO: this condition isnt always valid (it does not take attributes into account)
-        // find a better way to do this. the purpose is to prevent an infinite loop
-        guard lastParsedString != textStorage.string else {
+        
+        // TODO: find a better way to do this. purpose is to prevent an infinite loop
+        if skipPass == true {
             return
         }
         
@@ -40,8 +39,6 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
         self.backingStore = textStorage
         
         updateSyntax(searchRange: backingStore.string.maxNSRange)
-        
-        self.lastParsedString = textStorage.string
     }
     
     
@@ -52,7 +49,7 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
     
     func updateSyntax(searchRange: NSRange) {
         
-        print("updateSyntax")
+//        print("updateSyntax")
         
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
@@ -95,6 +92,7 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
                 
                 // invalidating must happen first and new attributes may include the invalid ranges - this might not be correct
                 //TODO: consolidate invalid and new attributes
+                self.skipPass = true
                 for invalidAttributeRange in invalidAttributeRanges {
                     
                     self.backingStore.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
@@ -105,7 +103,7 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
                     
                     self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
                 }
-                
+                self.skipPass = false
                 let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
                     return attributeOccurence.effectiveRange
                 })
