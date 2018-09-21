@@ -78,7 +78,6 @@ class MarkdownFactory {
     // MARK: special keyword cases
     
     // Links //[link title](www.linkAddress.com)
-    // TODO: figure out why links do not get their attributes invalidated
     func createLinksKeyword() -> Keyword {
         
         let linkTitleKeywordRegexLabel = "linkTitle"

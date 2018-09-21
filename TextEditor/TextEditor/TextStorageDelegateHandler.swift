@@ -9,47 +9,28 @@
 import Foundation
 
 
+// TODO: rename protocol
 protocol TextStorageDelegateHandlerDelegate {
     
-    func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence])
     func invalidateRanges(invalidRanges: [NSRange])
 }
 
 class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
     
-    let syntaxParser = SyntaxParser()
-    var myDelegate: TextStorageDelegateHandlerDelegate? = nil
+    // MARK: - Properties
+    var delegate: TextStorageDelegateHandlerDelegate? = nil
     
-    var editedRange: NSRange = NSRange(location: 0, length: 0)
-    var changeInLength: Int = 0
-    var backingStore = NSTextStorage()
+    private let syntaxParser = SyntaxParser()
+    private var editedRange: NSRange = NSRange(location: 0, length: 0)
+    private var changeInLength: Int = 0
+    private var backingStore = NSTextStorage()
+    private var skipPass = false
+    private var editedRangeSinceLastParsing: NSRange? = nil
+    private var changeInLengthSinceLastParsing: Int? = nil
+    private var workItem: DispatchWorkItem? = nil
     
-    var skipPass = false
-    
-    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        
-        
-        // TODO: find a better way to do this. purpose is to prevent an infinite loop
-        if skipPass == true {
-            return
-        }
-        
-        self.editedRange = editedRange
-        self.changeInLength = delta
-        self.backingStore = textStorage
-        
-        updateSyntax(searchRange: backingStore.string.maxNSRange)
-    }
-    
-    
-    var editedRangeSinceLastParsing: NSRange? = nil
-    var changeInLengthSinceLastParsing: Int? = nil
-    
-    var workItem: DispatchWorkItem? = nil
-    
-    func updateSyntax(searchRange: NSRange) {
-        
-//        print("updateSyntax")
+    // MARK: - methods
+    private func updateSyntax(searchRange: NSRange) {
         
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
@@ -90,9 +71,8 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
             
             DispatchQueue.main.async {
                 
-                // invalidating must happen first and new attributes may include the invalid ranges - this might not be correct
-                //TODO: consolidate invalid and new attributes
                 self.skipPass = true
+                self.backingStore.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
                 for invalidAttributeRange in invalidAttributeRanges {
                     
                     self.backingStore.addAttribute(normalColorAttribute.key, value: normalColorAttribute.value, range: invalidAttributeRange)
@@ -103,6 +83,7 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
                     
                     self.backingStore.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
                 }
+                self.backingStore.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
                 self.skipPass = false
                 let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
                     return attributeOccurence.effectiveRange
@@ -110,7 +91,7 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
                 
                 let invalidRanges = invalidAttributeRanges + newAttributesRanges
                 
-                self.myDelegate?.invalidateRanges(invalidRanges: invalidRanges)
+                self.delegate?.invalidateRanges(invalidRanges: invalidRanges)
             }
             
             newWorkItem = nil
@@ -119,5 +100,20 @@ class TextStorageDelegateHandler: NSObject, NSTextStorageDelegate {
         self.workItem = newWorkItem
         
         DispatchQueue.global(qos: .background).async(execute: newWorkItem)
+    }
+    
+    // MARK: - NSTextStorageDelegate
+    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        
+        // TODO: find a better way to do this. purpose is to prevent an infinite loop
+        if skipPass == true {
+            return
+        }
+        
+        self.editedRange = editedRange
+        self.changeInLength = delta
+        self.backingStore = textStorage
+        
+        updateSyntax(searchRange: backingStore.string.maxNSRange)
     }
 }

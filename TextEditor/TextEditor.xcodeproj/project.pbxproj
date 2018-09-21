@@ -19,7 +19,6 @@
 		A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */; };
 		A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */; };
 		A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */; };
-		A36E72C82106833500D8BDA1 /* TextEditorTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */; };
 		A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */; };
 		A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */; };
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
@@ -66,7 +65,6 @@
 		A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFactory.swift; sourceTree = "<group>"; };
 		A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParser.swift; sourceTree = "<group>"; };
 		A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParserTests.swift; sourceTree = "<group>"; };
-		A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTextStorage.swift; sourceTree = "<group>"; };
 		A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownFactory.swift; sourceTree = "<group>"; };
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 				A3C316B220FFF7BA0028D466 /* Info.plist */,
 				A3C316D520FFFBF10028D466 /* TextEditorView.swift */,
 				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
-				A36E72C72106833500D8BDA1 /* TextEditorTextStorage.swift */,
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
 				A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
@@ -398,7 +395,6 @@
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
 				A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
-				A36E72C82106833500D8BDA1 /* TextEditorTextStorage.swift in Sources */,
 				A3CF81D12152D01500BA4D48 /* AddRangeCalculator.swift in Sources */,
 				A36B119821519F2B0086AD83 /* NSRange+IsAdjacent.swift in Sources */,
 				A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */,

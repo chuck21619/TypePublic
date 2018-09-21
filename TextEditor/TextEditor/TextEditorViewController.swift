@@ -8,11 +8,10 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TextStorageDelegateHandlerDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegateHandlerDelegate {
     
     // MARK: - Properties
     // TODO: make these non-optional?
-    // TODO: see if these properties should be moved somewhere more appropriate. maybe they should be here. idk
     var textEditorView: TextEditorView!
     var textStorage: NSTextStorage!
     
@@ -61,8 +60,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = NSTextStorage()
         textStorage.font = monospaceFont
-//        textStorage.myDelegate = self
-        textStorageDelegateHandler.myDelegate = self
+        
+        // TODO: clean up this delegation (not sure what to do. but it looks weird at the moment)
+        textStorageDelegateHandler.delegate = self
         textStorage.delegate = textStorageDelegateHandler
         textStorage.append(attributedString)
         
@@ -85,10 +85,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             return
         }
         
-        // TODO: handle word-wrap
+        // word-wrap
         textContainer.widthTracksTextView = true
-//        textContainer.containerSize = NSSize(width: .greatestFiniteMagnitude, height: containerSize.height)
-        textContainer.containerSize = containerSize
         
         // 4. assemble
         
@@ -110,7 +108,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         textEditorView.isVerticallyResizable = true
         textEditorView.isHorizontallyResizable = false
         textEditorView.autoresizingMask = .width
-        textEditorView.delegate = self
         textEditorView.typingAttributes = attributes
         
         // 7. assemble
@@ -119,29 +116,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         view.addSubview(scrollView)
     }
     
-    // MARK: my text storage delegate
-    func didChangeAttributeOccurrences(changedAttributeOccurrences: [AttributeOccurrence]) {
-
-//        guard let layoutManager = self.layoutManager else {
-//            return
-//        }
-//
-//        for changedAttributeOccurrence in changedAttributeOccurrences {
-//
-//            layoutManager.invalidateDisplay(forCharacterRange: changedAttributeOccurrence.range)
-//        }
-        
-        
-//
-//        guard let textView = self.textEditorView else {
-//            return
-//        }
-//
-//        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
-//        textView.setNeedsDisplay(rect)
-    }
-    
+    // MARK: TextStorageDelegateHandlerDelegate
     func invalidateRanges(invalidRanges: [NSRange]) {
+        
         guard let layoutManager = self.layoutManager else {
             return
         }
@@ -149,41 +126,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         for invalidRange in invalidRanges {
 
             layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
-//            layoutManager.invalidateLayout(forCharacterRange: invalidRange, actualCharacterRange: nil)
         }
-        
-//        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
-//        self.textEditorView.setNeedsDisplay(rect, avoidAdditionalLayout: true)
-        
-        
-        //calculate rect
-//        for invalidRange in invalidRanges {
-//
-//            let countPointer = UnsafeMutablePointer<Int>.allocate(capacity: 1)
-//            let rectArray = layoutManager.rectArray(forCharacterRange: invalidRange, withinSelectedCharacterRange: self.textStorage.string.maxNSRange, in: textContainer!, rectCount: countPointer)
-//
-//            print(countPointer)
-//            print(rectArray)
-//            
-////            let glyphRange = layoutManager.glyphRange(forCharacterRange: invalidRange, actualCharacterRange: nil)
-////            layoutManager.enumerateEnclosingRects(forGlyphRange: glyphRange, withinSelectedGlyphRange: self.textStorage.string.maxNSRange, in: textContainer!) { (rect, unsafeObjCBoolPointer) in
-////
-////                print("")
-////            }
-//        }
-        
-    }
-    
-    // MARK: NSTextStorage Delegate
-    public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        
-//        self.textStorage.updateAllAttributeOccurrences()
-//        self.textStorage.applyStylesToRange(searchRange: editedRange)
-    }
-    
-    // MARK: NSTextViewDelegate
-    public func textDidChange(_ notification: Notification) {
-        
-//        textStorage.updateAllAttributeOccurrences()
     }
 }
