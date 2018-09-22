@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="xk1-Xr-Zch">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Test View Controller-->
+        <scene sceneID="v9Q-8k-tm3">
+            <objects>
+                <viewController storyboardIdentifier="testVC" id="xk1-Xr-Zch" customClass="TestViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="vYQ-Fu-Svd">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="300"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eLT-ve-GFe">
+                                <rect key="frame" x="-3" y="-3" width="186" height="306"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" image="egg-icon" id="7ex-nx-T1g"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dYc-WW-zem">
+                                <rect key="frame" x="-2" y="283" width="37" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="3Tj-bx-0cp"/>
+                                    <constraint firstAttribute="height" constant="17" id="zFL-2P-btk"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Wyn-dd-rB3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="eLT-ve-GFe" secondAttribute="bottom" id="3cq-Hm-9nM"/>
+                            <constraint firstItem="eLT-ve-GFe" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" id="3s8-nF-cxO"/>
+                            <constraint firstAttribute="trailing" secondItem="eLT-ve-GFe" secondAttribute="trailing" id="OHa-Au-4ap"/>
+                            <constraint firstItem="eLT-ve-GFe" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" id="cEl-Vj-bRb"/>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="top" secondItem="vYQ-Fu-Svd" secondAttribute="top" id="hkM-gD-fNr"/>
+                            <constraint firstItem="dYc-WW-zem" firstAttribute="leading" secondItem="vYQ-Fu-Svd" secondAttribute="leading" id="jZ4-mF-tc7"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="m0e-Xi-Tvm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-213" y="90"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="egg-icon" width="256" height="256"/>
+    </resources>
+</document>
