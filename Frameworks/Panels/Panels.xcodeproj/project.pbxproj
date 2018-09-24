@@ -12,9 +12,7 @@
 		A32FFE5420FEB91700D4BA58 /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFE5320FEB91700D4BA58 /* Axis.swift */; };
 		A32FFE5720FEB93A00D4BA58 /* Y.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFE5620FEB93A00D4BA58 /* Y.swift */; };
 		A32FFE5920FEB95000D4BA58 /* X.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFE5820FEB95000D4BA58 /* X.swift */; };
-		A36CD4D320EDA3EB00ED46FA /* ResizeBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D220EDA3EB00ED46FA /* ResizeBehavior.swift */; };
-		A36CD4D520EDA49300ED46FA /* ResizeWindowBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D420EDA49300ED46FA /* ResizeWindowBehavior.swift */; };
-		A36CD4D720EDA4A500ED46FA /* ResizeMainPanelBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D620EDA4A500ED46FA /* ResizeMainPanelBehavior.swift */; };
+		A36CD4D520EDA49300ED46FA /* ResizeBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D420EDA49300ED46FA /* ResizeBehavior.swift */; };
 		A36CD4D920EDA88E00ED46FA /* ResizeBehaviorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */; };
 		A36CD4DB20EDA9D300ED46FA /* PanelsDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */; };
 		A374633420F548A3000E43C2 /* PanelsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374633320F548A3000E43C2 /* PanelsWindow.swift */; };
@@ -30,6 +28,10 @@
 		A3828C1920E563DC000FDA72 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3828C1820E563DC000FDA72 /* Panels.swift */; };
 		A3B0278520EAE24A00A5C912 /* ResizeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0278420EAE24A00A5C912 /* ResizeBar.swift */; };
 		A3C325D220E56E65007DFCE4 /* Panels.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3C325D120E56E65007DFCE4 /* Panels.xib */; };
+		A3F0617F215963C000B012DD /* WindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0617E215963C000B012DD /* WindowState.swift */; };
+		A3F061852159650700B012DD /* FullScreenWindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F061842159650700B012DD /* FullScreenWindowState.swift */; };
+		A3F061872159651E00B012DD /* WindowedWindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F061862159651E00B012DD /* WindowedWindowState.swift */; };
+		A3F06189215967A900B012DD /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F06188215967A900B012DD /* Side.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,9 +40,7 @@
 		A32FFE5320FEB91700D4BA58 /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		A32FFE5620FEB93A00D4BA58 /* Y.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Y.swift; sourceTree = "<group>"; };
 		A32FFE5820FEB95000D4BA58 /* X.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X.swift; sourceTree = "<group>"; };
-		A36CD4D220EDA3EB00ED46FA /* ResizeBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBehavior.swift; sourceTree = "<group>"; };
-		A36CD4D420EDA49300ED46FA /* ResizeWindowBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeWindowBehavior.swift; sourceTree = "<group>"; };
-		A36CD4D620EDA4A500ED46FA /* ResizeMainPanelBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeMainPanelBehavior.swift; sourceTree = "<group>"; };
+		A36CD4D420EDA49300ED46FA /* ResizeBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBehavior.swift; sourceTree = "<group>"; };
 		A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBehaviorDelegate.swift; sourceTree = "<group>"; };
 		A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsDimensions.swift; sourceTree = "<group>"; };
 		A374633320F548A3000E43C2 /* PanelsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsWindow.swift; sourceTree = "<group>"; };
@@ -58,6 +58,10 @@
 		A3828C1820E563DC000FDA72 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		A3B0278420EAE24A00A5C912 /* ResizeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBar.swift; sourceTree = "<group>"; };
 		A3C325D120E56E65007DFCE4 /* Panels.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Panels.xib; sourceTree = "<group>"; };
+		A3F0617E215963C000B012DD /* WindowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowState.swift; sourceTree = "<group>"; };
+		A3F061842159650700B012DD /* FullScreenWindowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenWindowState.swift; sourceTree = "<group>"; };
+		A3F061862159651E00B012DD /* WindowedWindowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowedWindowState.swift; sourceTree = "<group>"; };
+		A3F06188215967A900B012DD /* Side.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,31 +84,16 @@
 			path = Axis;
 			sourceTree = "<group>";
 		};
-		A36CD4D120EDA3D800ED46FA /* Behavior */ = {
+		A36CD4D120EDA3D800ED46FA /* Resize Behavior */ = {
 			isa = PBXGroup;
 			children = (
-				A36CD4DC20EDA9E000ED46FA /* Interface */,
-				A36CD4DD20EDA9FA00ED46FA /* Concrete Behaviors */,
-			);
-			path = Behavior;
-			sourceTree = "<group>";
-		};
-		A36CD4DC20EDA9E000ED46FA /* Interface */ = {
-			isa = PBXGroup;
-			children = (
-				A36CD4D220EDA3EB00ED46FA /* ResizeBehavior.swift */,
+				A36CD4D420EDA49300ED46FA /* ResizeBehavior.swift */,
+				A3F06188215967A900B012DD /* Side.swift */,
 				A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */,
+				A32FFE5120FE680D00D4BA58 /* ResizingCalculator.swift */,
+				A3763DD120EF6F14009C84C7 /* ResizeHandlers */,
 			);
-			path = Interface;
-			sourceTree = "<group>";
-		};
-		A36CD4DD20EDA9FA00ED46FA /* Concrete Behaviors */ = {
-			isa = PBXGroup;
-			children = (
-				A3763DD020EF6EFE009C84C7 /* ResizeWindowBehavior */,
-				A3763DDA20EF6FBB009C84C7 /* ResizeMainPanelBehavior */,
-			);
-			path = "Concrete Behaviors";
+			path = "Resize Behavior";
 			sourceTree = "<group>";
 		};
 		A3754DF220F59FC400EF286A /* Horizontal */ = {
@@ -123,16 +112,6 @@
 				A3754DF620F59FFB00EF286A /* BottomResizingHandler.swift */,
 			);
 			path = Vertical;
-			sourceTree = "<group>";
-		};
-		A3763DD020EF6EFE009C84C7 /* ResizeWindowBehavior */ = {
-			isa = PBXGroup;
-			children = (
-				A36CD4D420EDA49300ED46FA /* ResizeWindowBehavior.swift */,
-				A32FFE5120FE680D00D4BA58 /* ResizingCalculator.swift */,
-				A3763DD120EF6F14009C84C7 /* ResizeHandlers */,
-			);
-			path = ResizeWindowBehavior;
 			sourceTree = "<group>";
 		};
 		A3763DD120EF6F14009C84C7 /* ResizeHandlers */ = {
@@ -162,14 +141,6 @@
 				A3754DF220F59FC400EF286A /* Horizontal */,
 			);
 			path = Concrete;
-			sourceTree = "<group>";
-		};
-		A3763DDA20EF6FBB009C84C7 /* ResizeMainPanelBehavior */ = {
-			isa = PBXGroup;
-			children = (
-				A36CD4D620EDA4A500ED46FA /* ResizeMainPanelBehavior.swift */,
-			);
-			path = ResizeMainPanelBehavior;
 			sourceTree = "<group>";
 		};
 		A37658C120E80C4000BD76B9 /* Panel */ = {
@@ -213,9 +184,10 @@
 				A3828C1820E563DC000FDA72 /* Panels.swift */,
 				A3C325D120E56E65007DFCE4 /* Panels.xib */,
 				A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */,
+				A3F061812159649700B012DD /* WindowState */,
 				A374633320F548A3000E43C2 /* PanelsWindow.swift */,
 				A37EEB2221018DFD0068D447 /* Helper Extensions */,
-				A36CD4D120EDA3D800ED46FA /* Behavior */,
+				A36CD4D120EDA3D800ED46FA /* Resize Behavior */,
 				A3B0278320EAE23800A5C912 /* ResizeBar */,
 				A37658C120E80C4000BD76B9 /* Panel */,
 			);
@@ -228,6 +200,32 @@
 				A3B0278420EAE24A00A5C912 /* ResizeBar.swift */,
 			);
 			path = ResizeBar;
+			sourceTree = "<group>";
+		};
+		A3F061812159649700B012DD /* WindowState */ = {
+			isa = PBXGroup;
+			children = (
+				A3F06182215964A900B012DD /* Interface */,
+				A3F06183215964AE00B012DD /* Implementation */,
+			);
+			path = WindowState;
+			sourceTree = "<group>";
+		};
+		A3F06182215964A900B012DD /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				A3F0617E215963C000B012DD /* WindowState.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		A3F06183215964AE00B012DD /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				A3F061842159650700B012DD /* FullScreenWindowState.swift */,
+				A3F061862159651E00B012DD /* WindowedWindowState.swift */,
+			);
+			path = Implementation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,7 +272,7 @@
 				TargetAttributes = {
 					A3828BF120E5612A000FDA72 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -311,26 +309,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3F06189215967A900B012DD /* Side.swift in Sources */,
 				A3754DF720F59FFB00EF286A /* BottomResizingHandler.swift in Sources */,
 				A36CD4DB20EDA9D300ED46FA /* PanelsDimensions.swift in Sources */,
 				A3763DD720EF6F60009C84C7 /* LeftResizingHandler.swift in Sources */,
 				A36CD4D920EDA88E00ED46FA /* ResizeBehaviorDelegate.swift in Sources */,
+				A3F061852159650700B012DD /* FullScreenWindowState.swift in Sources */,
 				A32FFE5220FE680D00D4BA58 /* ResizingCalculator.swift in Sources */,
 				A37EEB2421018E170068D447 /* NSRect+Helpers.swift in Sources */,
 				A3763DD320EF6F30009C84C7 /* HorizontalResizingHandler.swift in Sources */,
+				A3F0617F215963C000B012DD /* WindowState.swift in Sources */,
 				A3828C1920E563DC000FDA72 /* Panels.swift in Sources */,
 				A32FFE5420FEB91700D4BA58 /* Axis.swift in Sources */,
-				A36CD4D320EDA3EB00ED46FA /* ResizeBehavior.swift in Sources */,
 				A3763DD920EF6F74009C84C7 /* RightResizingHandler.swift in Sources */,
 				A327F21920EC02710003B829 /* PanelPosition.swift in Sources */,
+				A3F061872159651E00B012DD /* WindowedWindowState.swift in Sources */,
 				A32FFE5920FEB95000D4BA58 /* X.swift in Sources */,
 				A374633420F548A3000E43C2 /* PanelsWindow.swift in Sources */,
 				A37658BE20E8092700BD76B9 /* Panel.swift in Sources */,
-				A36CD4D720EDA4A500ED46FA /* ResizeMainPanelBehavior.swift in Sources */,
 				A32FFE5720FEB93A00D4BA58 /* Y.swift in Sources */,
 				A3B0278520EAE24A00A5C912 /* ResizeBar.swift in Sources */,
 				A3754DF120F59F3200EF286A /* VerticalResizingHandler.swift in Sources */,
-				A36CD4D520EDA49300ED46FA /* ResizeWindowBehavior.swift in Sources */,
+				A36CD4D520EDA49300ED46FA /* ResizeBehavior.swift in Sources */,
 				A3754DF520F59FE300EF286A /* TopResizingHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,7 +483,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -510,7 +510,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.Panels;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

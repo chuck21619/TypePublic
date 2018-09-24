@@ -11,7 +11,7 @@ import Foundation
 class MarkdownFactory {
     
     // MARK: properties
-    let headerTitleAttributeKey = NSAttributedStringKey.foregroundColor
+    let headerTitleAttributeKey = NSAttributedString.Key.foregroundColor
     let headerTitleColor = NSColor.brown
     
     // MARK: methods
@@ -68,7 +68,7 @@ class MarkdownFactory {
         return keywords
     }
     
-    func createKeyword( _ regexPattern: String, _ attributeKey: NSAttributedStringKey, _ attributeValue: Any) -> Keyword {
+    func createKeyword( _ regexPattern: String, _ attributeKey: NSAttributedString.Key, _ attributeValue: Any) -> Keyword {
         
         let attribute = Attribute(key: attributeKey, value: attributeValue)
         let keyword = Keyword(regexPattern: regexPattern, attribute: attribute)

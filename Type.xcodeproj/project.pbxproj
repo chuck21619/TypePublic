@@ -256,9 +256,11 @@
 				TargetAttributes = {
 					A327175820E55CA100AD89A0 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					A327176A20E55CA200AD89A0 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = A327175820E55CA100AD89A0;
 					};
 				};
@@ -521,7 +523,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.Type;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -541,7 +543,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.Type;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -561,7 +563,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.TypeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Type.app/Contents/MacOS/Type";
 			};
 			name = Debug;
@@ -582,7 +584,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.TypeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Type.app/Contents/MacOS/Type";
 			};
 			name = Release;

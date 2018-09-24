@@ -24,7 +24,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     public static func createInstance() -> TextEditorViewController? {
         
         let bundle = Bundle(for: TextEditorViewController.self)
-        let storyboardName = NSStoryboard.Name(rawValue: String(describing: TextEditorViewController.self))
+        let storyboardName = String(describing: TextEditorViewController.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
         
@@ -53,7 +53,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         // 1. create text storage that backs the editor
         //TODO: hook font up to settings/preferences
         let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
-        let attributes = [NSAttributedStringKey.font : monospaceFont]
+        let attributes = [NSAttributedString.Key.font : monospaceFont]
         //TODO: hook string up to opened file
         let string = ""
         

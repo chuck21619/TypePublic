@@ -84,12 +84,12 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
         
         var topLevelObjects: NSArray? = NSArray()
         let bundle = Bundle(for: Panels.self)
-        bundle.loadNibNamed(NSNib.Name(rawValue: String(describing: Panels.self)), owner: self, topLevelObjects: &topLevelObjects)
+        bundle.loadNibNamed(String(describing: Panels.self), owner: self, topLevelObjects: &topLevelObjects)
         
         contentView.frame = self.bounds
         addSubview(contentView)
         
-        resizeBehavior = ResizeWindowBehavior(delegate: self)
+        resizeBehavior = ResizeBehavior(delegate: self)
         self.setAutomaticResizing(true)
     }
     
@@ -119,6 +119,7 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     @IBOutlet weak var resizeBarRight: ResizeBar!
     
     // resizing
+    private var windowState: WindowState = WindowedWindowState() // TODO: get state from settings or whatever the startup pipeline is
     private var elasticity: Float = 0.25
     private var resizeBehavior: ResizeBehavior?
     private var animating = false
@@ -161,6 +162,8 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     }
     
     private func configureConstraintsForPanelResizing(panelConstraint: NSLayoutConstraint) {
+        
+        
         
         if isFullScreen() {
             
@@ -311,6 +314,7 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     
     private func isFullScreen() -> Bool {
         
+        return false
         return self.window?.styleMask.contains(.fullScreen) == true
     }
     
@@ -361,7 +365,7 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
             
             context.allowsImplicitAnimation = false
             context.duration = 0.17
-            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
             
             if isFullScreen() {
                 

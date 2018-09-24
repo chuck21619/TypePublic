@@ -17,7 +17,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "TestViewController"), bundle: Bundle.main)
+        let storyboard = NSStoryboard(name: "TestViewController", bundle: Bundle.main)
         
         let leftPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let leftPanel = Panel(position: .left, viewController: leftPanelViewController)
@@ -29,6 +29,7 @@ class ViewController: NSViewController {
         guard let mainPanelViewController = TextEditorViewController.createInstance() else {
             return
         }
+//        let mainPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         
         let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
 

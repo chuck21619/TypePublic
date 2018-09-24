@@ -10,7 +10,7 @@ import Foundation
 
 struct Attribute {
     
-    let key: NSAttributedStringKey
+    let key: NSAttributedString.Key
     let value: Any
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ResizeWindowBehavior: ResizeBehavior {
+class ResizeBehavior {
     
     var delegate: ResizeBehaviorDelegate
     
