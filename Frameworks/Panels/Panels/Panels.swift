@@ -314,7 +314,6 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     
     private func isFullScreen() -> Bool {
         
-        return false
         return self.window?.styleMask.contains(.fullScreen) == true
     }
     
