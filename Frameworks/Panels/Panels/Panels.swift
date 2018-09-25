@@ -267,11 +267,6 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
         return sides
     }
     
-    private func isFullScreen() -> Bool {
-        
-        return self.window?.styleMask.contains(.fullScreen) == true
-    }
-    
     //MARK: - Resize Behavior Delegate
     func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
         
