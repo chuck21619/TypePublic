@@ -27,7 +27,7 @@ class SyntaxParser {
     
     // MARK: - Methods
     // TODO: rename method - it only returns NEW attributes occurrences and ranges to invalidate
-    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int, workItem: DispatchWorkItem) -> (allAttributeOccurrences: [AttributeOccurrence], newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
+    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int, workItem: DispatchWorkItem) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
         
         guard let allAttributeOccurrences = language.attributes(for: string, range: range, workItem: workItem) else {
             return nil
@@ -41,7 +41,9 @@ class SyntaxParser {
 
         let newAttributeOccurrences = calcNewAttributeOccurrences(allAttributeOccurrences: allAttributeOccurrences, editedRange: editedRange, invalidRanges: invalidRanges)
         
-        return (allAttributeOccurrences: allAttributeOccurrences, newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
+        self.lastAttributeOccurrences = allAttributeOccurrences
+        
+        return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
     }
     
     private func calcNewAttributeOccurrences(allAttributeOccurrences: [AttributeOccurrence], editedRange: NSRange, invalidRanges: [NSRange]) -> [AttributeOccurrence] {

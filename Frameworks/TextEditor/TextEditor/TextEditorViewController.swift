@@ -8,17 +8,16 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, TextStorageDelegateHandlerDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate {
     
     // MARK: - Properties
     // TODO: make these non-optional?
     var textEditorView: TextEditorView!
     var textStorage: NSTextStorage!
-    
     var layoutManager: TextEditorLayoutManager? = nil
     var textContainer: NSTextContainer? = nil
     
-    let textStorageDelegateHandler = TextStorageDelegateHandler()
+    let syntaxHighlighter = SyntaxHighligher()
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -39,7 +38,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
     }
     
     private func commonInit() {
-        //
+        
+        syntaxHighlighter.delegate = self
     }
     
     public override func viewDidLoad() {
@@ -60,10 +60,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = NSTextStorage()
         textStorage.font = monospaceFont
-        
-        // TODO: clean up this delegation (not sure what to do. but it looks weird at the moment)
-        textStorageDelegateHandler.delegate = self
-        textStorage.delegate = textStorageDelegateHandler
+        textStorage.delegate = self
         textStorage.append(attributedString)
         
         let scrollViewRect = view.bounds
@@ -71,7 +68,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         // 2. create the layout manager
         layoutManager = TextEditorLayoutManager()
         layoutManager?.allowsNonContiguousLayout = true
-//        layoutManager?.allowsNonContiguousLayout = true
         guard let layoutManager = layoutManager else {
             print("error creating text view - layoutManager")
             return
@@ -116,7 +112,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
         view.addSubview(scrollView)
     }
     
-    // MARK: TextStorageDelegateHandlerDelegate
+    // MARK: SyntaxHighlighterDelegate
     func invalidateRanges(invalidRanges: [NSRange]) {
         
         guard let layoutManager = self.layoutManager else {
@@ -127,5 +123,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Tex
 
             layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
         }
+    }
+    
+    // MARK: - NSTextStorageDelegate
+    public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        
+        syntaxHighlighter.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
     }
 }

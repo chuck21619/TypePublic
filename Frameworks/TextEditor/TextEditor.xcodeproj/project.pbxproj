@@ -21,10 +21,11 @@
 		A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */; };
 		A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */; };
 		A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */; };
+		A3848A9E215B53B50045C5AB /* SyntaxHighlighterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */; };
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
 		A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DB62144D8470072095F /* String+MaxNSRange.swift */; };
 		A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */; };
-		A3A95E622154439F0038CD9C /* TextStorageDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */; };
+		A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */; };
 		A3C316B820FFF7BA0028D466 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C316AE20FFF7BA0028D466 /* TextEditor.framework */; };
 		A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316BC20FFF7BA0028D466 /* TextEditorTests.swift */; };
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -67,10 +68,11 @@
 		A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParserTests.swift; sourceTree = "<group>"; };
 		A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownFactory.swift; sourceTree = "<group>"; };
+		A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighlighterDelegate.swift; sourceTree = "<group>"; };
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
 		A3951DB62144D8470072095F /* String+MaxNSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MaxNSRange.swift"; sourceTree = "<group>"; };
 		A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ContainsRange.swift"; sourceTree = "<group>"; };
-		A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageDelegateHandler.swift; sourceTree = "<group>"; };
+		A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighligher.swift; sourceTree = "<group>"; };
 		A3C316AE20FFF7BA0028D466 /* TextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C316B120FFF7BA0028D466 /* TextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextEditor.h; sourceTree = "<group>"; };
 		A3C316B220FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,6 +128,8 @@
 		A36E72B621066E1A00D8BDA1 /* Syntax */ = {
 			isa = PBXGroup;
 			children = (
+				A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */,
+				A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */,
 				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A3F0F4692134817600FA0A74 /* Keyword */,
@@ -186,7 +190,6 @@
 				A3C316D520FFFBF10028D466 /* TextEditorView.swift */,
 				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
-				A3A95E612154439F0038CD9C /* TextStorageDelegateHandler.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */,
 				A3381E0A213F1B9D001C638A /* Helper Extensions */,
@@ -390,13 +393,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3A95E622154439F0038CD9C /* TextStorageDelegateHandler.swift in Sources */,
+				A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */,
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
 				A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
 				A3CF81D12152D01500BA4D48 /* AddRangeCalculator.swift in Sources */,
 				A36B119821519F2B0086AD83 /* NSRange+IsAdjacent.swift in Sources */,
+				A3848A9E215B53B50045C5AB /* SyntaxHighlighterDelegate.swift in Sources */,
 				A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */,
 				A36B119621519F000086AD83 /* NSRange+Positive.swift in Sources */,
 				A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */,
