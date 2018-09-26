@@ -33,8 +33,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             return
         }
         
-        let searchRange = textStorage.string.maxNSRange
-        
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
         
@@ -43,14 +41,15 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
         
         newWorkItem = DispatchWorkItem {
             
+            let string = textStorage.string
+            let range = string.maxNSRange
+            
             guard let editedRange = self.editedRangeSinceLastParsing,
-                  let changeInLength = self.changeInLengthSinceLastParsing else {
+                  let changeInLength = self.changeInLengthSinceLastParsing,
+                  let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: string, range: range, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
                     return
             }
             
-            guard let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: textStorage.string, range: searchRange, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
-                return
-            }
             let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
             let invalidAttributeRanges = attributeOccurrences.invalidRanges
             
@@ -59,28 +58,9 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
             DispatchQueue.main.async {
                 
-                self.skipPass = true
-                textStorage.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
-                for invalidAttributeRange in invalidAttributeRanges {
-                    
-                    textStorage.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
-                    textStorage.addAttribute(self.normalFontAttribute.key, value: self.normalFontAttribute.value, range: invalidAttributeRange)
-                }
+                self.addAttributes(textStorage: textStorage, invalidAttributeRanges: invalidAttributeRanges, newAttributeOccurrences: newAttributeOccurrences)
                 
-                for attributeOccurence in newAttributeOccurrences {
-                    
-                    textStorage.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
-                }
-                textStorage.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
-                self.skipPass = false
-                
-                let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
-                    return attributeOccurence.effectiveRange
-                })
-                
-                let invalidRanges = invalidAttributeRanges + newAttributesRanges
-                
-                self.delegate?.invalidateRanges(invalidRanges: invalidRanges)
+                self.invalidateDisplay(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
             }
             
             newWorkItem = nil
@@ -89,5 +69,34 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
         self.workItem = newWorkItem
         
         DispatchQueue.global(qos: .background).async(execute: newWorkItem)
+    }
+    
+    private func addAttributes(textStorage: NSTextStorage, invalidAttributeRanges: [NSRange], newAttributeOccurrences: [AttributeOccurrence]) {
+        
+        self.skipPass = true
+        textStorage.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
+        for invalidAttributeRange in invalidAttributeRanges {
+            
+            textStorage.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
+            textStorage.addAttribute(self.normalFontAttribute.key, value: self.normalFontAttribute.value, range: invalidAttributeRange)
+        }
+        
+        for attributeOccurence in newAttributeOccurrences {
+            
+            textStorage.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
+        }
+        textStorage.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
+        self.skipPass = false
+    }
+    
+    private func invalidateDisplay(newAttributeOccurrences: [AttributeOccurrence], invalidAttributeRanges: [NSRange]) {
+        
+        let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
+            return attributeOccurence.effectiveRange
+        })
+        
+        let invalidRanges = invalidAttributeRanges + newAttributesRanges
+        
+        self.delegate?.invalidateRanges(invalidRanges: invalidRanges)
     }
 }
