@@ -27,7 +27,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
         
-        viewController!.commonInit()
+        viewController?.commonInit()
         
         return viewController
     }

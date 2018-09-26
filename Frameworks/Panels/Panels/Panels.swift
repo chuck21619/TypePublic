@@ -266,23 +266,6 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
         
         return sides
     }
-    
-    //MARK: - Resize Behavior Delegate
-    func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
-        
-        guard animating == false else {
-            return
-        }
-        
-        if animated {
-            
-            return animateUI(panelsDimensions)
-        }
-        else {
-            
-            windowState.updateUI(leftPanelViewWidthConstraint: leftPanelViewWidthConstraint, rightPanelViewWidthConstraint: rightPanelViewWidthConstraint, window: self.window, mainPanelDefaultWidth: mainPanel?.defaultWidth, newPanelsDimensions: panelsDimensions)
-        }
-    }
 
     func currentPanelsDimensions() -> PanelsDimensions {
         
@@ -326,6 +309,23 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
         return
     }
     
+    //MARK: - Resize Behavior Delegate
+    func didUpdate(panelsDimensions: PanelsDimensions, animated: Bool) {
+        
+        guard animating == false else {
+            return
+        }
+        
+        if animated {
+            
+            return animateUI(panelsDimensions)
+        }
+        else {
+            
+            windowState.updateUI(leftPanelViewWidthConstraint: leftPanelViewWidthConstraint, rightPanelViewWidthConstraint: rightPanelViewWidthConstraint, window: self.window, mainPanelDefaultWidth: mainPanel?.defaultWidth, newPanelsDimensions: panelsDimensions)
+        }
+    }
+    
     // MARK: - NSWindowDelegate
     public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
 
@@ -365,4 +365,27 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
         
         self.windowState = WindowedWindowState()
     }
+    
+    // allow resizing from window edge in fullscreen
+    public func windowDidUpdate(_ notification: Notification) {
+        
+        if self.window?.styleMask.contains(.fullScreen) == true {
+            
+            if NSMenu.menuBarVisible() {
+                
+                if self.window?.styleMask.contains(.resizable) != true {
+                    
+                    self.window?.styleMask.insert(.resizable)
+                }
+            }
+            else {
+                
+                if self.window?.styleMask.contains(.resizable) == true {
+                    
+                    self.window?.styleMask.remove(.resizable)
+                }
+            }
+        }
+    }
 }
+
