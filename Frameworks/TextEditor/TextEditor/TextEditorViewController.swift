@@ -17,7 +17,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     var layoutManager: TextEditorLayoutManager? = nil
     var textContainer: NSTextContainer? = nil
     
-    let syntaxHighlighter = SyntaxHighligher()
+    let syntaxParser: SyntaxParser = SyntaxParser()
+    var syntaxHighlighter: SyntaxHighligher!
+    var outlineModel: OutlineModel? = nil
+    var outlineView: OutlineView? = nil
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -39,6 +42,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     private func commonInit() {
         
+        outlineModel = OutlineModel(syntaxParser: syntaxParser)
+        outlineView = OutlineView()
+        
+        syntaxHighlighter = SyntaxHighligher(syntaxParser: syntaxParser)
         syntaxHighlighter.delegate = self
     }
     

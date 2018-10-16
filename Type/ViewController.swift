@@ -29,7 +29,6 @@ class ViewController: NSViewController {
         guard let mainPanelViewController = TextEditorViewController.createInstance() else {
             return
         }
-//        let mainPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         
         let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
 

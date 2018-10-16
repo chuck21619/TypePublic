@@ -13,6 +13,7 @@ class SyntaxParser {
     // MARK: - Properties
     var language: Language
     var lastAttributeOccurrences: [AttributeOccurrence] = []
+    var listeners: [SyntaxParserListener] = []
     
     // MARK: - Constructors
     convenience init() {
@@ -42,6 +43,12 @@ class SyntaxParser {
         let newAttributeOccurrences = calcNewAttributeOccurrences(allAttributeOccurrences: allAttributeOccurrences, editedRange: editedRange, invalidRanges: invalidRanges)
         
         self.lastAttributeOccurrences = allAttributeOccurrences
+        
+        let textGroups = language
+        
+        listeners.forEach { (listener) in
+            listener.textGroupsUpdated([:])
+        }
         
         return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
     }

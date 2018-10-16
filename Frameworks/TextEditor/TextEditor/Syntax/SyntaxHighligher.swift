@@ -13,7 +13,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     // MARK: - Properties
     var delegate: SyntaxHighlighterDelegate? = nil
     
-    private let syntaxParser = SyntaxParser()
+    private let syntaxParser: SyntaxParser
     private var skipPass = false
     private var workItem: DispatchWorkItem? = nil
     
@@ -24,6 +24,12 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     //TODO: get font from settings
     private let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
     private let normalFontAttribute = Attribute(key: .font, value: NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11))
+    
+    //MARK: - Constructors
+    init(syntaxParser: SyntaxParser) {
+        
+        self.syntaxParser = syntaxParser
+    }
     
     // MARK: - methods
     func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage) {

@@ -38,4 +38,11 @@ class Language {
         
         return attributeOccurences
     }
+    
+    func textGroupsHierarchy() -> [Int:TextGroup] {
+        
+        //TODO: LAST LEFT OFF
+        
+        return [:]
+    }
 }
