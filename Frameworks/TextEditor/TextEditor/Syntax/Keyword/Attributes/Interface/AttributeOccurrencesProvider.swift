@@ -10,5 +10,5 @@ import Foundation
 
 protocol AttributeOccurrencesProvider {
     
-    func attributes(for keyword: Keyword, in string: String, range: NSRange, workItem: DispatchWorkItem) -> [AttributeOccurrence]
+    func attributes(for keyword: Keyword, in string: String, workItem: DispatchWorkItem) -> [AttributeOccurrence]
 }

@@ -52,7 +52,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
             guard let editedRange = self.editedRangeSinceLastParsing,
                   let changeInLength = self.changeInLengthSinceLastParsing,
-                  let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: string, range: range, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
+                  let attributeOccurrences = self.syntaxParser.newAttributeOccurrences(for: string, range: range, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
                     return
             }
             

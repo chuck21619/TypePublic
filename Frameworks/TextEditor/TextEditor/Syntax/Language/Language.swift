@@ -13,22 +13,24 @@ class Language {
     let name: String
     let definedLanguage: DefinedLanguage
     let keywords: [Keyword]
+    let textGroupsHierarchy: ([AttributeOccurrence])->([TextGroup])
     
-    init(name: String, definedLanguage: DefinedLanguage, keywords: [Keyword]) {
+    init(name: String, definedLanguage: DefinedLanguage, keywords: [Keyword], textGroupsHierarchy: @escaping ([AttributeOccurrence])->([TextGroup])) {
         
         self.name = name
         self.definedLanguage = definedLanguage
         self.keywords = keywords
+        self.textGroupsHierarchy = textGroupsHierarchy
     }
     
-    func attributes(for string: String, range: NSRange, workItem: DispatchWorkItem) -> [AttributeOccurrence]? {
+    func attributes(for string: String, workItem: DispatchWorkItem) -> [AttributeOccurrence]? {
         
         var attributeOccurences: [AttributeOccurrence] = []
         
         for keyword in keywords {
             
             let attributeOccurencesProvider = keyword.attributeOccurencesProvider
-            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, range: range, workItem: workItem)
+            let attributeOccurencesToAppend = attributeOccurencesProvider.attributes(for: keyword, in: string, workItem: workItem)
             attributeOccurences.append(contentsOf: attributeOccurencesToAppend)
             
             guard workItem.isCancelled == false else {
@@ -37,12 +39,5 @@ class Language {
         }
         
         return attributeOccurences
-    }
-    
-    func textGroupsHierarchy() -> [Int:TextGroup] {
-        
-        //TODO: LAST LEFT OFF
-        
-        return [:]
     }
 }

@@ -18,7 +18,8 @@ class MarkdownFactory {
     func createMarkdown() -> Language {
         
         let keywords = createKeywords()
-        let language = Language(name: "Markdown", definedLanguage: .Markdown, keywords: keywords)
+        let textGroupsHierarchy = createHierarchy()
+        let language = Language(name: "Markdown", definedLanguage: .Markdown, keywords: keywords, textGroupsHierarchy: textGroupsHierarchy)
         return language
     }
     
@@ -124,5 +125,18 @@ class MarkdownFactory {
         let keyword = Keyword(regexPattern: regexPattern, attributeOccurencesProvider: provider)
         
         return keyword
+    }
+    
+    // MARK: - Text Groups Hierarchy
+    func createHierarchy() -> ([AttributeOccurrence])->([TextGroup]) {
+        
+        func textGroupsHierarchy(occurences: [AttributeOccurrence]) -> [TextGroup] {
+            
+            //TODO: implement
+            
+            return []
+        }
+        
+        return textGroupsHierarchy
     }
 }

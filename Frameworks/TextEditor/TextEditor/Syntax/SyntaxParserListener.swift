@@ -10,5 +10,5 @@ import Foundation
 
 protocol SyntaxParserListener {
     
-    func textGroupsUpdated(_ textGroups: [Int:TextGroup])
+    func textGroupsUpdated(_ textGroups: [TextGroup])
 }

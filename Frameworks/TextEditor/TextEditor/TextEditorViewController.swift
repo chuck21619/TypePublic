@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, SyntaxParserListener {
     
     // MARK: - Properties
     // TODO: make these non-optional?
@@ -30,8 +30,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
         
-        viewController?.commonInit()
-        
         return viewController
     }
 
@@ -41,6 +39,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     private func commonInit() {
+        
+        syntaxParser.listeners.append(self)
         
         outlineModel = OutlineModel(syntaxParser: syntaxParser)
         outlineView = OutlineView()
@@ -136,5 +136,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
         syntaxHighlighter.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+//        syntaxParser.
+        //TODO: GO HERE NEXT
+    }
+    
+    // MARK: SyntaxParserListener
+    func textGroupsUpdated(_ textGroups: [TextGroup]) {
+        
+        print("text editor view controller syntax listener - groups: \(textGroups)")
     }
 }

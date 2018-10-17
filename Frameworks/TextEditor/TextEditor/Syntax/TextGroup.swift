@@ -10,4 +10,5 @@ import Foundation
 
 class TextGroup {
     
+    let textGroups: [TextGroup] = []
 }
