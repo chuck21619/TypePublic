@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, SyntaxParserListener {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate {
     
     // MARK: - Properties
     // TODO: make these non-optional?
@@ -17,10 +17,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     var layoutManager: TextEditorLayoutManager? = nil
     var textContainer: NSTextContainer? = nil
     
-    let syntaxParser: SyntaxParser = SyntaxParser()
-    var syntaxHighlighter: SyntaxHighligher!
+    var syntaxParser: SyntaxParser? = nil
+    var syntaxHighlighter: SyntaxHighligher? = nil
     var outlineModel: OutlineModel? = nil
-    var outlineView: OutlineView? = nil
+    var outlineViewController: OutlineViewController? = nil
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -40,13 +40,21 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     private func commonInit() {
         
-        syntaxParser.listeners.append(self)
+        let languageFactory = LanguageFactory()
+        let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
         
-        outlineModel = OutlineModel(syntaxParser: syntaxParser)
-        outlineView = OutlineView()
+        syntaxParser = SyntaxParser(language: language)
+        
+        guard let syntaxParser = syntaxParser else {
+             return
+        }
         
         syntaxHighlighter = SyntaxHighligher(syntaxParser: syntaxParser)
-        syntaxHighlighter.delegate = self
+        syntaxHighlighter?.delegate = self
+        
+        outlineModel = OutlineModel(language: language)
+        outlineViewController = OutlineViewController()
+        outlineViewController?.model = outlineModel
     }
     
     public override func viewDidLoad() {
@@ -135,14 +143,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     // MARK: - NSTextStorageDelegate
     public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
-        syntaxHighlighter.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
-//        syntaxParser.
-        //TODO: GO HERE NEXT
-    }
-    
-    // MARK: SyntaxParserListener
-    func textGroupsUpdated(_ textGroups: [TextGroup]) {
-        
-        print("text editor view controller syntax listener - groups: \(textGroups)")
+        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+        outlineModel?.outline(textStorage: textStorage)
     }
 }

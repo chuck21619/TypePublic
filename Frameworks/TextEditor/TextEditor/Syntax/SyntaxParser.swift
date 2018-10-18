@@ -13,38 +13,16 @@ class SyntaxParser {
     // MARK: - Properties
     var language: Language
     var lastAttributeOccurrences: [AttributeOccurrence] = []
-    var listeners: [SyntaxParserListener] = []
     
-    // MARK: - Constructors
-    convenience init() {
-        let languageFactory = LanguageFactory()
-        let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
-        self.init(language: language)
-    }
-    
+    // MARK: - Constructors    
     init(language: Language) {
         self.language = language
     }
     
-    // MARK: - Methods
-    func getAllAttributeOccurrences(for string: String, workItem: DispatchWorkItem) -> [AttributeOccurrence]? {
-        
-        guard let allAttributeOccurrences = language.attributes(for: string, workItem: workItem) else {
-            return nil
-        }
-        
-        let textGroups = language.textGroupsHierarchy(allAttributeOccurrences)
-        
-        listeners.forEach { (listener) in
-            listener.textGroupsUpdated(textGroups)
-        }
-        
-        return allAttributeOccurrences
-    }
-    
+    // MARK: - Methods    
     func newAttributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int, workItem: DispatchWorkItem) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
         
-        guard let allAttributeOccurrences = getAllAttributeOccurrences(for: string, workItem: workItem) else {
+        guard let allAttributeOccurrences = language.attributes(for: string, workItem: workItem) else {
             return nil
         }
         

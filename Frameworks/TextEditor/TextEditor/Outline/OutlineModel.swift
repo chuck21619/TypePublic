@@ -10,10 +10,15 @@ import Foundation
 
 class OutlineModel {
     
-    private let syntaxParser: SyntaxParser
+    let language: Language
+    var processing: Bool = false
     
-    init(syntaxParser: SyntaxParser) {
+    init(language: Language) {
         
-        self.syntaxParser = syntaxParser
+        self.language = language
+    }
+    
+    func outline(textStorage: NSTextStorage) {
+        
     }
 }

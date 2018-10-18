@@ -8,7 +8,12 @@
 
 import Foundation
 
-class OutlineView: NSView {
+class OutlineViewController: NSViewController {
     
     var model: OutlineModel? = nil
+    
+    var allowInteraction: Bool {
+        
+        return !(model?.processing ?? true)
+    }
 }

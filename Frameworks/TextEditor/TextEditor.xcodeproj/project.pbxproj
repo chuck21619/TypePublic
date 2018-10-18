@@ -42,8 +42,7 @@
 		A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46F2134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift */; };
 		A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */; };
 		A3F6F0FE21767B4F003A6DA2 /* OutlineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F6F0FD21767B4F003A6DA2 /* OutlineModel.swift */; };
-		A3F6F10121767B66003A6DA2 /* OutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F6F10021767B66003A6DA2 /* OutlineView.swift */; };
-		A3F6F10321768300003A6DA2 /* SyntaxParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F6F10221768300003A6DA2 /* SyntaxParserListener.swift */; };
+		A3F6F10121767B66003A6DA2 /* OutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F6F10021767B66003A6DA2 /* OutlineViewController.swift */; };
 		A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F6F104217684A1003A6DA2 /* TextGroup.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,8 +95,7 @@
 		A3F0F46F2134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeOccurrence.swift; sourceTree = "<group>"; };
 		A3F6F0FD21767B4F003A6DA2 /* OutlineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModel.swift; sourceTree = "<group>"; };
-		A3F6F10021767B66003A6DA2 /* OutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineView.swift; sourceTree = "<group>"; };
-		A3F6F10221768300003A6DA2 /* SyntaxParserListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParserListener.swift; sourceTree = "<group>"; };
+		A3F6F10021767B66003A6DA2 /* OutlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineViewController.swift; sourceTree = "<group>"; };
 		A3F6F104217684A1003A6DA2 /* TextGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,8 +137,6 @@
 				A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */,
 				A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */,
 				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
-				A3F6F10221768300003A6DA2 /* SyntaxParserListener.swift */,
-				A3F6F104217684A1003A6DA2 /* TextGroup.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
@@ -200,11 +196,11 @@
 				A3C316D520FFFBF10028D466 /* TextEditorView.swift */,
 				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
-				A3F6F0FF21767B53003A6DA2 /* Outline */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */,
 				A3381E0A213F1B9D001C638A /* Helper Extensions */,
 				A3DF51E02139CB5200A8A1AF /* Line Numbers */,
+				A3F6F0FF21767B53003A6DA2 /* Outline */,
 				A36E72B621066E1A00D8BDA1 /* Syntax */,
 			);
 			path = TextEditor;
@@ -298,7 +294,8 @@
 			isa = PBXGroup;
 			children = (
 				A3F6F0FD21767B4F003A6DA2 /* OutlineModel.swift */,
-				A3F6F10021767B66003A6DA2 /* OutlineView.swift */,
+				A3F6F10021767B66003A6DA2 /* OutlineViewController.swift */,
+				A3F6F104217684A1003A6DA2 /* TextGroup.swift */,
 			);
 			path = Outline;
 			sourceTree = "<group>";
@@ -416,7 +413,7 @@
 				A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */,
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
-				A3F6F10121767B66003A6DA2 /* OutlineView.swift in Sources */,
+				A3F6F10121767B66003A6DA2 /* OutlineViewController.swift in Sources */,
 				A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
 				A3CF81D12152D01500BA4D48 /* AddRangeCalculator.swift in Sources */,
@@ -444,7 +441,6 @@
 				A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
-				A3F6F10321768300003A6DA2 /* SyntaxParserListener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,8 +14,10 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     var delegate: SyntaxHighlighterDelegate? = nil
     
     private let syntaxParser: SyntaxParser
-    private var skipPass = false
     private var workItem: DispatchWorkItem? = nil
+    
+    // skipPass: used to prevent infinite loop. adding attributes to the textStorage will make another delegate call to willProcessEditing
+    private var skipPass = false
     
     // keep track of any request's edits, in case a new request is made before completion
     private var editedRangeSinceLastParsing: NSRange? = nil

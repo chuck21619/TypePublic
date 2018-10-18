@@ -13,14 +13,14 @@ class Language {
     let name: String
     let definedLanguage: DefinedLanguage
     let keywords: [Keyword]
-    let textGroupsHierarchy: ([AttributeOccurrence])->([TextGroup])
+    let textGroups: [TextGroup]
     
-    init(name: String, definedLanguage: DefinedLanguage, keywords: [Keyword], textGroupsHierarchy: @escaping ([AttributeOccurrence])->([TextGroup])) {
+    init(name: String, definedLanguage: DefinedLanguage, keywords: [Keyword], textGroups: [TextGroup]) {
         
         self.name = name
         self.definedLanguage = definedLanguage
         self.keywords = keywords
-        self.textGroupsHierarchy = textGroupsHierarchy
+        self.textGroups = textGroups
     }
     
     func attributes(for string: String, workItem: DispatchWorkItem) -> [AttributeOccurrence]? {
@@ -39,5 +39,10 @@ class Language {
         }
         
         return attributeOccurences
+    }
+    
+    func textGroups(for string: String, workItem: DispatchWorkItem) -> [TextGroup] {
+        
+        return []
     }
 }
