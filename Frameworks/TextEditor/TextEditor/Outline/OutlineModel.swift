@@ -12,6 +12,7 @@ class OutlineModel {
     
     let language: Language
     var processing: Bool = false
+    private var workItem: DispatchWorkItem? = nil
     
     init(language: Language) {
         
@@ -20,5 +21,18 @@ class OutlineModel {
     
     func outline(textStorage: NSTextStorage) {
         
+        workItem?.cancel()
+        var newWorkItem: DispatchWorkItem!
+        
+        newWorkItem = DispatchWorkItem {
+            
+            let tokens = self.language.textGroupTokens(for: textStorage.string, workItem: newWorkItem)
+            print(tokens)
+            
+            newWorkItem = nil
+        }
+        self.workItem = newWorkItem
+        
+        DispatchQueue.global(qos: .background).async(execute: newWorkItem)
     }
 }

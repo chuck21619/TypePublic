@@ -37,7 +37,6 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             attributeOccurences.append(attributeOccurence)
             
             guard workItem.isCancelled == false else {
-                stop.pointee = true
                 return
             }
         }

@@ -42,7 +42,6 @@ class CustomAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             attributeOccurences.append(contentsOf: attributeOccurence)
             
             guard workItem.isCancelled == false else {
-                stop.pointee = true
                 return
             }
         }
