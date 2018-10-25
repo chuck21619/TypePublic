@@ -43,6 +43,7 @@ class Language {
         return attributeOccurences
     }
     
+    // all text group tokens, ordered by range
     func textGroupTokens(for string: String, workItem: DispatchWorkItem) -> [TextGroupToken]? {
         
         var tokens: [TextGroupToken] = []
@@ -68,7 +69,7 @@ class Language {
                 }
                 
                 let matchedString = String(string[range])
-                let token = TextGroupToken(string: matchedString, range: match.range)
+                let token = TextGroupToken(string: matchedString, range: match.range, groupingRule: groupingRule)
                 tokens.append(token)
                 
                 guard workItem.isCancelled == false else {
@@ -81,6 +82,43 @@ class Language {
             }
         }
         
-        return tokens
+        //order tokens by range
+        let orderedTokens = tokens.sorted { (token1, token2) -> Bool in
+            
+            return token1.range.location < token2.range.location
+        }
+        
+        return orderedTokens
+    }
+    
+    private func index(of textGroupingRule: TextGroupingRule) -> Int? {
+        
+        guard let index = textGroupingRules.firstIndex(of: textGroupingRule) else {
+            return nil
+        }
+        
+        return index
+    }
+    
+    private func index(of textGroupToken: TextGroupToken) -> Int? {
+        
+        let rule = textGroupToken.groupingRule
+        return index(of: rule)
+    }
+    
+    private func index(of textGroup: TextGroup) -> Int? {
+    
+        let token = textGroup.token
+        return index(of: token)
+    }
+    
+    func priority(of firstGroupingRule: TextGroupingRule, isHigherThan secondGroupingRule: TextGroupingRule) -> Bool {
+        
+        guard let firstRuleIndex = index(of: firstGroupingRule), let secondRuleIndex = index(of: secondGroupingRule) else {
+            return false
+        }
+        
+        // a lower index means higher priority
+        return firstRuleIndex < secondRuleIndex
     }
 }

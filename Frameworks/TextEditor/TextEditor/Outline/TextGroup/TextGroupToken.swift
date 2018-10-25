@@ -12,4 +12,5 @@ struct TextGroupToken {
     
     let string: String
     let range: NSRange
+    let groupingRule: TextGroupingRule
 }

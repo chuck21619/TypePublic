@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TextGroupingRule {
+struct TextGroupingRule: Equatable {
     
     let regexPattern: String
 }

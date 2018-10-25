@@ -21,13 +21,68 @@ class OutlineModel {
     
     func outline(textStorage: NSTextStorage) {
         
+        textGroups(from: textStorage.string, completion: { (textgroups) in
+            
+            print("groups")
+            print(textgroups)
+        })
+    }
+    
+    func textGroups(from string: String, completion: @escaping ([TextGroup])->()) {
+        
         workItem?.cancel()
         var newWorkItem: DispatchWorkItem!
         
         newWorkItem = DispatchWorkItem {
             
-            let tokens = self.language.textGroupTokens(for: textStorage.string, workItem: newWorkItem)
+            guard let tokens = self.language.textGroupTokens(for: string, workItem: newWorkItem) else {
+                completion([])
+                return
+            }
             print(tokens)
+            
+            var textGroups: [TextGroup] = []
+            
+            for token in tokens {
+                
+                let newTextGroup = TextGroup(title: token.string, textGroups: nil, token: token)
+                
+                guard let iterator = textGroups.first?.createIterator() else {
+                    textGroups.append(newTextGroup)
+                    continue
+                }
+                
+                var allTextGroups: [TextGroup] = []
+                
+                while iterator.hasNext() {
+                    
+                    guard let textGroup = iterator.next() else {
+                        continue
+                    }
+                    
+                    allTextGroups.append(textGroup)
+                }
+                
+                let reversedTextGroups = allTextGroups.reversed()
+                
+                var noPreviousTextGroupsWithHigherPriority = true
+                for textGroup in reversedTextGroups {
+                    
+                    if self.language.priority(of: textGroup.token.groupingRule, isHigherThan: token.groupingRule) {
+                        
+                        noPreviousTextGroupsWithHigherPriority = false
+                        
+                        textGroups.append(newTextGroup)
+                    }
+                }
+                
+                if noPreviousTextGroupsWithHigherPriority {
+                    
+                    textGroups.append(newTextGroup)
+                }
+            }
+            
+            completion(textGroups)
             
             newWorkItem = nil
         }
