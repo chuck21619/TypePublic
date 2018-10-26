@@ -38,10 +38,10 @@ class TextGroup: Equatable, CustomStringConvertible {
     // MARK: etc.
     func createIterator() -> TextGroupIterator {
         
-//        if iterator == nil {
+        if iterator == nil {
             let oneLevelIterator = OneLevelTextGroupIterator(textGroups: textGroups)
             iterator = CompositeTextGroupIterator(textGroupIterator: oneLevelIterator)
-//        }
+        }
         
         return iterator!
     }
