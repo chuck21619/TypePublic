@@ -21,13 +21,17 @@ class OutlineModel {
     
     func outline(textStorage: NSTextStorage) {
         
-        textGroups(from: textStorage.string, completion: { (textgroups) in
+        textGroups(from: textStorage.string, completion: { (textGroups) in
             
-            print("groups : \(textgroups)")
+            guard let textGroups = textGroups else {
+                return
+            }
+            
+            print("groups : \(textGroups)")
         })
     }
     
-    func textGroups(from string: String, completion: @escaping ([TextGroup])->()) {
+    func textGroups(from string: String, completion: @escaping (TextGroup?)->()) {
         
         workItem?.cancel()
         var newWorkItem: DispatchWorkItem!
@@ -35,25 +39,19 @@ class OutlineModel {
         newWorkItem = DispatchWorkItem {
             
             guard let tokens = self.language.textGroupTokens(for: string, workItem: newWorkItem) else {
-                completion([])
+                completion(nil)
                 return
             }
-//            print(tokens)
             
-            var textGroups: [TextGroup] = []
+            let parentTextGroup = TextGroup(title: "parent")
             
             for token in tokens {
                 
                 let newTextGroup = TextGroup(title: token.label, token: token)
                 
-                guard let firstTextGroup = textGroups.first else {
-                    textGroups.append(newTextGroup)
-                    continue
-                }
+                var allTextGroups: [TextGroup] = [parentTextGroup]
                 
-                var allTextGroups: [TextGroup] = [firstTextGroup]
-                
-                let iterator = firstTextGroup.createIterator()
+                let iterator = parentTextGroup.createIterator()
                 while iterator.hasNext() {
                     
                     guard let textGroup = iterator.next() else {
@@ -63,26 +61,31 @@ class OutlineModel {
                     allTextGroups.append(textGroup)
                 }
                 
-                let reversedTextGroups = allTextGroups.reversed()
+                let reversedTextGroups =  allTextGroups.reversed()
                 
                 var noPreviousTextGroupsWithHigherPriority = true
                 for textGroup in reversedTextGroups {
                     
-                    if self.language.priority(of: textGroup.token.groupingRule, isHigherThan: token.groupingRule) {
-                        
-                        noPreviousTextGroupsWithHigherPriority = false
+                    guard let textGroupToken = textGroup.token else {
+                        continue
+                    }
+                    
+                    if self.language.priority(of: textGroupToken.groupingRule, isHigherThan: token.groupingRule) {
                         
                         textGroup.textGroups.append(newTextGroup)
+                        
+                        noPreviousTextGroupsWithHigherPriority = false
+                        break
                     }
                 }
                 
                 if noPreviousTextGroupsWithHigherPriority {
                     
-                    textGroups.append(newTextGroup)
+                    parentTextGroup.textGroups.append(newTextGroup)
                 }
             }
             
-            completion(textGroups)
+            completion(parentTextGroup)
             
             newWorkItem = nil
         }

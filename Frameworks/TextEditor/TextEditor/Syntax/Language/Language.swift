@@ -113,7 +113,10 @@ class Language {
     
     private func index(of textGroup: TextGroup) -> Int? {
     
-        let token = textGroup.token
+        guard let token = textGroup.token else {
+            return nil
+        }
+        
         return index(of: token)
     }
     

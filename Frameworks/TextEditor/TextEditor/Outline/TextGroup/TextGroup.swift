@@ -10,17 +10,11 @@ import Foundation
 
 class TextGroup: Equatable, CustomStringConvertible {
     
-    static func == (lhs: TextGroup, rhs: TextGroup) -> Bool {
-        
-        let isEqual = lhs.title == rhs.title &&
-                      lhs.textGroups == rhs.textGroups &&
-                      lhs.token == rhs.token
-        
-        return isEqual
-    }
-    
-    
+    // MARK: - Properties
     let title: String
+    private var iterator: TextGroupIterator? = nil
+    let token: TextGroupToken?
+    weak var parentTextGroup: TextGroup? = nil
     var textGroups: [TextGroup] = [] {
         
         didSet {
@@ -31,28 +25,28 @@ class TextGroup: Equatable, CustomStringConvertible {
             }
         }
     }
-    private var iterator: TextGroupIterator? = nil
-    let token: TextGroupToken
     
-    weak var parentTextGroup: TextGroup? = nil
-    
-    init(title: String, textGroups: [TextGroup] = [], token: TextGroupToken) {
+    // MARK: - Methods
+    // MARK: Constructor
+    init(title: String, textGroups: [TextGroup] = [], token: TextGroupToken? = nil) {
         
         self.title = title
         self.textGroups = textGroups
         self.token = token
     }
     
+    // MARK: etc.
     func createIterator() -> TextGroupIterator {
         
-        if iterator == nil {
+//        if iterator == nil {
             let oneLevelIterator = OneLevelTextGroupIterator(textGroups: textGroups)
             iterator = CompositeTextGroupIterator(textGroupIterator: oneLevelIterator)
-        }
+//        }
         
         return iterator!
     }
     
+    // MARK: - Description
     var description: String {
 
         var string = ""
@@ -89,5 +83,15 @@ class TextGroup: Equatable, CustomStringConvertible {
         }
         
         return string
+    }
+    
+    // MARK: - Equatable
+    static func == (lhs: TextGroup, rhs: TextGroup) -> Bool {
+        
+        let isEqual = lhs.title == rhs.title &&
+            lhs.textGroups == rhs.textGroups &&
+            lhs.token == rhs.token
+        
+        return isEqual
     }
 }
