@@ -69,7 +69,12 @@ class Language {
                 }
                 
                 let matchedString = String(string[range])
-                let token = TextGroupToken(string: matchedString, range: match.range, groupingRule: groupingRule)
+                var label = matchedString
+                if let labelRange = Range(match.range(withName: groupingRule.labelGroupTitle), in: string) {
+                    label = String(string[labelRange])
+                }
+                
+                let token = TextGroupToken(label: label, range: match.range, groupingRule: groupingRule)
                 tokens.append(token)
                 
                 guard workItem.isCancelled == false else {

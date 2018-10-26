@@ -8,14 +8,35 @@
 
 import Foundation
 
-class TextGroup {
+class TextGroup: Equatable, CustomStringConvertible {
+    
+    static func == (lhs: TextGroup, rhs: TextGroup) -> Bool {
+        
+        let isEqual = lhs.title == rhs.title &&
+                      lhs.textGroups == rhs.textGroups &&
+                      lhs.token == rhs.token
+        
+        return isEqual
+    }
+    
     
     let title: String
-    let textGroups: [TextGroup]?
+    var textGroups: [TextGroup] = [] {
+        
+        didSet {
+            
+            for textGroup in textGroups {
+                
+                textGroup.parentTextGroup = self
+            }
+        }
+    }
     private var iterator: TextGroupIterator? = nil
     let token: TextGroupToken
     
-    init(title: String, textGroups: [TextGroup]?, token: TextGroupToken) {
+    weak var parentTextGroup: TextGroup? = nil
+    
+    init(title: String, textGroups: [TextGroup] = [], token: TextGroupToken) {
         
         self.title = title
         self.textGroups = textGroups
@@ -25,15 +46,48 @@ class TextGroup {
     func createIterator() -> TextGroupIterator {
         
         if iterator == nil {
-            let oneLevelIterator = OneLevelTextGroupIterator(textGroups: textGroups ?? [])
+            let oneLevelIterator = OneLevelTextGroupIterator(textGroups: textGroups)
             iterator = CompositeTextGroupIterator(textGroupIterator: oneLevelIterator)
         }
         
-        guard let iterator = iterator else {
+        return iterator!
+    }
+    
+    var description: String {
+
+        var string = ""
+        
+        var indentLevel = 0
+        
+        var currentTextGroup: TextGroup? = self
+        
+        let iterator = self.createIterator()
+        
+        while currentTextGroup != nil {
             
-            fatalError()
+            for _ in 0..<indentLevel {
+                
+                string = "\(string)    "
+            }
+            string = "\(string)\(currentTextGroup!.title)\n"
+            
+            let nextTextGroup = iterator.next()
+            
+            if let nextTextGroup = nextTextGroup {
+                
+                if currentTextGroup?.textGroups.contains(nextTextGroup) == true {
+                    
+                    indentLevel += 1
+                }
+                else if nextTextGroup.parentTextGroup?.textGroups.contains(currentTextGroup!) == false {
+                    
+                    indentLevel -= 1
+                }
+            }
+            
+            currentTextGroup = nextTextGroup
         }
         
-        return iterator
+        return string
     }
 }

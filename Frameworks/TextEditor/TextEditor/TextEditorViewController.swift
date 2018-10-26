@@ -146,7 +146,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         //TODO: syntaxHighlighter causes this callback to be made a second time - figure out someway of handling it
         //currently the syntaxHighlighter ignores the second call inside itself
         //but other objects wont know that its the second call and that it should be ignored
-        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         outlineModel?.outline(textStorage: textStorage)
     }
 }

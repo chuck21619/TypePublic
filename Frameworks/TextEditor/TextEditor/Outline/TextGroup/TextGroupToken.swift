@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct TextGroupToken {
+struct TextGroupToken: Equatable {
     
-    let string: String
+    let label: String
     let range: NSRange
     let groupingRule: TextGroupingRule
 }

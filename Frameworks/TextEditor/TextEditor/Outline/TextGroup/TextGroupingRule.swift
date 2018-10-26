@@ -11,4 +11,5 @@ import Foundation
 struct TextGroupingRule: Equatable {
     
     let regexPattern: String
+    let labelGroupTitle: String
 }

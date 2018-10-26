@@ -23,8 +23,7 @@ class OutlineModel {
         
         textGroups(from: textStorage.string, completion: { (textgroups) in
             
-            print("groups")
-            print(textgroups)
+            print("groups : \(textgroups)")
         })
     }
     
@@ -39,21 +38,22 @@ class OutlineModel {
                 completion([])
                 return
             }
-            print(tokens)
+//            print(tokens)
             
             var textGroups: [TextGroup] = []
             
             for token in tokens {
                 
-                let newTextGroup = TextGroup(title: token.string, textGroups: nil, token: token)
+                let newTextGroup = TextGroup(title: token.label, token: token)
                 
-                guard let iterator = textGroups.first?.createIterator() else {
+                guard let firstTextGroup = textGroups.first else {
                     textGroups.append(newTextGroup)
                     continue
                 }
                 
-                var allTextGroups: [TextGroup] = []
+                var allTextGroups: [TextGroup] = [firstTextGroup]
                 
+                let iterator = firstTextGroup.createIterator()
                 while iterator.hasNext() {
                     
                     guard let textGroup = iterator.next() else {
@@ -72,7 +72,7 @@ class OutlineModel {
                         
                         noPreviousTextGroupsWithHigherPriority = false
                         
-                        textGroups.append(newTextGroup)
+                        textGroup.textGroups.append(newTextGroup)
                     }
                 }
                 

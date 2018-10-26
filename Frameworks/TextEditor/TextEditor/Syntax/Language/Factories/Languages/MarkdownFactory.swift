@@ -130,9 +130,11 @@ class MarkdownFactory {
     // MARK: - Text Groups
     func createTextGroupingRules() -> [TextGroupingRule] {
         
-        let rule = TextGroupingRule(regexPattern: "# ")
-        let rule2 = TextGroupingRule(regexPattern: "## ")
-        let rule3 = TextGroupingRule(regexPattern: "### ")
-        return [rule, rule2, rule3]
+        let labelGroupTitle = "labelGroupTitle"
+        
+        let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*#(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
+        let rule2 = TextGroupingRule(regexPattern: "(^|\\n)\\s*##(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
+        let rule3 = TextGroupingRule(regexPattern: "(^|\\n)\\s*###(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
+        return [rule1, rule2, rule3]
     }
 }
