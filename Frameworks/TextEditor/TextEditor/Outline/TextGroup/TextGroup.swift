@@ -38,10 +38,9 @@ class TextGroup: Equatable, CustomStringConvertible {
     // MARK: etc.
     func createIterator() -> TextGroupIterator {
         
-        if iterator == nil {
-            let oneLevelIterator = OneLevelTextGroupIterator(textGroups: textGroups)
-            iterator = CompositeTextGroupIterator(textGroupIterator: oneLevelIterator)
-        }
+//        if iterator == nil {
+            iterator = TextGroupIterator(textGroups: textGroups)
+//        }
         
         return iterator!
     }
@@ -49,6 +48,8 @@ class TextGroup: Equatable, CustomStringConvertible {
     // MARK: - Description
     var description: String {
 
+//        return ""
+        
         var string = ""
         
         var indentLevel = 0
@@ -73,9 +74,15 @@ class TextGroup: Equatable, CustomStringConvertible {
                     
                     indentLevel += 1
                 }
-                else if nextTextGroup.parentTextGroup?.textGroups.contains(currentTextGroup!) == false {
+                else {
                     
-                    indentLevel -= 1
+                    var recursiveTextGroup: TextGroup? = currentTextGroup
+                    
+                    while nextTextGroup.parentTextGroup?.textGroups.contains(recursiveTextGroup!) == false {
+                        
+                        indentLevel -= 1
+                        recursiveTextGroup = recursiveTextGroup?.parentTextGroup
+                    }
                 }
             }
             

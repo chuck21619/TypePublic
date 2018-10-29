@@ -52,11 +52,7 @@ class OutlineModel {
                 var allTextGroups: [TextGroup] = [parentTextGroup]
                 
                 let iterator = parentTextGroup.createIterator()
-                while iterator.hasNext() {
-                    
-                    guard let textGroup = iterator.next() else {
-                        continue
-                    }
+                while let textGroup = iterator.next() {
                     
                     allTextGroups.append(textGroup)
                 }

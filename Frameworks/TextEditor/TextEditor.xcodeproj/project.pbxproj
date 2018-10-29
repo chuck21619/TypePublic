@@ -21,9 +21,7 @@
 		A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */; };
 		A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */; };
 		A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */; };
-		A3751D872180FF9000D3D1C0 /* OneLevelTextGroupIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3751D862180FF9000D3D1C0 /* OneLevelTextGroupIterator.swift */; };
-		A3751D892181055700D3D1C0 /* CompositeTextGroupIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3751D882181055700D3D1C0 /* CompositeTextGroupIterator.swift */; };
-		A3751D8B2181085400D3D1C0 /* TextGroupIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3751D8A2181085400D3D1C0 /* TextGroupIterator.swift */; };
+		A3751D892181055700D3D1C0 /* TextGroupIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3751D882181055700D3D1C0 /* TextGroupIterator.swift */; };
 		A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */; };
 		A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */; };
 		A3848A9E215B53B50045C5AB /* SyntaxHighlighterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */; };
@@ -77,9 +75,7 @@
 		A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFactory.swift; sourceTree = "<group>"; };
 		A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParser.swift; sourceTree = "<group>"; };
 		A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParserTests.swift; sourceTree = "<group>"; };
-		A3751D862180FF9000D3D1C0 /* OneLevelTextGroupIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLevelTextGroupIterator.swift; sourceTree = "<group>"; };
-		A3751D882181055700D3D1C0 /* CompositeTextGroupIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTextGroupIterator.swift; sourceTree = "<group>"; };
-		A3751D8A2181085400D3D1C0 /* TextGroupIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupIterator.swift; sourceTree = "<group>"; };
+		A3751D882181055700D3D1C0 /* TextGroupIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupIterator.swift; sourceTree = "<group>"; };
 		A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownFactory.swift; sourceTree = "<group>"; };
 		A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighlighterDelegate.swift; sourceTree = "<group>"; };
@@ -179,27 +175,9 @@
 		A3751D8C218108A100D3D1C0 /* Iterator */ = {
 			isa = PBXGroup;
 			children = (
-				A3751D8D21810B2100D3D1C0 /* Interface */,
-				A3751D8E21810B2600D3D1C0 /* Implementation */,
+				A3751D882181055700D3D1C0 /* TextGroupIterator.swift */,
 			);
 			path = Iterator;
-			sourceTree = "<group>";
-		};
-		A3751D8D21810B2100D3D1C0 /* Interface */ = {
-			isa = PBXGroup;
-			children = (
-				A3751D8A2181085400D3D1C0 /* TextGroupIterator.swift */,
-			);
-			path = Interface;
-			sourceTree = "<group>";
-		};
-		A3751D8E21810B2600D3D1C0 /* Implementation */ = {
-			isa = PBXGroup;
-			children = (
-				A3751D862180FF9000D3D1C0 /* OneLevelTextGroupIterator.swift */,
-				A3751D882181055700D3D1C0 /* CompositeTextGroupIterator.swift */,
-			);
-			path = Implementation;
 			sourceTree = "<group>";
 		};
 		A3764B9C2135FEE1006F6675 /* Factories */ = {
@@ -466,7 +444,6 @@
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
 				A3F6F10121767B66003A6DA2 /* OutlineViewController.swift in Sources */,
 				A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */,
-				A3751D872180FF9000D3D1C0 /* OneLevelTextGroupIterator.swift in Sources */,
 				A36E72B821066E2600D8BDA1 /* Keyword.swift in Sources */,
 				A3CF81D12152D01500BA4D48 /* AddRangeCalculator.swift in Sources */,
 				A36B119821519F2B0086AD83 /* NSRange+IsAdjacent.swift in Sources */,
@@ -478,7 +455,6 @@
 				A3CF81D62152D0A700BA4D48 /* ReplaceRangeCalculator.swift in Sources */,
 				A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */,
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
-				A3751D8B2181085400D3D1C0 /* TextGroupIterator.swift in Sources */,
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
 				A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
@@ -487,7 +463,7 @@
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,
 				A3F6F0FE21767B4F003A6DA2 /* OutlineModel.swift in Sources */,
-				A3751D892181055700D3D1C0 /* CompositeTextGroupIterator.swift in Sources */,
+				A3751D892181055700D3D1C0 /* TextGroupIterator.swift in Sources */,
 				A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
 				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,

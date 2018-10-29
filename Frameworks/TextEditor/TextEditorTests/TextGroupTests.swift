@@ -13,27 +13,35 @@ class TextGroupTests: XCTestCase {
     
     func testPrinting() {
         
-        let textGroup = createSampleTextGroup()
+        let textGroup = createSampleTextGroup2()
         
         print("\n")
         print(textGroup)
         print("\n")
+        
+        
+        
+        
+//        let iterator = textGroup.createIterator()
+//        
+//        while let textGroup = iterator.next() {
+//            
+//            print(textGroup.title)
+//        }
     }
     
     // sample text groups
-    //
-    // 1
-    // 2
-    //   2.1
-    //   2.2
-    //     2.2.1
-    //   2.3
-    // 3
-    //   3.1
-    //   3.2
-    // 4
-    // 5
-    //
+    // ## 1
+    // # 2
+    // ## 2.1
+    // ## 2.2
+    // ### 2.2.1
+    // ## 2.3
+    // # 3
+    // ### 3.1
+    // ## 3.2
+    // # 4
+    // # 5
     private func createSampleTextGroup() -> TextGroup {
 
         let language = MarkdownFactory().createMarkdown()
@@ -102,6 +110,62 @@ class TextGroupTests: XCTestCase {
         let twelthToken = TextGroupToken(label: "5", range: twelthTokenRange, groupingRule: rules[0])
         let five = TextGroup(title: twelthToken.label, token: twelthToken)
         parentTextGroup.textGroups.append(five)
+        
+        return parentTextGroup
+    }
+    
+    // sample text groups
+    //
+    // # 1
+    // ## 1.1
+    // # 2
+    // ### 2.1
+    // ## 2.2
+    // ### 2.2.1
+    // # 3
+    private func createSampleTextGroup2() -> TextGroup {
+        
+        let language = MarkdownFactory().createMarkdown()
+        let rules = language.textGroupingRules
+        
+        let parentTokenRange = NSRange(location: 0, length: 0)
+        let parentToken = TextGroupToken(label: "", range: parentTokenRange, groupingRule: rules[0])
+        let parentTextGroup = TextGroup(title: "parent", token: parentToken)
+        
+        let firstTokenRange = NSRange(location: 0, length: 1)
+        let firstToken = TextGroupToken(label: "1", range: firstTokenRange, groupingRule: rules[0])
+        let one = TextGroup(title: firstToken.label, token: firstToken)
+        parentTextGroup.textGroups.append(one)
+        
+        let secondTokenRange = NSRange(location: 1, length: 1)
+        let secondToken = TextGroupToken(label: "1.1", range: secondTokenRange, groupingRule: rules[1])
+        let two = TextGroup(title: secondToken.label, token: secondToken)
+        one.textGroups.append(two)
+        
+        let thirdTokenRange = NSRange(location: 2, length: 1)
+        let thirdToken = TextGroupToken(label: "2", range: thirdTokenRange, groupingRule: rules[0])
+        let two_one = TextGroup(title: thirdToken.label, token: thirdToken)
+        parentTextGroup.textGroups.append(two_one)
+        
+        let fourthTokenRange = NSRange(location: 3, length: 1)
+        let fourthToken = TextGroupToken(label: "2.1", range: fourthTokenRange, groupingRule: rules[2])
+        let two_two = TextGroup(title: fourthToken.label, token: fourthToken)
+        two_one.textGroups.append(two_two)
+        
+        let fifthTokenRange = NSRange(location: 4, length: 1)
+        let fifthToken = TextGroupToken(label: "2.2", range: fifthTokenRange, groupingRule: rules[1])
+        let two_two_one = TextGroup(title: fifthToken.label, token: fifthToken)
+        two_one.textGroups.append(two_two_one)
+        
+        let sixthTokenRange = NSRange(location: 5, length: 1)
+        let sixthToken = TextGroupToken(label: "2.2.1", range: sixthTokenRange, groupingRule: rules[2])
+        let two_two_two = TextGroup(title: sixthToken.label, token: sixthToken)
+        two_two_one.textGroups.append(two_two_two)
+        
+        let seventhTokenRange = NSRange(location: 6, length: 1)
+        let seventhToken = TextGroupToken(label: "3", range: seventhTokenRange, groupingRule: rules[0])
+        let two_three = TextGroup(title: seventhToken.label, token: seventhToken)
+        parentTextGroup.textGroups.append(two_three)
         
         return parentTextGroup
     }
