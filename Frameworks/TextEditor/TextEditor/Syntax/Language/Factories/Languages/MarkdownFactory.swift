@@ -131,10 +131,13 @@ class MarkdownFactory {
     func createTextGroupingRules() -> [TextGroupingRule] {
         
         let labelGroupTitle = "labelGroupTitle"
+        let indeterminateGroupLabel = "indeterminateGroupLabel"
         
-        let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*#(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
-        let rule2 = TextGroupingRule(regexPattern: "(^|\\n)\\s*##(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
-        let rule3 = TextGroupingRule(regexPattern: "(^|\\n)\\s*###(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
-        return [rule1, rule2, rule3]
+        let indeterminateProperties = IndeterminateProperties(ascending: true, indeterminateGroupLabel: indeterminateGroupLabel)
+        
+        let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*(?<\(indeterminateGroupLabel)>#+)(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle, indeterminateProperties: indeterminateProperties)
+//        let rule2 = TextGroupingRule(regexPattern: "(^|\\n)\\s*##(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
+//        let rule3 = TextGroupingRule(regexPattern: "(^|\\n)\\s*###(?![^\\s])\\s*(?<\(labelGroupTitle)>.*)(?=\\n|$)", labelGroupTitle: labelGroupTitle)
+        return [rule1]//, rule2, rule3]
     }
 }

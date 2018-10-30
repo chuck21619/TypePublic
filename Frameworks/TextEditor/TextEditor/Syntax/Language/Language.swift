@@ -74,6 +74,19 @@ class Language {
                     label = String(string[labelRange])
                 }
                 
+                if let indeterminateProperties = groupingRule.indeterminateProperties {
+                    
+                    guard let indeterminateRange = Range(match.range(withName: indeterminateProperties.indeterminateGroupLabel), in: string) else {
+                        return
+                    }
+                    
+                    let indeterminateString = String(string[indeterminateRange])
+                    print(indeterminateString)
+                    // calculate amount
+                    // pass amount into TextGroupToken
+                    // then figure out how to use the amount when comparing two tokens for higher priority
+                }
+                
                 let token = TextGroupToken(label: label, range: match.range, groupingRule: groupingRule)
                 tokens.append(token)
                 

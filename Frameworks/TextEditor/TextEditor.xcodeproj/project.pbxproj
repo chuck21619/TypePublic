@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3069D612188FDA400DD24F6 /* IndeterminateProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3069D602188FDA400DD24F6 /* IndeterminateProperties.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
 		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
 		A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962E8217A605600D52175 /* TextGroupingRule.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3069D602188FDA400DD24F6 /* IndeterminateProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndeterminateProperties.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
 		A36962E8217A605600D52175 /* TextGroupingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupingRule.swift; sourceTree = "<group>"; };
@@ -126,6 +128,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A3069D622188FE2800DD24F6 /* Grouping Rules */ = {
+			isa = PBXGroup;
+			children = (
+				A36962E8217A605600D52175 /* TextGroupingRule.swift */,
+				A3069D602188FDA400DD24F6 /* IndeterminateProperties.swift */,
+			);
+			path = "Grouping Rules";
+			sourceTree = "<group>";
+		};
 		A3381E0A213F1B9D001C638A /* Helper Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,7 +177,7 @@
 			children = (
 				A3F6F104217684A1003A6DA2 /* TextGroup.swift */,
 				A3751D8C218108A100D3D1C0 /* Iterator */,
-				A36962E8217A605600D52175 /* TextGroupingRule.swift */,
+				A3069D622188FE2800DD24F6 /* Grouping Rules */,
 				A36962EA217A624C00D52175 /* TextGroupToken.swift */,
 			);
 			path = TextGroup;
@@ -467,6 +478,7 @@
 				A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
 				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,
+				A3069D612188FDA400DD24F6 /* IndeterminateProperties.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
 				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,
 				A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */,
