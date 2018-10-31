@@ -74,6 +74,7 @@ class Language {
                     label = String(string[labelRange])
                 }
                 
+                var tokenAmount = 0
                 if let indeterminateProperties = groupingRule.indeterminateProperties {
                     
                     guard let indeterminateRange = Range(match.range(withName: indeterminateProperties.indeterminateGroupLabel), in: string) else {
@@ -81,13 +82,10 @@ class Language {
                     }
                     
                     let indeterminateString = String(string[indeterminateRange])
-                    print(indeterminateString)
-                    // calculate amount
-                    // pass amount into TextGroupToken
-                    // then figure out how to use the amount when comparing two tokens for higher priority
+                    tokenAmount = indeterminateString.count
                 }
                 
-                let token = TextGroupToken(label: label, range: match.range, groupingRule: groupingRule)
+                let token = TextGroupToken(label: label, range: match.range, groupingRule: groupingRule, tokenAmount: tokenAmount)
                 tokens.append(token)
                 
                 guard workItem.isCancelled == false else {
@@ -109,6 +107,7 @@ class Language {
         return orderedTokens
     }
     
+    // MARK: - Grouping Priority
     private func index(of textGroupingRule: TextGroupingRule) -> Int? {
         
         guard let index = textGroupingRules.firstIndex(of: textGroupingRule) else {
@@ -133,13 +132,32 @@ class Language {
         return index(of: token)
     }
     
-    func priority(of firstGroupingRule: TextGroupingRule, isHigherThan secondGroupingRule: TextGroupingRule) -> Bool {
+    func priority(of firstTextGroupToken: TextGroupToken, isHigherThan secondTextGroupToken: TextGroupToken) -> Bool {
         
-        guard let firstRuleIndex = index(of: firstGroupingRule), let secondRuleIndex = index(of: secondGroupingRule) else {
+        guard let firstRuleIndex = index(of: firstTextGroupToken.groupingRule), let secondRuleIndex = index(of: secondTextGroupToken.groupingRule) else {
             return false
         }
         
-        // a lower index means higher priority
-        return firstRuleIndex < secondRuleIndex
+        // when tokens associated with the same rule, and the rule is ideterminate - compare token amount
+        // TODO: rename indeterminateProperties
+        if firstRuleIndex == secondRuleIndex, let indeterminateProperties = firstTextGroupToken.groupingRule.indeterminateProperties {
+            
+            let ascending = indeterminateProperties.ascending
+            
+            if ascending {
+                
+                return firstTextGroupToken.tokenAmount < secondTextGroupToken.tokenAmount
+            }
+            else {
+                
+                return secondTextGroupToken.tokenAmount < firstTextGroupToken.tokenAmount
+            }
+            
+        }
+        else {
+            
+            // a lower index means higher priority
+            return firstRuleIndex < secondRuleIndex
+        }
     }
 }

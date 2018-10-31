@@ -66,7 +66,7 @@ class OutlineModel {
                         continue
                     }
                     
-                    if self.language.priority(of: textGroupToken.groupingRule, isHigherThan: token.groupingRule) {
+                    if self.language.priority(of: textGroupToken, isHigherThan: token) {
                         
                         textGroup.textGroups.append(newTextGroup)
                         

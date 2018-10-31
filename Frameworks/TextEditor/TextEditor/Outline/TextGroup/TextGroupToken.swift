@@ -19,6 +19,7 @@ struct TextGroupToken: Equatable {
     let groupingRule: TextGroupingRule
     
     // the amount of a token represented in an indeterminate rule
+    // if associated rule is not indeterminate, then value has no effect
     // see TextGroupingRule.ascending for more details
     let tokenAmount: Int
     
