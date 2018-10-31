@@ -11,7 +11,7 @@ import Foundation
 class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
     
     // MARK: Methods
-    func attributes(for keyword: Keyword, in string: String, range: NSRange, workItem: DispatchWorkItem) -> [AttributeOccurrence] {
+    func attributes(for keyword: Keyword, in string: String, workItem: DispatchWorkItem) -> [AttributeOccurrence] {
         
         guard let attribute = keyword.attribute else {
             return []
@@ -25,9 +25,7 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             return []
         }
         
-        guard string.contains(range: range) else {
-            return []
-        }
+        let range = string.maxNSRange
         
         regex.enumerateMatches(in: string, range: range) { (match, flags, stop) in
             
@@ -39,7 +37,6 @@ class SimpleAttributeOccurrencesProvider: AttributeOccurrencesProvider {
             attributeOccurences.append(attributeOccurence)
             
             guard workItem.isCancelled == false else {
-                stop.pointee = true
                 return
             }
         }

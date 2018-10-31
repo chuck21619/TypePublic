@@ -14,22 +14,15 @@ class SyntaxParser {
     var language: Language
     var lastAttributeOccurrences: [AttributeOccurrence] = []
     
-    // MARK: - Constructors
-    convenience init() {
-        let languageFactory = LanguageFactory()
-        let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
-        self.init(language: language)
-    }
-    
+    // MARK: - Constructors    
     init(language: Language) {
         self.language = language
     }
     
-    // MARK: - Methods
-    // TODO: rename method - it only returns NEW attributes occurrences and ranges to invalidate
-    func attributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int, workItem: DispatchWorkItem) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
+    // MARK: - Methods    
+    func newAttributeOccurrences(for string: String, range: NSRange, editedRange: NSRange, changeInLength: Int, workItem: DispatchWorkItem) -> (newAttributeOccurrences: [AttributeOccurrence], invalidRanges: [NSRange])? {
         
-        guard let allAttributeOccurrences = language.attributes(for: string, range: range, workItem: workItem) else {
+        guard let allAttributeOccurrences = language.attributes(for: string, workItem: workItem) else {
             return nil
         }
         
@@ -42,6 +35,7 @@ class SyntaxParser {
         let newAttributeOccurrences = calcNewAttributeOccurrences(allAttributeOccurrences: allAttributeOccurrences, editedRange: editedRange, invalidRanges: invalidRanges)
         
         self.lastAttributeOccurrences = allAttributeOccurrences
+        
         
         return (newAttributeOccurrences: newAttributeOccurrences, invalidRanges: invalidRanges)
     }

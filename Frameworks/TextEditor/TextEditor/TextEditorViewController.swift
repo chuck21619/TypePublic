@@ -8,16 +8,25 @@
 
 import Foundation
 
+//NSTrackingMouseEnteredAndExited
+//NSTrackingActiveAlways
+//self.view.addtrackingarea()
+
 public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate {
     
     // MARK: - Properties
-    // TODO: make these non-optional?
+    // TODO: make these non-optional or non-forced-optional?
     var textEditorView: TextEditorView!
     var textStorage: NSTextStorage!
     var layoutManager: TextEditorLayoutManager? = nil
     var textContainer: NSTextContainer? = nil
     
-    let syntaxHighlighter = SyntaxHighligher()
+    var syntaxParser: SyntaxParser? = nil
+    var syntaxHighlighter: SyntaxHighligher? = nil
+    
+    var outlineModel: OutlineModel? = nil
+    var outlineViewController: OutlineViewController? = nil
+    var outlineMouseTrackingArea: NSTrackingArea? = nil
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -26,8 +35,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         let storyboardName = String(describing: TextEditorViewController.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
-        
-        viewController?.commonInit()
         
         return viewController
     }
@@ -39,13 +46,40 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     private func commonInit() {
         
-        syntaxHighlighter.delegate = self
+        let languageFactory = LanguageFactory()
+        let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
+        
+        syntaxParser = SyntaxParser(language: language)
+        
+        guard let syntaxParser = syntaxParser else {
+             return
+        }
+        
+        syntaxHighlighter = SyntaxHighligher(syntaxParser: syntaxParser)
+        syntaxHighlighter?.delegate = self
+        
+        outlineViewController = OutlineViewController.createInstance()
+        outlineModel = OutlineModel(language: language, delegate: outlineViewController)
+        outlineViewController?.model = outlineModel
     }
     
+    
+    // MARK: initialization
     public override func viewDidLoad() {
         
         createTextView()
         textEditorView.lnv_setUpLineNumberView()
+        
+        if let outlineView = outlineViewController?.view {
+            
+            showOutline(false, animated: false)
+            self.view.addSubview(outlineView)
+        }
+        
+        // create mouse area to show/hide the outline
+        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
+        outlineMouseTrackingArea = NSTrackingArea(rect: rect, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil)
+        self.view.addTrackingArea(outlineMouseTrackingArea!)
     }
     
     private func createTextView() {
@@ -112,7 +146,28 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         view.addSubview(scrollView)
     }
     
-    // MARK: SyntaxHighlighterDelegate
+    // MARK: - Outline View
+    private func showOutline(_ show: Bool, animated: Bool) {
+        
+        guard let outlineView = outlineViewController?.view else {
+            
+            return
+        }
+        
+        outlineView.isHidden = !show
+    }
+    
+    public override func mouseEntered(with event: NSEvent) {
+        
+        showOutline(true, animated: true)
+    }
+    
+    public override func mouseExited(with event: NSEvent) {
+        
+        showOutline(false, animated: true)
+    }
+    
+    // MARK: - SyntaxHighlighterDelegate
     func invalidateRanges(invalidRanges: [NSRange]) {
         
         guard let layoutManager = self.layoutManager else {
@@ -128,6 +183,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     // MARK: - NSTextStorageDelegate
     public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
-        syntaxHighlighter.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+        //TODO: syntaxHighlighter causes this callback to be made a second time - figure out someway of handling it
+        //currently the syntaxHighlighter ignores the second call inside itself
+        //but other objects wont know that its the second call and that it should be ignored
+//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+        outlineModel?.outline(textStorage: textStorage)
     }
 }

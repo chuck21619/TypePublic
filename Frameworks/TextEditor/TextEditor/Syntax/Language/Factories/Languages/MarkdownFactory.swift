@@ -18,7 +18,8 @@ class MarkdownFactory {
     func createMarkdown() -> Language {
         
         let keywords = createKeywords()
-        let language = Language(name: "Markdown", definedLanguage: .Markdown, keywords: keywords)
+        let textGroupingRules = createTextGroupingRules()
+        let language = Language(name: "Markdown", definedLanguage: .Markdown, keywords: keywords, textGroupingRules: textGroupingRules)
         return language
     }
     
@@ -124,5 +125,17 @@ class MarkdownFactory {
         let keyword = Keyword(regexPattern: regexPattern, attributeOccurencesProvider: provider)
         
         return keyword
+    }
+    
+    // MARK: - Text Groups
+    func createTextGroupingRules() -> [TextGroupingRule] {
+        
+        let labelGroupTitle = "labelGroupTitle"
+        let indeterminateGroupLabel = "indeterminateGroupLabel"
+        let indeterminateGroupingRuleProperties = IndeterminateGroupingRuleProperties(ascending: true, indeterminateGroupLabel: indeterminateGroupLabel)
+        
+        let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*(?<\(indeterminateGroupLabel)>#+)(?![^\\s])\\s+(?<\(labelGroupTitle)>.+)(?=\\n|$)", labelGroupTitle: labelGroupTitle, indeterminateGroupingRuleProperties: indeterminateGroupingRuleProperties)
+        
+        return [rule1]//, rule2, rule3]
     }
 }

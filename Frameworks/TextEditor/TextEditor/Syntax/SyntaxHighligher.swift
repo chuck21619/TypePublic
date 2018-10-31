@@ -13,9 +13,11 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     // MARK: - Properties
     var delegate: SyntaxHighlighterDelegate? = nil
     
-    private let syntaxParser = SyntaxParser()
-    private var skipPass = false
+    private let syntaxParser: SyntaxParser
     private var workItem: DispatchWorkItem? = nil
+    
+    // skipPass: used to prevent infinite loop. adding attributes to the textStorage will make another delegate call to willProcessEditing
+    private var skipPass = false
     
     // keep track of any request's edits, in case a new request is made before completion
     private var editedRangeSinceLastParsing: NSRange? = nil
@@ -24,6 +26,12 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     //TODO: get font from settings
     private let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
     private let normalFontAttribute = Attribute(key: .font, value: NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11))
+    
+    //MARK: - Constructors
+    init(syntaxParser: SyntaxParser) {
+        
+        self.syntaxParser = syntaxParser
+    }
     
     // MARK: - methods
     func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage) {
@@ -46,7 +54,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
             guard let editedRange = self.editedRangeSinceLastParsing,
                   let changeInLength = self.changeInLengthSinceLastParsing,
-                  let attributeOccurrences = self.syntaxParser.attributeOccurrences(for: string, range: range, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
+                  let attributeOccurrences = self.syntaxParser.newAttributeOccurrences(for: string, range: range, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
                     return
             }
             
