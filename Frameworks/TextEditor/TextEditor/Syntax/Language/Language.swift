@@ -75,9 +75,9 @@ class Language {
                 }
                 
                 var tokenAmount = 0
-                if let indeterminateProperties = groupingRule.indeterminateProperties {
+                if let indeterminateGroupingRuleProperties = groupingRule.indeterminateGroupingRuleProperties {
                     
-                    guard let indeterminateRange = Range(match.range(withName: indeterminateProperties.indeterminateGroupLabel), in: string) else {
+                    guard let indeterminateRange = Range(match.range(withName: indeterminateGroupingRuleProperties.indeterminateGroupLabel), in: string) else {
                         return
                     }
                     
@@ -138,11 +138,10 @@ class Language {
             return false
         }
         
-        // when tokens associated with the same rule, and the rule is ideterminate - compare token amount
-        // TODO: rename indeterminateProperties
-        if firstRuleIndex == secondRuleIndex, let indeterminateProperties = firstTextGroupToken.groupingRule.indeterminateProperties {
+        // when tokens are associated with the same rule, and the rule is ideterminate - compare token amount
+        if firstRuleIndex == secondRuleIndex, let indeterminateGroupingRuleProperties = firstTextGroupToken.groupingRule.indeterminateGroupingRuleProperties {
             
-            let ascending = indeterminateProperties.ascending
+            let ascending = indeterminateGroupingRuleProperties.ascending
             
             if ascending {
                 

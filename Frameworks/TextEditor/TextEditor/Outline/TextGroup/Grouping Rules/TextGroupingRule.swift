@@ -21,13 +21,13 @@ struct TextGroupingRule: Equatable {
     // # h1 title
     // ## h2 title
     // etc.
-    let indeterminateProperties: IndeterminateProperties?
+    let indeterminateGroupingRuleProperties: IndeterminateGroupingRuleProperties?
     
-    init(regexPattern: String, labelGroupTitle: String, indeterminateProperties: IndeterminateProperties? = nil) {
+    init(regexPattern: String, labelGroupTitle: String, indeterminateGroupingRuleProperties: IndeterminateGroupingRuleProperties? = nil) {
         
         self.regexPattern = regexPattern
         self.labelGroupTitle = labelGroupTitle
-        self.indeterminateProperties = indeterminateProperties
+        self.indeterminateGroupingRuleProperties = indeterminateGroupingRuleProperties
     }
     
     // MARK: - Equatable
@@ -35,7 +35,7 @@ struct TextGroupingRule: Equatable {
         
         let isEqual = lhs.regexPattern == rhs.regexPattern &&
                       lhs.labelGroupTitle == rhs.labelGroupTitle &&
-                      lhs.indeterminateProperties == rhs.indeterminateProperties
+                      lhs.indeterminateGroupingRuleProperties == rhs.indeterminateGroupingRuleProperties
         
         return isEqual
     }
