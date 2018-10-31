@@ -10,28 +10,30 @@ import Foundation
 
 class OutlineModel {
     
+    // MARK: - Properties
     let language: Language
+    var delegate: OutlineModelDelegate?
     var processing: Bool = false
     private var workItem: DispatchWorkItem? = nil
     
-    init(language: Language) {
+    // MARK: - Methods
+    // MARK: Constructor
+    init(language: Language, delegate: OutlineModelDelegate?) {
         
         self.language = language
+        self.delegate = delegate
     }
     
+    // MARK: real stuff
     func outline(textStorage: NSTextStorage) {
         
         textGroups(from: textStorage.string, completion: { (textGroups) in
             
-            guard let textGroups = textGroups else {
-                return
-            }
-            
-            print("groups : \(textGroups)")
+            self.delegate?.didUpdate(textGroups: textGroups)            
         })
     }
     
-    func textGroups(from string: String, completion: @escaping (TextGroup?)->()) {
+    func textGroups(from string: String, completion: @escaping ([TextGroup]?)->()) {
         
         workItem?.cancel()
         var newWorkItem: DispatchWorkItem!
@@ -43,21 +45,21 @@ class OutlineModel {
                 return
             }
             
-            let parentTextGroup = TextGroup(title: "parent")
+            var textGroups: [TextGroup] = []
             
             for token in tokens {
                 
                 let newTextGroup = TextGroup(title: token.label, token: token)
                 
-                var allTextGroups: [TextGroup] = [parentTextGroup]
+                var flattenedTextGroups: [TextGroup] = []
                 
-                let iterator = parentTextGroup.createIterator()
+                let iterator = TextGroupIterator(textGroups: textGroups)
                 while let textGroup = iterator.next() {
                     
-                    allTextGroups.append(textGroup)
+                    flattenedTextGroups.append(textGroup)
                 }
                 
-                let reversedTextGroups =  allTextGroups.reversed()
+                let reversedTextGroups =  flattenedTextGroups.reversed()
                 
                 var noPreviousTextGroupsWithHigherPriority = true
                 for textGroup in reversedTextGroups {
@@ -77,11 +79,11 @@ class OutlineModel {
                 
                 if noPreviousTextGroupsWithHigherPriority {
                     
-                    parentTextGroup.textGroups.append(newTextGroup)
+                    textGroups.append(newTextGroup)
                 }
             }
             
-            completion(parentTextGroup)
+            completion(textGroups)
             
             newWorkItem = nil
         }

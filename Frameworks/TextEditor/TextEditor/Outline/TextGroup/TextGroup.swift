@@ -47,8 +47,6 @@ class TextGroup: Equatable, CustomStringConvertible {
     
     // MARK: - Description
     var description: String {
-
-//        return ""
         
         var string = ""
         
