@@ -32,6 +32,8 @@
 		A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */; };
 		A3B78676218A1AA900FB0005 /* OutlineModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */; };
 		A3B78679218A21A700FB0005 /* OutlineViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */; };
+		A3B7867E218BA46700FB0005 /* OutlineEntry.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3B7867D218BA46700FB0005 /* OutlineEntry.xib */; };
+		A3B78680218BA49100FB0005 /* OutlineEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B7867F218BA49100FB0005 /* OutlineEntry.swift */; };
 		A3C316B820FFF7BA0028D466 /* TextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C316AE20FFF7BA0028D466 /* TextEditor.framework */; };
 		A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C316BC20FFF7BA0028D466 /* TextEditorTests.swift */; };
 		A3C316BF20FFF7BA0028D466 /* TextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C316B120FFF7BA0028D466 /* TextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -89,6 +91,8 @@
 		A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighligher.swift; sourceTree = "<group>"; };
 		A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModelDelegate.swift; sourceTree = "<group>"; };
 		A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OutlineViewController.storyboard; sourceTree = "<group>"; };
+		A3B7867D218BA46700FB0005 /* OutlineEntry.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutlineEntry.xib; sourceTree = "<group>"; };
+		A3B7867F218BA49100FB0005 /* OutlineEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineEntry.swift; sourceTree = "<group>"; };
 		A3C316AE20FFF7BA0028D466 /* TextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C316B120FFF7BA0028D466 /* TextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextEditor.h; sourceTree = "<group>"; };
 		A3C316B220FFF7BA0028D466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */,
+				A3B7867D218BA46700FB0005 /* OutlineEntry.xib */,
+				A3B7867F218BA49100FB0005 /* OutlineEntry.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -454,6 +460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3B78679218A21A700FB0005 /* OutlineViewController.storyboard in Resources */,
+				A3B7867E218BA46700FB0005 /* OutlineEntry.xib in Resources */,
 				A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +492,7 @@
 				A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */,
 				A36B119621519F000086AD83 /* NSRange+Positive.swift in Sources */,
 				A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */,
+				A3B78680218BA49100FB0005 /* OutlineEntry.swift in Sources */,
 				A3357897212B635C000773C7 /* Attribute.swift in Sources */,
 				A3CF81D62152D0A700BA4D48 /* ReplaceRangeCalculator.swift in Sources */,
 				A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */,
