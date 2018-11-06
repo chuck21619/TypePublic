@@ -11,4 +11,6 @@ import Foundation
 protocol SyntaxHighlighterDelegate {
     
     func invalidateRanges(invalidRanges: [NSRange])
+    func willAddAttributes(_ SyntaxHighlighter: SyntaxHighligher)
+    func didAddAttributes(_ SyntaxHighlighter: SyntaxHighligher)
 }

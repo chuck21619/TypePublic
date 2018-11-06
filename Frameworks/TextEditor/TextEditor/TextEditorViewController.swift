@@ -23,6 +23,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     var syntaxParser: SyntaxParser? = nil
     var syntaxHighlighter: SyntaxHighligher? = nil
+    // used to prevent infinite loop. during processEditing, syntaxHighlighter adds attributes, which will call processEditing
+    var ignoreProcessEditing = false
     
     var outlineModel: OutlineModel? = nil
     var outlineViewController: OutlineViewController? = nil
@@ -180,13 +182,25 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
     }
     
+    
+    func willAddAttributes(_ SyntaxHighlighter: SyntaxHighligher) {
+        
+        ignoreProcessEditing = true
+    }
+    
+    func didAddAttributes(_ SyntaxHighlighter: SyntaxHighligher) {
+        
+        ignoreProcessEditing = false
+    }
+    
     // MARK: - NSTextStorageDelegate
     public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
-        //TODO: syntaxHighlighter causes this callback to be made a second time - figure out someway of handling it
-        //currently the syntaxHighlighter ignores the second call inside itself
-        //but other objects wont know that its the second call and that it should be ignored
-//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+        guard ignoreProcessEditing == false else {
+            return
+        }
+        
+        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         outlineModel?.outline(textStorage: textStorage)
     }
 }

@@ -62,28 +62,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             
             self.outlineView.reloadData()
         }
-        
-//        guard let textGroups = textGroups, textGroups.isEmpty == false else {
-//
-//            clearOutline()
-//            return
-//        }
-//
-//        print("update outline: \(textGroups)")
-//
-//        DispatchQueue.main.async {
-//            self.testingTextView.string = textGroups.description
-//        }
     }
-    
-//    private func clearOutline() {
-//
-//        print("clear outline")
-//
-//        DispatchQueue.main.async {
-//            self.testingTextView.string = ""
-//        }
-//    }
     
     // MARK: - OutlineModelDelegate
     func didUpdate(textGroups: [TextGroup]?) {

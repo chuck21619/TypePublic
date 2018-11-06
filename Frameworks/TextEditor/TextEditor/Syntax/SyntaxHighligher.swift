@@ -16,9 +16,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     private let syntaxParser: SyntaxParser
     private var workItem: DispatchWorkItem? = nil
     
-    // skipPass: used to prevent infinite loop. adding attributes to the textStorage will make another delegate call to willProcessEditing
-    private var skipPass = false
-    
     // keep track of any request's edits, in case a new request is made before completion
     private var editedRangeSinceLastParsing: NSRange? = nil
     private var changeInLengthSinceLastParsing: Int? = nil
@@ -35,11 +32,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     // MARK: - methods
     func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage) {
-        
-        guard skipPass == false else {
-            
-            return
-        }
         
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
@@ -81,7 +73,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     private func addAttributes(textStorage: NSTextStorage, invalidAttributeRanges: [NSRange], newAttributeOccurrences: [AttributeOccurrence]) {
         
-        self.skipPass = true
+        self.delegate?.willAddAttributes(self)
         textStorage.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
         for invalidAttributeRange in invalidAttributeRanges {
             
@@ -94,7 +86,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             textStorage.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
         }
         textStorage.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
-        self.skipPass = false
+        self.delegate?.didAddAttributes(self)
     }
     
     private func invalidateDisplay(newAttributeOccurrences: [AttributeOccurrence], invalidAttributeRanges: [NSRange]) {
