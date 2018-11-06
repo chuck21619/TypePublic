@@ -151,6 +151,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     // MARK: - Outline View
     private func showOutline(_ show: Bool, animated: Bool) {
         
+        //TODO: add animation
+        
         guard let outlineView = outlineViewController?.view else {
             
             return

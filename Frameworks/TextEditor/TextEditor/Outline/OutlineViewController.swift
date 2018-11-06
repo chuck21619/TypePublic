@@ -61,6 +61,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         DispatchQueue.main.async {
             
             self.outlineView.reloadData()
+            self.outlineView.expandItem(nil, expandChildren: true)
         }
     }
     
@@ -129,4 +130,11 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         return view
     }
+    
+    //Returns whether the specified item should display the outline cell (the disclosure triangle).
+    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
+
+        return false
+    }
+    
 }
