@@ -132,6 +132,7 @@ class MarkdownFactory {
         
         let labelGroupTitle = "labelGroupTitle"
         let indeterminateGroupLabel = "indeterminateGroupLabel"
+        
         let indeterminateGroupingRuleProperties = IndeterminateGroupingRuleProperties(ascending: true, indeterminateGroupLabel: indeterminateGroupLabel)
         
         let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*(?<\(indeterminateGroupLabel)>#+)(?![^\\s])\\s+(?<\(labelGroupTitle)>.+)(?=\\n|$)", labelGroupTitle: labelGroupTitle, indeterminateGroupingRuleProperties: indeterminateGroupingRuleProperties)

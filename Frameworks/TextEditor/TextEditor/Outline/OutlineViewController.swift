@@ -51,6 +51,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         self.outlineView.dataSource = self
         self.outlineView.delegate = self
+        
+        self.outlineView.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: "public.text")])
     }
     
     // MARK: stuff
@@ -116,6 +118,49 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
         
         return textGroup.textGroups.count
+    }
+    
+    // MARK: drag to reorder
+    func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
+
+        
+        guard let textGroup = item as? TextGroup else {
+            return nil
+        }
+//
+//        return textGroup
+        
+//        let pi = textGroup.pas
+        let pasteboardItem = NSPasteboardItem()
+//        pasteboardItem.setData(textGroup, forType: NSPasteboard.PasteboardType(rawValue: "public.text"))
+        pasteboardItem.setString(textGroup.title, forType: NSPasteboard.PasteboardType(rawValue: "public.text"))
+        return pasteboardItem
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
+
+        return .move
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
+        
+        guard let textGroup = item as? TextGroup else {
+            
+            return false
+        }
+        
+        let p = info.draggingPasteboard
+        let title = p.string(forType: NSPasteboard.PasteboardType(rawValue: "public.text"))
+        let sourceNode: NSTreeNode
+        
+        
+//        NSUInteger indexArr[] = {0,index};
+//        NSIndexPath *toIndexPATH =[NSIndexPath indexPathWithIndexes:indexArr length:2];
+//        [self.booksController moveNode:sourceNode toIndexPath:toIndexPATH];
+//
+//        outlineView.moveItem(at: <#T##Int#>, inParent: <#T##Any?#>, to: <#T##Int#>, inParent: <#T##Any?#>)
+        
+        return false
     }
     
     // MARK: - NSOutlineViewDelegate

@@ -121,7 +121,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         textContainer.widthTracksTextView = true
         
         // 4. assemble
-        
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
         
@@ -168,7 +167,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     public override func mouseExited(with event: NSEvent) {
         
-        showOutline(false, animated: true)
+//        showOutline(false, animated: true)
     }
     
     // MARK: - SyntaxHighlighterDelegate
@@ -183,7 +182,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             layoutManager.invalidateDisplay(forCharacterRange: invalidRange)
         }
     }
-    
     
     func willAddAttributes(_ SyntaxHighlighter: SyntaxHighligher) {
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TextGroupingRule: Equatable {
+class TextGroupingRule: NSObject, NSCoding {
     
     let regexPattern: String
     
@@ -40,4 +40,18 @@ struct TextGroupingRule: Equatable {
         return isEqual
     }
     
+    // MARK: - NSCoding
+    func encode(with aCoder: NSCoder) {
+        
+        aCoder.encode(regexPattern, forKey: "regexPattern")
+        aCoder.encode(labelGroupTitle, forKey: "labelGroupTitle")
+        aCoder.encode(indeterminateGroupingRuleProperties, forKey: "indeterminateGroupingRuleProperties")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        self.regexPattern = aDecoder.decodeObject(forKey: "regexPattern") as! String
+        self.labelGroupTitle = aDecoder.decodeObject(forKey: "labelGroupTitle") as! String
+        self.indeterminateGroupingRuleProperties = aDecoder.decodeObject(forKey: "indeterminateGroupingRuleProperties") as? IndeterminateGroupingRuleProperties
+    }
 }

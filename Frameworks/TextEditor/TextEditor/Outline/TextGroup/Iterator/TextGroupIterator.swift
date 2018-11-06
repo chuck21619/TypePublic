@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TextGroupIterator {
+class TextGroupIterator: NSCoding {
     
     var position = 0
     let textGroups: [TextGroup]
@@ -55,5 +55,20 @@ class TextGroupIterator {
         position += 1
         
         return textGroup
+    }
+    
+    // MARK: - NSCoding
+    func encode(with aCoder: NSCoder) {
+        
+        aCoder.encode(position, forKey: "position")
+        aCoder.encode(textGroups, forKey: "textGroups")
+        aCoder.encode(stack, forKey: "stack")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        self.position = aDecoder.decodeInteger(forKey: "position")
+        self.textGroups = aDecoder.decodeObject(forKey: "textGroups") as! [TextGroup]
+        self.stack = aDecoder.decodeObject(forKey: "stack") as! [TextGroupIterator]
     }
 }

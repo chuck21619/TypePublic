@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct TextGroupToken: Equatable {
+class TextGroupToken: NSObject, NSCoding {
+    static func == (lhs: TextGroupToken, rhs: TextGroupToken) -> Bool {
+        return lhs.label == rhs.label && lhs.range == rhs.range && lhs.groupingRule == rhs.groupingRule && lhs.tokenAmount == rhs.tokenAmount
+    }
+    
     
     let label: String
     
@@ -29,5 +33,22 @@ struct TextGroupToken: Equatable {
         self.range = range
         self.groupingRule = groupingRule
         self.tokenAmount = tokenAmount
+    }
+    
+    // MARK: - NSCoding
+    func encode(with aCoder: NSCoder) {
+        
+        aCoder.encode(label, forKey: "label")
+        aCoder.encode(range, forKey: "range")
+        aCoder.encode(groupingRule, forKey: "groupingRule")
+        aCoder.encode(tokenAmount, forKey: "tokenAmount")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        self.label = aDecoder.decodeObject(forKey: "label") as! String
+        self.range = aDecoder.decodeObject(forKey: "range") as! NSRange
+        self.groupingRule = aDecoder.decodeObject(forKey: "groupingRule") as! TextGroupingRule
+        self.tokenAmount = aDecoder.decodeInteger(forKey: "tokenAmount")
     }
 }
