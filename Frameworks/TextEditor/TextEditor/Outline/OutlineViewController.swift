@@ -136,5 +136,4 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
 
         return false
     }
-    
 }
