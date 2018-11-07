@@ -168,21 +168,26 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
-//        let draggingPasteboard = info.draggingPasteboard
-//
-//        // idk why this line doesnt work
-//        // let objects = draggingPasteboard.readObjects(forClasses: [TextGroup.self], options: nil)
-//
-//        guard let pasteboardItem = draggingPasteboard.pasteboardItems?.first,
-//              let data = pasteboardItem.data(forType: NSPasteboard.PasteboardType(rawValue: "type.textGroup")),
-//              let textGroup = NSKeyedUnarchiver.unarchiveObject(with: data) as? TextGroup else {
-//            return false
-//        }
+        // if item is nil, then target is root
+        let targetParent = item as? TextGroup ?? parentTextGroup
         
-        print("draggedFrom: \(draggedFromIndex)")
-        print("draggedTo  : \(index)")
+        guard let draggingGroup = draggingGroup else {
+            return false
+        }
         
-        draggingGroup?.parentTextGroup?.textGroups.remove(at: draggedFromIndex)
+        //remove the text group from its current location
+        draggingGroup.parentTextGroup?.textGroups.remove(at: draggedFromIndex)
+        
+        //insert the text group into its new location
+        var insertIndex = index
+        if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
+            
+            insertIndex -= 1
+        }
+
+        targetParent.textGroups.insert(draggingGroup, at: insertIndex)
+        
+        //update the outline
         updateOutline(textGroups: parentTextGroup.textGroups)
         
         return true
