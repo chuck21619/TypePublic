@@ -17,6 +17,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     // MARK: drag to reorder
     private var draggedFromIndex: Int = -1
+    private var draggingGroup: TextGroup? = nil
     
     @IBOutlet weak var outlineView: NSOutlineView!
     
@@ -131,6 +132,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
         
         draggedFromIndex = outlineView.childIndex(forItem: item)
+        draggingGroup = textGroup
         
         return textGroup
     }
@@ -138,14 +140,27 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
         
+        guard let draggingGroup = draggingGroup else {
+            return []
+        }
+        // if item is nil, then target is root
+        let targetParent = item as? TextGroup ?? parentTextGroup
+        
         // do not allow drops directly onto groups
         guard index != NSOutlineViewDropOnItemIndex else {
             return []
         }
         
-        // no operation should occur when dropping to same location
-        guard index != draggedFromIndex, index != draggedFromIndex+1 else {
+        // do not allow dropping into itself
+        guard draggingGroup.isDescendant(of: targetParent) == false else {
             return []
+        }
+        
+        // no operation should occur when dropping to same location
+        if targetParent == draggingGroup.parentTextGroup {
+            guard index != draggedFromIndex, index != draggedFromIndex+1 else {
+                return []
+            }
         }
         
         return .move
@@ -153,20 +168,22 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
-        let draggingPasteboard = info.draggingPasteboard
-        
-        // idk why this doesnt work
-        // let objects = draggingPasteboard.readObjects(forClasses: [TextGroup.self], options: nil)
-        
-        guard let pasteboardItem = draggingPasteboard.pasteboardItems?.first,
-              let data = pasteboardItem.data(forType: NSPasteboard.PasteboardType(rawValue: "type.textGroup")),
-              let textGroup = NSKeyedUnarchiver.unarchiveObject(with: data) as? TextGroup else {
-            return false
-        }
+//        let draggingPasteboard = info.draggingPasteboard
+//
+//        // idk why this line doesnt work
+//        // let objects = draggingPasteboard.readObjects(forClasses: [TextGroup.self], options: nil)
+//
+//        guard let pasteboardItem = draggingPasteboard.pasteboardItems?.first,
+//              let data = pasteboardItem.data(forType: NSPasteboard.PasteboardType(rawValue: "type.textGroup")),
+//              let textGroup = NSKeyedUnarchiver.unarchiveObject(with: data) as? TextGroup else {
+//            return false
+//        }
         
         print("draggedFrom: \(draggedFromIndex)")
         print("draggedTo  : \(index)")
         
+        draggingGroup?.parentTextGroup?.textGroups.remove(at: draggedFromIndex)
+        updateOutline(textGroups: parentTextGroup.textGroups)
         
         return true
     }

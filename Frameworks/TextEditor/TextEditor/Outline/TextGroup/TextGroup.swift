@@ -79,6 +79,23 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
         return iterator!
     }
     
+    // TODO: validate this method
+    func isDescendant(of parent: TextGroup) -> Bool {
+        
+        var parentTextGroup: TextGroup? = parent
+        
+        while parentTextGroup != nil {
+            
+            if self == parentTextGroup {
+                return true
+            }
+            
+            parentTextGroup = parentTextGroup?.parentTextGroup
+        }
+        
+        return false
+    }
+    
     // MARK: - Description
     override var description: String {
         
