@@ -52,7 +52,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         self.outlineView.dataSource = self
         self.outlineView.delegate = self
         
-        self.outlineView.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: "public.text")])
+        self.outlineView.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: "type.textGroup")])
     }
     
     // MARK: stuff
@@ -123,44 +123,39 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     // MARK: drag to reorder
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
 
-        
         guard let textGroup = item as? TextGroup else {
             return nil
         }
-//
-//        return textGroup
         
-//        let pi = textGroup.pas
-        let pasteboardItem = NSPasteboardItem()
-//        pasteboardItem.setData(textGroup, forType: NSPasteboard.PasteboardType(rawValue: "public.text"))
-        pasteboardItem.setString(textGroup.title, forType: NSPasteboard.PasteboardType(rawValue: "public.text"))
-        return pasteboardItem
+        return textGroup
     }
     
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
-
+        
+        // do not allow drops directly onto groups
+        guard index != NSOutlineViewDropOnItemIndex else {
+            return []
+        }
+        
         return .move
     }
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
-        guard let textGroup = item as? TextGroup else {
-            
+        let draggingPasteboard = info.draggingPasteboard
+        
+        // idk why this doesnt work
+        // let objects = draggingPasteboard.readObjects(forClasses: [TextGroup.self], options: nil)
+        
+        guard let pasteboardItem = draggingPasteboard.pasteboardItems?.first,
+              let data = pasteboardItem.data(forType: NSPasteboard.PasteboardType(rawValue: "type.textGroup")),
+              let textGroup = NSKeyedUnarchiver.unarchiveObject(with: data) as? TextGroup else {
             return false
         }
         
-        let p = info.draggingPasteboard
-        let title = p.string(forType: NSPasteboard.PasteboardType(rawValue: "public.text"))
-        let sourceNode: NSTreeNode
         
         
-//        NSUInteger indexArr[] = {0,index};
-//        NSIndexPath *toIndexPATH =[NSIndexPath indexPathWithIndexes:indexArr length:2];
-//        [self.booksController moveNode:sourceNode toIndexPath:toIndexPATH];
-//
-//        outlineView.moveItem(at: <#T##Int#>, inParent: <#T##Any?#>, to: <#T##Int#>, inParent: <#T##Any?#>)
-        
-        return false
+        return true
     }
     
     // MARK: - NSOutlineViewDelegate

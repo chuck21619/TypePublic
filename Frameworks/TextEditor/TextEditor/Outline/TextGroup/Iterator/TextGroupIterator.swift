@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TextGroupIterator: NSCoding {
+class TextGroupIterator: NSObject, NSCoding {
     
     var position = 0
     let textGroups: [TextGroup]
@@ -17,6 +17,8 @@ class TextGroupIterator: NSCoding {
     init(textGroups: [TextGroup]) {
         
         self.textGroups = textGroups
+        super.init()
+        
         stack.append(self)
     }
     

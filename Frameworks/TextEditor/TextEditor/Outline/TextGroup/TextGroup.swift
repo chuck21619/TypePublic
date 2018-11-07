@@ -20,21 +20,21 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
         
         // TODO: following example. not sure what this means
         // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        return [NSPasteboard.PasteboardType(rawValue: "textGroup")]
+        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
     }
     
     func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
         
         // TODO: following example. not sure what this means
         // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        return [NSPasteboard.PasteboardType(rawValue: "textGroup")]
+        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
     }
     
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
         
         // TODO: following example. not sure what this means
         // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        if type.rawValue != "textGroup" {
+        if type.rawValue != "type.textGroup" {
             
             return nil
         }
