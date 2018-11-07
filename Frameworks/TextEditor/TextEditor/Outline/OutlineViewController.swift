@@ -12,8 +12,11 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     // MARK: - Properties
     var model: OutlineModel? = nil
-    var parentTextGroup = TextGroup(title: "parent")
-    let columnReuseIdentifier = NSUserInterfaceItemIdentifier(rawValue: "columnReuseIdentifier")
+    private var parentTextGroup = TextGroup(title: "parent")
+    private let columnReuseIdentifier = NSUserInterfaceItemIdentifier(rawValue: "columnReuseIdentifier")
+    
+    // MARK: drag to reorder
+    private var draggedFromIndex: Int = -1
     
     @IBOutlet weak var outlineView: NSOutlineView!
     
@@ -127,13 +130,21 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             return nil
         }
         
+        draggedFromIndex = outlineView.childIndex(forItem: item)
+        
         return textGroup
     }
+    
     
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
         
         // do not allow drops directly onto groups
         guard index != NSOutlineViewDropOnItemIndex else {
+            return []
+        }
+        
+        // no operation should occur when dropping to same location
+        guard index != draggedFromIndex, index != draggedFromIndex+1 else {
             return []
         }
         
@@ -153,6 +164,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             return false
         }
         
+        print("draggedFrom: \(draggedFromIndex)")
+        print("draggedTo  : \(index)")
         
         
         return true
