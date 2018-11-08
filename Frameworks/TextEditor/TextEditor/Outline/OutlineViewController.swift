@@ -53,7 +53,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         self.outlineView.dataSource = self
         self.outlineView.delegate = self
         
-        self.outlineView.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: "type.textGroup")])
+        self.outlineView.registerForDraggedTypes([TextGroup.pasteboardType])
     }
     
     // MARK: stuff

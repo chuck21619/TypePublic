@@ -14,6 +14,7 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     let title: String
     private var iterator: TextGroupIterator? = nil
     let token: TextGroupToken?
+    static let pasteboardType = NSPasteboard.PasteboardType(rawValue: "\(Bundle.main.bundleIdentifier ?? "Type").textGroup")
     weak var parentTextGroup: TextGroup? = nil
     var textGroups: [TextGroup] = [] {
         
@@ -126,23 +127,17 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     
     static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
         
-        // TODO: following example. not sure what this means
-        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
+        return [TextGroup.pasteboardType]
     }
     
     func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
         
-        // TODO: following example. not sure what this means
-        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
+        return [TextGroup.pasteboardType]
     }
     
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
         
-        // TODO: following example. not sure what this means
-        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        if type.rawValue != "type.textGroup" {
+        guard type == TextGroup.pasteboardType else {
             
             return nil
         }
