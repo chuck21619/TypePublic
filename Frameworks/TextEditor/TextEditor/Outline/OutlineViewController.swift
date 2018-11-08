@@ -77,25 +77,14 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     // MARK: - NSOutlineViewDataSource
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         
-        // TODO: clean up
-        if item == nil {
-            // root item
-            guard parentTextGroup.textGroups.indices.contains(index) else {
+        // a nil item represents the root node
+        guard let textGroup = (item ?? parentTextGroup) as? TextGroup,
+              textGroup.textGroups.indices.contains(index) else {
                 
                 return TextGroup(title: "Error")
-            }
-            
-            return parentTextGroup.textGroups[index]
         }
-        else {
-            
-            guard let textGroup = item as? TextGroup, textGroup.textGroups.indices.contains(index) else {
-                
-                return TextGroup(title: "Error")
-            }
-            
-            return textGroup.textGroups[index]
-        }
+        
+        return textGroup.textGroups[index]
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
