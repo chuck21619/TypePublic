@@ -37,15 +37,18 @@ class IndeterminateGroupingRuleProperties: NSObject, NSCoding {
     }
     
     // MARK: - NSCoding
+    let ascendingCodingKey = "ascendingCodingKey"
+    let indeterminateGroupLabelCodingKey = "indeterminateGroupLabelCodingKey"
+    
     func encode(with aCoder: NSCoder) {
         
-        aCoder.encode(ascending, forKey: "ascending")
-        aCoder.encode(indeterminateGroupLabel, forKey: "indeterminateGroupLabel")
+        aCoder.encode(ascending, forKey: ascendingCodingKey)
+        aCoder.encode(indeterminateGroupLabel, forKey: indeterminateGroupLabelCodingKey)
     }
     
     required init?(coder aDecoder: NSCoder) {
         
-        self.ascending = aDecoder.decodeBool(forKey: "ascending")
-        self.indeterminateGroupLabel = aDecoder.decodeObject(forKey: "indeterminateGroupLabel") as! String
+        self.ascending = aDecoder.decodeBool(forKey: ascendingCodingKey)
+        self.indeterminateGroupLabel = aDecoder.decodeObject(forKey: indeterminateGroupLabelCodingKey) as? String ?? ""
     }
 }

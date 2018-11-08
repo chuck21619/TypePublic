@@ -29,6 +29,7 @@
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
 		A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DB62144D8470072095F /* String+MaxNSRange.swift */; };
 		A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */; };
+		A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */; };
 		A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */; };
 		A3B78676218A1AA900FB0005 /* OutlineModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */; };
 		A3B78679218A21A700FB0005 /* OutlineViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */; };
@@ -86,6 +87,7 @@
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
 		A3951DB62144D8470072095F /* String+MaxNSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MaxNSRange.swift"; sourceTree = "<group>"; };
 		A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ContainsRange.swift"; sourceTree = "<group>"; };
+		A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RegexMatchNothing.swift"; sourceTree = "<group>"; };
 		A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighligher.swift; sourceTree = "<group>"; };
 		A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModelDelegate.swift; sourceTree = "<group>"; };
 		A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OutlineViewController.storyboard; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				A36B119521519F000086AD83 /* NSRange+Positive.swift */,
 				A36B119321518E950086AD83 /* NSRange+Intersects.swift */,
+				A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */,
 				A36B119721519F2B0086AD83 /* NSRange+IsAdjacent.swift */,
 				A3381E0B213F1BBD001C638A /* Array+Difference.swift */,
 				A3951DB62144D8470072095F /* String+MaxNSRange.swift */,
@@ -501,6 +504,7 @@
 				A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
 				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,
+				A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */,
 				A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
 				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,

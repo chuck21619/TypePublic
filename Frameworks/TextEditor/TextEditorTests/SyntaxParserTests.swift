@@ -14,18 +14,4 @@ class SyntaxParserTests: XCTestCase {
     func testSomething() {
         
     }
-//    func testParseMarkdownWithBlueKeyword() {
-//
-//        let string = "my face is blue and your face is red"
-//        let syntaxParser = SyntaxParser(delegate: self)
-//        syntaxParser.parseText(string)
-//
-//        //verify 'blue' is blue
-//    }
-//
-//    // MARK: - Syntax Parser Delegate
-//    var parsedString: NSAttributedString?
-//    func didParseSyntax(string: NSAttributedString) {
-//        self.parsedString = string
-//    }
 }

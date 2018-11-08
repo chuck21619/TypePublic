@@ -37,19 +37,29 @@ class TextGroupToken: NSObject, NSCoding {
     }
     
     // MARK: - NSCoding
+    let labelCodingKey = "labelCodingKey"
+    let rangeCodingKey = "rangeCodingKey"
+    let groupingRuleCodingKey = "groupingRuleCodingKey"
+    let tokenAmountCodingKey = "tokenAmountCodingKey"
+    
     func encode(with aCoder: NSCoder) {
         
-        aCoder.encode(label, forKey: "label")
-        aCoder.encode(range, forKey: "range")
-        aCoder.encode(groupingRule, forKey: "groupingRule")
-        aCoder.encode(tokenAmount, forKey: "tokenAmount")
+        aCoder.encode(label, forKey: labelCodingKey)
+        aCoder.encode(range, forKey: rangeCodingKey)
+        aCoder.encode(groupingRule, forKey: groupingRuleCodingKey)
+        aCoder.encode(tokenAmount, forKey: tokenAmountCodingKey)
     }
     
     required init?(coder aDecoder: NSCoder) {
         
-        self.label = aDecoder.decodeObject(forKey: "label") as! String
-        self.range = aDecoder.decodeObject(forKey: "range") as! NSRange
-        self.groupingRule = aDecoder.decodeObject(forKey: "groupingRule") as! TextGroupingRule
-        self.tokenAmount = aDecoder.decodeInteger(forKey: "tokenAmount")
+        self.label = aDecoder.decodeObject(forKey: labelCodingKey) as? String ?? ""
+        
+        let rangeNotFound = NSRange(location: NSNotFound, length: NSNotFound)
+        self.range = aDecoder.decodeObject(forKey: rangeCodingKey) as? NSRange ?? rangeNotFound
+        
+        let emptyRule = TextGroupingRule(regexPattern: .regexMatchNothing, labelGroupTitle: "error")
+        self.groupingRule = aDecoder.decodeObject(forKey: groupingRuleCodingKey) as? TextGroupingRule ?? emptyRule
+        
+        self.tokenAmount = aDecoder.decodeInteger(forKey: tokenAmountCodingKey)
     }
 }

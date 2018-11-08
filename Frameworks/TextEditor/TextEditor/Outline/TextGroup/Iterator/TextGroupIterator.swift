@@ -60,17 +60,21 @@ class TextGroupIterator: NSObject, NSCoding {
     }
     
     // MARK: - NSCoding
+    let positionCodingKey = "positionCodingKey"
+    let textGroupsCodingKey = "textGroupsCodingKey"
+    let stackCodingKey = "stackCodingKey"
+    
     func encode(with aCoder: NSCoder) {
         
-        aCoder.encode(position, forKey: "position")
-        aCoder.encode(textGroups, forKey: "textGroups")
-        aCoder.encode(stack, forKey: "stack")
+        aCoder.encode(position, forKey: positionCodingKey)
+        aCoder.encode(textGroups, forKey: textGroupsCodingKey)
+        aCoder.encode(stack, forKey: stackCodingKey)
     }
     
     required init?(coder aDecoder: NSCoder) {
         
-        self.position = aDecoder.decodeInteger(forKey: "position")
-        self.textGroups = aDecoder.decodeObject(forKey: "textGroups") as! [TextGroup]
-        self.stack = aDecoder.decodeObject(forKey: "stack") as! [TextGroupIterator]
+        self.position = aDecoder.decodeInteger(forKey: positionCodingKey)
+        self.textGroups = aDecoder.decodeObject(forKey: textGroupsCodingKey) as? [TextGroup] ?? []
+        self.stack = aDecoder.decodeObject(forKey: stackCodingKey) as? [TextGroupIterator] ?? []
     }
 }

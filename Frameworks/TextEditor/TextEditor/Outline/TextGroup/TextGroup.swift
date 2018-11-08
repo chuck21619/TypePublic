@@ -146,21 +146,27 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     }
     
     // MARK: - NSCoding
+    let titleCodingKey = "title"
+    let iteratorCodingKey = "iterator"
+    let tokenCodingKey = "tokenCodingKey"
+    let parentTextGroupCodingKey = "parentTextGroupCodingKey"
+    let textGroupsCodingKey = "textGroupsCodingKey"
+    
     func encode(with aCoder: NSCoder) {
 
-        aCoder.encode(title, forKey: "title")
-        aCoder.encode(iterator, forKey: "iterator")
-        aCoder.encode(token, forKey: "token")
-        aCoder.encode(parentTextGroup, forKey: "parentTextGroup")
-        aCoder.encode(textGroups, forKey: "textGroups")
+        aCoder.encode(title, forKey: titleCodingKey)
+        aCoder.encode(iterator, forKey: iteratorCodingKey)
+        aCoder.encode(token, forKey: tokenCodingKey)
+        aCoder.encode(parentTextGroup, forKey: parentTextGroupCodingKey)
+        aCoder.encode(textGroups, forKey: textGroupsCodingKey)
     }
 
     required init?(coder aDecoder: NSCoder) {
 
-        self.title = aDecoder.decodeObject(forKey: "title") as! String
-        self.iterator = aDecoder.decodeObject(forKey: "iterator") as? TextGroupIterator
-        self.token = aDecoder.decodeObject(forKey: "token") as? TextGroupToken
-        self.parentTextGroup = aDecoder.decodeObject(forKey: "parentTextGroup") as? TextGroup
-        self.textGroups = aDecoder.decodeObject(forKey: "textGroups") as! [TextGroup]
+        self.title = aDecoder.decodeObject(forKey: titleCodingKey) as? String ?? ""
+        self.iterator = aDecoder.decodeObject(forKey: iteratorCodingKey) as? TextGroupIterator
+        self.token = aDecoder.decodeObject(forKey: tokenCodingKey) as? TextGroupToken
+        self.parentTextGroup = aDecoder.decodeObject(forKey: parentTextGroupCodingKey) as? TextGroup
+        self.textGroups = aDecoder.decodeObject(forKey: textGroupsCodingKey) as? [TextGroup] ?? []
     }
 }

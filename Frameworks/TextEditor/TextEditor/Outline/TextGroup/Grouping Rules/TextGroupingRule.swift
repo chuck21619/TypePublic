@@ -41,17 +41,21 @@ class TextGroupingRule: NSObject, NSCoding {
     }
     
     // MARK: - NSCoding
+    let regexPatternCodingKey = "regexPatternCodingKey"
+    let labelGroupTitleCodingKey = "labelGroupTitleCodingKey"
+    let indeterminateGroupingRulePropertiesCodingKey = "indeterminateGroupingRulePropertiesCodingKey"
+    
     func encode(with aCoder: NSCoder) {
         
-        aCoder.encode(regexPattern, forKey: "regexPattern")
-        aCoder.encode(labelGroupTitle, forKey: "labelGroupTitle")
-        aCoder.encode(indeterminateGroupingRuleProperties, forKey: "indeterminateGroupingRuleProperties")
+        aCoder.encode(regexPattern, forKey: regexPatternCodingKey)
+        aCoder.encode(labelGroupTitle, forKey: labelGroupTitleCodingKey)
+        aCoder.encode(indeterminateGroupingRuleProperties, forKey: indeterminateGroupingRulePropertiesCodingKey)
     }
     
     required init?(coder aDecoder: NSCoder) {
         
-        self.regexPattern = aDecoder.decodeObject(forKey: "regexPattern") as! String
-        self.labelGroupTitle = aDecoder.decodeObject(forKey: "labelGroupTitle") as! String
-        self.indeterminateGroupingRuleProperties = aDecoder.decodeObject(forKey: "indeterminateGroupingRuleProperties") as? IndeterminateGroupingRuleProperties
+        self.regexPattern = aDecoder.decodeObject(forKey: regexPatternCodingKey) as? String ?? .regexMatchNothing
+        self.labelGroupTitle = aDecoder.decodeObject(forKey: labelGroupTitleCodingKey) as? String ?? ""
+        self.indeterminateGroupingRuleProperties = aDecoder.decodeObject(forKey: indeterminateGroupingRulePropertiesCodingKey) as? IndeterminateGroupingRuleProperties
     }
 }
