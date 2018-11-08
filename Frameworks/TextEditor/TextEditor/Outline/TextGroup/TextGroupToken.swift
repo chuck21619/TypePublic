@@ -9,10 +9,6 @@
 import Foundation
 
 class TextGroupToken: NSObject, NSCoding {
-    static func == (lhs: TextGroupToken, rhs: TextGroupToken) -> Bool {
-        return lhs.label == rhs.label && lhs.range == rhs.range && lhs.groupingRule == rhs.groupingRule && lhs.tokenAmount == rhs.tokenAmount
-    }
-    
     
     let label: String
     
@@ -33,6 +29,11 @@ class TextGroupToken: NSObject, NSCoding {
         self.range = range
         self.groupingRule = groupingRule
         self.tokenAmount = tokenAmount
+    }
+    
+    // MARK: - Equatable
+    static func == (lhs: TextGroupToken, rhs: TextGroupToken) -> Bool {
+        return lhs.label == rhs.label && lhs.range == rhs.range && lhs.groupingRule == rhs.groupingRule && lhs.tokenAmount == rhs.tokenAmount
     }
     
     // MARK: - NSCoding

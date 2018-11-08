@@ -9,11 +9,6 @@
 import Foundation
 
 class IndeterminateGroupingRuleProperties: NSObject, NSCoding {
-    static func == (lhs: IndeterminateGroupingRuleProperties, rhs: IndeterminateGroupingRuleProperties) -> Bool {
-        
-        return lhs.ascending == rhs.ascending && lhs.indeterminateGroupLabel == rhs.indeterminateGroupLabel
-    }
-    
     
     // used to determine order when grouping rule contains indeterminate regex matches
     // example:
@@ -33,6 +28,12 @@ class IndeterminateGroupingRuleProperties: NSObject, NSCoding {
         
         self.ascending = ascending
         self.indeterminateGroupLabel = indeterminateGroupLabel
+    }
+    
+    // MARK: - Equatable
+    static func == (lhs: IndeterminateGroupingRuleProperties, rhs: IndeterminateGroupingRuleProperties) -> Bool {
+        
+        return lhs.ascending == rhs.ascending && lhs.indeterminateGroupLabel == rhs.indeterminateGroupLabel
     }
     
     // MARK: - NSCoding

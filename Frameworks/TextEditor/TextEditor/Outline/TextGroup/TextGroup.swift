@@ -10,40 +10,6 @@ import Foundation
 
 class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     
-    //This method is considered optional because, if readableTypes(for:) returns just a single type, and that type uses the asKeyedArchive reading option, then instances are initialized using init(coder:) instead of this method.
-    required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
-        
-        return nil
-    }
-    
-    static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-        
-        // TODO: following example. not sure what this means
-        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
-    }
-    
-    func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-        
-        // TODO: following example. not sure what this means
-        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
-    }
-    
-    func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-        
-        // TODO: following example. not sure what this means
-        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
-        if type.rawValue != "type.textGroup" {
-            
-            return nil
-        }
-        
-        return NSKeyedArchiver.archivedData(withRootObject:self)
-    }
-    
-    
-    
     // MARK: - Properties
     let title: String
     private var iterator: TextGroupIterator? = nil
@@ -149,6 +115,39 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
             lhs.token == rhs.token
         
         return isEqual
+    }
+    
+    // MARK: NSPasteboardWriting/NSPasteboardReading
+    //This method is considered optional because, if readableTypes(for:) returns just a single type, and that type uses the asKeyedArchive reading option, then instances are initialized using init(coder:) instead of this method.
+    required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
+        
+        return nil
+    }
+    
+    static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+        
+        // TODO: following example. not sure what this means
+        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
+        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
+    }
+    
+    func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+        
+        // TODO: following example. not sure what this means
+        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
+        return [NSPasteboard.PasteboardType(rawValue: "type.textGroup")]
+    }
+    
+    func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
+        
+        // TODO: following example. not sure what this means
+        // stackoverflow.com/questions/28656562/storing-and-retrieving-a-custom-object-from-nspasteboard
+        if type.rawValue != "type.textGroup" {
+            
+            return nil
+        }
+        
+        return NSKeyedArchiver.archivedData(withRootObject:self)
     }
     
     // MARK: - NSCoding
