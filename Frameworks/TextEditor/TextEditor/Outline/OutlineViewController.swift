@@ -12,6 +12,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     // MARK: - Properties
     var model: OutlineModel? = nil
+    var delegate: OutlineViewControllerDelegate? = nil
     private var parentTextGroup = TextGroup(title: "parent")
     private let columnReuseIdentifier = NSUserInterfaceItemIdentifier(rawValue: "columnReuseIdentifier")
     
@@ -28,12 +29,13 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     // MARK: - Methods
     // MARK: - Constructors
-    public static func createInstance() -> OutlineViewController? {
+    public static func createInstance(delegate: OutlineViewControllerDelegate) -> OutlineViewController? {
         
         let bundle = Bundle(for: OutlineViewController.self)
         let storyboardName = String(describing: OutlineViewController.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? OutlineViewController
+        viewController?.delegate = delegate
         
         return viewController
     }
@@ -162,6 +164,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
         
         //remove the text group from its current location
+        //the order of these two calls matters
+        delegate?.removeTextGroup(draggingGroup)
         draggingGroup.parentTextGroup?.textGroups.remove(at: draggedFromIndex)
         
         //insert the text group into its new location
@@ -172,6 +176,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
 
         targetParent.textGroups.insert(draggingGroup, at: insertIndex)
+        delegate?.insertTextGroup(draggingGroup, in: targetParent, at: insertIndex)
         
         //update the outline
         updateOutline(textGroups: parentTextGroup.textGroups)

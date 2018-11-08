@@ -12,7 +12,7 @@ import Foundation
 //NSTrackingActiveAlways
 //self.view.addtrackingarea()
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, OutlineViewControllerDelegate {
     
     // MARK: - Properties
     // TODO: make these non-optional or non-forced-optional?
@@ -60,7 +60,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         syntaxHighlighter = SyntaxHighligher(syntaxParser: syntaxParser)
         syntaxHighlighter?.delegate = self
         
-        outlineViewController = OutlineViewController.createInstance()
+        outlineViewController = OutlineViewController.createInstance(delegate: self)
         outlineModel = OutlineModel(language: language, delegate: outlineViewController)
         outlineViewController?.model = outlineModel
     }
@@ -202,5 +202,17 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         outlineModel?.outline(textStorage: textStorage)
+    }
+    
+    // MARK: - OutlineViewControllerDelegate
+    func removeTextGroup(_ textGroup: TextGroup) {
+        
+        let range = outlineModel?.range(of: textGroup)
+        print("range of \(textGroup.title): \(String(describing: range))")
+    }
+    
+    func insertTextGroup(_ textGroup: TextGroup, in: TextGroup, at: Int) {
+        
+        //TODO: implement
     }
 }
