@@ -21,9 +21,6 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     @IBOutlet weak var outlineView: NSOutlineView!
     
-    // just for testing
-    @IBOutlet var testingTextView: NSTextView!
-    
     var allowInteraction: Bool {
         
         return !(model?.processing ?? true)
