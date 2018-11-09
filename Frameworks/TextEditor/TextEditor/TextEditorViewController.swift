@@ -12,7 +12,7 @@ import Foundation
 //NSTrackingActiveAlways
 //self.view.addtrackingarea()
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, OutlineViewControllerDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, OutlineViewControllerDelegate {    
     
     // MARK: - Properties
     // TODO: make these non-optional or non-forced-optional?
@@ -74,7 +74,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         if let outlineView = outlineViewController?.view {
             
-            showOutline(false, animated: false)
+//            showOutline(false, animated: false)
             self.view.addSubview(outlineView)
         }
         
@@ -200,19 +200,69 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         outlineModel?.outline(textStorage: textStorage)
     }
     
     // MARK: - OutlineViewControllerDelegate
+    // TODO: these operations should not be done by the viewController?
+    // maybe the delegate of the outlineVC could be something else?
     func removeTextGroup(_ textGroup: TextGroup) {
         
-        let range = outlineModel?.range(of: textGroup)
-        print("range of \(textGroup.title): \(String(describing: range))")
+        guard let range = outlineModel?.range(of: textGroup) else {
+            return
+        }
+        textStorage.replaceCharacters(in: range, with: "")
     }
     
-    func insertTextGroup(_ textGroup: TextGroup, in: TextGroup, at: Int) {
+    func attributedString(for textGroup: TextGroup) -> NSAttributedString? {
         
-        //TODO: implement
+        guard let range = outlineModel?.range(of: textGroup) else {
+            return nil
+        }
+        
+        let attributedString = textStorage.attributedSubstring(from: range)
+        
+        return attributedString
+    }
+    
+    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int) {
+//        return
+        //TODO: cleanup
+        if index == 0 {
+            
+            let belowTextGroup = textGroup.textGroups[index]
+            
+            guard let rangeOfBelowTextGroup = outlineModel?.range(of: belowTextGroup) else {
+                return
+            }
+            
+            let locationToInsert = rangeOfBelowTextGroup.location
+            
+            textStorage.insert(attributedString, at: locationToInsert)
+        }
+        else {
+            
+            let aboveTextGroup = textGroup.textGroups[index-1]
+            
+            guard let rangeOfAboveTextGroup = outlineModel?.range(of: aboveTextGroup) else {
+                return
+            }
+            
+            let locationToInsert = rangeOfAboveTextGroup.location + rangeOfAboveTextGroup.length
+            
+            textStorage.insert(attributedString, at: locationToInsert)
+            
+            let rangeToInvalidate = NSRange(location: locationToInsert, length: attributedString.length)
+            self.invalidateRanges(invalidRanges: [rangeToInvalidate])
+        }
+    }
+    
+    func beginUpdates() {
+        self.textStorage.beginEditing()
+    }
+    
+    func endUpdates() {
+        self.textStorage.endEditing()
     }
 }

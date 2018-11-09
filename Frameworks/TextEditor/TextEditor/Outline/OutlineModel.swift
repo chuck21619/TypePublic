@@ -96,6 +96,8 @@ class OutlineModel {
         DispatchQueue.global(qos: .background).async(execute: newWorkItem)
     }
     
+    // TODO: Clean up
+    // TODO: Clean up
     func range(of textGroup: TextGroup) -> NSRange? {
         
         guard let parent = textGroup.parentTextGroup else {

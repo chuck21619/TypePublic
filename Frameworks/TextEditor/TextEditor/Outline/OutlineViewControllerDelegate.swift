@@ -10,6 +10,11 @@ import Foundation
 
 protocol OutlineViewControllerDelegate {
     
+    func attributedString(for textGroup: TextGroup) -> NSAttributedString?
+    
     func removeTextGroup(_ textGroup: TextGroup)
-    func insertTextGroup(_ textGroup: TextGroup, in: TextGroup, at: Int)
+    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int)
+    
+    func beginUpdates()
+    func endUpdates()
 }

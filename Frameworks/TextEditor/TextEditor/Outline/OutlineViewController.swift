@@ -73,6 +73,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     // MARK: - OutlineModelDelegate
     func didUpdate(textGroups: [TextGroup]?) {
         
+        print("textGroups updated")
         updateOutline(textGroups: textGroups)
     }
     
@@ -156,6 +157,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
+        // TODO: clean up
         // if item is nil, then target is root
         let targetParent = item as? TextGroup ?? parentTextGroup
         
@@ -163,23 +165,62 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             return false
         }
         
-        //remove the text group from its current location
-        //the order of these two calls matters
-        delegate?.removeTextGroup(draggingGroup)
-        draggingGroup.parentTextGroup?.textGroups.remove(at: draggedFromIndex)
-        
-        //insert the text group into its new location
-        var insertIndex = index
-        if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
+        if index == 0 {
             
-            insertIndex -= 1
+            var insertIndex = index
+            if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
+                
+                insertIndex -= 1
+            }
+            
+            let belowTextGroup = targetParent.textGroups[index]
+            
+            guard let textGroupString = delegate?.attributedString(for: draggingGroup) else {
+                return false
+            }
+            
+            delegate?.beginUpdates()
+            if draggingGroup.token!.range.location < belowTextGroup.token!.range.location {
+                
+                delegate?.insertAttributedString(textGroupString, in: targetParent, at: index)
+                delegate?.removeTextGroup(draggingGroup)
+            }
+            else {
+                
+                
+                delegate?.removeTextGroup(draggingGroup)
+                delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex)
+            }
+            delegate?.endUpdates()
         }
-
-        targetParent.textGroups.insert(draggingGroup, at: insertIndex)
-        delegate?.insertTextGroup(draggingGroup, in: targetParent, at: insertIndex)
-        
-        //update the outline
-        updateOutline(textGroups: parentTextGroup.textGroups)
+        else {
+            
+            var insertIndex = index
+            if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
+                
+                insertIndex -= 1
+            }
+            
+            let aboveTextGroup = targetParent.textGroups[index-1]
+            
+            guard let textGroupString = delegate?.attributedString(for: draggingGroup) else {
+                return false
+            }
+            
+            delegate?.beginUpdates()
+            if draggingGroup.token!.range.location < aboveTextGroup.token!.range.location {
+                
+                delegate?.insertAttributedString(textGroupString, in: targetParent, at: index)
+                delegate?.removeTextGroup(draggingGroup)
+            }
+            else {
+                
+                
+                delegate?.removeTextGroup(draggingGroup)
+                delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex)
+            }
+            delegate?.endUpdates()
+        }
         
         return true
     }
