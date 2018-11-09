@@ -132,6 +132,7 @@ class Language {
         return index(of: token)
     }
     
+    // TODO: change these into equatable. i think i would have to add the language as a property on the token object
     func priority(of firstTextGroupToken: TextGroupToken, isHigherThan secondTextGroupToken: TextGroupToken) -> Bool {
         
         guard let firstRuleIndex = index(of: firstTextGroupToken.groupingRule), let secondRuleIndex = index(of: secondTextGroupToken.groupingRule) else {
@@ -158,5 +159,15 @@ class Language {
             // a lower index means higher priority
             return firstRuleIndex < secondRuleIndex
         }
+    }
+    
+    func priority(of firstTextGroupToken: TextGroupToken, isEqualTo secondTextGroupToken: TextGroupToken) -> Bool {
+        
+        guard let firstRuleIndex = index(of: firstTextGroupToken.groupingRule), let secondRuleIndex = index(of: secondTextGroupToken.groupingRule) else {
+            return false
+        }
+        
+        // a lower index means higher priority
+        return firstRuleIndex == secondRuleIndex
     }
 }

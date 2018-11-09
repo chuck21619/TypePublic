@@ -126,7 +126,7 @@ class OutlineModel {
             return nil
         }
         
-        var firstTextGroupWithEqualPriority: TextGroup? = nil
+        var firstTextGroupWithEqualOrHigherPriority: TextGroup? = nil
         for i in startIndex..<textGroups.count {
             
             let textGroup = textGroups[i]
@@ -134,15 +134,17 @@ class OutlineModel {
                 continue
             }
             
-            if language.priority(of: iteratedToken, isHigherThan: textGroupToken) {
-                firstTextGroupWithEqualPriority = textGroup
+            if language.priority(of: iteratedToken, isHigherThan: textGroupToken) ||
+               language.priority(of: iteratedToken, isEqualTo: textGroupToken) {
+                
+                firstTextGroupWithEqualOrHigherPriority = textGroup
                 break
             }
         }
         
         let endOfTextGroup: Int
         
-        if let locationOFSTG = firstTextGroupWithEqualPriority?.token?.range.location {
+        if let locationOFSTG = firstTextGroupWithEqualOrHigherPriority?.token?.range.location {
             
             endOfTextGroup = locationOFSTG
         }
