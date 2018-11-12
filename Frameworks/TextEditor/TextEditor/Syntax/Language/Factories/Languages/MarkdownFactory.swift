@@ -132,12 +132,11 @@ class MarkdownFactory {
         
         let labelGroupTitle = "labelGroupTitle"
         let indeterminateGroupLabel = "indeterminateGroupLabel"
-        
-        let testRange = "testRange"
+        let trimmedGroupTitle = "trimmedGroupTitle"
         
         let indeterminateGroupingRuleProperties = IndeterminateGroupingRuleProperties(ascending: true, indeterminateGroupLabel: indeterminateGroupLabel)
         
-        let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*(?<\(testRange)>(?<\(indeterminateGroupLabel)>#+)(?![^\\s])\\s+(?<\(labelGroupTitle)>.+)(?=\\n|$))", labelGroupTitle: labelGroupTitle, indeterminateGroupingRuleProperties: indeterminateGroupingRuleProperties, testRange: testRange)
+        let rule1 = TextGroupingRule(regexPattern: "(^|\\n)\\s*(?<\(trimmedGroupTitle)>(?<\(indeterminateGroupLabel)>#+)(?![^\\s])\\s+(?<\(labelGroupTitle)>.+)(?=\\n|$))", labelGroupTitle: labelGroupTitle, indeterminateGroupingRuleProperties: indeterminateGroupingRuleProperties, trimmedGroupTitle: trimmedGroupTitle)
         
         return [rule1]//, rule2, rule3]
     }

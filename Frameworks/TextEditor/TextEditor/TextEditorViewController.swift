@@ -232,16 +232,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         if lastCharacter.string != "\n" {
             
             // adds a newline character
-                    var mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-            
-                    let insertString = NSAttributedString(string: "\n")
-                    mutableAttributedString.append(insertString)
-            
-                    return mutableAttributedString
+            let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+    
+            let insertString = NSAttributedString(string: "\n")
+            mutableAttributedString.append(insertString)
+    
+            return mutableAttributedString
         }
         
         return attributedString
-        
     }
     
     func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int) {
