@@ -15,6 +15,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     var delegate: OutlineViewControllerDelegate? = nil
     private var parentTextGroup = TextGroup(title: "parent")
     private let columnReuseIdentifier = NSUserInterfaceItemIdentifier(rawValue: "columnReuseIdentifier")
+    public var relaxReorderRules = false
     
     // MARK: drag to reorder
     private var draggedFromIndex: Int = -1
@@ -148,6 +149,20 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         // no operation should occur when dropping to same location
         if targetParent == draggingGroup.parentTextGroup {
             guard index != draggedFromIndex, index != draggedFromIndex+1 else {
+                return []
+            }
+        }
+        
+        //TODO: Add option in settings?
+        if relaxReorderRules == false,
+           let language = model?.language,
+           let targetParentToken = targetParent.token,
+           let draggingGroupToken = draggingGroup.token {
+            
+            let targetParentHasHigherPriority = language.priority(of: targetParentToken, isHigherThan: draggingGroupToken)
+            
+            guard targetParentHasHigherPriority else {
+                
                 return []
             }
         }

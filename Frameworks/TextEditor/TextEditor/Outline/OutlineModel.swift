@@ -13,7 +13,7 @@ class OutlineModel {
     // MARK: - Properties
     var delegate: OutlineModelDelegate?
     var processing: Bool = false // TODO: implement - used by OutlineViewController.allowInteraction
-    private let language: Language
+    let language: Language
     private var string: String = ""
     private var textGroups: [TextGroup] = []
     private var workItem: DispatchWorkItem? = nil
