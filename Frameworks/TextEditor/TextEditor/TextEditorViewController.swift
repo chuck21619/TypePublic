@@ -212,6 +212,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         guard let range = outlineModel?.range(of: textGroup) else {
             return
         }
+        
         textStorage.replaceCharacters(in: range, with: "")
     }
     
@@ -227,7 +228,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int) {
-//        return
+        
         //TODO: cleanup
         if index == 0 {
             

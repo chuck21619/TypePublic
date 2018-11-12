@@ -74,7 +74,6 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     // MARK: - OutlineModelDelegate
     func didUpdate(textGroups: [TextGroup]?) {
         
-        print("textGroups updated")
         updateOutline(textGroups: textGroups)
     }
     

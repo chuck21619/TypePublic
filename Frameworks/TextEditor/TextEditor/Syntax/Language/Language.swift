@@ -85,7 +85,9 @@ class Language {
                     tokenAmount = indeterminateString.count
                 }
                 
-                let token = TextGroupToken(label: label, range: match.range, groupingRule: groupingRule, tokenAmount: tokenAmount)
+                let testRange = match.range(withName: groupingRule.testRange)
+                
+                let token = TextGroupToken(label: label, range: testRange, groupingRule: groupingRule, tokenAmount: tokenAmount, testRange: testRange)
                 tokens.append(token)
                 
                 guard workItem.isCancelled == false else {

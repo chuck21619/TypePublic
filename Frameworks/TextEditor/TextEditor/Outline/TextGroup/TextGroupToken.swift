@@ -23,12 +23,15 @@ class TextGroupToken: NSObject, NSCoding {
     // see TextGroupingRule.ascending for more details
     let tokenAmount: Int
     
-    init(label: String, range: NSRange, groupingRule: TextGroupingRule, tokenAmount: Int = 0) {
+    let testRange: NSRange
+    
+    init(label: String, range: NSRange, groupingRule: TextGroupingRule, tokenAmount: Int = 0, testRange: NSRange) {
         
         self.label = label
         self.range = range
         self.groupingRule = groupingRule
         self.tokenAmount = tokenAmount
+        self.testRange = testRange
     }
     
     // MARK: - Equatable
@@ -41,6 +44,7 @@ class TextGroupToken: NSObject, NSCoding {
     let rangeCodingKey = "rangeCodingKey"
     let groupingRuleCodingKey = "groupingRuleCodingKey"
     let tokenAmountCodingKey = "tokenAmountCodingKey"
+    let testRangeCodingKey = "testRangeCodingKey"
     
     func encode(with aCoder: NSCoder) {
         
@@ -48,6 +52,7 @@ class TextGroupToken: NSObject, NSCoding {
         aCoder.encode(range, forKey: rangeCodingKey)
         aCoder.encode(groupingRule, forKey: groupingRuleCodingKey)
         aCoder.encode(tokenAmount, forKey: tokenAmountCodingKey)
+        aCoder.encode(testRange, forKey: testRangeCodingKey)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,9 +62,11 @@ class TextGroupToken: NSObject, NSCoding {
         let rangeNotFound = NSRange(location: NSNotFound, length: NSNotFound)
         self.range = aDecoder.decodeObject(forKey: rangeCodingKey) as? NSRange ?? rangeNotFound
         
-        let emptyRule = TextGroupingRule(regexPattern: .regexMatchNothing, labelGroupTitle: "error")
+        let emptyRule = TextGroupingRule(regexPattern: .regexMatchNothing, labelGroupTitle: "error", testRange: .regexMatchNothing)
         self.groupingRule = aDecoder.decodeObject(forKey: groupingRuleCodingKey) as? TextGroupingRule ?? emptyRule
         
         self.tokenAmount = aDecoder.decodeInteger(forKey: tokenAmountCodingKey)
+        
+        self.testRange = aDecoder.decodeObject(forKey: testRangeCodingKey) as? NSRange ?? rangeNotFound
     }
 }
