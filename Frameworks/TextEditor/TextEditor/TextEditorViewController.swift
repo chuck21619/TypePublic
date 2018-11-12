@@ -218,13 +218,30 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     func attributedString(for textGroup: TextGroup) -> NSAttributedString? {
         
+        //TODO: Clean up
         guard let range = outlineModel?.range(of: textGroup) else {
             return nil
         }
         
         let attributedString = textStorage.attributedSubstring(from: range)
         
+        let rangeOfLastCharacter = NSRange(location: attributedString.length-1, length: 1)
+        
+        let lastCharacter = attributedString.attributedSubstring(from: rangeOfLastCharacter)
+        
+        if lastCharacter.string != "\n" {
+            
+            // adds a newline character
+                    var mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+            
+                    let insertString = NSAttributedString(string: "\n")
+                    mutableAttributedString.append(insertString)
+            
+                    return mutableAttributedString
+        }
+        
         return attributedString
+        
     }
     
     func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int) {
