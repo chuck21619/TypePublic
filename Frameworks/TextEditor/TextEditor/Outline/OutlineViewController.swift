@@ -20,6 +20,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     // MARK: drag to reorder
     private var draggedFromIndex: Int = -1
     private var draggingGroup: TextGroup? = nil
+    var visibleRect: NSRect? // save scroll position after reloading outline
     
     @IBOutlet weak var outlineView: NSOutlineView!
     
@@ -68,6 +69,11 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             
             self.outlineView.reloadData()
             self.outlineView.expandItem(nil, expandChildren: true)
+            
+            if let visibleRect = self.visibleRect {
+                
+                self.outlineView.scrollToVisible(visibleRect)
+            }
         }
     }
     
@@ -197,6 +203,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         guard let textGroupString = delegate?.attributedString(for: draggingGroup) else {
             return false
         }
+        
+        visibleRect = outlineView.visibleRect
         
         delegate?.beginUpdates()
         if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
