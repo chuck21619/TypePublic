@@ -216,9 +216,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         textStorage.replaceCharacters(in: range, with: "")
     }
     
+    // MARK: - etc.
     func attributedString(for textGroup: TextGroup) -> NSAttributedString? {
         
-        //TODO: Clean up
         guard let range = outlineModel?.range(of: textGroup) else {
             return nil
         }
@@ -245,34 +245,26 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int) {
         
-        //TODO: cleanup
+        let textGroupInserter: TextGroupInserter
+        
         if index == 0 {
             
-            let belowTextGroup = textGroup.textGroups[index]
-            
-            guard let rangeOfBelowTextGroup = outlineModel?.range(of: belowTextGroup) else {
-                return
-            }
-            
-            let locationToInsert = rangeOfBelowTextGroup.location
-            
-            textStorage.insert(attributedString, at: locationToInsert)
+            textGroupInserter = ZeroIndexTextGroupInserter()
         }
         else {
             
-            let aboveTextGroup = textGroup.textGroups[index-1]
-            
-            guard let rangeOfAboveTextGroup = outlineModel?.range(of: aboveTextGroup) else {
-                return
-            }
-            
-            let locationToInsert = rangeOfAboveTextGroup.location + rangeOfAboveTextGroup.length
-            
-            textStorage.insert(attributedString, at: locationToInsert)
-            
-            let rangeToInvalidate = NSRange(location: locationToInsert, length: attributedString.length)
-            self.invalidateRanges(invalidRanges: [rangeToInvalidate])
+            textGroupInserter = PositiveIndexTextGroupInserter()
         }
+        
+        let adjacentTextGroup = textGroupInserter.adjacentTextGroup(textGroups: textGroup.textGroups, index: index)
+        
+        guard let rangeOfAdjacentTextGroup = outlineModel?.range(of: adjacentTextGroup) else {
+            return
+        }
+        
+        let locationToInsert = textGroupInserter.locationToInsert(adjacentTextGroupRange: rangeOfAdjacentTextGroup)
+        
+        textStorage.insert(attributedString, at: locationToInsert)
     }
     
     func beginUpdates() {

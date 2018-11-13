@@ -171,7 +171,6 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
-        // TODO: clean up
         // if item is nil, then target is root
         let targetParent = item as? TextGroup ?? parentTextGroup
         
@@ -179,62 +178,38 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             return false
         }
         
+        var insertIndex = index
+        if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
+            
+            insertIndex -= 1
+        }
+        
+        let adjacentTextGroup: TextGroup
         if index == 0 {
             
-            var insertIndex = index
-            if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
-                
-                insertIndex -= 1
-            }
-            
-            let belowTextGroup = targetParent.textGroups[index]
-            
-            guard let textGroupString = delegate?.attributedString(for: draggingGroup) else {
-                return false
-            }
-            
-            delegate?.beginUpdates()
-            if draggingGroup.token!.range.location < belowTextGroup.token!.range.location {
-                
-                delegate?.insertAttributedString(textGroupString, in: targetParent, at: index)
-                delegate?.removeTextGroup(draggingGroup)
-            }
-            else {
-                
-                
-                delegate?.removeTextGroup(draggingGroup)
-                delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex)
-            }
-            delegate?.endUpdates()
+            adjacentTextGroup = targetParent.textGroups[index]
         }
         else {
             
-            var insertIndex = index
-            if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
-                
-                insertIndex -= 1
-            }
-            
-            let aboveTextGroup = targetParent.textGroups[index-1]
-            
-            guard let textGroupString = delegate?.attributedString(for: draggingGroup) else {
-                return false
-            }
-            
-            delegate?.beginUpdates()
-            if draggingGroup.token!.range.location < aboveTextGroup.token!.range.location {
-                
-                delegate?.insertAttributedString(textGroupString, in: targetParent, at: index)
-                delegate?.removeTextGroup(draggingGroup)
-            }
-            else {
-                
-                
-                delegate?.removeTextGroup(draggingGroup)
-                delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex)
-            }
-            delegate?.endUpdates()
+            adjacentTextGroup = targetParent.textGroups[index-1]
         }
+        
+        guard let textGroupString = delegate?.attributedString(for: draggingGroup) else {
+            return false
+        }
+        
+        delegate?.beginUpdates()
+        if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
+            
+            delegate?.insertAttributedString(textGroupString, in: targetParent, at: index)
+            delegate?.removeTextGroup(draggingGroup)
+        }
+        else {
+            
+            delegate?.removeTextGroup(draggingGroup)
+            delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex)
+        }
+        delegate?.endUpdates()
         
         return true
     }
@@ -256,5 +231,10 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
 
         return false
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet {
+        
+        return []
     }
 }

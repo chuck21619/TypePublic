@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A30433A3219B5FC900FEFC07 /* TextGroupInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30433A2219B5FC900FEFC07 /* TextGroupInserter.swift */; };
+		A30433A8219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30433A7219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift */; };
+		A30433AA219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30433A9219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift */; };
 		A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3069D602188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
 		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
@@ -66,6 +69,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A30433A2219B5FC900FEFC07 /* TextGroupInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupInserter.swift; sourceTree = "<group>"; };
+		A30433A7219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroIndexTextGroupInserter.swift; sourceTree = "<group>"; };
+		A30433A9219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveIndexTextGroupInserter.swift; sourceTree = "<group>"; };
 		A3069D602188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndeterminateGroupingRuleProperties.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
@@ -136,6 +142,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A30433A4219B5FD500FEFC07 /* TextGroupInserter */ = {
+			isa = PBXGroup;
+			children = (
+				A30433A5219B5FE100FEFC07 /* Interface */,
+				A30433A6219B5FE900FEFC07 /* Implementation */,
+			);
+			path = TextGroupInserter;
+			sourceTree = "<group>";
+		};
+		A30433A5219B5FE100FEFC07 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				A30433A2219B5FC900FEFC07 /* TextGroupInserter.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		A30433A6219B5FE900FEFC07 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				A30433A7219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift */,
+				A30433A9219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
+		A30433AB219B609900FEFC07 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
+				A30433A4219B5FD500FEFC07 /* TextGroupInserter */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		A3069D622188FE2800DD24F6 /* Grouping Rules */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,7 +206,6 @@
 				A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */,
 				A3848A9D215B53B50045C5AB /* SyntaxHighlighterDelegate.swift */,
 				A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */,
-				A36E72BD2106713A00D8BDA1 /* Language */,
 				A3F0F4692134817600FA0A74 /* Keyword */,
 			);
 			path = Syntax;
@@ -257,9 +297,10 @@
 			children = (
 				A3C316B120FFF7BA0028D466 /* TextEditor.h */,
 				A3C316B220FFF7BA0028D466 /* Info.plist */,
-				A3C316DC210000610028D466 /* TextEditorViewController.swift */,
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
+				A36E72BD2106713A00D8BDA1 /* Language */,
+				A30433AB219B609900FEFC07 /* ViewController */,
 				A3B7867A218A224900FB0005 /* View */,
 				A3381E0A213F1B9D001C638A /* Helper Extensions */,
 				A3DF51E02139CB5200A8A1AF /* Line Numbers */,
@@ -479,6 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */,
+				A30433A3219B5FC900FEFC07 /* TextGroupInserter.swift in Sources */,
 				A36962EB217A624C00D52175 /* TextGroupToken.swift in Sources */,
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
@@ -489,6 +531,7 @@
 				A3BA2EB52194C8FC00054D98 /* OutlineViewControllerDelegate.swift in Sources */,
 				A36B119821519F2B0086AD83 /* NSRange+IsAdjacent.swift in Sources */,
 				A3848A9E215B53B50045C5AB /* SyntaxHighlighterDelegate.swift in Sources */,
+				A30433AA219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift in Sources */,
 				A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */,
 				A36B119621519F000086AD83 /* NSRange+Positive.swift in Sources */,
 				A3951DB72144D8470072095F /* String+MaxNSRange.swift in Sources */,
@@ -511,6 +554,7 @@
 				A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */,
 				A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
+				A30433A8219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift in Sources */,
 				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,
 				A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */,
 				A3B78676218A1AA900FB0005 /* OutlineModelDelegate.swift in Sources */,

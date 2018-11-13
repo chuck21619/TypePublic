@@ -96,8 +96,6 @@ class OutlineModel {
         DispatchQueue.global(qos: .background).async(execute: newWorkItem)
     }
     
-    // TODO: Clean up
-    // TODO: Clean up
     func range(of textGroup: TextGroup) -> NSRange? {
         
         guard let parent = textGroup.parentTextGroup else {
@@ -106,21 +104,43 @@ class OutlineModel {
             return string.maxNSRange
         }
         
-        
         guard let location = textGroup.token?.range.location else {
             return nil
         }
         
+        let endOfTextGroup: Int
         
+        // find the next text group with equal or higher priority
+        if let nextTextGroupWithEqualOrHigherPriority = self.nextTextGroupWithEqualOrHigherPriority(after: textGroup),
+           let locationOfNextTextGroupWithEqualOrHigherPriority = nextTextGroupWithEqualOrHigherPriority.token?.range.location {
+         
+            endOfTextGroup = locationOfNextTextGroupWithEqualOrHigherPriority
+        }
+        // if there is no following text group (that is equal or higher) within its own parent,
+        // then the end of the text group would be the end of the parent text group
+        else {
+            
+            guard let parentTextGroupRange = range(of: parent) else {
+                return nil
+            }
+                
+            endOfTextGroup = parentTextGroupRange.location + parentTextGroupRange.length
+        }
         
+        let length = endOfTextGroup - location
         
-        let textGroups = parent.textGroups
+        return NSRange(location: location, length: length)
+    }
+    
+    private func nextTextGroupWithEqualOrHigherPriority(after textGroup: TextGroup) -> TextGroup? {
         
+        guard let textGroups = textGroup.parentTextGroup?.textGroups else {
+            return nil
+        }
         
         guard let indexOfTextGroupInParent = textGroups.firstIndex(of: textGroup) else {
             return nil
         }
-        
         
         let startIndex = indexOfTextGroupInParent + 1
         
@@ -128,7 +148,8 @@ class OutlineModel {
             return nil
         }
         
-        var firstTextGroupWithEqualOrHigherPriority: TextGroup? = nil
+        var nextTextGroupWithEqualOrHigherPriority: TextGroup? = nil
+        
         for i in startIndex..<textGroups.count {
             
             let textGroup = textGroups[i]
@@ -139,36 +160,11 @@ class OutlineModel {
             if language.priority(of: iteratedToken, isHigherThan: textGroupToken) ||
                language.priority(of: iteratedToken, isEqualTo: textGroupToken) {
                 
-                firstTextGroupWithEqualOrHigherPriority = textGroup
+                nextTextGroupWithEqualOrHigherPriority = textGroup
                 break
             }
         }
         
-        let endOfTextGroup: Int
-        
-        if let locationOFSTG = firstTextGroupWithEqualOrHigherPriority?.token?.range.location {
-            
-            endOfTextGroup = locationOFSTG
-        }
-        else {
-            
-            guard let parentTextGroupRange = range(of: parent) else {
-                return nil
-            }
-            
-            // no parent means root
-            if parent.parentTextGroup == nil {
-                
-                endOfTextGroup = string.maxNSRange.length
-            }
-            else {
-                
-                endOfTextGroup = parentTextGroupRange.location + parentTextGroupRange.length
-            }
-        }
-        
-        let length = endOfTextGroup - location
-        
-        return NSRange(location: location, length: length)
+        return nextTextGroupWithEqualOrHigherPriority
     }
 }
