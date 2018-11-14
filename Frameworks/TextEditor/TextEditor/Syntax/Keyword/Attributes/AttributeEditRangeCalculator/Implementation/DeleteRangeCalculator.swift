@@ -25,7 +25,7 @@ class AttributeDeleteRangeCalculator: AttributeEditRangeCalculator {
             
             if lastEditedIndexIsLessThanLastAttributeIndex {
                 
-                let location = attributeOccurrence.effectiveRange.location + changeInLength
+                let location = max(0, attributeOccurrence.effectiveRange.location + changeInLength)
                 let overlap = (editedLocation - changeInLength) - attributeLocation
                 let length = attributeLength - max(0, overlap)
                 
