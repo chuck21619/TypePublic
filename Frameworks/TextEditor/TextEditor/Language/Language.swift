@@ -44,7 +44,7 @@ class Language {
     }
     
     // all text group tokens, ordered by range
-    func textGroupTokens(for string: String, workItem: DispatchWorkItem) -> [TextGroupToken]? {
+    func textGroupTokens(for string: String, workItem: DispatchWorkItem?) -> [TextGroupToken]? {
         
         var tokens: [TextGroupToken] = []
         
@@ -90,12 +90,12 @@ class Language {
                 let token = TextGroupToken(label: label, range: tokenRange, groupingRule: groupingRule, tokenAmount: tokenAmount)
                 tokens.append(token)
                 
-                guard workItem.isCancelled == false else {
+                guard workItem?.isCancelled != true else {
                     return
                 }
             }
             
-            guard workItem.isCancelled == false else {
+            guard workItem?.isCancelled != true else {
                 return nil
             }
         }

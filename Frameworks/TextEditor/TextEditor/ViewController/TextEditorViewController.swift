@@ -8,10 +8,6 @@
 
 import Foundation
 
-//NSTrackingMouseEnteredAndExited
-//NSTrackingActiveAlways
-//self.view.addtrackingarea()
-
 public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, OutlineViewControllerDelegate {    
     
     // MARK: - Properties
@@ -42,12 +38,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
 
     required public init?(coder: NSCoder) {
+        
         super.init(coder: coder)
         self.commonInit()
     }
     
     private func commonInit() {
         
+        // TODO: change every object that holds onto language into a getter that pulls it from a common location
+        // in order to handle the user changing the language
         let languageFactory = LanguageFactory()
         let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
         
@@ -65,12 +64,34 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         outlineViewController?.model = outlineModel
     }
     
+    @objc func buttonAction() {
+        
+    }
     
+    var rulerView: TestRulerView! = nil
     // MARK: initialization
     public override func viewDidLoad() {
         
         createTextView()
-        textEditorView.lnv_setUpLineNumberView()
+//        textEditorView.lnv_setUpLineNumberView()
+        
+        rulerView = TestRulerView(scrollView: textEditorView.enclosingScrollView!, orientation: NSRulerView.Orientation.verticalRuler)
+        rulerView.clientView = textEditorView
+        // TODO: change every object that holds onto language into a getter that pulls it from a common location
+        // in order to handle the user changing the language
+        rulerView.language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
+        textEditorView.enclosingScrollView?.verticalRulerView = rulerView
+        
+//        let location: CGFloat = 180.0
+//        let image = #imageLiteral(resourceName: "egg-icon")
+//        let origin = NSPoint(x: 0, y: 0)
+//        let marker = NSRulerMarker(rulerView: rulerView, markerLocation: location, image: image, imageOrigin: origin)
+//        rulerView.addMarker(marker)
+        
+        let button = NSButton(checkboxWithTitle: "b", target: self, action: #selector(buttonAction))
+        button.frame = NSRect(x: 0, y: 100, width: 40, height: 40)
+        rulerView.addSubview(button)
+//        rulerView.trackMarker(marker, withMouseEvent: <#T##NSEvent#>)
         
         if let outlineView = outlineViewController?.view {
             
@@ -161,7 +182,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     public override func mouseEntered(with event: NSEvent) {
-        
+    
+        rulerView.needsDisplay = true
         showOutline(true, animated: true)
     }
     

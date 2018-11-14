@@ -34,6 +34,7 @@
 		A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */; };
 		A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */; };
 		A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */; };
+		A3B30982219C91A70093744A /* TestRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B30981219C91A70093744A /* TestRulerView.swift */; };
 		A3B78676218A1AA900FB0005 /* OutlineModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */; };
 		A3B78679218A21A700FB0005 /* OutlineViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */; };
 		A3BA2EB52194C8FC00054D98 /* OutlineViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA2EB42194C8FC00054D98 /* OutlineViewControllerDelegate.swift */; };
@@ -96,6 +97,7 @@
 		A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ContainsRange.swift"; sourceTree = "<group>"; };
 		A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RegexMatchNothing.swift"; sourceTree = "<group>"; };
 		A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighligher.swift; sourceTree = "<group>"; };
+		A3B30981219C91A70093744A /* TestRulerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRulerView.swift; sourceTree = "<group>"; };
 		A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModelDelegate.swift; sourceTree = "<group>"; };
 		A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OutlineViewController.storyboard; sourceTree = "<group>"; };
 		A3BA2EB42194C8FC00054D98 /* OutlineViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -189,13 +191,9 @@
 		A3381E0A213F1B9D001C638A /* Helper Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A36B119521519F000086AD83 /* NSRange+Positive.swift */,
-				A36B119321518E950086AD83 /* NSRange+Intersects.swift */,
-				A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */,
-				A36B119721519F2B0086AD83 /* NSRange+IsAdjacent.swift */,
 				A3381E0B213F1BBD001C638A /* Array+Difference.swift */,
-				A3951DB62144D8470072095F /* String+MaxNSRange.swift */,
-				A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */,
+				A3B30988219CA7AB0093744A /* NSRange */,
+				A3B30989219CA7B00093744A /* String */,
 			);
 			path = "Helper Extensions";
 			sourceTree = "<group>";
@@ -255,6 +253,34 @@
 				A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */,
 			);
 			path = Languages;
+			sourceTree = "<group>";
+		};
+		A3B30980219C91970093744A /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				A3B30981219C91A70093744A /* TestRulerView.swift */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		A3B30988219CA7AB0093744A /* NSRange */ = {
+			isa = PBXGroup;
+			children = (
+				A36B119521519F000086AD83 /* NSRange+Positive.swift */,
+				A36B119321518E950086AD83 /* NSRange+Intersects.swift */,
+				A36B119721519F2B0086AD83 /* NSRange+IsAdjacent.swift */,
+			);
+			path = NSRange;
+			sourceTree = "<group>";
+		};
+		A3B30989219CA7B00093744A /* String */ = {
+			isa = PBXGroup;
+			children = (
+				A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */,
+				A3951DB62144D8470072095F /* String+MaxNSRange.swift */,
+				A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */,
+			);
+			path = String;
 			sourceTree = "<group>";
 		};
 		A3B78677218A218600FB0005 /* View */ = {
@@ -353,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				A3DF51E12139CB6000A8A1AF /* LineNumberRulerView.swift */,
+				A3B30980219C91970093744A /* Mine */,
 			);
 			path = "Line Numbers";
 			sourceTree = "<group>";
@@ -554,6 +581,7 @@
 				A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */,
 				A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
+				A3B30982219C91A70093744A /* TestRulerView.swift in Sources */,
 				A30433A8219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift in Sources */,
 				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,
 				A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */,
