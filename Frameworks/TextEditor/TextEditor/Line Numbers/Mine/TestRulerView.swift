@@ -77,14 +77,9 @@ class TestRulerView: NSRulerView {
         let firstVisibleGlyphCharacterIndex = layoutManager.characterIndexForGlyph(at: visibleGlyphRange.location)
         
         /// start mine
-        let visibleCharacterNSRange = layoutManager.characterRange(forGlyphRange: visibleGlyphRange, actualGlyphRange: nil)
-        guard let visibleCharacterRange = Range(visibleCharacterNSRange, in: textView.string) else {
-            return
-        }
+        let visibleCharacterRange = layoutManager.characterRange(forGlyphRange: visibleGlyphRange, actualGlyphRange: nil)
         
-        let visibleString = String(textView.string[visibleCharacterRange])
-        
-        guard let visibleTextGroupTokens = self.language?.textGroupTokens(for: textView.string, workItem: nil) else {
+        guard let visibleTextGroupTokens = self.language?.textGroupTokens(for: textView.string, in: visibleCharacterRange, workItem: nil) else {
             return
         }
         

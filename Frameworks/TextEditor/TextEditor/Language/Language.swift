@@ -44,11 +44,11 @@ class Language {
     }
     
     // all text group tokens, ordered by range
-    func textGroupTokens(for string: String, workItem: DispatchWorkItem?) -> [TextGroupToken]? {
+    func textGroupTokens(for string: String, in range: NSRange? = nil, workItem: DispatchWorkItem?) -> [TextGroupToken]? {
         
         var tokens: [TextGroupToken] = []
         
-        let range = string.maxNSRange
+        let range = range ?? string.maxNSRange
         
         for groupingRule in textGroupingRules {
             
