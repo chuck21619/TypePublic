@@ -95,7 +95,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         if let outlineView = outlineViewController?.view {
             
-//            showOutline(false, animated: false)
+            showOutline(false, animated: false)
             self.view.addSubview(outlineView)
         }
         
@@ -178,7 +178,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        outlineView.isHidden = !show
+        outlineView.isHidden = true//!show
     }
     
     public override func mouseEntered(with event: NSEvent) {
@@ -189,7 +189,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     public override func mouseExited(with event: NSEvent) {
         
-//        showOutline(false, animated: true)
+        showOutline(false, animated: true)
     }
     
     // MARK: - SyntaxHighlighterDelegate

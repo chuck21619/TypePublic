@@ -84,8 +84,12 @@ class TestRulerView: NSRulerView {
         
         let visibleString = String(textView.string[visibleCharacterRange])
         
-        guard let visibleTextGroupTokens = self.language?.textGroupTokens(for: visibleString, workItem: nil) else {
+        guard let visibleTextGroupTokens = self.language?.textGroupTokens(for: textView.string, workItem: nil) else {
             return
+        }
+        
+        let tokenRanges = visibleTextGroupTokens.map { (token) -> NSRange in
+            return token.range
         }
         /// end mine
         
@@ -117,6 +121,7 @@ class TestRulerView: NSRulerView {
                 // then it will have more than one "line of glyphs"
                 let lineRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndexForGlyphLine, effectiveRange: &effectiveRange, withoutAdditionalLayout: true)
                 
+                
 //                let lineString = visibleString[Range(characterRangeForStringLine, in: visibleString)!]
 //
 //                for token in visibleTextGroupTokens {
@@ -124,11 +129,10 @@ class TestRulerView: NSRulerView {
 //                    print("")
 //                }
                 
-                let tokenRanges = visibleTextGroupTokens.map { (token) -> NSRange in
-                    return token.range
-                }
+                let charachter = layoutManager.characterRange(forGlyphRange: NSRange(location: glyphIndexForGlyphLine, length: 1), actualGlyphRange: nil)
                 
-                if self.instersects(range: characterRangeForStringLine, ranges: tokenRanges) {
+                
+                if self.intersects(range: charachter, ranges: tokenRanges) {
                     
                     drawLineNumber("GROUP", lineRect.minY)
                 }
@@ -153,7 +157,7 @@ class TestRulerView: NSRulerView {
         }
     }
     
-    func instersects(range: NSRange, ranges: [NSRange]) -> Bool {
+    func intersects(range: NSRange, ranges: [NSRange]) -> Bool {
         
         for iteratedRange in ranges {
             
