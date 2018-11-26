@@ -11,6 +11,8 @@
 		A30433A8219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30433A7219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift */; };
 		A30433AA219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30433A9219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift */; };
 		A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3069D602188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift */; };
+		A30961BD219F453A00926E66 /* TextGroupMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30961BC219F453A00926E66 /* TextGroupMarker.swift */; };
+		A30961BF219F4F8100926E66 /* TestRulerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30961BE219F4F8100926E66 /* TestRulerViewDelegate.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
 		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
 		A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962E8217A605600D52175 /* TextGroupingRule.swift */; };
@@ -74,6 +76,8 @@
 		A30433A7219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroIndexTextGroupInserter.swift; sourceTree = "<group>"; };
 		A30433A9219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveIndexTextGroupInserter.swift; sourceTree = "<group>"; };
 		A3069D602188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndeterminateGroupingRuleProperties.swift; sourceTree = "<group>"; };
+		A30961BC219F453A00926E66 /* TextGroupMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupMarker.swift; sourceTree = "<group>"; };
+		A30961BE219F4F8100926E66 /* TestRulerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRulerViewDelegate.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
 		A36962E8217A605600D52175 /* TextGroupingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupingRule.swift; sourceTree = "<group>"; };
@@ -259,6 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				A3B30981219C91A70093744A /* TestRulerView.swift */,
+				A30961BE219F4F8100926E66 /* TestRulerViewDelegate.swift */,
+				A30961BC219F453A00926E66 /* TextGroupMarker.swift */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 				A3BA2EB52194C8FC00054D98 /* OutlineViewControllerDelegate.swift in Sources */,
 				A36B119821519F2B0086AD83 /* NSRange+IsAdjacent.swift in Sources */,
 				A3848A9E215B53B50045C5AB /* SyntaxHighlighterDelegate.swift in Sources */,
+				A30961BD219F453A00926E66 /* TextGroupMarker.swift in Sources */,
 				A30433AA219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift in Sources */,
 				A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */,
 				A36B119621519F000086AD83 /* NSRange+Positive.swift in Sources */,
@@ -587,6 +594,7 @@
 				A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */,
 				A3B78676218A1AA900FB0005 /* OutlineModelDelegate.swift in Sources */,
 				A3C316D620FFFBF10028D466 /* TextEditorView.swift in Sources */,
+				A30961BF219F4F8100926E66 /* TestRulerViewDelegate.swift in Sources */,
 				A3C316DD210000610028D466 /* TextEditorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

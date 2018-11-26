@@ -10,6 +10,25 @@ import Foundation
 
 class TestRulerView: NSRulerView {
     
+    override func mouseDown(with event: NSEvent) {
+        
+        let invertedY = (self.window?.frame.height ?? 0) - event.locationInWindow.y
+        
+        for marker in textGroupMarkers {
+            
+            if invertedY > marker.frame.minY &&
+                invertedY < marker.frame.maxY {
+                
+                self.delegate?.markerClicked(marker)
+                break
+            }
+        }
+    }
+    
+    var textGroupMarkers: [TextGroupMarker] = []
+    var visibleTextGroupTokens: [TextGroupToken] = []
+    var delegate: TestRulerViewDelegate? = nil
+    
     var language: Language? = nil
     
     override init(scrollView: NSScrollView?, orientation: NSRulerView.Orientation) {
@@ -53,10 +72,12 @@ class TestRulerView: NSRulerView {
 //        DispatchQueue.global(qos: .background).async(execute: newWorkItem)
 //    }
     
-    var workItem: DispatchWorkItem? = nil
+//    var workItem: DispatchWorkItem? = nil
+    
     override func drawHashMarksAndLabels(in rect: NSRect) {
         
 //        workItem?.cancel()
+        self.textGroupMarkers = []
         
         guard let textView = self.clientView as? NSTextView,
               let layoutManager = textView.layoutManager else {
@@ -82,6 +103,7 @@ class TestRulerView: NSRulerView {
         guard let visibleTextGroupTokens = self.language?.textGroupTokens(for: textView.string, in: visibleCharacterRange, workItem: nil) else {
             return
         }
+        self.visibleTextGroupTokens = visibleTextGroupTokens
         
         let tokenRanges = visibleTextGroupTokens.map { (token) -> NSRange in
             return token.range
@@ -116,19 +138,21 @@ class TestRulerView: NSRulerView {
                 // then it will have more than one "line of glyphs"
                 let lineRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndexForGlyphLine, effectiveRange: &effectiveRange, withoutAdditionalLayout: true)
                 
-                
-//                let lineString = visibleString[Range(characterRangeForStringLine, in: visibleString)!]
-//
-//                for token in visibleTextGroupTokens {
-//
-//                    print("")
-//                }
-                
                 let charachter = layoutManager.characterRange(forGlyphRange: NSRange(location: glyphIndexForGlyphLine, length: 1), actualGlyphRange: nil)
                 
                 
-                if self.intersects(range: charachter, ranges: tokenRanges) {
+                if let intersectedRange = self.intersectedRange(range: charachter, ranges: tokenRanges) {
                     
+                    guard let token = visibleTextGroupTokens.first(where: { (token) -> Bool in
+                        token.range == intersectedRange
+                    }) else {
+                        
+                        print("ERROR")
+                        return
+                    }
+                    
+                    let textGroupMarker = TextGroupMarker(frame: lineRect, token: token)
+                    self.textGroupMarkers.append(textGroupMarker)
                     drawLineNumber("GROUP", lineRect.minY)
                 }
                 else if glyphLineCount > 0 {
@@ -152,15 +176,15 @@ class TestRulerView: NSRulerView {
         }
     }
     
-    func intersects(range: NSRange, ranges: [NSRange]) -> Bool {
+    func intersectedRange(range: NSRange, ranges: [NSRange]) -> NSRange? {
         
         for iteratedRange in ranges {
             
             if iteratedRange.intersects(range) {
-                return true
+                return iteratedRange
             }
         }
         
-        return false
+        return nil
     }
 }
