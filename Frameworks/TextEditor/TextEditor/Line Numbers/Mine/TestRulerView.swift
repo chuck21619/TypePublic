@@ -74,6 +74,7 @@ class TestRulerView: NSRulerView {
     
 //    var workItem: DispatchWorkItem? = nil
     
+    //TODO: Cleanup
     override func drawHashMarksAndLabels(in rect: NSRect) {
         
 //        workItem?.cancel()
@@ -141,7 +142,11 @@ class TestRulerView: NSRulerView {
                 let charachter = layoutManager.characterRange(forGlyphRange: NSRange(location: glyphIndexForGlyphLine, length: 1), actualGlyphRange: nil)
                 
                 
-                if let intersectedRange = self.intersectedRange(range: charachter, ranges: tokenRanges) {
+                if glyphIndexForGlyphLine != glyphRangeForStringLine.location {
+                    
+                    drawLineNumber("-", lineRect.minY)
+                }
+                else if let intersectedRange = self.intersectedRange(range: charachter, ranges: tokenRanges) {
                     
                     guard let token = visibleTextGroupTokens.first(where: { (token) -> Bool in
                         token.range == intersectedRange
