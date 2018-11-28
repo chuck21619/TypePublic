@@ -13,6 +13,7 @@
 		A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3069D602188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift */; };
 		A30961BD219F453A00926E66 /* TextGroupMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30961BC219F453A00926E66 /* TextGroupMarker.swift */; };
 		A30961BF219F4F8100926E66 /* TestRulerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30961BE219F4F8100926E66 /* TestRulerViewDelegate.swift */; };
+		A313B87F21AE276C00B4EEFD /* TextEditorTypeSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
 		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
 		A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962E8217A605600D52175 /* TextGroupingRule.swift */; };
@@ -78,6 +79,7 @@
 		A3069D602188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndeterminateGroupingRuleProperties.swift; sourceTree = "<group>"; };
 		A30961BC219F453A00926E66 /* TextGroupMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupMarker.swift; sourceTree = "<group>"; };
 		A30961BE219F4F8100926E66 /* TestRulerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRulerViewDelegate.swift; sourceTree = "<group>"; };
+		A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTypeSetter.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
 		A36962E8217A605600D52175 /* TextGroupingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupingRule.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				A3C316B120FFF7BA0028D466 /* TextEditor.h */,
 				A3C316B220FFF7BA0028D466 /* Info.plist */,
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
+				A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A30433AB219B609900FEFC07 /* ViewController */,
@@ -583,6 +586,7 @@
 				A3F6F0FE21767B4F003A6DA2 /* OutlineModel.swift in Sources */,
 				A3751D892181055700D3D1C0 /* TextGroupIterator.swift in Sources */,
 				A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */,
+				A313B87F21AE276C00B4EEFD /* TextEditorTypeSetter.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,
 				A3DF51E22139CB6000A8A1AF /* LineNumberRulerView.swift in Sources */,
 				A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */,

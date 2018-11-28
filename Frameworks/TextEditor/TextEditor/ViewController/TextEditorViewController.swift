@@ -168,12 +168,21 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        outlineView.isHidden = true//!show
+        outlineView.isHidden = !show
     }
     
     public override func mouseEntered(with event: NSEvent) {
     
         showOutline(true, animated: true)
+        
+        let string = "someString"
+        let stringAsData = string.data(using: .utf8)
+        let attachment = NSTextAttachment(data: stringAsData, ofType: nil)
+        attachment.image = #imageLiteral(resourceName: "egg-icon")
+        
+        let attachmentString = NSAttributedString(attachment: attachment)
+        
+        self.textStorage.append(attachmentString)
     }
     
     public override func mouseExited(with event: NSEvent) {
