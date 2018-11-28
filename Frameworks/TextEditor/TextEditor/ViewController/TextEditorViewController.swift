@@ -173,17 +173,24 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     public override func mouseEntered(with event: NSEvent) {
     
+                let astring = "someString"
+                let astringAsData = astring.data(using: .utf8)
+                let atestAttachment = TestTextAttachment(data: astringAsData, ofType: "someType")
+        
+        
         showOutline(true, animated: true)
         
         let string = "someString"
         let stringAsData = string.data(using: .utf8)
-        let attachment = NSTextAttachment(data: stringAsData, ofType: nil)
+        let attachment = TestTextAttachment(data: stringAsData, ofType: "someType")
         attachment.image = #imageLiteral(resourceName: "egg-icon")
         
         let attachmentString = NSAttributedString(attachment: attachment)
         
         self.textStorage.append(attachmentString)
     }
+    
+    
     
     public override func mouseExited(with event: NSEvent) {
         

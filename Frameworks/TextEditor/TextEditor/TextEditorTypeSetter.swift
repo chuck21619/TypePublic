@@ -18,3 +18,45 @@ class TextEditorTypeSetter: NSATSTypesetter {
         return result
     }
 }
+
+class TestTextAttachment: NSTextAttachment{//}, NSPasteboardWriting, NSPasteboardReading {
+    
+//    override init(data contentData: Data?, ofType uti: String?) {
+//        print("")
+//        super.init(data: contentData, ofType: uti)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//
+//    required init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
+//
+//        let string = "someString"
+//        let stringAsData = string.data(using: .utf8)
+//
+//        super.init(data: stringAsData, ofType: "someType")
+//    }
+//
+//
+//
+    static let testTextAttachmentPasteboardType = NSPasteboard.PasteboardType(rawValue: "\(Bundle.main.bundleIdentifier ?? "Type").TestTextAttachment")
+    
+    var myString = "myString"
+//
+//    func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+//
+//        return [TestTextAttachment.testTextAttachmentPasteboardType]
+//    }
+//
+//    static func readableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+//
+//        return [TestTextAttachment.testTextAttachmentPasteboardType]
+//    }
+//    
+//    func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
+//        
+//        return "string representing the image which represents the collapsed text"
+//    }
+}
