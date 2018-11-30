@@ -96,6 +96,23 @@ class OutlineModel {
         DispatchQueue.global(qos: .background).async(execute: newWorkItem)
     }
     
+    func textGroup(at location: Int) -> TextGroup? {
+        
+        var textGroup = textGroups.first
+        let iterator = textGroup?.createIterator()
+        
+        while textGroup != nil {
+            
+            if textGroup?.token?.range.location == location {
+                break
+            }
+            
+            textGroup = iterator?.next()
+        }
+        
+        return textGroup
+    }
+    
     func range(of textGroup: TextGroup) -> NSRange? {
         
         guard let parent = textGroup.parentTextGroup else {
@@ -132,7 +149,7 @@ class OutlineModel {
         return NSRange(location: location, length: length)
     }
     
-    private func nextTextGroupWithEqualOrHigherPriority(after textGroup: TextGroup) -> TextGroup? {
+    func nextTextGroupWithEqualOrHigherPriority(after textGroup: TextGroup) -> TextGroup? {
         
         guard let textGroups = textGroup.parentTextGroup?.textGroups else {
             return nil
