@@ -292,16 +292,18 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     // MARK: - TestRulerViewDelegate
+    var collapsedTextGroups: [TextGroup] = []
     func markerClicked(_ marker: TextGroupMarker) {
         
         //// get range of text group
-        /// location is the same as the marker's location
-        let location = marker.token.range.location
+        /// location
+        let location = marker.token.range.location + marker.token.range.length
         /// endIndex
         // get text group
         guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
+        
         let endIndex: Int
         // get next text group that is not a child,
         if let nextTextGroup = outlineModel?.nextTextGroupWithEqualOrHigherPriority(after: correspondingTextGroup),
@@ -321,27 +323,56 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
 
         
-//        // *********************
-//        // replacing textGroup with textAttachment
-//
-//        let string = String(textStorage.string[lowerBound..<upperBound])
-//        let attachment = TestTextAttachment(data: nil, ofType: "someType")
-//        attachment.image = #imageLiteral(resourceName: "egg-icon")
-//
-//        attachment.myString = string
-//
-//        let attachmentString = NSAttributedString(attachment: attachment)
-//
-//        self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
-//        // *********************
+        var textGroupIsCollapsed = false
+        var indexOfCollapsedTextGroup: Int? = nil
+        for collapsedTextGroup in collapsedTextGroups {
+            
+            if correspondingTextGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
+                textGroupIsCollapsed = true
+                indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex(of: collapsedTextGroup)
+                break
+            }
+        }
         
-        
-        
-//        // *********************
-//        // changing font of textgroup to 0
-        
-        let hiddenFont = NSFont.systemFont(ofSize: 0.00001)
-        textStorage.addAttribute(.font, value: hiddenFont, range: range)
-//        // *********************
+        if textGroupIsCollapsed {
+            
+            
+            
+            //        // *********************
+            //        // replacing textGroup with textAttachment
+            //
+            //        let string = String(textStorage.string[lowerBound..<upperBound])
+            //        let attachment = TestTextAttachment(data: nil, ofType: "someType")
+            //        attachment.image = #imageLiteral(resourceName: "egg-icon")
+            //
+            //        attachment.myString = string
+            //
+            //        let attachmentString = NSAttributedString(attachment: attachment)
+            //
+            //        self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
+            //        // *********************
+            
+            
+            
+            //        // *********************
+            //        // changing font of textgroup to 0
+            //TODO: hook font up to settings/preferences
+            let standardFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
+            textStorage.addAttribute(.font, value: standardFont, range: range)
+            //        // *********************
+            
+            if let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup {
+                
+                collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
+            }
+        }
+        else {
+            //TODO: hook font up to settings/preferences
+            let size: CGFloat = 0.00001
+            let hiddenFont = NSFont(name: "Menlo", size: size) ?? NSFont.systemFont(ofSize: size)
+            textStorage.addAttribute(.font, value: hiddenFont, range: range)
+            
+            collapsedTextGroups.append(correspondingTextGroup)
+        }
     }
 }

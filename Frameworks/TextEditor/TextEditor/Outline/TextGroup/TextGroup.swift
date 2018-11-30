@@ -169,4 +169,28 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
         self.parentTextGroup = aDecoder.decodeObject(forKey: parentTextGroupCodingKey) as? TextGroup
         self.textGroups = aDecoder.decodeObject(forKey: textGroupsCodingKey) as? [TextGroup] ?? []
     }
+    
+    // MARK: - etc.
+    func hasSameChildrenTitles(as textGroup: TextGroup) -> Bool {
+        
+        let argumentTitles = textGroup.titles()
+        let selfTitles = self.titles()
+        
+        return argumentTitles == selfTitles
+    }
+    
+    private func titles() -> [String] {
+     
+        var iteratedTextGroup: TextGroup? = self
+        let iterator = self.createIterator()
+        
+        var titles: [String] = []
+        while iteratedTextGroup != nil {
+            
+            titles.append(iteratedTextGroup?.title ?? "")
+            iteratedTextGroup = iterator.next()
+        }
+        
+        return titles
+    }
 }
