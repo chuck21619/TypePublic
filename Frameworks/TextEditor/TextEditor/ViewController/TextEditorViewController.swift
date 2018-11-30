@@ -211,7 +211,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         outlineModel?.outline(textStorage: textStorage)
         
         if rulerView != nil {
@@ -294,15 +294,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     // MARK: - TestRulerViewDelegate
     func markerClicked(_ marker: TextGroupMarker) {
         
-        //        let string = "someString"
-        //        let stringAsData = string.data(using: .utf8)
-        //        let attachment = TestTextAttachment(data: stringAsData, ofType: "someType")
-        //        attachment.image = #imageLiteral(resourceName: "egg-icon")
-        //
-        //        let attachmentString = NSAttributedString(attachment: attachment)
-        //
-        //        self.textStorage.append(attachmentString)
-        
         //// get range of text group
         /// location is the same as the marker's location
         let location = marker.token.range.location
@@ -315,33 +306,42 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         // get next text group that is not a child,
         if let nextTextGroup = outlineModel?.nextTextGroupWithEqualOrHigherPriority(after: correspondingTextGroup),
            let token = nextTextGroup.token {
-            
+
             endIndex = token.range.location
         }
         // if no next text group, then use end of string
         else {
-            
+
             endIndex = textStorage.string.maxNSRange.length
         }
         
-        
-        
-        //// create image to replace text
+        let range = NSRange(location: location, length: endIndex-location)
+
         let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
         let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
-        
-        let string = String(textStorage.string[lowerBound..<upperBound])
-        let attachment = TestTextAttachment(data: nil, ofType: "someType")
-        attachment.image = #imageLiteral(resourceName: "egg-icon")
-        
-        attachment.myString = string
 
-        let attachmentString = NSAttributedString(attachment: attachment)
-
-        self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
+        
+//        // *********************
+//        // replacing textGroup with textAttachment
+//
+//        let string = String(textStorage.string[lowerBound..<upperBound])
+//        let attachment = TestTextAttachment(data: nil, ofType: "someType")
+//        attachment.image = #imageLiteral(resourceName: "egg-icon")
+//
+//        attachment.myString = string
+//
+//        let attachmentString = NSAttributedString(attachment: attachment)
+//
+//        self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
+//        // *********************
         
         
-        print("-")
-        print(correspondingTextGroup.title)
+        
+//        // *********************
+//        // changing font of textgroup to 0
+        
+        let hiddenFont = NSFont.systemFont(ofSize: 0.00001)
+        textStorage.addAttribute(.font, value: hiddenFont, range: range)
+//        // *********************
     }
 }
