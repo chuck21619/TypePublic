@@ -184,6 +184,13 @@ class OutlineModel {
             }
         }
         
+
+        if nextTextGroupWithEqualOrHigherPriority == nil,
+           let parentTextGroup = textGroup.parentTextGroup {
+            
+            return self.nextTextGroupWithEqualOrHigherPriority(after: parentTextGroup)
+        }
+        
         return nextTextGroupWithEqualOrHigherPriority
     }
 }

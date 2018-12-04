@@ -318,7 +318,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
         
         let range = NSRange(location: location, length: endIndex-location)
-
+        
+        guard range.length > 1 else {
+            return
+        }
+        
         let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
         let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
 
@@ -366,10 +370,21 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
             }
             
-            for textGroup in collapsedTextGroups {
-
-                collapseTextGroup(textGroup)
+            for textGroup in correspondingTextGroup.textGroups {
+                
+                for collapsedTextGroup in collapsedTextGroups {
+                    
+                    if collapsedTextGroup.hasSameChildrenTitles(as: textGroup) {
+                        
+                        collapseTextGroup(collapsedTextGroup)
+                    }
+                }
             }
+            
+//            for textGroup in collapsedTextGroups {
+//
+//                collapseTextGroup(textGroup)
+//            }
         }
         else {
             //TODO: hook font up to settings/preferences

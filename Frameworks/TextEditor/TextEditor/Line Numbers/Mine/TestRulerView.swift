@@ -37,7 +37,15 @@ class TestRulerView: NSRulerView {
         scrollView?.verticalRulerView = self
         scrollView?.hasVerticalRuler = true
         scrollView?.rulersVisible = true
+        
         self.ruleThickness = 40
+        
+        // gets rid of gray background
+        if let bannerView = self.subviews.first(where: { (view) -> Bool in
+            view.className == "NSBannerView"
+        }) {
+            bannerView.isHidden = true
+        }
     }
     
     required init(coder: NSCoder) {
@@ -146,7 +154,7 @@ class TestRulerView: NSRulerView {
                 }
                 else if glyphIndexForGlyphLine != glyphRangeForStringLine.location {
                     
-                    drawLineNumber("-", lineRect.minY)
+                    drawLineNumber(" ", lineRect.minY)
                 }
                 else if let intersectedRange = self.intersectedRange(range: charachter, ranges: tokenRanges) {
                     
@@ -160,10 +168,25 @@ class TestRulerView: NSRulerView {
                     
                     let textGroupMarker = TextGroupMarker(frame: lineRect, token: token)
                     self.textGroupMarkers.append(textGroupMarker)
-                    drawLineNumber("GROUP", lineRect.minY)
+                    
+                    let TEVC = self.delegate as! TextEditorViewController
+                    var collapsed = false
+                    for textGroup in TEVC.collapsedTextGroups {
+                        
+                        if textGroup.token?.range == token.range {
+                            collapsed = true
+                        }
+                    }
+                    
+                    if collapsed {
+                        drawLineNumber(">", lineRect.minY)
+                    }
+                    else {
+                        drawLineNumber("^", lineRect.minY)
+                    }
                 }
                 else if glyphLineCount > 0 {
-                    drawLineNumber("-", lineRect.minY)
+                    drawLineNumber(" ", lineRect.minY)
                 } else {
                     drawLineNumber("\(lineNumber)", lineRect.minY)
                 }
