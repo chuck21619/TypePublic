@@ -365,6 +365,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 
                 collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
             }
+            
+            for textGroup in collapsedTextGroups {
+
+                collapseTextGroup(textGroup)
+            }
         }
         else {
             //TODO: hook font up to settings/preferences
@@ -374,6 +379,55 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             
             collapsedTextGroups.append(correspondingTextGroup)
         }
+        
+        self.invalidateRanges(invalidRanges: [range])
+    }
+    
+    private func collapseTextGroup(_ textGroup: TextGroup) {
+        
+        guard let locationOfToken = textGroup.token?.range.location,
+              let lengthOfToken = textGroup.token?.range.length else {
+            return
+        }
+        
+        let location = locationOfToken + lengthOfToken
+        
+        let endIndex: Int
+        // get next text group that is not a child,
+        if let nextTextGroup = outlineModel?.nextTextGroupWithEqualOrHigherPriority(after: textGroup),
+            let token = nextTextGroup.token {
+            
+            endIndex = token.range.location
+        }
+            // if no next text group, then use end of string
+        else {
+            
+            endIndex = textStorage.string.maxNSRange.length
+        }
+        
+        let range = NSRange(location: location, length: endIndex-location)
+        
+        let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
+        let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
+        
+        
+        var textGroupIsCollapsed = false
+        var indexOfCollapsedTextGroup: Int? = nil
+        for collapsedTextGroup in collapsedTextGroups {
+            
+            if textGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
+                textGroupIsCollapsed = true
+                indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex(of: collapsedTextGroup)
+                break
+            }
+        }
+        
+            //TODO: hook font up to settings/preferences
+            let size: CGFloat = 0.00001
+            let hiddenFont = NSFont(name: "Menlo", size: size) ?? NSFont.systemFont(ofSize: size)
+            textStorage.addAttribute(.font, value: hiddenFont, range: range)
+        
+        
         
         self.invalidateRanges(invalidRanges: [range])
     }
