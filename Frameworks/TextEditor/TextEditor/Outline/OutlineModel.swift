@@ -98,8 +98,10 @@ class OutlineModel {
     
     func textGroup(at location: Int) -> TextGroup? {
         
+        let parentTextGroup = TextGroup(title: "parent", textGroups: textGroups, token: nil)
+        
         var textGroup = textGroups.first
-        let iterator = textGroup?.createIterator()
+        let iterator = parentTextGroup.createIterator()
         
         while textGroup != nil {
             
@@ -107,7 +109,7 @@ class OutlineModel {
                 break
             }
             
-            textGroup = iterator?.next()
+            textGroup = iterator.next()
         }
         
         return textGroup

@@ -374,5 +374,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             
             collapsedTextGroups.append(correspondingTextGroup)
         }
+        
+        self.invalidateRanges(invalidRanges: [range])
     }
 }

@@ -141,8 +141,10 @@ class TestRulerView: NSRulerView {
                 
                 let charachter = layoutManager.characterRange(forGlyphRange: NSRange(location: glyphIndexForGlyphLine, length: 1), actualGlyphRange: nil)
                 
-                
-                if glyphIndexForGlyphLine != glyphRangeForStringLine.location {
+                if (lineRect.maxY - lineRect.minY) < 1 {
+                    // do nothing becuase the line is collapsed
+                }
+                else if glyphIndexForGlyphLine != glyphRangeForStringLine.location {
                     
                     drawLineNumber("-", lineRect.minY)
                 }
