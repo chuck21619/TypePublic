@@ -22,7 +22,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     //TODO: get font from settings
     private let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
-    private let normalFontAttribute = Attribute(key: .font, value: NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11))
     
     //MARK: - Constructors
     init(syntaxParser: SyntaxParser) {
@@ -78,7 +77,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
         for invalidAttributeRange in invalidAttributeRanges {
             
             textStorage.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
-            textStorage.addAttribute(self.normalFontAttribute.key, value: self.normalFontAttribute.value, range: invalidAttributeRange)
         }
         
         for attributeOccurence in newAttributeOccurrences {
