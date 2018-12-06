@@ -151,6 +151,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         textEditorView.isHorizontallyResizable = false
         textEditorView.autoresizingMask = .width
         textEditorView.typingAttributes = attributes
+        textEditorView.delegate = self
         
         // 7. assemble
         scrollView.documentView = textEditorView
@@ -212,7 +213,20 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
         
         syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
-        outlineModel?.outline(textStorage: textStorage)
+        
+        
+        //TODO: figure out how to handle deletion of a collapse text group titile
+        // eg: user collapses a group, then highlights the title and deletes it
+        // should the content of the textgroup be deleted? if so, figure out how to do it
+        // should the content of the textgroup be expaned? if so, figure out how to do it
+        
+        outlineModel?.outline(textStorage: textStorage) {
+            
+            DispatchQueue.main.async {
+                
+                self.validateCollapsedTextGroups()
+            }
+        }
         
         if rulerView != nil {
             
@@ -293,38 +307,57 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     // MARK: - TestRulerViewDelegate
     var collapsedTextGroups: [TextGroup] = []
+    //TODO: figure out how to remove textgroups from collapsedTextGroups when the group is cut/deleted
+    //maybe just as easy as checking if the collapsedTextGroupTitle still exists, then removing it
+    private func validateCollapsedTextGroups() {
+    
+        var invalidTextGroups: [TextGroup] = []
+        
+        for collapsedTextGroup in collapsedTextGroups {
+            
+            var stillExists = false
+            for textGroup in outlineModel?.textGroups ?? [] {
+                
+                if textGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
+                    stillExists = true
+                    break
+                }
+            }
+            
+            if stillExists == false {
+                invalidTextGroups.append(collapsedTextGroup)
+            }
+        }
+        
+        for invalidTextGroup in invalidTextGroups {
+            
+            guard let invalidTextGroupIndex = collapsedTextGroups.firstIndex(of: invalidTextGroup) else {
+                continue
+            }
+            
+            collapsedTextGroups.remove(at: invalidTextGroupIndex)
+        }
+    }
+    
     func markerClicked(_ marker: TextGroupMarker) {
         
-        //// get range of text group
-        /// location
-        let location = marker.token.range.location + marker.token.range.length
-        /// endIndex
         // get text group
         guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
         
-        let endIndex: Int
-        // get next text group that is not a child,
-        if let nextTextGroup = outlineModel?.nextTextGroupWithEqualOrHigherPriority(after: correspondingTextGroup),
-           let token = nextTextGroup.token {
-
-            endIndex = token.range.location
+        guard let range = collapsedTextGroupRange(correspondingTextGroup) else {
+            return
         }
-        // if no next text group, then use end of string
-        else {
-
-            endIndex = textStorage.string.maxNSRange.length
-        }
-        
-        let range = NSRange(location: location, length: endIndex-location)
-        
         guard range.length > 1 else {
             return
         }
         
-        let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
-        let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
+//        //used when replacing text with image (instead of reducing font size to 0.00001)
+//        let location = range.location
+//        let endIndex = location + range.length
+//        let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
+//        let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
 
         
         var textGroupIsCollapsed = false
@@ -380,11 +413,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                     }
                 }
             }
-            
-//            for textGroup in collapsedTextGroups {
-//
-//                collapseTextGroup(textGroup)
-//            }
         }
         else {
             //TODO: hook font up to settings/preferences
@@ -398,11 +426,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         self.invalidateRanges(invalidRanges: [range])
     }
     
-    private func collapseTextGroup(_ textGroup: TextGroup) {
-        
+    private func collapsedTextGroupRange(_ textGroup: TextGroup) -> NSRange? {
+       
         guard let locationOfToken = textGroup.token?.range.location,
               let lengthOfToken = textGroup.token?.range.length else {
-            return
+                return nil
         }
         
         let location = locationOfToken + lengthOfToken
@@ -410,40 +438,60 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         let endIndex: Int
         // get next text group that is not a child,
         if let nextTextGroup = outlineModel?.nextTextGroupWithEqualOrHigherPriority(after: textGroup),
-            let token = nextTextGroup.token {
+           let token = nextTextGroup.token {
             
             endIndex = token.range.location
         }
-            // if no next text group, then use end of string
+        // if no next text group, then use end of string
         else {
             
             endIndex = textStorage.string.maxNSRange.length
         }
         
         let range = NSRange(location: location, length: endIndex-location)
+    
+        return range
+    }
+    
+    private func collapseTextGroup(_ textGroup: TextGroup) {
         
-        let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
-        let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
+        guard let range = collapsedTextGroupRange(textGroup) else {
+            return
+        }
         
-        
-        var textGroupIsCollapsed = false
-        var indexOfCollapsedTextGroup: Int? = nil
         for collapsedTextGroup in collapsedTextGroups {
             
             if textGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
-                textGroupIsCollapsed = true
-                indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex(of: collapsedTextGroup)
                 break
             }
         }
         
-            //TODO: hook font up to settings/preferences
-            let size: CGFloat = 0.00001
-            let hiddenFont = NSFont(name: "Menlo", size: size) ?? NSFont.systemFont(ofSize: size)
-            textStorage.addAttribute(.font, value: hiddenFont, range: range)
-        
-        
+        //TODO: hook font up to settings/preferences
+        let size: CGFloat = 0.00001
+        let hiddenFont = NSFont(name: "Menlo", size: size) ?? NSFont.systemFont(ofSize: size)
+        textStorage.addAttribute(.font, value: hiddenFont, range: range)
         
         self.invalidateRanges(invalidRanges: [range])
+    }
+    
+    // MARK: - NSTextViewDelegate
+    public func textView(_ textView: NSTextView, willChangeSelectionFromCharacterRange oldSelectedCharRange: NSRange, toCharacterRange newSelectedCharRange: NSRange) -> NSRange {
+        
+        //TODO: detect which direction the selection is changing from/to
+        //TODO: adjust the intersects boolean? its jumping one character too early at the moment
+        //TODO: handle end of string (if the last character is coallapsed)
+//        for textGroup in collapsedTextGroups {
+//
+//            if let range = collapsedTextGroupRange(textGroup) {
+//
+//                if newSelectedCharRange.intersects(range) {
+//
+//                    return NSRange(location: range.location+range.length, length: 0)
+//                }
+//            }
+//        }
+//        print("")
+        
+        return newSelectedCharRange
     }
 }

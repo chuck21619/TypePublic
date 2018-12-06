@@ -15,7 +15,7 @@ class OutlineModel {
     var processing: Bool = false // TODO: implement - used by OutlineViewController.allowInteraction
     let language: Language
     private var string: String = ""
-    private var textGroups: [TextGroup] = []
+    var textGroups: [TextGroup] = []
     private var workItem: DispatchWorkItem? = nil
     
     // MARK: - Methods
@@ -27,11 +27,12 @@ class OutlineModel {
     }
     
     // MARK: real stuff
-    func outline(textStorage: NSTextStorage) {
+    func outline(textStorage: NSTextStorage, _ completion: (()->())? = nil ) {
         
         updateTextGroups(from: textStorage.string, completion: { (textGroups) in
             
-            self.delegate?.didUpdate(textGroups: textGroups)            
+            self.delegate?.didUpdate(textGroups: textGroups)
+            completion?()
         })
     }
     
