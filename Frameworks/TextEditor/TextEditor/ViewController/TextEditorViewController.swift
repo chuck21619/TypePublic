@@ -8,6 +8,13 @@
 
 import Foundation
 
+
+//TODO: hook font up to settings/preferences
+let hiddenFontSize: CGFloat = 0.00001
+let hiddenFont = NSFont(name: "Menlo", size: hiddenFontSize) ?? NSFont.systemFont(ofSize: hiddenFontSize)
+let standardFontSize: CGFloat = 11
+let standardFont = NSFont(name: "Menlo", size: standardFontSize) ?? NSFont.systemFont(ofSize: standardFontSize)
+
 public class TextEditorViewController: NSViewController, NSTextViewDelegate, SyntaxHighlighterDelegate, NSTextStorageDelegate, OutlineViewControllerDelegate, TestRulerViewDelegate {
     
     // MARK: - Properties
@@ -98,15 +105,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     private func createTextView() {
     
         // 1. create text storage that backs the editor
-        //TODO: hook font up to settings/preferences
-        let monospaceFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
-        let attributes = [NSAttributedString.Key.font : monospaceFont]
+        let attributes = [NSAttributedString.Key.font : standardFont]
         //TODO: hook string up to opened file
         let string = ""
         
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = NSTextStorage()
-        textStorage.font = monospaceFont
+        textStorage.font = standardFont
         textStorage.delegate = self
         textStorage.append(attributedString)
         
@@ -310,8 +315,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     // MARK: - TestRulerViewDelegate
     var collapsedTextGroups: [TextGroup] = []
-    //TODO: figure out how to remove textgroups from collapsedTextGroups when the group is cut/deleted
-    //maybe just as easy as checking if the collapsedTextGroupTitle still exists, then removing it
     private func validateCollapsedTextGroups() {
     
         var invalidTextGroups: [TextGroup] = []
@@ -344,7 +347,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     func markerClicked(_ marker: TextGroupMarker) {
         
-        // get text group
         guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
@@ -352,9 +354,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         guard let range = collapsedTextGroupRange(correspondingTextGroup) else {
             return
         }
+        
         guard range.length > 1 else {
             return
         }
+        
         
 //        //used when replacing text with image (instead of reducing font size to 0.00001)
 //        let location = range.location
@@ -376,8 +380,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         if textGroupIsCollapsed {
             
-            
-            
             //        // *********************
             //        // replacing textGroup with textAttachment
             //
@@ -393,20 +395,18 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             //        // *********************
             
             
-            
             //        // *********************
             //        // changing font of textgroup to 0
-            //TODO: hook font up to settings/preferences
-            let standardFont = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
             textStorage.addAttribute(.font, value: standardFont, range: range)
             //        // *********************
+            
             
             if let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup {
                 
                 collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
             }
             
-            //re-collapse any textgroups within textgroup
+            //re-collapse any textgroups within the textgroup
             for textGroup in correspondingTextGroup.textGroups {
                 
                 for collapsedTextGroup in collapsedTextGroups {
@@ -419,12 +419,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             }
         }
         else {
-            //TODO: hook font up to settings/preferences
-            let size: CGFloat = 0.00001
-            let hiddenFont = NSFont(name: "Menlo", size: size) ?? NSFont.systemFont(ofSize: size)
-            textStorage.addAttribute(.font, value: hiddenFont, range: range)
             
-            collapsedTextGroups.append(correspondingTextGroup)
+            collapseTextGroup(correspondingTextGroup)
         }
         
         self.invalidateRanges(invalidRanges: [range])
@@ -463,39 +459,44 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
+        textStorage.addAttribute(.font, value: hiddenFont, range: range)
+        
+        var alreadyInArray = false
         for collapsedTextGroup in collapsedTextGroups {
             
-            if textGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
-                break
+            if collapsedTextGroup.hasSameChildrenTitles(as: textGroup) {
+                
+                alreadyInArray = true
             }
         }
         
-        //TODO: hook font up to settings/preferences
-        let size: CGFloat = 0.00001
-        let hiddenFont = NSFont(name: "Menlo", size: size) ?? NSFont.systemFont(ofSize: size)
-        textStorage.addAttribute(.font, value: hiddenFont, range: range)
+        if !alreadyInArray {
+            
+            collapsedTextGroups.append(textGroup)
+        }
         
         self.invalidateRanges(invalidRanges: [range])
     }
     
-    // MARK: - NSTextViewDelegate
-    public func textView(_ textView: NSTextView, willChangeSelectionFromCharacterRange oldSelectedCharRange: NSRange, toCharacterRange newSelectedCharRange: NSRange) -> NSRange {
-        
-        //TODO: detect which direction the selection is changing from/to
-        //TODO: adjust the intersects boolean? its jumping one character too early at the moment
-        //TODO: handle end of string (if the last character is coallapsed)
-//        for textGroup in collapsedTextGroups {
+//    // MARK: - NSTextViewDelegate
+//    // if switching to text attachments, then this overridden method can be removed
+//    public func textView(_ textView: NSTextView, willChangeSelectionFromCharacterRange oldSelectedCharRange: NSRange, toCharacterRange newSelectedCharRange: NSRange) -> NSRange {
 //
-//            if let range = collapsedTextGroupRange(textGroup) {
+//        //TODO: detect which direction the selection is changing from/to
+//        //TODO: adjust the intersects boolean? its jumping one character too early at the moment
+//        //TODO: handle end of string (if the last character is coallapsed)
+////        for textGroup in collapsedTextGroups {
+////
+////            if let range = collapsedTextGroupRange(textGroup) {
+////
+////                if newSelectedCharRange.intersects(range) {
+////
+////                    return NSRange(location: range.location+range.length, length: 0)
+////                }
+////            }
+////        }
+////        print("")
 //
-//                if newSelectedCharRange.intersects(range) {
-//
-//                    return NSRange(location: range.location+range.length, length: 0)
-//                }
-//            }
-//        }
-//        print("")
-        
-        return newSelectedCharRange
-    }
+//        return newSelectedCharRange
+//    }
 }
