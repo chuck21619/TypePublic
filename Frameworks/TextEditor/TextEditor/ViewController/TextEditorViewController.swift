@@ -220,6 +220,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         // should the content of the textgroup be deleted? if so, figure out how to do it
         // should the content of the textgroup be expaned? if so, figure out how to do it
         
+        //TODO: figure out what shold happen when deleting '#' in a collapsed title that then makes that gorup consume a group underneath it
+        // should it auto-expand when deleting '#'?
+        
         outlineModel?.outline(textStorage: textStorage) {
             
             DispatchQueue.main.async {
@@ -403,6 +406,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
             }
             
+            //re-collapse any textgroups within textgroup
             for textGroup in correspondingTextGroup.textGroups {
                 
                 for collapsedTextGroup in collapsedTextGroups {
