@@ -242,6 +242,24 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
     }
     
+//    private func expandAllTextGroups() {
+//
+//        let savedCollapsedTextGroups = collapsedTextGroups
+//        for collapsedTextGroup in collapsedTextGroups {
+//
+//            expandTextGroup(textGroup: collapsedTextGroup, invalidateDisplay: false)
+//        }
+//        collapsedTextGroups = savedCollapsedTextGroups
+//    }
+    
+//    private func recollapseTextGroups() {
+//
+//        for collapsedTextGroup in collapsedTextGroups {
+//
+//            collapseTextGroup(collapsedTextGroup)
+//        }
+//    }
+    
     // MARK: - OutlineViewControllerDelegate
     // TODO: these operations should not be done by the viewController?
     // maybe the delegate of the outlineVC could be something else?
@@ -316,7 +334,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     // MARK: - TestRulerViewDelegate
     var collapsedTextGroups: [TextGroup] = []
     private func validateCollapsedTextGroups() {
-    
+        //TODO: fix for textAttachment
+        return
         var invalidTextGroups: [TextGroup] = []
         
         for collapsedTextGroup in collapsedTextGroups {
@@ -355,68 +374,32 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        guard range.length > 1 else {
-            return
-        }
-        
-        
-//        //used when replacing text with image (instead of reducing font size to 0.00001)
-//        let location = range.location
-//        let endIndex = location + range.length
-//        let lowerBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: location)
-//        let upperBound = textStorage.string.index(textStorage.string.startIndex, offsetBy: endIndex)
-
-        
         var textGroupIsCollapsed = false
         var indexOfCollapsedTextGroup: Int? = nil
         for collapsedTextGroup in collapsedTextGroups {
-            
-            if correspondingTextGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
+
+            //TODO: fix this - comparing titles is not always valid
+            let range = correspondingTextGroup.title.startIndex..<correspondingTextGroup.title.index(before: correspondingTextGroup.title.endIndex)
+            let correspondingTextGroupTitle = correspondingTextGroup.title[range]
+            if correspondingTextGroupTitle == collapsedTextGroup.title {
                 textGroupIsCollapsed = true
                 indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex(of: collapsedTextGroup)
                 break
             }
         }
         
+        guard textGroupIsCollapsed || range.length > 1 else {
+            return
+        }
+        
         if textGroupIsCollapsed {
             
-            //        // *********************
-            //        // replacing textGroup with textAttachment
-            //
-            //        let string = String(textStorage.string[lowerBound..<upperBound])
-            //        let attachment = TestTextAttachment(data: nil, ofType: "someType")
-            //        attachment.image = #imageLiteral(resourceName: "egg-icon")
-            //
-            //        attachment.myString = string
-            //
-            //        let attachmentString = NSAttributedString(attachment: attachment)
-            //
-            //        self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
-            //        // *********************
-            
-            
-            //        // *********************
-            //        // changing font of textgroup to 0
-            textStorage.addAttribute(.font, value: standardFont, range: range)
-            //        // *********************
-            
-            
-            if let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup {
-                
-                collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
+            guard let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup else {
+                return
             }
+            self.collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
             
-            //re-collapse any textgroups within the textgroup
-            for textGroup in correspondingTextGroup.textGroups {
-                
-                for collapsedTextGroup in collapsedTextGroups {
-                    
-                    if collapsedTextGroup.hasSameChildrenTitles(as: textGroup) {
-                        
-                        collapseTextGroup(collapsedTextGroup)
-                    }
-                }
-            }
+            expandTextGroup(textGroup: correspondingTextGroup)
         }
         else {
             
@@ -426,6 +409,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         self.invalidateRanges(invalidRanges: [range])
     }
     
+    // MARK: collapse text group
     private func collapsedTextGroupRange(_ textGroup: TextGroup) -> NSRange? {
        
         guard let locationOfToken = textGroup.token?.range.location,
@@ -440,7 +424,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         if let nextTextGroup = outlineModel?.nextTextGroupWithEqualOrHigherPriority(after: textGroup),
            let token = nextTextGroup.token {
             
-            endIndex = token.range.location
+            endIndex = token.range.location - 1
         }
         // if no next text group, then use end of string
         else {
@@ -458,8 +442,19 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         guard let range = collapsedTextGroupRange(textGroup) else {
             return
         }
+        let location = range.location
+        let endIndex = (location + range.length)
         
-        textStorage.addAttribute(.font, value: hiddenFont, range: range)
+        let string = textStorage.attributedSubstring(from: range)
+        let attachment = TestTextAttachment(data: nil, ofType: "someType")
+        attachment.image = #imageLiteral(resourceName: "elipses")
+        attachment.bounds = NSRect(x: 1, y: -1, width: 15, height: 10)
+
+        attachment.myString = string
+
+        let attachmentString = NSAttributedString(attachment: attachment)
+
+        self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
         
         var alreadyInArray = false
         for collapsedTextGroup in collapsedTextGroups {
@@ -478,25 +473,27 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         self.invalidateRanges(invalidRanges: [range])
     }
     
-//    // MARK: - NSTextViewDelegate
-//    // if switching to text attachments, then this overridden method can be removed
-//    public func textView(_ textView: NSTextView, willChangeSelectionFromCharacterRange oldSelectedCharRange: NSRange, toCharacterRange newSelectedCharRange: NSRange) -> NSRange {
-//
-//        //TODO: detect which direction the selection is changing from/to
-//        //TODO: adjust the intersects boolean? its jumping one character too early at the moment
-//        //TODO: handle end of string (if the last character is coallapsed)
-////        for textGroup in collapsedTextGroups {
-////
-////            if let range = collapsedTextGroupRange(textGroup) {
-////
-////                if newSelectedCharRange.intersects(range) {
-////
-////                    return NSRange(location: range.location+range.length, length: 0)
-////                }
-////            }
-////        }
-////        print("")
-//
-//        return newSelectedCharRange
-//    }
+    //MARK: expand text group
+    private func expandTextGroup(textGroup: TextGroup, invalidateDisplay: Bool = true) {
+        
+        //get the textattachment
+        guard let token = textGroup.token else {
+            return
+        }
+        
+        let attributeLocation = (token.range.location + token.range.length) - 1
+        guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
+            return
+        }
+        
+        let stringInAttachment = attachment.myString
+        
+        let attributeRange = NSRange(location: attributeLocation, length: 1)
+        textStorage.replaceCharacters(in: attributeRange, with: stringInAttachment)
+        let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
+        
+        if invalidateDisplay {
+            self.invalidateRanges(invalidRanges: [invalidRange])
+        }
+    }
 }

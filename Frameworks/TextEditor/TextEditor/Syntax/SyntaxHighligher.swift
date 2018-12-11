@@ -31,7 +31,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     // MARK: - methods
     func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage) {
-        
+        return
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
         

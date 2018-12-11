@@ -43,7 +43,7 @@ class TestTextAttachment: NSTextAttachment{//}, NSPasteboardWriting, NSPasteboar
 //
     static let testTextAttachmentPasteboardType = NSPasteboard.PasteboardType(rawValue: "\(Bundle.main.bundleIdentifier ?? "Type").TestTextAttachment")
     
-    var myString = "myString"
+    var myString: NSAttributedString = NSAttributedString(string: "")
 //
 //    func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
 //
