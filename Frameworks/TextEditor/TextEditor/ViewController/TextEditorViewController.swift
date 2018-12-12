@@ -71,10 +71,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         outlineViewController?.model = outlineModel
     }
     
-    @objc func buttonAction() {
-        
-    }
-    
     var rulerView: TestRulerView! = nil
     // MARK: initialization
     public override func viewDidLoad() {
@@ -100,6 +96,24 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
         outlineMouseTrackingArea = NSTrackingArea(rect: rect, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil)
         self.view.addTrackingArea(outlineMouseTrackingArea!)
+        
+        addTestButton()
+    }
+    
+    private func addTestButton() {
+        
+        let button = NSButton(image: #imageLiteral(resourceName: "elipses"), target: self, action: #selector(buttonAction))
+        
+        self.view.addSubview(button)
+    }
+    
+    @objc private func buttonAction() {
+        
+        print("collapsedGroups:")
+        for collapsedTextGroup in collapsedTextGroups {
+            print(collapsedTextGroup.title)
+        }
+        print("")
     }
     
     private func createTextView() {
@@ -242,23 +256,36 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
     }
     
-//    private func expandAllTextGroups() {
-//
-//        let savedCollapsedTextGroups = collapsedTextGroups
-//        for collapsedTextGroup in collapsedTextGroups {
-//
-//            expandTextGroup(textGroup: collapsedTextGroup, invalidateDisplay: false)
-//        }
-//        collapsedTextGroups = savedCollapsedTextGroups
-//    }
+    private func expandAllTextGroups() {
+
+        for collapsedTextGroup in collapsedTextGroups {
+
+            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
+                continue
+            }
+            
+            var iteratedTextGroup: TextGroup? = iterator.next()
+            var correspondingTextGroup: TextGroup? = nil
+            while iteratedTextGroup != nil {
+                
+                var iteratedTitle = iteratedTextGroup?.title
+                iteratedTitle?.removeLast() // removing the text attachment on the end
+                let collapsedTitle = String(collapsedTextGroup.title)
+                if iteratedTitle == collapsedTitle {
+                    correspondingTextGroup = iteratedTextGroup
+                }
+                
+                iteratedTextGroup = iterator.next()
+            }
+            
+            if let correspondingTextGroup = correspondingTextGroup {
+                
+                expandTextGroup(textGroup: correspondingTextGroup, invalidateDisplay: true)
+            }
+        }
+    }
     
-//    private func recollapseTextGroups() {
-//
-//        for collapsedTextGroup in collapsedTextGroups {
-//
-//            collapseTextGroup(collapsedTextGroup)
-//        }
-//    }
+    
     
     // MARK: - OutlineViewControllerDelegate
     // TODO: these operations should not be done by the viewController?
@@ -338,6 +365,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         return
         var invalidTextGroups: [TextGroup] = []
         
+        //TODO: use text group iterator
+        //currently this only iterates over the base level of text groups
         for collapsedTextGroup in collapsedTextGroups {
             
             var stillExists = false
@@ -366,6 +395,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     func markerClicked(_ marker: TextGroupMarker) {
         
+//        expandAllTextGroups()
+        
         guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
@@ -373,6 +404,12 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         guard let range = collapsedTextGroupRange(correspondingTextGroup) else {
             return
         }
+        
+        
+//        let savedCollapsedTextGroups = collapsedTextGroups
+        
+        
+        
         
         var textGroupIsCollapsed = false
         var indexOfCollapsedTextGroup: Int? = nil
@@ -392,6 +429,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
+//        let savedCollapsedTextGroupsTitles = collapsedTextGroups.map { (textGroup) -> String in
+//            return textGroup.title
+//        }
+        
         if textGroupIsCollapsed {
             
             guard let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup else {
@@ -406,14 +447,58 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             collapseTextGroup(correspondingTextGroup)
         }
         
+        
+//        for collapsedTextGroupTitle in savedCollapsedTextGroupsTitles {
+//            
+//            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
+//                continue
+//            }
+//            
+//            var iteratedTextGroup: TextGroup? = iterator.next()
+//            var correspondingTextGroup: TextGroup? = nil
+//            while iteratedTextGroup != nil {
+//                
+//                if iteratedTextGroup?.title == collapsedTextGroupTitle {
+//                    correspondingTextGroup = iteratedTextGroup
+//                    break
+//                }
+//                
+//                iteratedTextGroup = iterator.next()
+//            }
+//            
+//            
+//            if let correspondingTextGroup = correspondingTextGroup {
+//                
+//                collapseTextGroup(correspondingTextGroup)
+//            }
+//        }
+        
         self.invalidateRanges(invalidRanges: [range])
     }
     
     // MARK: collapse text group
     private func collapsedTextGroupRange(_ textGroup: TextGroup) -> NSRange? {
        
-        guard let locationOfToken = textGroup.token?.range.location,
-              let lengthOfToken = textGroup.token?.range.length else {
+        guard let iterator = textGroup.parentTextGroup?.createIterator() else {
+            return nil
+        }
+        
+        var iteratedTextGroup: TextGroup? = iterator.next()
+        var correspondingTextGroup: TextGroup? = nil
+        while iteratedTextGroup != nil {
+            
+            if iteratedTextGroup?.title == textGroup.title {
+                correspondingTextGroup = iteratedTextGroup
+                break
+            }
+            
+            iteratedTextGroup = iterator.next()
+        }
+        
+        
+        
+        guard let locationOfToken = correspondingTextGroup?.token?.range.location,
+              let lengthOfToken = correspondingTextGroup?.token?.range.length else {
                 return nil
         }
         
@@ -473,6 +558,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         self.invalidateRanges(invalidRanges: [range])
     }
     
+    private func recollapseTextGroups() {
+        
+        for collapsedTextGroup in collapsedTextGroups {
+            collapseTextGroup(collapsedTextGroup)
+        }
+    }
+    
     //MARK: expand text group
     private func expandTextGroup(textGroup: TextGroup, invalidateDisplay: Bool = true) {
         
@@ -481,10 +573,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        let attributeLocation = (token.range.location + token.range.length) - 1
+        
+        //TODO: the location is either -1 or not. figure out why. and clean it up
+        // -1 when clicking on ruler view
+        // 0 when called from expandAllGroups
+        let attributeLocation = (token.range.location + token.range.length) - 1 // -1 becuase the textAttachment gets included in the token
         guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
             return
         }
+        //
         
         let stringInAttachment = attachment.myString
         
