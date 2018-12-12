@@ -108,20 +108,28 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     @objc private func buttonAction() {
+
+        collapsedTextGroups = []
         
-        print("collapsedGroups:")
-        for collapsedTextGroup in collapsedTextGroups {
-            print(collapsedTextGroup.title)
-        }
-        print("")
+        let attributes = [NSAttributedString.Key.font : standardFont]
+        let attributedString = NSAttributedString(string: demoString, attributes: attributes)
+        textStorage.replaceCharacters(in: textStorage.string.maxNSRange, with: attributedString)
+        
+//        print("collapsedGroups:")
+//        for collapsedTextGroup in collapsedTextGroups {
+//            print(collapsedTextGroup.title)
+//        }
+//        print("")
     }
+    
+    let demoString = "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else"
     
     private func createTextView() {
     
         // 1. create text storage that backs the editor
         let attributes = [NSAttributedString.Key.font : standardFont]
         //TODO: hook string up to opened file
-        let string = ""
+        let string = demoString
         
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = NSTextStorage()
@@ -395,11 +403,36 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     func markerClicked(_ marker: TextGroupMarker) {
         
-//        expandAllTextGroups()
         
-        guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
+        guard let correspondingTextGroup1 = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
+        
+        expandAllTextGroups()
+        
+        guard let iterator = outlineModel?.textGroups.first?.parentTextGroup?.createIterator() else {
+            return
+        }
+        
+        var iteratedTextGroup: TextGroup? = iterator.next()
+        var correspondingTextGroup: TextGroup! = nil
+        while iteratedTextGroup != nil {
+            
+            if iteratedTextGroup?.title == correspondingTextGroup1.title {
+                correspondingTextGroup = iteratedTextGroup
+                break
+            }
+            
+            iteratedTextGroup = iterator.next()
+        }
+        
+        guard correspondingTextGroup != nil else {
+            return
+        }
+        
+//        guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
+//            return
+//        }
         
         guard let range = collapsedTextGroupRange(correspondingTextGroup) else {
             return
@@ -429,9 +462,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-//        let savedCollapsedTextGroupsTitles = collapsedTextGroups.map { (textGroup) -> String in
-//            return textGroup.title
-//        }
+        let savedCollapsedTextGroupsTitles = collapsedTextGroups.map { (textGroup) -> String in
+            return textGroup.title
+        }
         
         if textGroupIsCollapsed {
             
@@ -448,30 +481,30 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
         
         
-//        for collapsedTextGroupTitle in savedCollapsedTextGroupsTitles {
-//            
-//            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
-//                continue
-//            }
-//            
-//            var iteratedTextGroup: TextGroup? = iterator.next()
-//            var correspondingTextGroup: TextGroup? = nil
-//            while iteratedTextGroup != nil {
-//                
-//                if iteratedTextGroup?.title == collapsedTextGroupTitle {
-//                    correspondingTextGroup = iteratedTextGroup
-//                    break
-//                }
-//                
-//                iteratedTextGroup = iterator.next()
-//            }
-//            
-//            
-//            if let correspondingTextGroup = correspondingTextGroup {
-//                
-//                collapseTextGroup(correspondingTextGroup)
-//            }
-//        }
+        for collapsedTextGroupTitle in savedCollapsedTextGroupsTitles {
+            
+            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
+                continue
+            }
+            
+            var iteratedTextGroup: TextGroup? = iterator.next()
+            var correspondingTextGroup: TextGroup? = nil
+            while iteratedTextGroup != nil {
+                
+                if iteratedTextGroup?.title == collapsedTextGroupTitle {
+                    correspondingTextGroup = iteratedTextGroup
+                    break
+                }
+                
+                iteratedTextGroup = iterator.next()
+            }
+            
+            
+            if let correspondingTextGroup = correspondingTextGroup {
+                
+                collapseTextGroup(correspondingTextGroup)
+            }
+        }
         
         self.invalidateRanges(invalidRanges: [range])
     }
