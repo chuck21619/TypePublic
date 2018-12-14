@@ -107,13 +107,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         self.view.addSubview(button)
     }
     
+    var DOTHETHING = false
     @objc private func buttonAction() {
 
-        collapsedTextGroups = []
-        
-        let attributes = [NSAttributedString.Key.font : standardFont]
-        let attributedString = NSAttributedString(string: demoString, attributes: attributes)
-        textStorage.replaceCharacters(in: textStorage.string.maxNSRange, with: attributedString)
+        DOTHETHING = true
+//        collapsedTextGroups = []
+//
+//        let attributes = [NSAttributedString.Key.font : standardFont]
+//        let attributedString = NSAttributedString(string: demoString, attributes: attributes)
+//        textStorage.replaceCharacters(in: textStorage.string.maxNSRange, with: attributedString)
         
 //        print("collapsedGroups:")
 //        for collapsedTextGroup in collapsedTextGroups {
@@ -239,13 +241,33 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
+        //DispatchQueue.background.async {
+        //  invalidRange1 = expandAllGroups() //change expandAllGroups to return invalidRange instead of calling invalidateRange: this means i may need to change how expandAllGroups works because it loops through groups, and depends of each one being expanded in order?
+            //i think i can just loop through the groups in descending order(but what about nested collapsed groups?)
+            // EDIT: i think i can ignore above comments regarding expandAllGroups and just change the invalidateDisplay bool passed to expandGroup to false (because nested collapses dont actually exist in the text storage, the parent collapsed group will contain an expanded version of its text) - why is that true to begin with? it shouldn't even happen with the current implementation (unless its needed when clicking expand/collapse in the rulerView? that would be extremely inefficient and needs to get fixed if so)
+        //  translatedEditedRange = to what it is after expanding all groups
+        //  translatedChangeInLength = to what it is after expanding all groups (if user deleted a collapsed group, the changeInLength changes)
+        //  invalidRange = syntaxHighlighter?.highlight(editedRange: translatedEditedRange, changeInLength: delta, textStorage: textStorage, workItem: workItem) //return invalidRange instead of calling invalidateDisplay. change mainQueue work from syntaxHighlighter to run on same queue
+        //  recollapseTextGroups()
+        //  if rulerView != nil {
+        //    rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
+        //  }
+        //}
+        
+        if DOTHETHING {
+            let result = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+            print(result)
+        }
+        
+//        DispatchQueue.main.async {
+//
+//            self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+//
+//        }
+        //TODO: handle consecutive calls in quick succession: may have to change 'DispatchQueue.background.async' to be in a workItem that can be cancelled()
+        
+        
         syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
-        
-        
-        //TODO: figure out how to handle deletion of a collapse text group titile
-        // eg: user collapses a group, then highlights the title and deletes it
-        // should the content of the textgroup be deleted? if so, figure out how to do it
-        // should the content of the textgroup be expaned? if so, figure out how to do it
         
         //TODO: figure out what shold happen when deleting '#' in a collapsed title that then makes that gorup consume a group underneath it
         // should it auto-expand when deleting '#'?
@@ -263,37 +285,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             rulerView.needsDisplay = true
         }
     }
-    
-    private func expandAllTextGroups() {
-
-        for collapsedTextGroup in collapsedTextGroups {
-
-            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
-                continue
-            }
-            
-            var iteratedTextGroup: TextGroup? = iterator.next()
-            var correspondingTextGroup: TextGroup? = nil
-            while iteratedTextGroup != nil {
-                
-                var iteratedTitle = iteratedTextGroup?.title
-                iteratedTitle?.removeLast() // removing the text attachment on the end
-                let collapsedTitle = String(collapsedTextGroup.title)
-                if iteratedTitle == collapsedTitle {
-                    correspondingTextGroup = iteratedTextGroup
-                }
-                
-                iteratedTextGroup = iterator.next()
-            }
-            
-            if let correspondingTextGroup = correspondingTextGroup {
-                
-                expandTextGroup(textGroup: correspondingTextGroup, invalidateDisplay: true)
-            }
-        }
-    }
-    
-    
     
     // MARK: - OutlineViewControllerDelegate
     // TODO: these operations should not be done by the viewController?
@@ -367,6 +358,48 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     // MARK: - TestRulerViewDelegate
+    private func expandAllTextGroups(editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRanges: [NSRange]) {
+        
+        var adjustedEditedRange = editedRange
+        var adjustedDelta = delta
+        var invalidRanges: [NSRange] = []
+        
+        for collapsedTextGroup in collapsedTextGroups {
+            
+            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
+                continue
+            }
+            
+            var iteratedTextGroup: TextGroup? = iterator.next()
+            var correspondingTextGroup: TextGroup? = nil
+            while iteratedTextGroup != nil {
+                
+                var iteratedTitle = iteratedTextGroup?.title
+                iteratedTitle?.removeLast() // removing the text attachment on the end
+                let collapsedTitle = String(collapsedTextGroup.title)
+                if iteratedTitle == collapsedTitle {
+                    correspondingTextGroup = iteratedTextGroup
+                }
+                
+                iteratedTextGroup = iterator.next()
+            }
+            
+            if let correspondingTextGroup = correspondingTextGroup {
+                
+                let adjustments = expandTextGroup(textGroup: correspondingTextGroup, invalidateDisplay: false, editedRange: adjustedEditedRange, delta: adjustedDelta)
+                
+                adjustedEditedRange = adjustments.adjustedEditedRange
+                adjustedDelta = adjustments.adjustedDelta
+                
+                if let invalidRange = adjustments.invalidRange {
+                    invalidRanges.append(invalidRange)
+                }
+            }
+        }
+        
+        return (adjustedEditedRange: adjustedEditedRange, adjustedDelta: adjustedDelta, invalidRanges: invalidRanges)
+    }
+    
     var collapsedTextGroups: [TextGroup] = []
     private func validateCollapsedTextGroups() {
         //TODO: fix for textAttachment
@@ -599,31 +632,63 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     //MARK: expand text group
-    private func expandTextGroup(textGroup: TextGroup, invalidateDisplay: Bool = true) {
+    private func expandTextGroup(textGroup: TextGroup, invalidateDisplay: Bool = true, editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRange: NSRange?) {
         
         //get the textattachment
         guard let token = textGroup.token else {
-            return
+            return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         
+        let attributeLocation = (token.range.location + token.range.length)        
+        //-1 if included or after textAttachment
+        var attributeRange = NSRange(location: attributeLocation, length: 1)
+        if editedRange?.intersection(attributeRange)?.length ?? 0 > 0 || editedRange?.location ?? 0 > attributeLocation {
+            attributeRange = NSRange(location: attributeRange.location - 1, length: attributeRange.length)
+        }
         
-        //TODO: the location is either -1 or not. figure out why. and clean it up
-        // -1 when clicking on ruler view
-        // 0 when called from expandAllGroups
-        let attributeLocation = (token.range.location + token.range.length) - 1 // -1 becuase the textAttachment gets included in the token
         guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
-            return
+            return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         //
         
         let stringInAttachment = attachment.myString
         
-        let attributeRange = NSRange(location: attributeLocation, length: 1)
         textStorage.replaceCharacters(in: attributeRange, with: stringInAttachment)
         let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
             self.invalidateRanges(invalidRanges: [invalidRange])
         }
+        
+        
+        
+        var invalidRangeReturnValue: NSRange? = nil
+        var deltaReturnValue = delta
+        var editedRangeReturnValue = editedRange
+        
+        if editedRange?.intersection(attributeRange)?.length ?? 0 > 0 {
+            
+            if let delta = delta {
+                deltaReturnValue = (delta - stringInAttachment.string.maxNSRange.length) + 1 //+1 due to the textAttachment
+            }
+            
+            if let editedRange = editedRange {
+                let location = editedRange.location
+                let length = editedRange.length + stringInAttachment.string.maxNSRange.length
+                editedRangeReturnValue = NSRange(location: location, length: length)
+            }
+        }
+        else if editedRange?.location ?? 0 > attributeRange.location, let editedRange = editedRange {
+            
+            let location = editedRange.location + stringInAttachment.string.maxNSRange.length
+            let length = editedRange.length
+            editedRangeReturnValue = NSRange(location: location, length: length)
+        }
+        
+        if editedRange?.intersects(attributeRange) == true {
+            invalidRangeReturnValue = invalidRange
+        }
+        
+        return (adjustedEditedRange: editedRangeReturnValue, adjustedDelta: deltaReturnValue, invalidRange: invalidRangeReturnValue)
     }
 }
