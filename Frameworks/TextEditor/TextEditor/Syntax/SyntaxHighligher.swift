@@ -30,8 +30,8 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     }
     
     // MARK: - methods
-    func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage) {
-        return
+    func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage, completion: ((_ invalidRanges: [NSRange])->())? = nil) {
+        
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
         
@@ -55,12 +55,14 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             self.editedRangeSinceLastParsing = nil
             self.changeInLengthSinceLastParsing = nil
             
-            DispatchQueue.main.async {
-                
+//            DispatchQueue.main.async {
+            
                 self.addAttributes(textStorage: textStorage, invalidAttributeRanges: invalidAttributeRanges, newAttributeOccurrences: newAttributeOccurrences)
-                
-                self.invalidateDisplay(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
-            }
+            
+            let invalidRanges = self.invalidRanges(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
+            completion?(invalidRanges)
+//                self.invalidateDisplay(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
+//            }
             
             newWorkItem = nil
         }
@@ -87,7 +89,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
         self.delegate?.didAddAttributes(self)
     }
     
-    private func invalidateDisplay(newAttributeOccurrences: [AttributeOccurrence], invalidAttributeRanges: [NSRange]) {
+    private func invalidRanges(newAttributeOccurrences: [AttributeOccurrence], invalidAttributeRanges: [NSRange]) -> [NSRange] {
         
         let newAttributesRanges = newAttributeOccurrences.map({ (attributeOccurence) -> NSRange in
             return attributeOccurence.effectiveRange
@@ -95,6 +97,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
         
         let invalidRanges = invalidAttributeRanges + newAttributesRanges
         
-        self.delegate?.invalidateRanges(invalidRanges: invalidRanges)
+        return invalidRanges
     }
 }

@@ -254,6 +254,24 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         //  }
         //}
         
+        DispatchQueue.global().async {
+            let translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+            
+            guard let translatedEditedRange = translations.adjustedEditedRange,
+                  let translatedChangeInLength = translations.adjustedDelta else {
+                    return
+            }
+            
+            self.syntaxHighlighter?.highlight(editedRange: translatedEditedRange, changeInLength: translatedChangeInLength, textStorage: textStorage) { invalidRangesForHighlighting in
+                
+                var invalidRanges = translations.invalidRanges
+                invalidRanges.append(contentsOf: invalidRangesForHighlighting)
+                
+                //invalidRanges = self.recollapseTextGroups(invalidRanges: [NSRange])
+            }
+            
+        }
+        
         if DOTHETHING {
             let result = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
             print(result)
@@ -588,10 +606,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         return range
     }
     
-    private func collapseTextGroup(_ textGroup: TextGroup) {
+    private func collapseTextGroup(_ textGroup: TextGroup, invalidRanges: [NSRange] = []) -> [NSRange] {
         
         guard let range = collapsedTextGroupRange(textGroup) else {
-            return
+            return []
         }
         let location = range.location
         let endIndex = (location + range.length)
@@ -607,6 +625,75 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
 
         self.textStorage.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
         
+        
+        
+        
+        /////
+        var collapsedGroupRangeNeedsToBeInvalidated = false
+        for invalidRange in invalidRanges {
+            if invalidRange.intersects(range) {
+                collapsedGroupRangeNeedsToBeInvalidated = true
+                break
+            }
+        }
+        //
+        
+        var adjustedInvalidRanges: [NSRange] = []
+        for invalidRange in invalidRanges {
+            
+            var adjustedRange: NSRange? = nil
+            let groupRange = range
+            
+            let invalidStartIndex = invalidRange.location
+            let invalidEndIndex = invalidRange.location + invalidRange.length
+            let groupStartIndex = groupRange.location
+            let groupEndIndex = groupRange.location + groupRange.length
+            
+            //1
+            if invalidStartIndex <= groupStartIndex && invalidEndIndex >= groupEndIndex {
+                adjustedRange = NSRange(location: invalidRange.location, length: invalidRange.length - groupRange.length)
+            }
+            //2
+            else if invalidEndIndex <= groupStartIndex {
+                adjustedRange = invalidRange
+            }
+            //3
+            else if invalidStartIndex >= groupEndIndex {
+                adjustedRange = NSRange(location: invalidRange.location - groupRange.length, length: invalidRange.length)
+            }
+            //4
+            else if invalidStartIndex <= groupStartIndex && invalidEndIndex > groupStartIndex && invalidEndIndex < groupEndIndex {
+                guard let overlap = invalidRange.intersection(groupRange)?.length else {
+                    continue
+                }
+                
+                adjustedRange = NSRange(location: invalidRange.location, length: invalidRange.length - overlap)
+            }
+            //5
+            else if invalidStartIndex > groupStartIndex && invalidStartIndex < groupEndIndex && invalidEndIndex > groupEndIndex {
+                guard let overlap = invalidRange.intersection(groupRange)?.length else {
+                    continue
+                }
+                
+                adjustedRange = NSRange(location: invalidRange.location - overlap, length: invalidRange.length - overlap)
+            }
+            //6
+            else if invalidStartIndex >= groupStartIndex && invalidEndIndex <= groupEndIndex {
+                adjustedRange = nil
+            }
+            
+            if let adjustedRange = adjustedRange {
+                adjustedInvalidRanges.append(adjustedRange)
+            }
+        }
+        
+        if collapsedGroupRangeNeedsToBeInvalidated {
+            adjustedInvalidRanges.append(range)
+        }
+        /////
+        
+        
+        
         var alreadyInArray = false
         for collapsedTextGroup in collapsedTextGroups {
             
@@ -621,14 +708,18 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             collapsedTextGroups.append(textGroup)
         }
         
-        self.invalidateRanges(invalidRanges: [range])
+        return adjustedInvalidRanges
+//        self.invalidateRanges(invalidRanges: [range])
     }
     
-    private func recollapseTextGroups() {
+    private func recollapseTextGroups(invalidRanges: [NSRange]) -> [NSRange] {
         
+        var adjustedInvalidRanges = invalidRanges
         for collapsedTextGroup in collapsedTextGroups {
-            collapseTextGroup(collapsedTextGroup)
+            adjustedInvalidRanges = collapseTextGroup(collapsedTextGroup, invalidRanges: invalidRanges)
         }
+        
+        return adjustedInvalidRanges
     }
     
     //MARK: expand text group
