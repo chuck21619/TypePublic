@@ -241,6 +241,14 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
+        guard markerClickAction == false else {
+            self.outlineModel?.updateTextGroups(from: textStorage.string)
+            if self.rulerView != nil {
+                self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
+            }
+            return
+        }
+        
         //DispatchQueue.background.async {
         //  invalidRange1 = expandAllGroups() //change expandAllGroups to return invalidRange instead of calling invalidateRange: this means i may need to change how expandAllGroups works because it loops through groups, and depends of each one being expanded in order?
             //i think i can just loop through the groups in descending order(but what about nested collapsed groups?)
@@ -255,7 +263,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         //}
         
         DispatchQueue.global().async {
+            
             let translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+            
+            self.outlineModel?.outline(textStorage: textStorage)
             
             guard let translatedEditedRange = translations.adjustedEditedRange,
                   let translatedChangeInLength = translations.adjustedDelta else {
@@ -267,7 +278,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 var invalidRanges = translations.invalidRanges
                 invalidRanges.append(contentsOf: invalidRangesForHighlighting)
                 
-                //invalidRanges = self.recollapseTextGroups(invalidRanges: [NSRange])
+                invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
+                
+                DispatchQueue.main.async {
+                    
+                    self.invalidateRanges(invalidRanges: invalidRanges)
+                    if self.rulerView != nil {
+                        self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
+                    }
+                }
             }
             
         }
@@ -285,23 +304,23 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         //TODO: handle consecutive calls in quick succession: may have to change 'DispatchQueue.background.async' to be in a workItem that can be cancelled()
         
         
-        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
+//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         
         //TODO: figure out what shold happen when deleting '#' in a collapsed title that then makes that gorup consume a group underneath it
         // should it auto-expand when deleting '#'?
         
-        outlineModel?.outline(textStorage: textStorage) {
-            
-            DispatchQueue.main.async {
-                
-                self.validateCollapsedTextGroups()
-            }
-        }
-        
-        if rulerView != nil {
-            
-            rulerView.needsDisplay = true
-        }
+//        outlineModel?.outline(textStorage: textStorage) {
+//
+//            DispatchQueue.main.async {
+//
+//                self.validateCollapsedTextGroups()
+//            }
+//        }
+//
+//        if rulerView != nil {
+//
+//            rulerView.needsDisplay = true
+//        }
     }
     
     // MARK: - OutlineViewControllerDelegate
@@ -415,7 +434,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             }
         }
         
-        return (adjustedEditedRange: adjustedEditedRange, adjustedDelta: adjustedDelta, invalidRanges: invalidRanges)
+        return (adjustedEditedRange: adjustedEditedRange, adjustedDelta: adjustedDelta, invalidRanges: [])
     }
     
     var collapsedTextGroups: [TextGroup] = []
@@ -452,16 +471,19 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
     }
     
+    var markerClickAction = false
     func markerClicked(_ marker: TextGroupMarker) {
         
+        markerClickAction = true
         
         guard let correspondingTextGroup1 = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
         
         expandAllTextGroups()
+        outlineModel?.updateTextGroups(from: textStorage.string)
         
-        guard let iterator = outlineModel?.textGroups.first?.parentTextGroup?.createIterator() else {
+        guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
             return
         }
         
@@ -469,7 +491,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         var correspondingTextGroup: TextGroup! = nil
         while iteratedTextGroup != nil {
             
-            if iteratedTextGroup?.title == correspondingTextGroup1.title {
+            var iteratedTitle = iteratedTextGroup?.title
+            iteratedTitle?.removeLast() // removing the text attachment on the end
+            
+            //when collapsed the text attachment needs to be removed for this comparision to work
+            //TODO: clean up
+            
+            if iteratedTitle == correspondingTextGroup1.title || iteratedTextGroup?.title == correspondingTextGroup1.title {
                 correspondingTextGroup = iteratedTextGroup
                 break
             }
@@ -558,6 +586,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
         
         self.invalidateRanges(invalidRanges: [range])
+        
+        markerClickAction = false
     }
     
     // MARK: collapse text group
@@ -731,21 +761,23 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
         
         let attributeLocation = (token.range.location + token.range.length)        
-        //-1 if included or after textAttachment
+        //-1 if included or after textAttachment. i think there are more conditions to this
         var attributeRange = NSRange(location: attributeLocation, length: 1)
         if editedRange?.intersection(attributeRange)?.length ?? 0 > 0 || editedRange?.location ?? 0 > attributeLocation {
             attributeRange = NSRange(location: attributeRange.location - 1, length: attributeRange.length)
         }
-        
-        guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
+        // TODO: fix this. figure out the correct location
+        guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment ??
+                               textStorage.attribute(.attachment, at: attributeLocation-1, effectiveRange: nil) as? TestTextAttachment else {
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         //
         
         let stringInAttachment = attachment.myString
         
-        textStorage.replaceCharacters(in: attributeRange, with: stringInAttachment)
-        let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
+        //minus 1 due to textAttachment
+        textStorage.replaceCharacters(in: NSRange(location: attributeRange.location-1, length: attributeRange.length), with: stringInAttachment)
+        let invalidRange = NSRange(location: attributeRange.location-1, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
             self.invalidateRanges(invalidRanges: [invalidRange])

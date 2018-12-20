@@ -36,7 +36,7 @@ class OutlineModel {
         })
     }
     
-    private func updateTextGroups(from string: String, completion: @escaping ([TextGroup]?)->()) {
+    func updateTextGroups(from string: String, completion: (([TextGroup]?)->())? = nil) {
         
 //        workItem?.cancel()
 //        var newWorkItem: DispatchWorkItem!
@@ -44,7 +44,7 @@ class OutlineModel {
 //        newWorkItem = DispatchWorkItem {
             
             guard let tokens = self.language.textGroupTokens(for: string, workItem: nil/*newWorkItem*/) else {
-                completion(nil)
+                completion?(nil)
                 return
             }
             
@@ -88,7 +88,7 @@ class OutlineModel {
             
             self.string = string
             self.textGroups = textGroups
-            completion(textGroups)
+            completion?(textGroups)
             
 //            newWorkItem = nil
 //        }
