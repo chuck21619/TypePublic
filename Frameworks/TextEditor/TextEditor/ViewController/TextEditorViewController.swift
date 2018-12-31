@@ -241,14 +241,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        guard markerClickAction == false else {
-            self.outlineModel?.updateTextGroups(from: textStorage.string)
-            if self.rulerView != nil {
-                self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
-            }
-            return
-        }
-        
         //DispatchQueue.background.async {
         //  invalidRange1 = expandAllGroups() //change expandAllGroups to return invalidRange instead of calling invalidateRange: this means i may need to change how expandAllGroups works because it loops through groups, and depends of each one being expanded in order?
             //i think i can just loop through the groups in descending order(but what about nested collapsed groups?)
@@ -471,123 +463,53 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
     }
     
-    var markerClickAction = false
     func markerClicked(_ marker: TextGroupMarker) {
         
-        markerClickAction = true
+        ignoreProcessEditing = true
         
-        guard let correspondingTextGroup1 = outlineModel?.textGroup(at: marker.token.range.location) else {
+        guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
-        
-        expandAllTextGroups()
-        outlineModel?.updateTextGroups(from: textStorage.string)
-        
-        guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
-            return
-        }
-        
-        var iteratedTextGroup: TextGroup? = iterator.next()
-        var correspondingTextGroup: TextGroup! = nil
-        while iteratedTextGroup != nil {
-            
-            var iteratedTitle = iteratedTextGroup?.title
-            iteratedTitle?.removeLast() // removing the text attachment on the end
-            
-            //when collapsed the text attachment needs to be removed for this comparision to work
-            //TODO: clean up
-            
-            if iteratedTitle == correspondingTextGroup1.title || iteratedTextGroup?.title == correspondingTextGroup1.title {
-                correspondingTextGroup = iteratedTextGroup
-                break
-            }
-            
-            iteratedTextGroup = iterator.next()
-        }
-        
-        guard correspondingTextGroup != nil else {
-            return
-        }
-        
-//        guard let correspondingTextGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
-//            return
-//        }
-        
-        guard let range = collapsedTextGroupRange(correspondingTextGroup) else {
-            return
-        }
-        
-        
-//        let savedCollapsedTextGroups = collapsedTextGroups
-        
-        
-        
         
         var textGroupIsCollapsed = false
-        var indexOfCollapsedTextGroup: Int? = nil
+        
         for collapsedTextGroup in collapsedTextGroups {
-
-            //TODO: fix this - comparing titles is not always valid
-            let range = correspondingTextGroup.title.startIndex..<correspondingTextGroup.title.index(before: correspondingTextGroup.title.endIndex)
-            let correspondingTextGroupTitle = correspondingTextGroup.title[range]
-            if correspondingTextGroupTitle == collapsedTextGroup.title {
+            
+            if collapsedTextGroup.title == textGroup.title {
                 textGroupIsCollapsed = true
-                indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex(of: collapsedTextGroup)
-                break
             }
-        }
-        
-        guard textGroupIsCollapsed || range.length > 1 else {
-            return
-        }
-        
-        let savedCollapsedTextGroupsTitles = collapsedTextGroups.map { (textGroup) -> String in
-            return textGroup.title
         }
         
         if textGroupIsCollapsed {
             
-            guard let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup else {
-                return
-            }
-            self.collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
+            expandTextGroup(textGroup: textGroup)
+            outlineModel?.updateTextGroups(from: textStorage.string)
             
-            expandTextGroup(textGroup: correspondingTextGroup)
+            for collapsedTextGroup in collapsedTextGroups {
+                
+                if collapsedTextGroup.parentTextGroup?.title == textGroup.title {
+                    collapseTextGroup(collapsedTextGroup)
+                    outlineModel?.updateTextGroups(from: textStorage.string)
+                }
+            }
+            
+            let indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex { (collapsedTextGroup) -> Bool in
+                collapsedTextGroup.title == textGroup.title
+            }
+            
+            if let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup {
+                collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
+            }
         }
         else {
             
-            collapseTextGroup(correspondingTextGroup)
+            collapseTextGroup(textGroup)
+            outlineModel?.updateTextGroups(from: textStorage.string)
         }
         
+        rulerView.needsDisplay = true
         
-        for collapsedTextGroupTitle in savedCollapsedTextGroupsTitles {
-            
-            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
-                continue
-            }
-            
-            var iteratedTextGroup: TextGroup? = iterator.next()
-            var correspondingTextGroup: TextGroup? = nil
-            while iteratedTextGroup != nil {
-                
-                if iteratedTextGroup?.title == collapsedTextGroupTitle {
-                    correspondingTextGroup = iteratedTextGroup
-                    break
-                }
-                
-                iteratedTextGroup = iterator.next()
-            }
-            
-            
-            if let correspondingTextGroup = correspondingTextGroup {
-                
-                collapseTextGroup(correspondingTextGroup)
-            }
-        }
-        
-        self.invalidateRanges(invalidRanges: [range])
-        
-        markerClickAction = false
+        ignoreProcessEditing = false
     }
     
     // MARK: collapse text group
@@ -636,7 +558,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         return range
     }
     
-    private func collapseTextGroup(_ textGroup: TextGroup, invalidRanges: [NSRange] = []) -> [NSRange] {
+    @discardableResult private func collapseTextGroup(_ textGroup: TextGroup, invalidRanges: [NSRange] = []) -> [NSRange] {
         
         guard let range = collapsedTextGroupRange(textGroup) else {
             return []

@@ -52,7 +52,17 @@ class OutlineModel {
             
             for token in tokens {
                 
-                let newTextGroup = TextGroup(title: token.label, token: token)
+                var title = token.label
+                
+                //TODO: the following 3 lines of code: this is not a valid solution to identifying/removing the collapsed image in a token
+                // user could have his own image on the end of a token which would also cause this to be true, which would be invalid as the text group is not necessariyly collapsed
+                // i think the best valid solution will have to be to change all the string arguments to nsattributedstring and then look at the attributedString for a testTextAttachment
+                if let lastCharacter = token.label.last, String(lastCharacter).utf8.count > 1 {
+                    
+                    title.removeLast()
+                }
+                
+                let newTextGroup = TextGroup(title: title, token: token)
                 
                 var flattenedTextGroups: [TextGroup] = []
                 

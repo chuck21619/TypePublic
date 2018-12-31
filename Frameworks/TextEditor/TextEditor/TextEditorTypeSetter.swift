@@ -21,6 +21,8 @@ class TextEditorTypeSetter: NSATSTypesetter {
 
 class TestTextAttachment: NSTextAttachment{//}, NSPasteboardWriting, NSPasteboardReading {
     
+    
+    
 //    override init(data contentData: Data?, ofType uti: String?) {
 //        print("")
 //        super.init(data: contentData, ofType: uti)
