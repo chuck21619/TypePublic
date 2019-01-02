@@ -485,11 +485,21 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             expandTextGroup(textGroup: textGroup)
             outlineModel?.updateTextGroups(from: textStorage.string)
             
-            for collapsedTextGroup in collapsedTextGroups {
-
-                if collapsedTextGroup.parentTextGroup?.title == textGroup.title {
-                    collapseTextGroup(collapsedTextGroup)
-                    outlineModel?.updateTextGroups(from: textStorage.string)
+            guard let location = textGroup.token?.range.location, let updatedTextGroup = outlineModel?.textGroup(at: location) else {
+                
+                return
+            }
+            
+            //re-collapse all groups inside of it that were collapsed
+            for childTextGroup in updatedTextGroup.textGroups.reversed() {
+                
+                for collapsedTextGroup in collapsedTextGroups {
+                    
+                    if collapsedTextGroup.title == childTextGroup.title {
+                        
+                        collapseTextGroup(childTextGroup)
+                        outlineModel?.updateTextGroups(from: textStorage.string)
+                    }
                 }
             }
             
@@ -504,7 +514,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         else {
             
             //expand all groups inside of it that are collapsed
-            for childTextGroup in textGroup.textGroups {
+            for childTextGroup in textGroup.textGroups.reversed() {
                 
                 for collapsedTextGroup in collapsedTextGroups {
                     
@@ -692,7 +702,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     //MARK: expand text group
-    private func expandTextGroup(textGroup: TextGroup, invalidateDisplay: Bool = true, editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRange: NSRange?) {
+    @discardableResult private func expandTextGroup(textGroup: TextGroup, invalidateDisplay: Bool = true, editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRange: NSRange?) {
         
         //get the textattachment
         guard let token = textGroup.token else {
