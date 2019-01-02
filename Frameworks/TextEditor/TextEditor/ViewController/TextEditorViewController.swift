@@ -682,24 +682,17 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         
-        let attributeLocation = (token.range.location + token.range.length)
-        //-1 if included or after textAttachment. i think there are more conditions to this
-        var attributeRange = NSRange(location: attributeLocation, length: 1)
-        if editedRange?.intersection(attributeRange)?.length ?? 0 > 0 || editedRange?.location ?? 0 > attributeLocation {
-            attributeRange = NSRange(location: attributeRange.location - 1, length: attributeRange.length)
-        }
-        // TODO: fix this. figure out the correct location
-        guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment ??
-                               textStorage.attribute(.attachment, at: attributeLocation-1, effectiveRange: nil) as? TestTextAttachment else {
+        let attributeLocation = (token.range.location + token.range.length)-1
+        let attributeRange = NSRange(location: attributeLocation, length: 1)
+        guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         //
         
         let stringInAttachment = attachment.myString
         
-        //minus 1 due to textAttachment
-        textStorage.replaceCharacters(in: NSRange(location: attributeRange.location-1, length: attributeRange.length), with: stringInAttachment)
-        let invalidRange = NSRange(location: attributeRange.location-1, length: stringInAttachment.string.maxNSRange.length)
+        textStorage.replaceCharacters(in: NSRange(location: attributeRange.location, length: attributeRange.length), with: stringInAttachment)
+        let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
             self.invalidateRanges(invalidRanges: [invalidRange])
