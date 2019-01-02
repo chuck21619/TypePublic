@@ -486,7 +486,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             outlineModel?.updateTextGroups(from: textStorage.string)
             
             for collapsedTextGroup in collapsedTextGroups {
-                
+
                 if collapsedTextGroup.parentTextGroup?.title == textGroup.title {
                     collapseTextGroup(collapsedTextGroup)
                     outlineModel?.updateTextGroups(from: textStorage.string)
@@ -503,7 +503,24 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         }
         else {
             
-            collapseTextGroup(textGroup)
+            //expand all groups inside of it that are collapsed
+            for childTextGroup in textGroup.textGroups {
+                
+                for collapsedTextGroup in collapsedTextGroups {
+                    
+                    if childTextGroup.title == collapsedTextGroup.title {
+                        
+                        expandTextGroup(textGroup: childTextGroup)
+                        outlineModel?.updateTextGroups(from: textStorage.string)
+                    }
+                }
+            }
+            
+            guard let location = textGroup.token?.range.location, let updatedTextGroup = outlineModel?.textGroup(at: location) else {
+                
+                return
+            }
+            collapseTextGroup(updatedTextGroup)
             outlineModel?.updateTextGroups(from: textStorage.string)
         }
         
