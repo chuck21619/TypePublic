@@ -107,10 +107,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         self.view.addSubview(button)
     }
     
-    var DOTHETHING = false
     @objc private func buttonAction() {
 
-        DOTHETHING = true
 //        collapsedTextGroups = []
 //
 //        let attributes = [NSAttributedString.Key.font : standardFont]
@@ -254,12 +252,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         //  }
         //}
         
-        DispatchQueue.global().async {
-            
+//        DispatchQueue.global().async {
+        
+//        textStorage.beginEditing()
             let translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
             
             self.outlineModel?.outline(textStorage: textStorage)
-            
+        
             guard let translatedEditedRange = translations.adjustedEditedRange,
                   let translatedChangeInLength = translations.adjustedDelta else {
                     return
@@ -272,21 +271,16 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 
                 invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
                 
-                DispatchQueue.main.async {
-                    
+//                DispatchQueue.main.async {
+                
                     self.invalidateRanges(invalidRanges: invalidRanges)
-                    if self.rulerView != nil {
-                        self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
-                    }
-                }
+//                    if self.rulerView != nil {
+//                        self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
+//                    }
+//                }
             }
-            
-        }
-        
-        if DOTHETHING {
-            let result = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
-            print(result)
-        }
+//            textStorage.endEditing()
+//        }
         
 //        DispatchQueue.main.async {
 //

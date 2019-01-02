@@ -55,14 +55,14 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             self.editedRangeSinceLastParsing = nil
             self.changeInLengthSinceLastParsing = nil
             
-//            DispatchQueue.main.async {
+            DispatchQueue.main.async {
             
                 self.addAttributes(textStorage: textStorage, invalidAttributeRanges: invalidAttributeRanges, newAttributeOccurrences: newAttributeOccurrences)
             
             let invalidRanges = self.invalidRanges(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
             completion?(invalidRanges)
 //                self.invalidateDisplay(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
-//            }
+            }
             
             newWorkItem = nil
         }
@@ -75,7 +75,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     private func addAttributes(textStorage: NSTextStorage, invalidAttributeRanges: [NSRange], newAttributeOccurrences: [AttributeOccurrence]) {
         
         self.delegate?.willAddAttributes(self)
-        textStorage.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
+//        textStorage.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
         for invalidAttributeRange in invalidAttributeRanges {
             
             textStorage.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
@@ -85,7 +85,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
             textStorage.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
         }
-        textStorage.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
+//        textStorage.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
         self.delegate?.didAddAttributes(self)
     }
     
