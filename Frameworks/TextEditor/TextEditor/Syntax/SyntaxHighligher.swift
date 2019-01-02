@@ -59,9 +59,8 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
                 self.addAttributes(textStorage: textStorage, invalidAttributeRanges: invalidAttributeRanges, newAttributeOccurrences: newAttributeOccurrences)
             
-            let invalidRanges = self.invalidRanges(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
-            completion?(invalidRanges)
-//                self.invalidateDisplay(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
+                let invalidRanges = self.invalidRanges(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
+                completion?(invalidRanges)
             }
             
             newWorkItem = nil

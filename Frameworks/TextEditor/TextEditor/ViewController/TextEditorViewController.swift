@@ -233,80 +233,62 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     // MARK: - NSTextStorageDelegate
+    var adjustedEditedRangeSinceLastEditing: NSRange? = nil
+    var adjustedDeltaSinceLastEditing: Int? = nil
+    var invalidRangesSinceLastEditing: [NSRange] = []
+    
     public func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
         guard ignoreProcessEditing == false else {
             return
         }
         
-        //DispatchQueue.background.async {
-        //  invalidRange1 = expandAllGroups() //change expandAllGroups to return invalidRange instead of calling invalidateRange: this means i may need to change how expandAllGroups works because it loops through groups, and depends of each one being expanded in order?
-            //i think i can just loop through the groups in descending order(but what about nested collapsed groups?)
-            // EDIT: i think i can ignore above comments regarding expandAllGroups and just change the invalidateDisplay bool passed to expandGroup to false (because nested collapses dont actually exist in the text storage, the parent collapsed group will contain an expanded version of its text) - why is that true to begin with? it shouldn't even happen with the current implementation (unless its needed when clicking expand/collapse in the rulerView? that would be extremely inefficient and needs to get fixed if so)
-        //  translatedEditedRange = to what it is after expanding all groups
-        //  translatedChangeInLength = to what it is after expanding all groups (if user deleted a collapsed group, the changeInLength changes)
-        //  invalidRange = syntaxHighlighter?.highlight(editedRange: translatedEditedRange, changeInLength: delta, textStorage: textStorage, workItem: workItem) //return invalidRange instead of calling invalidateDisplay. change mainQueue work from syntaxHighlighter to run on same queue
-        //  recollapseTextGroups()
-        //  if rulerView != nil {
-        //    rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
-        //  }
-        //}
+        let translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
         
-//        DispatchQueue.global().async {
+        guard let translatedEditedRange = translations.adjustedEditedRange,
+              let translatedChangeInLength = translations.adjustedDelta else {
+                return
+        }
         
-//        textStorage.beginEditing()
-            let translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+        self.adjustedEditedRangeSinceLastEditing = adjustedEditedRangeSinceLastEditing?.union(translatedEditedRange) ?? translatedEditedRange
+        self.adjustedDeltaSinceLastEditing = (adjustedDeltaSinceLastEditing ?? 0) + translatedChangeInLength
+        self.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
+        
+        DispatchQueue.global().async {
             
             self.outlineModel?.outline(textStorage: textStorage)
         
-            guard let translatedEditedRange = translations.adjustedEditedRange,
-                  let translatedChangeInLength = translations.adjustedDelta else {
+            guard let translatedEditedRange = self.adjustedEditedRangeSinceLastEditing,
+                  let translatedChangeInLength = self.adjustedDeltaSinceLastEditing else {
                     return
             }
             
             self.syntaxHighlighter?.highlight(editedRange: translatedEditedRange, changeInLength: translatedChangeInLength, textStorage: textStorage) { invalidRangesForHighlighting in
                 
-                var invalidRanges = translations.invalidRanges
+                var invalidRanges = self.invalidRangesSinceLastEditing
                 invalidRanges.append(contentsOf: invalidRangesForHighlighting)
                 
-                invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
+                self.adjustedEditedRangeSinceLastEditing = nil
+                self.adjustedDeltaSinceLastEditing = nil
+                self.invalidRangesSinceLastEditing = []
                 
-//                DispatchQueue.main.async {
+                DispatchQueue.main.async {
                 
+                    invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
+                    
                     self.invalidateRanges(invalidRanges: invalidRanges)
-//                    if self.rulerView != nil {
-//                        self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
-//                    }
-//                }
+                    if self.rulerView != nil {
+                        self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
+                    }
+                }
             }
-//            textStorage.endEditing()
-//        }
+        }
         
-//        DispatchQueue.main.async {
-//
-//            self.expandAllTextGroups(editedRange: editedRange, delta: delta)
-//
-//        }
-        //TODO: handle consecutive calls in quick succession: may have to change 'DispatchQueue.background.async' to be in a workItem that can be cancelled()
-        
-        
-//        syntaxHighlighter?.highlight(editedRange: editedRange, changeInLength: delta, textStorage: textStorage)
         
         //TODO: figure out what shold happen when deleting '#' in a collapsed title that then makes that gorup consume a group underneath it
         // should it auto-expand when deleting '#'?
         
-//        outlineModel?.outline(textStorage: textStorage) {
-//
-//            DispatchQueue.main.async {
-//
-//                self.validateCollapsedTextGroups()
-//            }
-//        }
-//
-//        if rulerView != nil {
-//
-//            rulerView.needsDisplay = true
-//        }
+        //TODO: validateCollapsedTextGroups()
     }
     
     // MARK: - OutlineViewControllerDelegate
