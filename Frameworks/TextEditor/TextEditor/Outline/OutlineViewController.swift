@@ -61,9 +61,9 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     }
     
     // MARK: stuff
-    private func updateOutline(textGroups: [TextGroup]?) {
+    private func updateOutline(parentTextGroup: TextGroup?) {
         
-        parentTextGroup.textGroups = textGroups ?? []
+        self.parentTextGroup = parentTextGroup ?? self.parentTextGroup
         
         DispatchQueue.main.async {
             
@@ -78,9 +78,9 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     }
     
     // MARK: - OutlineModelDelegate
-    func didUpdate(textGroups: [TextGroup]?) {
+    func didUpdate(parentTextGroup: TextGroup?) {
         
-        updateOutline(textGroups: textGroups)
+        updateOutline(parentTextGroup: parentTextGroup)
     }
     
     // MARK: - NSOutlineViewDataSource

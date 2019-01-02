@@ -395,7 +395,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         for collapsedTextGroup in collapsedTextGroups {
             
-            guard let iterator = outlineModel?.textGroups.first?.createIterator() else {
+            guard let iterator = outlineModel?.parentTextGroup.createIterator() else {
                 continue
             }
             
@@ -430,38 +430,38 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     }
     
     var collapsedTextGroups: [TextGroup] = []
-    private func validateCollapsedTextGroups() {
-        //TODO: fix for textAttachment
-        return
-        var invalidTextGroups: [TextGroup] = []
-        
-        //TODO: use text group iterator
-        //currently this only iterates over the base level of text groups
-        for collapsedTextGroup in collapsedTextGroups {
-            
-            var stillExists = false
-            for textGroup in outlineModel?.textGroups ?? [] {
-                
-                if textGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
-                    stillExists = true
-                    break
-                }
-            }
-            
-            if stillExists == false {
-                invalidTextGroups.append(collapsedTextGroup)
-            }
-        }
-        
-        for invalidTextGroup in invalidTextGroups {
-            
-            guard let invalidTextGroupIndex = collapsedTextGroups.firstIndex(of: invalidTextGroup) else {
-                continue
-            }
-            
-            collapsedTextGroups.remove(at: invalidTextGroupIndex)
-        }
-    }
+//    private func validateCollapsedTextGroups() {
+//        //TODO: fix for textAttachment
+//        return
+//        var invalidTextGroups: [TextGroup] = []
+//
+//        //TODO: use text group iterator
+//        //currently this only iterates over the base level of text groups
+//        for collapsedTextGroup in collapsedTextGroups {
+//
+//            var stillExists = false
+//            for textGroup in outlineModel?.textGroups ?? [] {
+//
+//                if textGroup.hasSameChildrenTitles(as: collapsedTextGroup) {
+//                    stillExists = true
+//                    break
+//                }
+//            }
+//
+//            if stillExists == false {
+//                invalidTextGroups.append(collapsedTextGroup)
+//            }
+//        }
+//
+//        for invalidTextGroup in invalidTextGroups {
+//
+//            guard let invalidTextGroupIndex = collapsedTextGroups.firstIndex(of: invalidTextGroup) else {
+//                continue
+//            }
+//
+//            collapsedTextGroups.remove(at: invalidTextGroupIndex)
+//        }
+//    }
     
     func markerClicked(_ marker: TextGroupMarker) {
         
@@ -682,7 +682,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         
-        let attributeLocation = (token.range.location + token.range.length)        
+        let attributeLocation = (token.range.location + token.range.length)
         //-1 if included or after textAttachment. i think there are more conditions to this
         var attributeRange = NSRange(location: attributeLocation, length: 1)
         if editedRange?.intersection(attributeRange)?.length ?? 0 > 0 || editedRange?.location ?? 0 > attributeLocation {

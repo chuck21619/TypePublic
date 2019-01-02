@@ -15,7 +15,7 @@ class OutlineModel {
     var processing: Bool = false // TODO: implement - used by OutlineViewController.allowInteraction
     let language: Language
     private var string: String = ""
-    var textGroups: [TextGroup] = []
+    var parentTextGroup: TextGroup = TextGroup(title: "parent")
     private var workItem: DispatchWorkItem? = nil
     
     // MARK: - Methods
@@ -29,14 +29,14 @@ class OutlineModel {
     // MARK: real stuff
     func outline(textStorage: NSTextStorage, _ completion: (()->())? = nil ) {
         
-        updateTextGroups(from: textStorage.string, completion: { (textGroups) in
+        updateTextGroups(from: textStorage.string, completion: { (parentTextGroup) in
             
-            self.delegate?.didUpdate(textGroups: textGroups)
+            self.delegate?.didUpdate(parentTextGroup: parentTextGroup)
             completion?()
         })
     }
     
-    func updateTextGroups(from string: String, completion: (([TextGroup]?)->())? = nil) {
+    func updateTextGroups(from string: String, completion: ((TextGroup?)->())? = nil) {
         
 //        workItem?.cancel()
 //        var newWorkItem: DispatchWorkItem!
@@ -97,8 +97,9 @@ class OutlineModel {
             }
             
             self.string = string
-            self.textGroups = textGroups
-            completion?(textGroups)
+            let parentTextGroup = TextGroup(title: "parent", textGroups: textGroups, token: nil)
+            self.parentTextGroup = parentTextGroup
+            completion?(parentTextGroup)
             
 //            newWorkItem = nil
 //        }
@@ -109,10 +110,8 @@ class OutlineModel {
     
     func textGroup(at location: Int) -> TextGroup? {
         
-        let parentTextGroup = TextGroup(title: "parent", textGroups: textGroups, token: nil)
-        
-        var textGroup = textGroups.first
         let iterator = parentTextGroup.createIterator()
+        var textGroup = iterator.next()
         
         while textGroup != nil {
             

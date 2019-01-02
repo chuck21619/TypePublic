@@ -31,9 +31,15 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     // MARK: Constructor
     init(title: String, textGroups: [TextGroup] = [], token: TextGroupToken? = nil) {
         
+        defer {
+            //causes didSet to be called
+            self.textGroups = textGroups
+        }
+        
         self.title = title
-        self.textGroups = textGroups
         self.token = token
+        
+        super.init()
     }
     
     // MARK: etc.

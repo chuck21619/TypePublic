@@ -10,5 +10,5 @@ import Foundation
 
 protocol OutlineModelDelegate {
     
-    func didUpdate(textGroups: [TextGroup]?)
+    func didUpdate(parentTextGroup: TextGroup?)
 }
