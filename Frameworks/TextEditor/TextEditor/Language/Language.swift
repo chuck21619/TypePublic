@@ -85,7 +85,17 @@ class Language {
                     tokenAmount = indeterminateString.count
                 }
                 
-                let tokenRange = match.range(withName: groupingRule.trimmedGroupTitle)
+                var tokenRange = match.range(withName: groupingRule.trimmedGroupTitle)
+                
+                
+                //TODO: the following x lines of code: this is not a valid solution to identifying/removing the collapsed image in a token
+                // user could have his own image on the end of a token which would also cause this to be true, which would be invalid as the text group is not necessariyly collapsed
+                // i think the best valid solution will have to be to change all the string arguments to nsattributedstring and then look at the attributedString for a testTextAttachment
+                if let lastCharacter = label.last, String(lastCharacter).utf8.count > 1 {
+                    
+                    label.removeLast()
+                    tokenRange = NSRange(location: tokenRange.location, length: tokenRange.length-1)
+                }
                 
                 let token = TextGroupToken(label: label, range: tokenRange, groupingRule: groupingRule, tokenAmount: tokenAmount)
                 tokens.append(token)

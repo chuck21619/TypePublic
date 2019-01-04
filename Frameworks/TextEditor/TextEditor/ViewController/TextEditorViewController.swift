@@ -243,8 +243,19 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return
         }
         
-        let translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+        //TODO: cleanup
         
+        //TODO: FIX THIS - IT DOESNT WORK
+        //only expand groups if they have not been expanded already
+        //a non-nil lastEditing var means they have been expanded by a previous processEditing call
+        let translations: (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRanges: [NSRange])
+        if self.adjustedDeltaSinceLastEditing == nil {
+            translations = self.expandAllTextGroups(editedRange: editedRange, delta: delta)
+        }
+        else {
+            translations = (adjustedEditedRange: editedRange, adjustedDelta: 0, invalidRanges: [])
+        }
+         return
         guard let translatedEditedRange = translations.adjustedEditedRange,
               let translatedChangeInLength = translations.adjustedDelta else {
                 return
@@ -274,8 +285,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 
                 DispatchQueue.main.async {
                 
-                    invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
-                    
+                    self.ignoreProcessEditing = true
+                    //invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
+                    self.ignoreProcessEditing = false
                     self.invalidateRanges(invalidRanges: invalidRanges)
                     if self.rulerView != nil {
                         self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
@@ -371,6 +383,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         for collapsedTextGroup in collapsedTextGroups {
             
+            outlineModel?.updateTextGroups(from: textStorage.string)
+            
             guard let iterator = outlineModel?.parentTextGroup.createIterator() else {
                 continue
             }
@@ -379,10 +393,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             var correspondingTextGroup: TextGroup? = nil
             while iteratedTextGroup != nil {
                 
-                var iteratedTitle = iteratedTextGroup?.title
-                iteratedTitle?.removeLast() // removing the text attachment on the end
-                let collapsedTitle = String(collapsedTextGroup.title)
-                if iteratedTitle == collapsedTitle {
+                if iteratedTextGroup?.title == collapsedTextGroup.title {
                     correspondingTextGroup = iteratedTextGroup
                 }
                 
@@ -442,6 +453,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     func markerClicked(_ marker: TextGroupMarker) {
         
         ignoreProcessEditing = true
+        
+        outlineModel?.updateTextGroups(from: textStorage.string)
         
         guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
@@ -685,7 +698,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
         
-        let attributeLocation = (token.range.location + token.range.length)-1
+        let attributeLocation = (token.range.location + token.range.length)
         let attributeRange = NSRange(location: attributeLocation, length: 1)
         guard let attachment = textStorage.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
