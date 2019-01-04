@@ -255,7 +255,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         else {
             translations = (adjustedEditedRange: editedRange, adjustedDelta: 0, invalidRanges: [])
         }
-         return
+        
         guard let translatedEditedRange = translations.adjustedEditedRange,
               let translatedChangeInLength = translations.adjustedDelta else {
                 return
@@ -283,15 +283,12 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 self.adjustedDeltaSinceLastEditing = nil
                 self.invalidRangesSinceLastEditing = []
                 
-                DispatchQueue.main.async {
-                
-                    self.ignoreProcessEditing = true
-                    //invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
-                    self.ignoreProcessEditing = false
-                    self.invalidateRanges(invalidRanges: invalidRanges)
-                    if self.rulerView != nil {
-                        self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
-                    }
+                self.ignoreProcessEditing = true
+                invalidRanges = self.recollapseTextGroups(invalidRanges: invalidRanges)
+                self.ignoreProcessEditing = false
+                self.invalidateRanges(invalidRanges: invalidRanges)
+                if self.rulerView != nil {
+                    self.rulerView.needsDisplay = true //update rulerView to calculate collapsedGroups
                 }
             }
         }
@@ -576,7 +573,23 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     @discardableResult private func collapseTextGroup(_ textGroup: TextGroup, invalidRanges: [NSRange] = []) -> [NSRange] {
         
-        guard let range = collapsedTextGroupRange(textGroup) else {
+        outlineModel?.updateTextGroups(from: textStorage.string)
+        
+        var correspondingTextGroup: TextGroup? = nil
+        let iterator = outlineModel?.parentTextGroup.createIterator()
+        var iteratedTextGroup: TextGroup? = iterator?.next()
+        
+        while iteratedTextGroup != nil {
+            
+            if iteratedTextGroup?.title == textGroup.title {
+                correspondingTextGroup = iteratedTextGroup
+                break
+            }
+            
+            iteratedTextGroup = iterator?.next()
+        }
+        
+        guard correspondingTextGroup != nil, let range = collapsedTextGroupRange(correspondingTextGroup!) else {
             return []
         }
         let location = range.location
