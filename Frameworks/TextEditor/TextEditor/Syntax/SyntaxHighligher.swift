@@ -14,7 +14,6 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     var delegate: SyntaxHighlighterDelegate? = nil
     
     private let syntaxParser: SyntaxParser
-    private var workItem: DispatchWorkItem? = nil
     
     // keep track of any request's edits, in case a new request is made before completion
     private var editedRangeSinceLastParsing: NSRange? = nil
@@ -30,61 +29,42 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     }
     
     // MARK: - methods
-    func highlight(editedRange: NSRange, changeInLength: Int, textStorage: NSTextStorage, completion: ((_ invalidRanges: [NSRange])->())? = nil) {
+    func highlight(editedRange: NSRange, changeInLength: Int, string: NSMutableAttributedString, workItem: DispatchWorkItem, completion: ((_ invalidRanges: [NSRange])->())? = nil) {
         
         self.editedRangeSinceLastParsing = self.editedRangeSinceLastParsing?.union(editedRange) ?? editedRange
         self.changeInLengthSinceLastParsing = (self.changeInLengthSinceLastParsing ?? 0) + changeInLength
-        
-        workItem?.cancel()
-        var newWorkItem: DispatchWorkItem!
-        
-        newWorkItem = DispatchWorkItem {
-            
-            let string = textStorage.string
-            let range = string.maxNSRange
-            
-            guard let editedRange = self.editedRangeSinceLastParsing,
-                  let changeInLength = self.changeInLengthSinceLastParsing,
-                  let attributeOccurrences = self.syntaxParser.newAttributeOccurrences(for: string, range: range, editedRange: editedRange, changeInLength: changeInLength, workItem: newWorkItem) else {
-                    return
-            }
-            
-            let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
-            let invalidAttributeRanges = attributeOccurrences.invalidRanges
-            
-            self.editedRangeSinceLastParsing = nil
-            self.changeInLengthSinceLastParsing = nil
-            
-            DispatchQueue.main.async {
-            
-                self.addAttributes(textStorage: textStorage, invalidAttributeRanges: invalidAttributeRanges, newAttributeOccurrences: newAttributeOccurrences)
-            
-                let invalidRanges = self.invalidRanges(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
-                completion?(invalidRanges)
-            }
-            
-            newWorkItem = nil
+    
+        guard let editedRange = self.editedRangeSinceLastParsing,
+              let changeInLength = self.changeInLengthSinceLastParsing,
+              let attributeOccurrences = self.syntaxParser.newAttributeOccurrences(for: string.string, range: string.string.maxNSRange, editedRange: editedRange, changeInLength: changeInLength, workItem: workItem) else {
+                return
         }
+    
+        let newAttributeOccurrences = attributeOccurrences.newAttributeOccurrences
+        let invalidAttributeRanges = attributeOccurrences.invalidRanges
+    
+        self.editedRangeSinceLastParsing = nil
+        self.changeInLengthSinceLastParsing = nil
+    
+        self.addAttributes(string: string, invalidAttributeRanges: invalidAttributeRanges, newAttributeOccurrences: newAttributeOccurrences)
+    
+        let invalidRanges = self.invalidRanges(newAttributeOccurrences: newAttributeOccurrences, invalidAttributeRanges: invalidAttributeRanges)
         
-        self.workItem = newWorkItem
-        
-        DispatchQueue.global(qos: .background).async(execute: newWorkItem)
+        completion?(invalidRanges)
     }
     
-    private func addAttributes(textStorage: NSTextStorage, invalidAttributeRanges: [NSRange], newAttributeOccurrences: [AttributeOccurrence]) {
+    private func addAttributes(string: NSMutableAttributedString, invalidAttributeRanges: [NSRange], newAttributeOccurrences: [AttributeOccurrence]) {
         
         self.delegate?.willAddAttributes(self)
-//        textStorage.beginEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
         for invalidAttributeRange in invalidAttributeRanges {
             
-            textStorage.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
+            string.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
         }
         
         for attributeOccurence in newAttributeOccurrences {
             
-            textStorage.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
+            string.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
         }
-//        textStorage.endEditing() // TODO: this is added as a test - not sure if this helps or breaks stuff
         self.delegate?.didAddAttributes(self)
     }
     

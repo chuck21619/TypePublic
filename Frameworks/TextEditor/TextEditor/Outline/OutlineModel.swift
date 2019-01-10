@@ -27,23 +27,27 @@ class OutlineModel {
     }
     
     // MARK: real stuff
-    func outline(textStorage: NSTextStorage, _ completion: (()->())? = nil ) {
+    func outline(textStorage: NSMutableAttributedString, _ completion: (()->())? = nil ) {
         
-        updateTextGroups(from: textStorage.string, completion: { (parentTextGroup) in
+        let string = NSMutableAttributedString(attributedString: textStorage)
+        
+        updateTextGroups(from: string, completion: { (parentTextGroup) in
             
             self.delegate?.didUpdate(parentTextGroup: parentTextGroup)
             completion?()
         })
     }
     
-    func updateTextGroups(from string: String, completion: ((TextGroup?)->())? = nil) {
+    func updateTextGroups(from string: NSMutableAttributedString, completion: ((TextGroup?)->())? = nil) {
+        
+        //TODO: change the dependancy on this method - several operations in textHighlthing/collapsing have to keep calling this method in order ot have updated groups
         
 //        workItem?.cancel()
 //        var newWorkItem: DispatchWorkItem!
 //        
 //        newWorkItem = DispatchWorkItem {
-            
-            guard let tokens = self.language.textGroupTokens(for: string, workItem: nil/*newWorkItem*/) else {
+        
+            guard let tokens = self.language.textGroupTokens(for: string.string, workItem: nil/*newWorkItem*/) else {
                 completion?(nil)
                 return
             }
@@ -86,7 +90,7 @@ class OutlineModel {
                 }
             }
             
-            self.string = string
+            self.string = string.string
             let parentTextGroup = TextGroup(title: "parent", textGroups: textGroups, token: nil)
             self.parentTextGroup = parentTextGroup
             completion?(parentTextGroup)
