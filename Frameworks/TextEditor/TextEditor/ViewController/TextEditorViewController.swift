@@ -268,7 +268,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             else {
                 
                 //TODO: figure out how to calculate this correctly
-                translations = (adjustedEditedRange: editedRange, adjustedDelta: 0, invalidRanges: [])
+                let translatedRange = self.adjustedEditedRangeSinceLastEditing?.union(editedRange) ?? editedRange
+                let translatedDelta = delta + (self.adjustedDeltaSinceLastEditing ?? 0)
+                translations = (adjustedEditedRange: translatedRange, adjustedDelta: translatedDelta, invalidRanges: self.invalidRangesSinceLastEditing)
             }
             
             guard newWorkItem.isCancelled == false else {
@@ -313,6 +315,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
 
                 DispatchQueue.main.async {
                     
+                    guard newWorkItem.isCancelled == false else {
+                        return
+                    }
+                    
                     let selectedRange = self.textEditorView.selectedRange()
                     self.ignoreProcessEditing = true
                     self.textStorage.setAttributedString(stringCopy)
@@ -322,10 +328,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                     if self.rulerView != nil {
                         self.rulerView.needsDisplay = true //TODO: re-write testRulerView to calculate line #s with collapsedGroups
                     }
+                    
+                    newWorkItem = nil
                 }
             }
-        
-            newWorkItem = nil
         }
         
         self.workItem = newWorkItem
