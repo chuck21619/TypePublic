@@ -20,7 +20,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     private var changeInLengthSinceLastParsing: Int? = nil
     
     //TODO: get font from settings
-    private let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.black)
+    private let normalColorAttribute = Attribute(key: .foregroundColor, value: NSColor.white)
     
     //MARK: - Constructors
     init(syntaxParser: SyntaxParser) {

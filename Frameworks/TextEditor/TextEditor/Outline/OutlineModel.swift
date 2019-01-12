@@ -119,7 +119,7 @@ class OutlineModel {
         return textGroup
     }
     
-    func range(of textGroup: TextGroup) -> NSRange? {
+    func range(of textGroup: TextGroup, includeTitle: Bool = true) -> NSRange? {
         
         guard let parent = textGroup.parentTextGroup else {
             
@@ -127,8 +127,18 @@ class OutlineModel {
             return string.maxNSRange
         }
         
-        guard let location = textGroup.token?.range.location else {
-            return nil
+        let location: Int
+        
+        if includeTitle {
+            
+            guard let tmpLocation = textGroup.token?.range.location else {
+                return nil
+            }
+            location = tmpLocation
+        }
+        else {
+            
+            location = textGroup.token!.range.location + textGroup.token!.range.length
         }
         
         let endOfTextGroup: Int
@@ -137,7 +147,16 @@ class OutlineModel {
         if let nextTextGroupWithEqualOrHigherPriority = self.nextTextGroupWithEqualOrHigherPriority(after: textGroup),
            let locationOfNextTextGroupWithEqualOrHigherPriority = nextTextGroupWithEqualOrHigherPriority.token?.range.location {
          
-            endOfTextGroup = locationOfNextTextGroupWithEqualOrHigherPriority
+            if includeTitle {
+                
+                
+                endOfTextGroup = locationOfNextTextGroupWithEqualOrHigherPriority
+            }
+            else {
+                
+                
+                endOfTextGroup = locationOfNextTextGroupWithEqualOrHigherPriority - 1
+            }
         }
         // if there is no following text group (that is equal or higher) within its own parent,
         // then the end of the text group would be the end of the parent text group

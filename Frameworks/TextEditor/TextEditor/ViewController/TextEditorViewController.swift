@@ -109,7 +109,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
     
     @objc private func buttonAction() {
 
-        //
+        self.invalidateRanges(invalidRanges: [self.textStorage.string.maxNSRange])
     }
     
     //let demoString = "1\n2\n3\n4\n5\n\n6\n7\n8\n9\n0\n\n11\n12\n13\n14\n15\n\n16\n17\n18\n19\n10\n\n21\n22\n23\n24\n25\n\n26\n27\n28\n29\n20\n\n31\n32\n33\n34\n35\n\n36\n37\n38\n39\n30\n\n41\n42\n43\n44\n45\n\n46\n47\n48\n49\n40\n"
@@ -246,7 +246,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         guard ignoreProcessEditing == false else {
             return
         }
-        
         
         workItem?.cancel()
         var newWorkItem: DispatchWorkItem!
@@ -432,6 +431,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
                 
                 if iteratedTextGroup?.title == collapsedTextGroup.title {
                     correspondingTextGroup = iteratedTextGroup
+                    break
                 }
                 
                 iteratedTextGroup = iterator.next()
@@ -611,7 +611,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         return range
     }
     
-    @discardableResult private func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = []) -> [NSRange] {
+    @discardableResult private func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], recollapsing: Bool = false) -> [NSRange] {
         
         outlineModel?.updateTextGroups(from: string)
         
@@ -629,13 +629,22 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
             iteratedTextGroup = iterator?.next()
         }
         
-        guard correspondingTextGroup != nil, let range = collapsedTextGroupRange(string: string, correspondingTextGroup!) else {
+        guard correspondingTextGroup != nil else {
             return []
         }
+        
+        let range: NSRange
+        if recollapsing {
+            range = outlineModel!.range(of: correspondingTextGroup!, includeTitle: false)!
+        }
+        else {
+            range = collapsedTextGroupRange(string: string, correspondingTextGroup!)!
+        }
+        
         let location = range.location
         let endIndex = (location + range.length)
         
-        let textGroupString = textStorage.attributedSubstring(from: range)
+        let textGroupString = string.attributedSubstring(from: range)
         let attachment = TestTextAttachment(data: nil, ofType: "someType")
         attachment.image = #imageLiteral(resourceName: "elipses")
         attachment.bounds = NSRect(x: 1, y: -1, width: 15, height: 10)
@@ -737,7 +746,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, Syn
         
         var adjustedInvalidRanges = invalidRanges
         for collapsedTextGroup in collapsedTextGroups {
-            adjustedInvalidRanges = collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges)
+            adjustedInvalidRanges = collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, recollapsing: true)
         }
         
         return adjustedInvalidRanges
