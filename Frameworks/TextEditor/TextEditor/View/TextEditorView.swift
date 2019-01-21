@@ -25,6 +25,7 @@ class TextEditorView: NSTextView {
 //    }
     
 // ********* replacing text groups with text attachments
+    /*
     override func copy(_ sender: Any?) {
 
 //        let pasteboard = NSPasteboard.general
@@ -59,6 +60,7 @@ class TextEditorView: NSTextView {
         let stringInAttachment = testAttachment.myString
         pasteboard.setString(stringInAttachment.string, forType: .string)
     }
+ */
     
     // MARK: - Methods
     
