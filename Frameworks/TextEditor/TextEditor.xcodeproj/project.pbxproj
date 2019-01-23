@@ -229,6 +229,15 @@
 			path = "Helper Extensions";
 			sourceTree = "<group>";
 		};
+		A346AFB221F9109C0096C660 /* User-todo-move out of text editor framework */ = {
+			isa = PBXGroup;
+			children = (
+				A346AFA821F8F8E80096C660 /* Settings.swift */,
+				A346AFA421F8F4470096C660 /* DocumentOpener.swift */,
+			);
+			path = "User-todo-move out of text editor framework";
+			sourceTree = "<group>";
+		};
 		A36E72B621066E1A00D8BDA1 /* Syntax */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,8 +369,7 @@
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
 				A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */,
 				A3F59EED21F6A02C00BC271A /* EditingValues.swift */,
-				A346AFA421F8F4470096C660 /* DocumentOpener.swift */,
-				A346AFA821F8F8E80096C660 /* Settings.swift */,
+				A346AFB221F9109C0096C660 /* User-todo-move out of text editor framework */,
 				A3130EA721F6CAB100FD37A6 /* CollapsingExpanding */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A30433AB219B609900FEFC07 /* ViewController */,
