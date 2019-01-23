@@ -11,8 +11,7 @@ import Foundation
 class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     // MARK: - Properties
-    var delegate: SyntaxHighlighterDelegate? = nil
-    
+    var delegate: IgnoreProcessingDelegate? = nil
     private let syntaxParser: SyntaxParser
     
     // keep track of any request's edits, in case a new request is made before completion
@@ -55,7 +54,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     private func addAttributes(string: NSMutableAttributedString, invalidAttributeRanges: [NSRange], newAttributeOccurrences: [AttributeOccurrence]) {
         
-        self.delegate?.willAddAttributes(self)
+        self.delegate?.ignoreProcessing(ignore: true)
         for invalidAttributeRange in invalidAttributeRanges {
             
             string.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
@@ -65,7 +64,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
             string.addAttribute(attributeOccurence.attribute.key, value: attributeOccurence.attribute.value, range: attributeOccurence.attributeRange)
         }
-        self.delegate?.didAddAttributes(self)
+        self.delegate?.ignoreProcessing(ignore: false)
     }
     
     private func invalidRanges(newAttributeOccurrences: [AttributeOccurrence], invalidAttributeRanges: [NSRange]) -> [NSRange] {
