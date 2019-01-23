@@ -8,32 +8,27 @@
 
 import Foundation
 
-
-//TODO: hook font up to settings/preferences
-let hiddenFontSize: CGFloat = 0.00001
-let hiddenFont = NSFont(name: "Menlo", size: hiddenFontSize) ?? NSFont.systemFont(ofSize: hiddenFontSize)
-let standardFontSize: CGFloat = 11
-let standardFont = NSFont(name: "Menlo", size: standardFontSize) ?? NSFont.systemFont(ofSize: standardFontSize)
-
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, OutlineViewControllerDelegate, TestRulerViewDelegate, IgnoreProcessingDelegate, CollapsingTranslatorDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TestRulerViewDelegate, IgnoreProcessingDelegate, CollapsingTranslatorDelegate {
     
     // MARK: - Properties
-    // TODO: make these non-optional or non-forced-optional?
     var textEditorView: TextEditorView!
     var textStorage: NSTextStorage!
     var layoutManager: TextEditorLayoutManager? = nil
     var textContainer: NSTextContainer? = nil
-    
+    var rulerView: TestRulerView! = nil
+    var settings: Settings = Settings()
     var syntaxParser: SyntaxParser? = nil
     var syntaxHighlighter: SyntaxHighligher? = nil
-    // used to prevent infinite loop. during processEditing, syntaxHighlighter adds attributes, which will call processEditing
+    // used to prevent infinite loop. during processEditing, syntaxHighlighting and expanding/collapsing cause another processEditing call
     var ignoreProcessEditing = false
-    
     var outlineModel: OutlineModel? = nil
     var outlineViewController: OutlineViewController? = nil
     var outlineMouseTrackingArea: NSTrackingArea? = nil
-    
     var collapsingTranslator: CollapsingTranslator? = nil
+    
+    // TODO: change every object that holds onto language into a getter that pulls it from a common location
+    // in order to handle the user changing the language
+    let language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
     
     // MARK: - Constructors
     public static func createInstance() -> TextEditorViewController? {
@@ -54,11 +49,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     
     private func commonInit() {
         
-        // TODO: change every object that holds onto language into a getter that pulls it from a common location
-        // in order to handle the user changing the language
-        let languageFactory = LanguageFactory()
-        let language = languageFactory.createLanguage(LanguageFactory.defaultLanguage)
-        
         syntaxParser = SyntaxParser(language: language)
         
         guard let syntaxParser = syntaxParser else {
@@ -68,18 +58,17 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         syntaxHighlighter = SyntaxHighligher(syntaxParser: syntaxParser)
         syntaxHighlighter?.delegate = self
         
-        outlineViewController = OutlineViewController.createInstance(delegate: self)
-        outlineModel = OutlineModel(language: language, delegate: outlineViewController)
-        outlineViewController?.model = outlineModel
-        
         collapsingTranslator = CollapsingTranslator(delegate: self, ignoreProcessingDelegate: self)
     }
     
-    var rulerView: TestRulerView! = nil
     // MARK: initialization
     public override func viewDidLoad() {
         
         createTextView()
+        
+        outlineViewController = OutlineViewController.createInstance(delegate: self.textStorage)
+        outlineModel = OutlineModel(language: language, delegate: outlineViewController)
+        outlineViewController?.model = outlineModel
         
         rulerView = TestRulerView(scrollView: textEditorView.enclosingScrollView!, orientation: NSRulerView.Orientation.verticalRuler)
         rulerView.clientView = textEditorView
@@ -115,20 +104,20 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         self.invalidateRanges(invalidRanges: [self.textStorage.string.maxNSRange])
     }
     
-    let demoString = "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else"
-    
     private func createTextView() {
     
         // 1. create text storage that backs the editor
-        let attributes = [NSAttributedString.Key.font : standardFont]
-        //TODO: hook string up to opened file
-        let string = demoString
+        let attributes = [NSAttributedString.Key.font : settings.standardFont]
         
-        let attributedString = NSAttributedString(string: string, attributes: attributes)
         textStorage = NSTextStorage()
-        textStorage.font = standardFont
+        textStorage.font = settings.standardFont
         textStorage.delegate = self
-        textStorage.append(attributedString)
+        
+        DocumentOpener().string { (string) in
+            
+            let attributedString = NSAttributedString(string: string, attributes: attributes)
+            self.textStorage.append(attributedString)
+        }
         
         let scrollViewRect = view.bounds
         
@@ -314,77 +303,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         //TODO: validateCollapsedTextGroups()
     }
     
-    // MARK: - OutlineViewControllerDelegate
-    // TODO: these operations should not be done by the viewController?
-    // maybe the delegate of the outlineVC could be something else?
-    func removeTextGroup(_ textGroup: TextGroup) {
-        
-        guard let range = outlineModel?.range(of: textGroup) else {
-            return
-        }
-        
-        textStorage.replaceCharacters(in: range, with: "")
-    }
-    
     // MARK: - etc.
-    func title(for textGroup: TextGroup) -> NSAttributedString? {
-        
-        guard let range = outlineModel?.range(of: textGroup) else {
-            return nil
-        }
-        
-        let attributedString = textStorage.attributedSubstring(from: range)
-        
-        let rangeOfLastCharacter = NSRange(location: attributedString.length-1, length: 1)
-        
-        let lastCharacter = attributedString.attributedSubstring(from: rangeOfLastCharacter)
-        
-        if lastCharacter.string != "\n" {
-            
-            // adds a newline character
-            let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    
-            let insertString = NSAttributedString(string: "\n")
-            mutableAttributedString.append(insertString)
-    
-            return mutableAttributedString
-        }
-        
-        return attributedString
-    }
-    
-    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int) {
-        
-        let textGroupInserter: TextGroupInserter
-        
-        if index == 0 {
-            
-            textGroupInserter = ZeroIndexTextGroupInserter()
-        }
-        else {
-            
-            textGroupInserter = PositiveIndexTextGroupInserter()
-        }
-        
-        let adjacentTextGroup = textGroupInserter.adjacentTextGroup(textGroups: textGroup.textGroups, index: index)
-        
-        guard let rangeOfAdjacentTextGroup = outlineModel?.range(of: adjacentTextGroup) else {
-            return
-        }
-        
-        let locationToInsert = textGroupInserter.locationToInsert(adjacentTextGroupRange: rangeOfAdjacentTextGroup)
-        
-        textStorage.insert(attributedString, at: locationToInsert)
-    }
-    
-    func beginUpdates() {
-        self.textStorage.beginEditing()
-    }
-    
-    func endUpdates() {
-        self.textStorage.endEditing()
-    }
-    
     var collapsedTextGroups: [TextGroup] = []
 //    private func validateCollapsedTextGroups() {
 //        //TODO: fix for textAttachment
@@ -421,79 +340,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     
     func markerClicked(_ marker: TextGroupMarker) {
         
-        ignoreProcessEditing = true
-        
-        outlineModel?.updateTextGroups(from: textStorage)
-        
-        guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
-            return
-        }
-        
-        var textGroupIsCollapsed = false
-        
-        for collapsedTextGroup in collapsedTextGroups {
-            
-            if collapsedTextGroup.title == textGroup.title {
-                textGroupIsCollapsed = true
-            }
-        }
-        
-        if textGroupIsCollapsed {
-            
-            self.collapsingTranslator?.expandTextGroup(string: self.textStorage, textGroup: textGroup)
-            outlineModel?.updateTextGroups(from: textStorage)
-            
-            guard let location = textGroup.token?.range.location, let updatedTextGroup = outlineModel?.textGroup(at: location) else {
-                
-                return
-            }
-            
-            //re-collapse all groups inside of it that were collapsed
-            for childTextGroup in updatedTextGroup.textGroups.reversed() {
-                
-                for collapsedTextGroup in collapsedTextGroups {
-                    
-                    if collapsedTextGroup.title == childTextGroup.title {
-                        
-                        self.collapsingTranslator?.collapseTextGroup(string: textStorage, updatedTextGroup, outlineModel: self.outlineModel, collapsedTextGroups: &self.collapsedTextGroups)
-                        outlineModel?.updateTextGroups(from: textStorage)
-                    }
-                }
-            }
-            
-            let indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex { (collapsedTextGroup) -> Bool in
-                collapsedTextGroup.title == textGroup.title
-            }
-            
-            if let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup {
-                collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
-            }
-        }
-        else {
-            
-            //expand all groups inside of it that are collapsed
-            for childTextGroup in textGroup.textGroups.reversed() {
-                
-                for collapsedTextGroup in collapsedTextGroups {
-                    
-                    if childTextGroup.title == collapsedTextGroup.title {
-                        
-                        self.collapsingTranslator?.expandTextGroup(string: self.textStorage, textGroup: childTextGroup)
-                        outlineModel?.updateTextGroups(from: textStorage)
-                    }
-                }
-            }
-            
-            guard let location = textGroup.token?.range.location, let updatedTextGroup = outlineModel?.textGroup(at: location) else {
-                
-                return
-            }
-            self.collapsingTranslator?.collapseTextGroup(string: textStorage, updatedTextGroup, outlineModel: self.outlineModel, collapsedTextGroups: &self.collapsedTextGroups)
-            outlineModel?.updateTextGroups(from: textStorage)
-        }
-        
-        rulerView.needsDisplay = true
-        
-        ignoreProcessEditing = false
+        MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsedTextGroups: &self.collapsedTextGroups, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
     }
 }

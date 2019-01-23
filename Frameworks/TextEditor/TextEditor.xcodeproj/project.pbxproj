@@ -18,6 +18,10 @@
 		A313B87F21AE276C00B4EEFD /* TextEditorTypeSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */; };
 		A3357897212B635C000773C7 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3357896212B635C000773C7 /* Attribute.swift */; };
 		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
+		A346AFA521F8F4470096C660 /* DocumentOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFA421F8F4470096C660 /* DocumentOpener.swift */; };
+		A346AFA921F8F8E80096C660 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFA821F8F8E80096C660 /* Settings.swift */; };
+		A346AFAD21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */; };
+		A346AFB121F9085B0096C660 /* MarkerClickHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */; };
 		A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962E8217A605600D52175 /* TextGroupingRule.swift */; };
 		A36962EB217A624C00D52175 /* TextGroupToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962EA217A624C00D52175 /* TextGroupToken.swift */; };
 		A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B119321518E950086AD83 /* NSRange+Intersects.swift */; };
@@ -87,6 +91,10 @@
 		A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTypeSetter.swift; sourceTree = "<group>"; };
 		A3357896212B635C000773C7 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
+		A346AFA421F8F4470096C660 /* DocumentOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOpener.swift; sourceTree = "<group>"; };
+		A346AFA821F8F8E80096C660 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+OutlineViewControllerDelegate..swift"; sourceTree = "<group>"; };
+		A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerClickHandler.swift; sourceTree = "<group>"; };
 		A36962E8217A605600D52175 /* TextGroupingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupingRule.swift; sourceTree = "<group>"; };
 		A36962EA217A624C00D52175 /* TextGroupToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupToken.swift; sourceTree = "<group>"; };
 		A36B119321518E950086AD83 /* NSRange+Intersects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Intersects.swift"; sourceTree = "<group>"; };
@@ -201,13 +209,14 @@
 			path = "Grouping Rules";
 			sourceTree = "<group>";
 		};
-		A3130EA721F6CAB100FD37A6 /* CollapsingTranslator */ = {
+		A3130EA721F6CAB100FD37A6 /* CollapsingExpanding */ = {
 			isa = PBXGroup;
 			children = (
+				A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */,
 				A3F59EEF21F6A23000BC271A /* CollapsingTranslator.swift */,
 				A3130EA521F6C81100FD37A6 /* CollapsingTranslatorDelegate.swift */,
 			);
-			path = CollapsingTranslator;
+			path = CollapsingExpanding;
 			sourceTree = "<group>";
 		};
 		A3381E0A213F1B9D001C638A /* Helper Extensions */ = {
@@ -349,8 +358,11 @@
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
 				A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
+				A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */,
 				A3F59EED21F6A02C00BC271A /* EditingValues.swift */,
-				A3130EA721F6CAB100FD37A6 /* CollapsingTranslator */,
+				A346AFA421F8F4470096C660 /* DocumentOpener.swift */,
+				A346AFA821F8F8E80096C660 /* Settings.swift */,
+				A3130EA721F6CAB100FD37A6 /* CollapsingExpanding */,
 				A36E72BD2106713A00D8BDA1 /* Language */,
 				A30433AB219B609900FEFC07 /* ViewController */,
 				A3B7867A218A224900FB0005 /* View */,
@@ -585,6 +597,7 @@
 				A3BA2EB52194C8FC00054D98 /* OutlineViewControllerDelegate.swift in Sources */,
 				A36B119821519F2B0086AD83 /* NSRange+IsAdjacent.swift in Sources */,
 				A30961BD219F453A00926E66 /* TextGroupMarker.swift in Sources */,
+				A346AFB121F9085B0096C660 /* MarkerClickHandler.swift in Sources */,
 				A30433AA219B604700FEFC07 /* PositiveIndexTextGroupInserter.swift in Sources */,
 				A3CF81CF2152D00500BA4D48 /* DeleteRangeCalculator.swift in Sources */,
 				A36B119621519F000086AD83 /* NSRange+Positive.swift in Sources */,
@@ -595,9 +608,11 @@
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
 				A3130EA421F6C11100FD37A6 /* IgnoreProcessingDelegate.swift in Sources */,
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
+				A346AFAD21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift in Sources */,
 				A3F59EEE21F6A02C00BC271A /* EditingValues.swift in Sources */,
 				A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,
+				A346AFA521F8F4470096C660 /* DocumentOpener.swift in Sources */,
 				A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */,
 				A3CF81CD2152CFF500BA4D48 /* AttributeEditRangeCalculator.swift in Sources */,
 				A36E72B521066DE400D8BDA1 /* Language.swift in Sources */,
@@ -605,6 +620,7 @@
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,
 				A3F6F0FE21767B4F003A6DA2 /* OutlineModel.swift in Sources */,
 				A3751D892181055700D3D1C0 /* TextGroupIterator.swift in Sources */,
+				A346AFA921F8F8E80096C660 /* Settings.swift in Sources */,
 				A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */,
 				A313B87F21AE276C00B4EEFD /* TextEditorTypeSetter.swift in Sources */,
 				A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */,

@@ -200,7 +200,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             adjacentTextGroup = targetParent.textGroups[index-1]
         }
         
-        guard let textGroupString = delegate?.title(for: draggingGroup) else {
+        guard let textGroupString = delegate?.title(for: draggingGroup, outlineModel: self.model) else {
             return false
         }
         
@@ -209,13 +209,13 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         delegate?.beginUpdates()
         if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
             
-            delegate?.insertAttributedString(textGroupString, in: targetParent, at: index)
-            delegate?.removeTextGroup(draggingGroup)
+            delegate?.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model)
+            delegate?.removeTextGroup(draggingGroup, outlineModel: self.model)
         }
         else {
             
-            delegate?.removeTextGroup(draggingGroup)
-            delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex)
+            delegate?.removeTextGroup(draggingGroup, outlineModel: self.model)
+            delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model)
         }
         delegate?.endUpdates()
         
