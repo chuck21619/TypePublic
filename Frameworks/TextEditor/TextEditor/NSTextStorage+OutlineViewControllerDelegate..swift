@@ -70,6 +70,7 @@ extension NSTextStorage: OutlineViewControllerDelegate {
         }
         
         self.replaceCharacters(in: range, with: "")
+        outlineModel?.reCalculateTextGroups(replacingRange: range, with: "")
     }
     
     func beginUpdates() {

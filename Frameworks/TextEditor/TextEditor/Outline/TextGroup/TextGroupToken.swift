@@ -13,7 +13,7 @@ class TextGroupToken: NSObject, NSCoding {
     let label: String
     
     // range at which the token resides within the document
-    let range: NSRange
+    var range: NSRange
     
     // associated rule
     let groupingRule: TextGroupingRule

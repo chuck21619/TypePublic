@@ -14,7 +14,7 @@ class MarkerClickHandler {
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: true)
         
-        outlineModel?.updateTextGroups(from: textStorage)
+        //outlineModel?.updateTextGroups(from: textStorage)
         
         guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
@@ -32,8 +32,8 @@ class MarkerClickHandler {
         
         if textGroupIsCollapsed {
             
-            collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: textGroup)
-            outlineModel?.updateTextGroups(from: textStorage)
+            collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: textGroup, outlineModel: outlineModel)
+            //outlineModel?.updateTextGroups(from: textStorage)
             
             guard let location = textGroup.token?.range.location, let updatedTextGroup = outlineModel?.textGroup(at: location) else {
                 
@@ -48,7 +48,7 @@ class MarkerClickHandler {
                     if collapsedTextGroup.title == childTextGroup.title {
                         
                         collapsingTranslator?.collapseTextGroup(string: textStorage, collapsedTextGroup, outlineModel: outlineModel, collapsedTextGroups: &collapsedTextGroups)
-                        outlineModel?.updateTextGroups(from: textStorage)
+//                        outlineModel?.updateTextGroups(from: textStorage)
                     }
                 }
             }
@@ -70,8 +70,8 @@ class MarkerClickHandler {
                     
                     if childTextGroup.title == collapsedTextGroup.title {
                         
-                        collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: childTextGroup)
-                        outlineModel?.updateTextGroups(from: textStorage)
+                        collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: childTextGroup, outlineModel: outlineModel)
+//                        outlineModel?.updateTextGroups(from: textStorage)
                     }
                 }
             }
@@ -82,7 +82,7 @@ class MarkerClickHandler {
             }
             
             collapsingTranslator?.collapseTextGroup(string: textStorage, updatedTextGroup, outlineModel: outlineModel, collapsedTextGroups: &collapsedTextGroups)
-            outlineModel?.updateTextGroups(from: textStorage)
+//            outlineModel?.updateTextGroups(from: textStorage)
         }
         
         rulerView.needsDisplay = true

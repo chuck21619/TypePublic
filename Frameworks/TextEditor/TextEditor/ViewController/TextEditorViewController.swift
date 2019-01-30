@@ -238,6 +238,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
             
+            self.outlineModel?.updateTextGroups(from: textStorage)
+            
             guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, collapsedTextGroups: self.collapsedTextGroups, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
                 return
             }

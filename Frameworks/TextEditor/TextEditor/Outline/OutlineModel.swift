@@ -100,6 +100,49 @@ class OutlineModel {
 //        DispatchQueue.global(qos: .background).async(execute: newWorkItem)
     }
     
+    func reCalculateTextGroups(editedRange: NSRange, delta: Int) {
+        
+        for textGroup in self.parentTextGroup {
+            
+            guard let textGroupRange = range(of: textGroup) else {
+                continue
+            }
+            
+            if textGroupRange.location + textGroupRange.length <= editedRange.location &&
+                textGroupRange.location + textGroupRange.length <= editedRange.location + editedRange.length {
+                
+                print("")
+                //do nothing
+                //the textgroup is prior to the edit, and will not be changed
+            }
+            else if textGroupRange.location >= editedRange.location &&
+                textGroupRange.location >= editedRange.location + editedRange.length {
+                
+                guard let previousTokenRange = textGroup.token?.range else {
+                    continue
+                }
+                
+                let newLocation = previousTokenRange.location + delta
+                
+                let newTokenRange = NSRange(location: newLocation, length: previousTokenRange.length)
+                
+                textGroup.token?.range = newTokenRange
+                
+                //the textgroup is completely after the edit, and will be adjusted by the same as the edit delta
+            }
+            else {
+                
+                //figure out the other scenarios
+                //not sure how many more there are
+            }
+        }
+    }
+    
+    func reCalculateTextGroups(replacingRange: NSRange, with str: String) {
+        
+       reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length)
+    }
+    
     func textGroup(at location: Int) -> TextGroup? {
         
         var textGroup: TextGroup?

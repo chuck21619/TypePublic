@@ -73,7 +73,7 @@ class CollapsingTranslator {
             
             if let correspondingTextGroup = correspondingTextGroup {
                 
-                let adjustments = expandTextGroup(string: string, textGroup: correspondingTextGroup, invalidateDisplay: false, editedRange: adjustedEditedRange, delta: adjustedDelta)
+                let adjustments = expandTextGroup(string: string, textGroup: correspondingTextGroup, invalidateDisplay: false, editedRange: adjustedEditedRange, delta: adjustedDelta, outlineModel: outlineModel)
                 
                 adjustedEditedRange = adjustments.adjustedEditedRange
                 adjustedDelta = adjustments.adjustedDelta
@@ -87,7 +87,7 @@ class CollapsingTranslator {
         return (adjustedEditedRange: adjustedEditedRange, adjustedDelta: adjustedDelta, invalidRanges: [])
     }
     
-    @discardableResult func expandTextGroup(string: NSMutableAttributedString, textGroup: TextGroup, invalidateDisplay: Bool = true, editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRange: NSRange?) {
+    @discardableResult func expandTextGroup(string: NSMutableAttributedString, textGroup: TextGroup, invalidateDisplay: Bool = true, editedRange: NSRange? = nil, delta: Int? = nil, outlineModel: OutlineModel?) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRange: NSRange?) {
         
         //get the textattachment
         guard let token = textGroup.token else {
@@ -103,7 +103,10 @@ class CollapsingTranslator {
         
         let stringInAttachment = attachment.myString
         
-        string.replaceCharacters(in: NSRange(location: attributeRange.location, length: attributeRange.length), with: stringInAttachment)
+        let replacingRange = NSRange(location: attributeRange.location, length: attributeRange.length)
+        string.replaceCharacters(in: replacingRange, with: stringInAttachment)
+        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: stringInAttachment.string)
+        
         let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
@@ -195,7 +198,9 @@ class CollapsingTranslator {
         
         let attachmentString = NSAttributedString(attachment: attachment)
         
-        string.replaceCharacters(in: NSRange(location: location, length: endIndex-location), with: attachmentString)
+        let replacingRange = NSRange(location: location, length: endIndex-location)
+        string.replaceCharacters(in: replacingRange, with: attachmentString)
+        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: attachmentString.string)
         
         var collapsedGroupRangeNeedsToBeInvalidated = false
         for invalidRange in invalidRanges {
