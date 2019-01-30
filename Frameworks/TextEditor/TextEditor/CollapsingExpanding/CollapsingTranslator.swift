@@ -58,20 +58,17 @@ class CollapsingTranslator {
             
             outlineModel?.updateTextGroups(from: string)
             
-            guard let iterator = outlineModel?.parentTextGroup.createIterator() else {
+            guard let parentTextGroup = outlineModel?.parentTextGroup else {
                 continue
             }
             
-            var iteratedTextGroup: TextGroup? = iterator.next()
             var correspondingTextGroup: TextGroup? = nil
-            while iteratedTextGroup != nil {
+            for iteratedTextGroup in parentTextGroup {
                 
-                if iteratedTextGroup?.title == collapsedTextGroup.title {
+                if iteratedTextGroup.title == collapsedTextGroup.title {
                     correspondingTextGroup = iteratedTextGroup
                     break
                 }
-                
-                iteratedTextGroup = iterator.next()
             }
             
             if let correspondingTextGroup = correspondingTextGroup {
@@ -161,17 +158,17 @@ class CollapsingTranslator {
         outlineModel?.updateTextGroups(from: string)
         
         var correspondingTextGroup: TextGroup? = nil
-        let iterator = outlineModel?.parentTextGroup.createIterator()
-        var iteratedTextGroup: TextGroup? = iterator?.next()
         
-        while iteratedTextGroup != nil {
+        guard let parentTextGroup = outlineModel?.parentTextGroup else {
+            return []
+        }
+        
+        for iteratedTextGroup in parentTextGroup {
             
-            if iteratedTextGroup?.title == textGroup.title {
+            if iteratedTextGroup.title == textGroup.title {
                 correspondingTextGroup = iteratedTextGroup
                 break
             }
-            
-            iteratedTextGroup = iterator?.next()
         }
         
         guard correspondingTextGroup != nil else {
@@ -280,20 +277,18 @@ class CollapsingTranslator {
     
     private func collapsedTextGroupRange(string: NSMutableAttributedString, outlineModel: OutlineModel?, _ textGroup: TextGroup) -> NSRange? {
         
-        guard let iterator = textGroup.parentTextGroup?.createIterator() else {
+        var correspondingTextGroup: TextGroup? = nil
+        
+        guard let parentTextGroup = textGroup.parentTextGroup else {
             return nil
         }
         
-        var iteratedTextGroup: TextGroup? = iterator.next()
-        var correspondingTextGroup: TextGroup? = nil
-        while iteratedTextGroup != nil {
+        for iteratedTextGroup in parentTextGroup {
             
-            if iteratedTextGroup?.title == textGroup.title {
+            if iteratedTextGroup.title == textGroup.title {
                 correspondingTextGroup = iteratedTextGroup
                 break
             }
-            
-            iteratedTextGroup = iterator.next()
         }
         
         guard let locationOfToken = correspondingTextGroup?.token?.range.location,

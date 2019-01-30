@@ -40,7 +40,7 @@ class OutlineModel {
     
     func updateTextGroups(from string: NSMutableAttributedString, completion: ((TextGroup?)->())? = nil) {
         
-        //TODO: change the dependancy on this method - several operations in textHighlthing/collapsing have to keep calling this method in order ot have updated groups
+        //TODO: change the dependancy on this method - several operations in textHighlthing/collapsing have to keep calling this method in order to have updated groups
         
 //        workItem?.cancel()
 //        var newWorkItem: DispatchWorkItem!
@@ -52,7 +52,7 @@ class OutlineModel {
                 return
             }
             
-            var textGroups: [TextGroup] = []
+            let parentTextGroup = TextGroup (title: "parent")
             
             for token in tokens {
                 
@@ -60,8 +60,7 @@ class OutlineModel {
                 
                 var flattenedTextGroups: [TextGroup] = []
                 
-                let iterator = TextGroupIterator(textGroups: textGroups)
-                while let textGroup = iterator.next() {
+                for textGroup in parentTextGroup {
                     
                     flattenedTextGroups.append(textGroup)
                 }
@@ -86,12 +85,11 @@ class OutlineModel {
                 
                 if noPreviousTextGroupsWithHigherPriority {
                     
-                    textGroups.append(newTextGroup)
+                    parentTextGroup.textGroups.append(newTextGroup)
                 }
             }
             
             self.string = string.string
-            let parentTextGroup = TextGroup(title: "parent", textGroups: textGroups, token: nil)
             self.parentTextGroup = parentTextGroup
             completion?(parentTextGroup)
             
@@ -104,16 +102,14 @@ class OutlineModel {
     
     func textGroup(at location: Int) -> TextGroup? {
         
-        let iterator = parentTextGroup.createIterator()
-        var textGroup = iterator.next()
+        var textGroup: TextGroup?
         
-        while textGroup != nil {
+        for iteratedTextGroup in parentTextGroup {
             
-            if textGroup?.token?.range.location == location {
+            if iteratedTextGroup.token?.range.location == location {
+                textGroup = iteratedTextGroup
                 break
             }
-            
-            textGroup = iterator.next()
         }
         
         return textGroup

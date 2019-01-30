@@ -22,6 +22,7 @@
 		A346AFA921F8F8E80096C660 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFA821F8F8E80096C660 /* Settings.swift */; };
 		A346AFAD21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */; };
 		A346AFB121F9085B0096C660 /* MarkerClickHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */; };
+		A34D0F712201387F005C4C66 /* TextGroup+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34D0F702201387F005C4C66 /* TextGroup+Sequence.swift */; };
 		A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962E8217A605600D52175 /* TextGroupingRule.swift */; };
 		A36962EB217A624C00D52175 /* TextGroupToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962EA217A624C00D52175 /* TextGroupToken.swift */; };
 		A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36B119321518E950086AD83 /* NSRange+Intersects.swift */; };
@@ -34,7 +35,6 @@
 		A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */; };
 		A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */; };
 		A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */; };
-		A3751D892181055700D3D1C0 /* TextGroupIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3751D882181055700D3D1C0 /* TextGroupIterator.swift */; };
 		A3764B9B2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */; };
 		A3764B9E2135FEF5006F6675 /* MarkdownFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */; };
 		A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */; };
@@ -95,6 +95,7 @@
 		A346AFA821F8F8E80096C660 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+OutlineViewControllerDelegate..swift"; sourceTree = "<group>"; };
 		A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerClickHandler.swift; sourceTree = "<group>"; };
+		A34D0F702201387F005C4C66 /* TextGroup+Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextGroup+Sequence.swift"; sourceTree = "<group>"; };
 		A36962E8217A605600D52175 /* TextGroupingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupingRule.swift; sourceTree = "<group>"; };
 		A36962EA217A624C00D52175 /* TextGroupToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupToken.swift; sourceTree = "<group>"; };
 		A36B119321518E950086AD83 /* NSRange+Intersects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Intersects.swift"; sourceTree = "<group>"; };
@@ -107,7 +108,6 @@
 		A36E72BB2106704B00D8BDA1 /* LanguageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFactory.swift; sourceTree = "<group>"; };
 		A36E72BF2106724000D8BDA1 /* SyntaxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParser.swift; sourceTree = "<group>"; };
 		A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxParserTests.swift; sourceTree = "<group>"; };
-		A3751D882181055700D3D1C0 /* TextGroupIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupIterator.swift; sourceTree = "<group>"; };
 		A3764B9A2135F9F1006F6675 /* CustomAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownFactory.swift; sourceTree = "<group>"; };
 		A3886F96210059E1009E0420 /* TextEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditorViewController.storyboard; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 		A3751D8C218108A100D3D1C0 /* Iterator */ = {
 			isa = PBXGroup;
 			children = (
-				A3751D882181055700D3D1C0 /* TextGroupIterator.swift */,
+				A34D0F702201387F005C4C66 /* TextGroup+Sequence.swift */,
 			);
 			path = Iterator;
 			sourceTree = "<group>";
@@ -627,7 +627,6 @@
 				A3F59EF021F6A23000BC271A /* CollapsingTranslator.swift in Sources */,
 				A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */,
 				A3F6F0FE21767B4F003A6DA2 /* OutlineModel.swift in Sources */,
-				A3751D892181055700D3D1C0 /* TextGroupIterator.swift in Sources */,
 				A346AFA921F8F8E80096C660 /* Settings.swift in Sources */,
 				A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */,
 				A313B87F21AE276C00B4EEFD /* TextEditorTypeSetter.swift in Sources */,
@@ -637,6 +636,7 @@
 				A3069D612188FDA400DD24F6 /* IndeterminateGroupingRuleProperties.swift in Sources */,
 				A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */,
 				A3B30982219C91A70093744A /* TestRulerView.swift in Sources */,
+				A34D0F712201387F005C4C66 /* TextGroup+Sequence.swift in Sources */,
 				A30433A8219B601700FEFC07 /* ZeroIndexTextGroupInserter.swift in Sources */,
 				A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */,
 				A3F6F105217684A1003A6DA2 /* TextGroup.swift in Sources */,

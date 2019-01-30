@@ -12,7 +12,6 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     
     // MARK: - Properties
     let title: String
-    private var iterator: TextGroupIterator? = nil
     let token: TextGroupToken?
     static let pasteboardType = NSPasteboard.PasteboardType(rawValue: "\(Bundle.main.bundleIdentifier ?? "Type").textGroup")
     weak var parentTextGroup: TextGroup? = nil
@@ -43,15 +42,6 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     }
     
     // MARK: etc.
-    func createIterator() -> TextGroupIterator {
-        
-//        if iterator == nil {
-            iterator = TextGroupIterator(textGroups: textGroups)
-//        }
-        
-        return iterator!
-    }
-    
     // TODO: validate this method
     func isDescendant(of parent: TextGroup) -> Bool {
         
@@ -71,47 +61,50 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     
     // MARK: - Description
     override var description: String {
+
+        //TODO: re-implement using new iteration
+        return self.title
         
-        var string = ""
-        
-        var indentLevel = 0
-        
-        var currentTextGroup: TextGroup? = self
-        
-        let iterator = self.createIterator()
-        
-        while currentTextGroup != nil {
-            
-            for _ in 0..<indentLevel {
-                
-                string = "\(string)    "
-            }
-            string = "\(string)\(currentTextGroup!.title)\n"
-            
-            let nextTextGroup = iterator.next()
-            
-            if let nextTextGroup = nextTextGroup {
-                
-                if currentTextGroup?.textGroups.contains(nextTextGroup) == true {
-                    
-                    indentLevel += 1
-                }
-                else {
-                    
-                    var recursiveTextGroup: TextGroup? = currentTextGroup
-                    
-                    while nextTextGroup.parentTextGroup?.textGroups.contains(recursiveTextGroup!) == false {
-                        
-                        indentLevel -= 1
-                        recursiveTextGroup = recursiveTextGroup?.parentTextGroup
-                    }
-                }
-            }
-            
-            currentTextGroup = nextTextGroup
-        }
-        
-        return string
+//        var string = ""
+//
+//        var indentLevel = 0
+//
+//        var currentTextGroup: TextGroup? = self
+//
+//        let iterator = self.createIterator()
+//
+//        while currentTextGroup != nil {
+//
+//            for _ in 0..<indentLevel {
+//
+//                string = "\(string)    "
+//            }
+//            string = "\(string)\(currentTextGroup!.title)\n"
+//
+//            let nextTextGroup = iterator.next()
+//
+//            if let nextTextGroup = nextTextGroup {
+//
+//                if currentTextGroup?.textGroups.contains(nextTextGroup) == true {
+//
+//                    indentLevel += 1
+//                }
+//                else {
+//
+//                    var recursiveTextGroup: TextGroup? = currentTextGroup
+//
+//                    while nextTextGroup.parentTextGroup?.textGroups.contains(recursiveTextGroup!) == false {
+//
+//                        indentLevel -= 1
+//                        recursiveTextGroup = recursiveTextGroup?.parentTextGroup
+//                    }
+//                }
+//            }
+//
+//            currentTextGroup = nextTextGroup
+//        }
+//
+//        return string
     }
     
     // MARK: - Equatable
@@ -153,7 +146,6 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     
     // MARK: - NSCoding
     let titleCodingKey = "title"
-    let iteratorCodingKey = "iterator"
     let tokenCodingKey = "tokenCodingKey"
     let parentTextGroupCodingKey = "parentTextGroupCodingKey"
     let textGroupsCodingKey = "textGroupsCodingKey"
@@ -161,7 +153,6 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     func encode(with aCoder: NSCoder) {
 
         aCoder.encode(title, forKey: titleCodingKey)
-        aCoder.encode(iterator, forKey: iteratorCodingKey)
         aCoder.encode(token, forKey: tokenCodingKey)
         aCoder.encode(parentTextGroup, forKey: parentTextGroupCodingKey)
         aCoder.encode(textGroups, forKey: textGroupsCodingKey)
@@ -170,7 +161,6 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     required init?(coder aDecoder: NSCoder) {
 
         self.title = aDecoder.decodeObject(forKey: titleCodingKey) as? String ?? ""
-        self.iterator = aDecoder.decodeObject(forKey: iteratorCodingKey) as? TextGroupIterator
         self.token = aDecoder.decodeObject(forKey: tokenCodingKey) as? TextGroupToken
         self.parentTextGroup = aDecoder.decodeObject(forKey: parentTextGroupCodingKey) as? TextGroup
         self.textGroups = aDecoder.decodeObject(forKey: textGroupsCodingKey) as? [TextGroup] ?? []
@@ -186,15 +176,11 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     }
     
     private func titles() -> [String] {
-     
-        var iteratedTextGroup: TextGroup? = self
-        let iterator = self.createIterator()
         
         var titles: [String] = []
-        while iteratedTextGroup != nil {
+        for textGroup in self {
             
-            titles.append(iteratedTextGroup?.title ?? "")
-            iteratedTextGroup = iterator.next()
+            titles.append(textGroup.title)
         }
         
         return titles
