@@ -62,49 +62,47 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     // MARK: - Description
     override var description: String {
 
-        //TODO: re-implement using new iteration
-        return self.title
+        func updateIndention(textGroup: TextGroup, lastTextGroup: TextGroup?, indentLevel: Int) -> Int {
+            
+            if lastTextGroup == nil {
+                
+                return indentLevel
+            }
+            else if lastTextGroup?.parentTextGroup?.textGroups.contains(textGroup) == true {
+                
+                return indentLevel
+            }
+            else if lastTextGroup?.textGroups.contains(textGroup) == true {
+                
+                return indentLevel + 1
+            }
+            else {
+                
+                return updateIndention(textGroup: textGroup, lastTextGroup: lastTextGroup?.parentTextGroup, indentLevel: indentLevel - 1)
+            }
+        }
         
-//        var string = ""
-//
-//        var indentLevel = 0
-//
-//        var currentTextGroup: TextGroup? = self
-//
-//        let iterator = self.createIterator()
-//
-//        while currentTextGroup != nil {
-//
-//            for _ in 0..<indentLevel {
-//
-//                string = "\(string)    "
-//            }
-//            string = "\(string)\(currentTextGroup!.title)\n"
-//
-//            let nextTextGroup = iterator.next()
-//
-//            if let nextTextGroup = nextTextGroup {
-//
-//                if currentTextGroup?.textGroups.contains(nextTextGroup) == true {
-//
-//                    indentLevel += 1
-//                }
-//                else {
-//
-//                    var recursiveTextGroup: TextGroup? = currentTextGroup
-//
-//                    while nextTextGroup.parentTextGroup?.textGroups.contains(recursiveTextGroup!) == false {
-//
-//                        indentLevel -= 1
-//                        recursiveTextGroup = recursiveTextGroup?.parentTextGroup
-//                    }
-//                }
-//            }
-//
-//            currentTextGroup = nextTextGroup
-//        }
-//
-//        return string
+        var string = ""
+        
+        var lastTextGroup: TextGroup? = nil
+        
+        var indentLevel = 0
+        
+        for textGroup in self {
+            
+            indentLevel = updateIndention(textGroup: textGroup, lastTextGroup: lastTextGroup, indentLevel: indentLevel)
+
+            for _ in 0..<indentLevel {
+
+                string = "\(string)    "
+            }
+            string = "\(string)\(textGroup.title)\n"
+
+
+            lastTextGroup = textGroup
+        }
+        
+        return string
     }
     
     // MARK: - Equatable
