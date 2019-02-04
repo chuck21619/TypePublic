@@ -22,7 +22,7 @@ class ViewController: NSViewController {
         let sideboardStoryboard = NSStoryboard(name: "Sideboard", bundle: Bundle.main)
         
         let leftPanelViewController = sideboardStoryboard.instantiateInitialController() as? NSViewController
-        let leftPanel = Panel(position: .left, viewController: leftPanelViewController)
+        let leftPanel = Panel(position: .left, viewController: leftPanelViewController, hidingThreshold: 200, defaultWidth: 300)
         
         let rightPanelViewController = storyboard.instantiateInitialController() as? NSViewController
         let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
