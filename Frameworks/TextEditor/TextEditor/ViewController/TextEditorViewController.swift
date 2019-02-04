@@ -21,7 +21,16 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     var syntaxHighlighter: SyntaxHighligher? = nil
     // used to prevent infinite loop. during processEditing, syntaxHighlighting and expanding/collapsing cause another processEditing call
     var ignoreProcessEditing = false
-    var outlineModel: OutlineModel? = nil
+    var outlineModel: OutlineModel? = nil {
+        
+        didSet {
+            
+            if let textStorage = self.textStorage {
+                
+                outlineModel?.updateTextGroups(from: self.textStorage)
+            }
+        }
+    }
     var outlineViewController: OutlineViewController? = nil
     var outlineMouseTrackingArea: NSTrackingArea? = nil
     var collapsingTranslator: CollapsingTranslator? = nil
