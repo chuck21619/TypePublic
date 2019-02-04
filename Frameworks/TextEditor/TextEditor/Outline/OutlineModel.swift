@@ -38,66 +38,62 @@ class OutlineModel {
         })
     }
     
-    func updateTextGroups(from string: NSMutableAttributedString, completion: ((TextGroup?)->())? = nil) {
+    func updateTextGroups(from string: NSMutableAttributedString, workItem: DispatchWorkItem? = nil, completion: ((TextGroup?)->())? = nil) {
         
         //TODO: change the dependancy on this method - several operations in textHighlthing/collapsing have to keep calling this method in order to have updated groups
         
-//        workItem?.cancel()
-//        var newWorkItem: DispatchWorkItem!
-//        
-//        newWorkItem = DispatchWorkItem {
+        guard let tokens = self.language.textGroupTokens(for: string.string, workItem: workItem) else {
+            completion?(nil)
+            return
+        }
         
-            guard let tokens = self.language.textGroupTokens(for: string.string, workItem: nil/*newWorkItem*/) else {
+        let parentTextGroup = TextGroup (title: "parent")
+        
+        for token in tokens {
+            
+            let newTextGroup = TextGroup(title: token.label, token: token)
+            
+            var flattenedTextGroups: [TextGroup] = []
+            
+            for textGroup in parentTextGroup {
+                
+                flattenedTextGroups.append(textGroup)
+            }
+            
+            let reversedTextGroups =  flattenedTextGroups.reversed()
+            
+            var noPreviousTextGroupsWithHigherPriority = true
+            for textGroup in reversedTextGroups {
+                
+                guard let textGroupToken = textGroup.token else {
+                    continue
+                }
+                
+                if self.language.priority(of: textGroupToken, isHigherThan: token) {
+                    
+                    textGroup.textGroups.append(newTextGroup)
+                    
+                    noPreviousTextGroupsWithHigherPriority = false
+                    break
+                }
+            }
+            
+            if noPreviousTextGroupsWithHigherPriority {
+                
+                parentTextGroup.textGroups.append(newTextGroup)
+            }
+            
+            
+            guard workItem?.isCancelled != true else {
+                print("cancallineg thins shiots")
                 completion?(nil)
                 return
             }
-            
-            let parentTextGroup = TextGroup (title: "parent")
-            
-            for token in tokens {
-                
-                let newTextGroup = TextGroup(title: token.label, token: token)
-                
-                var flattenedTextGroups: [TextGroup] = []
-                
-                for textGroup in parentTextGroup {
-                    
-                    flattenedTextGroups.append(textGroup)
-                }
-                
-                let reversedTextGroups =  flattenedTextGroups.reversed()
-                
-                var noPreviousTextGroupsWithHigherPriority = true
-                for textGroup in reversedTextGroups {
-                    
-                    guard let textGroupToken = textGroup.token else {
-                        continue
-                    }
-                    
-                    if self.language.priority(of: textGroupToken, isHigherThan: token) {
-                        
-                        textGroup.textGroups.append(newTextGroup)
-                        
-                        noPreviousTextGroupsWithHigherPriority = false
-                        break
-                    }
-                }
-                
-                if noPreviousTextGroupsWithHigherPriority {
-                    
-                    parentTextGroup.textGroups.append(newTextGroup)
-                }
-            }
-            
-            self.string = string.string
-            self.parentTextGroup = parentTextGroup
-            completion?(parentTextGroup)
-            
-//            newWorkItem = nil
-//        }
-//        self.workItem = newWorkItem
+        }
         
-//        DispatchQueue.global(qos: .background).async(execute: newWorkItem)
+        self.string = string.string
+        self.parentTextGroup = parentTextGroup
+        completion?(parentTextGroup)
     }
     
     func reCalculateTextGroups(editedRange: NSRange, delta: Int) {
