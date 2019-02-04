@@ -12,7 +12,12 @@ class TestRulerView: NSRulerView {
     
     override func mouseDown(with event: NSEvent) {
         
-        let invertedY = (self.window?.frame.height ?? 0) - event.locationInWindow.y
+        guard let scrollView = self.scrollView else {
+            return
+        }
+        
+        let invertedY = ((self.window?.frame.height ?? 0) - event.locationInWindow.y) +
+            scrollView.contentView.bounds.minY
         
         for marker in textGroupMarkers {
             
