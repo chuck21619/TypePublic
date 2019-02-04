@@ -12,6 +12,8 @@
 		A327176120E55CA200AD89A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A327176020E55CA200AD89A0 /* Assets.xcassets */; };
 		A327176420E55CA200AD89A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A327176220E55CA200AD89A0 /* Main.storyboard */; };
 		A327177020E55CA200AD89A0 /* TypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A327176F20E55CA200AD89A0 /* TypeTests.swift */; };
+		A364C3892208CC8C0080EFF1 /* Sideboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A364C3882208CC8C0080EFF1 /* Sideboard.swift */; };
+		A364C38D2208CD4B0080EFF1 /* Sideboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A364C38C2208CD4B0080EFF1 /* Sideboard.storyboard */; };
 		A36CD4D020ED9B9500ED46FA /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4CF20ED9B9500ED46FA /* WindowController.swift */; };
 		A37D66052155F7A600947572 /* TextEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A37D65FD2155F77900947572 /* TextEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A37D66062155F7A600947572 /* Panels.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A37D65F62155F77200947572 /* Panels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -94,6 +96,8 @@
 		A327176B20E55CA200AD89A0 /* TypeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A327176F20E55CA200AD89A0 /* TypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTests.swift; sourceTree = "<group>"; };
 		A327177120E55CA200AD89A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A364C3882208CC8C0080EFF1 /* Sideboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sideboard.swift; sourceTree = "<group>"; };
+		A364C38C2208CD4B0080EFF1 /* Sideboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Sideboard.storyboard; sourceTree = "<group>"; };
 		A36CD4CF20ED9B9500ED46FA /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		A37D65F12155F77200947572 /* Panels.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Panels.xcodeproj; path = Panels/Panels.xcodeproj; sourceTree = "<group>"; };
 		A37D65F72155F77900947572 /* TextEditor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextEditor.xcodeproj; path = TextEditor/TextEditor.xcodeproj; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 				A327176220E55CA200AD89A0 /* Main.storyboard */,
 				A327176520E55CA200AD89A0 /* Info.plist */,
 				A327176620E55CA200AD89A0 /* Type.entitlements */,
+				A364C3862208CC550080EFF1 /* Sideboard */,
 				A37658BC20E8046C00BD76B9 /* test */,
 			);
 			path = Type;
@@ -164,6 +169,15 @@
 				A327177120E55CA200AD89A0 /* Info.plist */,
 			);
 			path = TypeTests;
+			sourceTree = "<group>";
+		};
+		A364C3862208CC550080EFF1 /* Sideboard */ = {
+			isa = PBXGroup;
+			children = (
+				A364C3882208CC8C0080EFF1 /* Sideboard.swift */,
+				A364C38C2208CD4B0080EFF1 /* Sideboard.storyboard */,
+			);
+			path = Sideboard;
 			sourceTree = "<group>";
 		};
 		A37658BC20E8046C00BD76B9 /* test */ = {
@@ -327,6 +341,7 @@
 				A327176120E55CA200AD89A0 /* Assets.xcassets in Resources */,
 				A327176420E55CA200AD89A0 /* Main.storyboard in Resources */,
 				A3C325D420E57115007DFCE4 /* TestViewController.storyboard in Resources */,
+				A364C38D2208CD4B0080EFF1 /* Sideboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +362,7 @@
 				A327175F20E55CA100AD89A0 /* ViewController.swift in Sources */,
 				A36CD4D020ED9B9500ED46FA /* WindowController.swift in Sources */,
 				A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */,
+				A364C3892208CC8C0080EFF1 /* Sideboard.swift in Sources */,
 				A327175D20E55CA100AD89A0 /* AppDelegate.swift in Sources */,
 				A3B0277F20EAC0C300A5C912 /* TestViewControllerTwo.swift in Sources */,
 			);

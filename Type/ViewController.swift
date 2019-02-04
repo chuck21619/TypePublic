@@ -19,7 +19,9 @@ class ViewController: NSViewController {
         
         let storyboard = NSStoryboard(name: "TestViewController", bundle: Bundle.main)
         
-        let leftPanelViewController = storyboard.instantiateInitialController() as? NSViewController
+        let sideboardStoryboard = NSStoryboard(name: "Sideboard", bundle: Bundle.main)
+        
+        let leftPanelViewController = sideboardStoryboard.instantiateInitialController() as? NSViewController
         let leftPanel = Panel(position: .left, viewController: leftPanelViewController)
         
         let rightPanelViewController = storyboard.instantiateInitialController() as? NSViewController

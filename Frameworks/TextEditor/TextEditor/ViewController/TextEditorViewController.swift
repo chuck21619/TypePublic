@@ -98,7 +98,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         outlineMouseTrackingArea = NSTrackingArea(rect: rect, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil)
         self.view.addTrackingArea(outlineMouseTrackingArea!)
         
-        addTestButton()
+//        addTestButton()
     }
     
     private func addTestButton() {
