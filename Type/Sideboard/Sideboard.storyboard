@@ -48,7 +48,7 @@
                                                         </menu>
                                                     </popUpButtonCell>
                                                 </popUpButton>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jQ-4p-gth">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jQ-4p-gth" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="1149" width="106" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Document Name" id="Ak6-an-Nx5">
                                                         <font key="font" metaFont="system"/>
@@ -56,7 +56,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DaG-v2-rhE">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DaG-v2-rhE" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="1124" width="40" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Name" id="rPU-Hc-Heg">
                                                         <font key="font" metaFont="system"/>
@@ -64,7 +64,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sbK-g6-FqI">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sbK-g6-FqI" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="1084" width="88" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Creation Date" id="miJ-qV-tA8">
                                                         <font key="font" metaFont="system"/>
@@ -72,7 +72,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eO1-eM-tw9">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eO1-eM-tw9" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="1059" width="68" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="MM.DD.YY" id="uii-Is-saE">
                                                         <font key="font" metaFont="system"/>
@@ -80,7 +80,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mWy-n6-bED">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mWy-n6-bED" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="1009" width="89" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Time Invested" id="RhK-34-1rN">
                                                         <font key="font" metaFont="system"/>
@@ -96,25 +96,15 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Fp-tZ-yBe">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Fp-tZ-yBe" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="205" y="1117" width="36" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="WMP" id="hCy-Vj-fjj">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rlj-oM-duI">
-                                                    <rect key="frame" x="213" y="1092" width="21" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="45" id="UXh-XA-n3t">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTA-35-3nU">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTA-35-3nU" customClass="SideboardSectionLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="18" y="936" width="38" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="TAGS" id="q0L-cT-yHa">
                                                         <font key="font" metaFont="system"/>
@@ -122,7 +112,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="54V-AG-lXb">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="54V-AG-lXb" customClass="SideboardSectionLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="18" y="793" width="48" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="GOALS" id="Eaw-jw-Kra">
                                                         <font key="font" metaFont="system"/>
@@ -130,7 +120,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ic4-1A-5GV">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ic4-1A-5GV" customClass="SideboardSectionLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="18" y="614" width="96" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="COMPOSITION" id="EHe-oa-6Ij">
                                                         <font key="font" metaFont="system"/>
@@ -138,7 +128,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GbQ-Uy-QRs">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GbQ-Uy-QRs" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="904" width="65" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Tag Name" id="ERm-3z-fQa">
                                                         <font key="font" metaFont="system"/>
@@ -146,7 +136,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9ez-mB-Rry">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9ez-mB-Rry" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="42" y="879" width="65" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Tag Name" id="nr9-m7-nXU">
                                                         <font key="font" metaFont="system"/>
@@ -162,7 +152,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bgo-Mw-hcT">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bgo-Mw-hcT" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="44" y="753" width="136" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="More than 500 Words" id="fLk-ZA-Dym">
                                                         <font key="font" metaFont="system"/>
@@ -170,7 +160,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EJi-VZ-ssa">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EJi-VZ-ssa" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="583" width="72" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Pages (A4)" id="2nw-kc-mxd">
                                                         <font key="font" metaFont="system"/>
@@ -178,7 +168,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQU-sz-rhY">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQU-sz-rhY" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="44" y="728" width="106" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="At Least 3 Pages" id="jbe-ff-Va1">
                                                         <font key="font" metaFont="system"/>
@@ -186,7 +176,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oRb-p0-pla">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oRb-p0-pla" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="44" y="703" width="128" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="2 Hour Long Speech" id="HEz-Nr-oct">
                                                         <font key="font" metaFont="system"/>
@@ -202,7 +192,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="udf-lY-AjK">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="udf-lY-AjK" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="558" width="12" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="2" id="OiH-1b-tM2">
                                                         <font key="font" metaFont="system"/>
@@ -210,7 +200,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gN5-EI-Pau">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gN5-EI-Pau" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="524" width="37" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Lines" id="sgD-JP-afM">
                                                         <font key="font" metaFont="system"/>
@@ -218,28 +208,28 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="2sv-Xs-1Ft">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="2sv-Xs-1Ft" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="961" width="242" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="H7G-hZ-REc"/>
                                                         <constraint firstAttribute="width" constant="242" id="gTT-OI-Lb5"/>
                                                     </constraints>
                                                 </customView>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="xLx-LR-CU7">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="xLx-LR-CU7" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="818" width="242" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="fZE-cX-AEw"/>
                                                         <constraint firstAttribute="width" constant="242" id="hra-4n-w9o"/>
                                                     </constraints>
                                                 </customView>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="LQA-bm-m7x">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="LQA-bm-m7x" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="639" width="242" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="6pH-PO-bR3"/>
                                                         <constraint firstAttribute="width" constant="242" id="JRG-bU-nHD"/>
                                                     </constraints>
                                                 </customView>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="268-0X-r1x">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="268-0X-r1x" customClass="SideboardSectionLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="19" y="263" width="128" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="WEEKLY PROGRESS" id="ZGD-i4-4V8">
                                                         <font key="font" metaFont="system"/>
@@ -248,21 +238,21 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Gm-GY-nFP">
-                                                    <rect key="frame" x="67" y="225" width="148" height="17"/>
+                                                    <rect key="frame" x="77" y="228" width="129" height="14"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="&lt;        THIS WEEK        &gt;" id="hrr-bw-FID">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="font" metaFont="system" size="11"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="edw-kV-v3C">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="edw-kV-v3C" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="288" width="242" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="NvH-Pa-OtD"/>
                                                         <constraint firstAttribute="width" constant="242" id="ZeW-T7-djn"/>
                                                     </constraints>
                                                 </customView>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CGx-qX-P11">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CGx-qX-P11" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="499" width="28" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="783" id="S5O-SV-Z59">
                                                         <font key="font" metaFont="system"/>
@@ -270,7 +260,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f59-gN-jez">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f59-gN-jez" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="457" width="43" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Words" id="MxC-n4-Vqs">
                                                         <font key="font" metaFont="system"/>
@@ -278,7 +268,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-z3-DrO">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-z3-DrO" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="432" width="40" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="4,330" id="3uN-7a-BKI">
                                                         <font key="font" metaFont="system"/>
@@ -286,7 +276,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wJB-bD-RKO">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wJB-bD-RKO" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="395" width="71" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Characters" id="hio-aW-3Vq">
                                                         <font key="font" metaFont="system"/>
@@ -294,7 +284,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TKn-5j-FMT">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TKn-5j-FMT" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="370" width="38" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="1,230" id="84i-H6-gNX">
                                                         <font key="font" metaFont="system"/>
@@ -302,7 +292,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fSr-3J-Rcw">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fSr-3J-Rcw" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="334" width="68" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Read Time" id="8q1-uh-nWN">
                                                         <font key="font" metaFont="system"/>
@@ -310,23 +300,23 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xt1-Za-OMU">
-                                                    <rect key="frame" x="98" y="45" width="86" height="17"/>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xt1-Za-OMU" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
+                                                    <rect key="frame" x="98" y="48" width="86" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Words Added" id="NfL-Y6-OGc">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dDl-ks-0tB">
-                                                    <rect key="frame" x="90" y="20" width="103" height="17"/>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dDl-ks-0tB" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
+                                                    <rect key="frame" x="90" y="23" width="103" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Words Removed" id="mjf-sK-CyD">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-B3-DxA">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-B3-DxA" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="40" y="309" width="32" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="45m" id="Kia-8B-1WI">
                                                         <font key="font" metaFont="system"/>
@@ -335,14 +325,14 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dh3-eO-kch">
-                                                    <rect key="frame" x="42" y="90" width="16" height="17"/>
+                                                    <rect key="frame" x="42" y="93" width="16" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="M" id="j7l-Vy-R1h">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qJD-G5-1KR">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qJD-G5-1KR" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="583" width="109" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Misspelled words" id="sZ5-8Y-PU5">
                                                         <font key="font" metaFont="system"/>
@@ -350,7 +340,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aLd-f4-wvB">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aLd-f4-wvB" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="558" width="13" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="8" id="WNd-bV-JPJ">
                                                         <font key="font" metaFont="system"/>
@@ -358,7 +348,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TAf-2m-isg">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TAf-2m-isg" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="524" width="87" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Passive Voice" id="u4O-Tk-40h">
                                                         <font key="font" metaFont="system"/>
@@ -366,7 +356,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rPD-yk-ftr">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rPD-yk-ftr" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="499" width="18" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="12" id="y1l-BA-eUE">
                                                         <font key="font" metaFont="system"/>
@@ -374,7 +364,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4id-Ei-R8X">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4id-Ei-R8X" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="457" width="125" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Complex Sentences" id="I3c-Gw-2Fc">
                                                         <font key="font" metaFont="system"/>
@@ -382,7 +372,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5l2-9p-19l">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5l2-9p-19l" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="432" width="12" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="7" id="sC3-7g-s0W">
                                                         <font key="font" metaFont="system"/>
@@ -390,7 +380,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ga2-xt-vAk">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ga2-xt-vAk" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="170" y="395" width="54" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Adverbs" id="dOC-dY-Igh">
                                                         <font key="font" metaFont="system"/>
@@ -398,7 +388,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9M4-VN-5nj">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9M4-VN-5nj" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="170" y="370" width="21" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="30" id="wXi-x1-Ssc">
                                                         <font key="font" metaFont="system"/>
@@ -406,7 +396,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dud-kG-oow">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dud-kG-oow" customClass="SideboardSmallLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="334" width="96" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Speech Length" id="cl9-sj-M4R">
                                                         <font key="font" metaFont="system"/>
@@ -414,7 +404,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cLI-Ny-b4r">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cLI-Ny-b4r" customClass="SideboardDefaultLabel" customModule="Type" customModuleProvider="target">
                                                     <rect key="frame" x="169" y="309" width="49" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="1h 30m" id="fGD-g1-S8t">
                                                         <font key="font" metaFont="system"/>
@@ -423,50 +413,58 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdp-Wc-gKv">
-                                                    <rect key="frame" x="71" y="90" width="13" height="17"/>
+                                                    <rect key="frame" x="71" y="93" width="13" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="T" id="gya-2I-dad">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DEY-N6-FOV">
-                                                    <rect key="frame" x="100" y="90" width="17" height="17"/>
+                                                    <rect key="frame" x="100" y="93" width="17" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="W" id="d51-Hn-T9U">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rav-La-rgy">
-                                                    <rect key="frame" x="134" y="90" width="22" height="17"/>
+                                                    <rect key="frame" x="134" y="93" width="22" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="TH" id="ZOB-vm-Bm6">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7q3-jW-Mpd">
-                                                    <rect key="frame" x="173" y="90" width="12" height="17"/>
+                                                    <rect key="frame" x="173" y="93" width="12" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="F" id="afH-R7-ktK">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zoj-Ib-7au">
-                                                    <rect key="frame" x="202" y="90" width="13" height="17"/>
+                                                    <rect key="frame" x="202" y="93" width="13" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="S" id="gtz-UC-k0V">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9RI-xu-wD1">
-                                                    <rect key="frame" x="232" y="90" width="22" height="17"/>
+                                                    <rect key="frame" x="232" y="93" width="22" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="SU" id="zz2-hX-qhl">
                                                         <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rlj-oM-duI">
+                                                    <rect key="frame" x="201" y="1065" width="45" height="44"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="45" id="UXh-XA-n3t">
+                                                        <font key="font" size="36" name="HelveticaNeue-Light"/>
+                                                        <color key="textColor" red="0.56862745098039214" green="0.56862745098039214" blue="0.56862745098039214" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
@@ -523,6 +521,7 @@
                                                 <constraint firstItem="Sg6-z3-DrO" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="Md7-xO-NLg"/>
                                                 <constraint firstItem="gN5-EI-Pau" firstAttribute="top" secondItem="udf-lY-AjK" secondAttribute="bottom" constant="17" id="NRR-jT-b3S"/>
                                                 <constraint firstItem="rPD-yk-ftr" firstAttribute="top" secondItem="TAf-2m-isg" secondAttribute="bottom" constant="8" id="OQR-8D-meS"/>
+                                                <constraint firstItem="7Fp-tZ-yBe" firstAttribute="leading" secondItem="DaG-v2-rhE" secondAttribute="trailing" constant="127" id="Oxn-jc-Y3g"/>
                                                 <constraint firstItem="54V-AG-lXb" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="20" id="PNV-cw-mYH"/>
                                                 <constraint firstItem="fSr-3J-Rcw" firstAttribute="top" secondItem="TKn-5j-FMT" secondAttribute="bottom" constant="19" id="PZs-1k-6gW"/>
                                                 <constraint firstItem="dQU-sz-rhY" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="46" id="QLr-bi-WYt"/>
@@ -534,7 +533,7 @@
                                                 <constraint firstItem="oRb-p0-pla" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="46" id="VG3-5d-Od9"/>
                                                 <constraint firstItem="9M4-VN-5nj" firstAttribute="leading" secondItem="TKn-5j-FMT" secondAttribute="trailing" constant="96" id="WpS-XZ-YrH"/>
                                                 <constraint firstItem="DEY-N6-FOV" firstAttribute="top" secondItem="2Gm-GY-nFP" secondAttribute="bottom" constant="118" id="XHb-nQ-OYe"/>
-                                                <constraint firstItem="9RI-xu-wD1" firstAttribute="top" secondItem="edw-kV-v3C" secondAttribute="bottom" constant="181" id="Y9y-qC-V2a"/>
+                                                <constraint firstItem="9RI-xu-wD1" firstAttribute="top" secondItem="edw-kV-v3C" secondAttribute="bottom" constant="178" id="Y9y-qC-V2a"/>
                                                 <constraint firstItem="5l2-9p-19l" firstAttribute="leading" secondItem="Sg6-z3-DrO" secondAttribute="trailing" constant="93" id="Zp9-Rt-9uN"/>
                                                 <constraint firstItem="Ic4-1A-5GV" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="20" id="aEw-ug-BI5"/>
                                                 <constraint firstItem="EJi-VZ-ssa" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="aiF-ee-Pkv"/>
@@ -555,15 +554,17 @@
                                                 <constraint firstItem="rav-La-rgy" firstAttribute="leading" secondItem="DEY-N6-FOV" secondAttribute="trailing" constant="21" id="has-TX-cBL"/>
                                                 <constraint firstItem="eO1-eM-tw9" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="44" id="hng-L4-44S"/>
                                                 <constraint firstItem="2Gm-GY-nFP" firstAttribute="centerX" secondItem="wJc-Tc-FL8" secondAttribute="centerX" constant="-15" id="hri-ak-svD"/>
+                                                <constraint firstItem="7Fp-tZ-yBe" firstAttribute="top" secondItem="wJc-Tc-FL8" secondAttribute="top" constant="152" id="hwn-dJ-Gnf"/>
                                                 <constraint firstItem="eO1-eM-tw9" firstAttribute="top" secondItem="sbK-g6-FqI" secondAttribute="bottom" constant="8" id="iII-vW-Apw"/>
                                                 <constraint firstItem="xt1-Za-OMU" firstAttribute="centerX" secondItem="wJc-Tc-FL8" secondAttribute="centerX" constant="-15" id="iNs-IR-YNF"/>
                                                 <constraint firstItem="e0C-lP-CiF" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="44" id="ipe-Ay-k4t"/>
                                                 <constraint firstItem="dDl-ks-0tB" firstAttribute="top" secondItem="xt1-Za-OMU" secondAttribute="bottom" constant="8" id="iuS-Mv-M6y"/>
                                                 <constraint firstItem="e0C-lP-CiF" firstAttribute="top" secondItem="mWy-n6-bED" secondAttribute="bottom" constant="8" id="jqC-aY-r9v"/>
                                                 <constraint firstItem="9M4-VN-5nj" firstAttribute="top" secondItem="Ga2-xt-vAk" secondAttribute="bottom" constant="8" id="kps-we-mAb"/>
-                                                <constraint firstItem="dh3-eO-kch" firstAttribute="top" secondItem="268-0X-r1x" secondAttribute="bottom" constant="156" id="kyk-Ny-flT"/>
+                                                <constraint firstItem="dh3-eO-kch" firstAttribute="top" secondItem="268-0X-r1x" secondAttribute="bottom" constant="153" id="kyk-Ny-flT"/>
                                                 <constraint firstItem="dud-kG-oow" firstAttribute="leading" secondItem="fSr-3J-Rcw" secondAttribute="trailing" constant="65" id="l0Q-zq-caX"/>
                                                 <constraint firstItem="f59-gN-jez" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="lhV-FH-Zsq"/>
+                                                <constraint firstItem="Rlj-oM-duI" firstAttribute="top" secondItem="7Fp-tZ-yBe" secondAttribute="bottom" constant="8" id="ljE-jL-ymA"/>
                                                 <constraint firstItem="2sv-Xs-1Ft" firstAttribute="centerX" secondItem="wJc-Tc-FL8" secondAttribute="centerX" constant="-15" id="m1H-wH-g6X"/>
                                                 <constraint firstItem="t96-0E-5IL" firstAttribute="top" secondItem="9ez-mB-Rry" secondAttribute="bottom" constant="8" id="oPS-zl-LT7"/>
                                                 <constraint firstItem="rPD-yk-ftr" firstAttribute="leading" secondItem="CGx-qX-P11" secondAttribute="trailing" constant="105" id="oYy-mp-N7Z"/>
@@ -571,6 +572,7 @@
                                                 <constraint firstItem="9ez-mB-Rry" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="44" id="paX-V1-d1q"/>
                                                 <constraint firstItem="TAf-2m-isg" firstAttribute="top" secondItem="aLd-f4-wvB" secondAttribute="bottom" constant="17" id="qDn-Cf-pWk"/>
                                                 <constraint firstItem="GbQ-Uy-QRs" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="44" id="qkd-mc-OIn"/>
+                                                <constraint firstItem="Rlj-oM-duI" firstAttribute="centerX" secondItem="7Fp-tZ-yBe" secondAttribute="centerX" id="sk3-P6-gRP"/>
                                                 <constraint firstItem="sTA-35-3nU" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="20" id="tvt-FV-Zjf"/>
                                                 <constraint firstItem="DEY-N6-FOV" firstAttribute="leading" secondItem="fdp-Wc-gKv" secondAttribute="trailing" constant="20" id="vnv-gW-9iT"/>
                                                 <constraint firstItem="CGx-qX-P11" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="vo2-vI-EL4"/>
