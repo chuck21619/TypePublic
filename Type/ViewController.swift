@@ -31,7 +31,7 @@ class ViewController: NSViewController {
             return
         }
         
-        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 700)
+        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
 
         panels.set(panels: [leftPanel, rightPanel, mainPanel])
     }
