@@ -1,5 +1,5 @@
 //
-//  SideboardDefaultLabel.swift
+//  SideboardSectionLabel.swift
 //  Type
 //
 //  Created by charles johnston on 2/4/19.
@@ -9,11 +9,11 @@
 import Foundation
 import AppKit
 
-class SideboardDefaultLabel: NSTextField {
+class OuterPanelSectionLabel: NSTextField {
     
     override func awakeFromNib() {
         
-        self.textColor = NSColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 1.0)
+        self.textColor = NSColor(red: 84.0/255.0, green: 84.0/255.0, blue: 84.0/255.0, alpha: 1.0)
         self.font = NSFont.systemFont(ofSize: 12.0)
     }
 }

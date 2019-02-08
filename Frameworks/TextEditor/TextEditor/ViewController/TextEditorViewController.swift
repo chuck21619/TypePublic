@@ -171,6 +171,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         textEditorView.typingAttributes = attributes
         textEditorView.delegate = self
         
+        textEditorView.enclosingScrollView?.autohidesScrollers = true
+        
         // 7. assemble
         scrollView.documentView = textEditorView
         

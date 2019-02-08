@@ -77,6 +77,7 @@ class TextEditorView: NSTextView {
 //    
 //    func commonInit() {
 //
+//        self.enclosingScrollView?.autohidesScrollers = true
 //    }
 //
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
+public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGestureRecognizerDelegate {
     
     // MARK: - Public Interface
     public func set(panels: [Panel]) {
@@ -126,6 +126,23 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate {
     private var preventPanelResizing = false
     
     // MARK: - Resizing gestures
+//    public func gestureRecognizerShouldBegin(_ gestureRecognizer: NSGestureRecognizer) -> Bool {
+//
+//        if let panGestureRecognizer = gestureRecognizer as? NSPanGestureRecognizer {
+//
+//            let velocity = panGestureRecognizer.velocity(in: self)
+//            let shouldBegin = fabs(velocity.x) > fabs(velocity.y)
+//            return shouldBegin
+//        }
+//
+//        return true
+//    }
+
+//    public func gestureRecognizer(_ gestureRecognizer: NSGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: NSGestureRecognizer) -> Bool {
+//
+//        return true
+//    }
+    
     @IBAction func leftPanelResizing(_ sender: NSPanGestureRecognizer) {
         
         guard shouldResizePanel(sender) == true, let leftPanel = self.leftPanel else {

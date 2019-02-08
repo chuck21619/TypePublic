@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="djb-OF-1p5">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--File Browser View Controller-->
+        <scene sceneID="FPG-yf-hzW">
+            <objects>
+                <viewController id="djb-OF-1p5" customClass="FileBrowserViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="yiB-a8-mdw" customClass="OuterPanelView" customModule="Type" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="253" height="713"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JIb-Ya-u8c" customClass="OuterPanelTitleLabel" customModule="Type" customModuleProvider="target">
+                                <rect key="frame" x="88" y="676" width="78" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="File Browser" id="77q-2Q-h2v">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="JIb-Ya-u8c" firstAttribute="centerX" secondItem="yiB-a8-mdw" secondAttribute="centerX" id="Eb5-3k-vdz"/>
+                            <constraint firstItem="JIb-Ya-u8c" firstAttribute="top" secondItem="yiB-a8-mdw" secondAttribute="top" constant="20" id="msD-wp-SNi"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="7U1-p5-Tdn" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="24.5" y="208.5"/>
+        </scene>
+    </scenes>
+</document>

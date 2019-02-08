@@ -11,10 +11,4 @@ import AppKit
 
 class SideboardViewController: NSViewController {
     
-    
-    override func viewDidLoad() {
-        
-        self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0).cgColor
-    }
 }

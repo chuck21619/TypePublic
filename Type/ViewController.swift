@@ -17,22 +17,21 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let storyboard = NSStoryboard(name: "TestViewController", bundle: Bundle.main)
-        
+        let fileBrowserStoryboard = NSStoryboard(name: "FileBrowser", bundle: Bundle.main)
         let sideboardStoryboard = NSStoryboard(name: "Sideboard", bundle: Bundle.main)
         
-        let leftPanelViewController = sideboardStoryboard.instantiateInitialController() as? NSViewController
-        let leftPanel = Panel(position: .left, viewController: leftPanelViewController, hidingThreshold: 200, defaultWidth: 300)
+        let leftPanelViewController = fileBrowserStoryboard.instantiateInitialController() as? NSViewController
+        let leftPanel = Panel(position: .left, viewController: leftPanelViewController, hidingThreshold: 100, defaultWidth: 200)
         
-        let rightPanelViewController = storyboard.instantiateInitialController() as? NSViewController
-        let rightPanel = Panel(position: .right, viewController: rightPanelViewController)
+        let rightPanelViewController = sideboardStoryboard.instantiateInitialController() as? NSViewController
+        let rightPanel = Panel(position: .right, viewController: rightPanelViewController, hidingThreshold: 100, defaultWidth: 300)
         
         
         guard let mainPanelViewController = TextEditorViewController.createInstance() else {
             return
         }
         
-        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 500)
+        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 700)
 
         panels.set(panels: [leftPanel, rightPanel, mainPanel])
     }

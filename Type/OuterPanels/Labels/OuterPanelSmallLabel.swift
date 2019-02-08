@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 
-class SideboardSmallLabel: NSTextField {
+class OuterPanelSmallLabel: NSTextField {
     
     override func awakeFromNib() {
         
