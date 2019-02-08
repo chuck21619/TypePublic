@@ -11,4 +11,9 @@ import AppKit
 
 class SideboardViewController: NSViewController {
     
+    @IBOutlet weak var scrollview: NSScrollView!
+    @IBAction func buttonAction(_ sender: Any) {
+        
+        self.scrollview.hasVerticalScroller = !self.scrollview.hasVerticalScroller
+    }
 }
