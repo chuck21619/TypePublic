@@ -11,6 +11,8 @@ import Foundation
 public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGestureRecognizerDelegate {
     
     // MARK: - Public Interface
+    public var delegate: PanelsDelegate? = nil
+    
     public func set(panels: [Panel]) {
         
         //left panel
@@ -94,11 +96,13 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGesture
     }
     
     public override init(frame frameRect: NSRect) {
+        self.delegate = nil
         super.init(frame: frameRect)
         commonInit()
     }
     
     required public init?(coder decoder: NSCoder) {
+        self.delegate = nil
         super.init(coder: decoder)
         commonInit()
     }
@@ -149,9 +153,14 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGesture
             return
         }
         
+        if sender.state == .began {
+            
+            self.delegate?.didStartResizing(panelPosition: .left)
+        }
+        
         configureConstraintsFromResizeBarGesture(gesture: sender, panelConstraint: leftPanelViewWidthConstraint)
         
-        resizeBehavior?.handleResizeLeft(sender, leftPanel: leftPanel)
+        resizeBehavior?.handleResizeLeft(sender, leftPanel: leftPanel, panelsDelegate: self.delegate)
     }
     
     @IBAction func rightPanelResizing(_ sender: NSPanGestureRecognizer) {
@@ -160,9 +169,14 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGesture
             return
         }
         
+        if sender.state == .began {
+            
+            self.delegate?.didStartResizing(panelPosition: .right)
+        }
+        
         configureConstraintsFromResizeBarGesture(gesture: sender, panelConstraint: rightPanelViewWidthConstraint)
         
-        resizeBehavior?.handleResizeRight(sender, rightPanel: rightPanel)
+        resizeBehavior?.handleResizeRight(sender, rightPanel: rightPanel, panelsDelegate: self.delegate)
     }
     
     // MARK: - Configure Constraints
@@ -335,7 +349,8 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGesture
         
         if animated {
             
-            return animateUI(panelsDimensions)
+            animateUI(panelsDimensions)
+            return
         }
         else {
             

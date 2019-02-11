@@ -24,19 +24,19 @@ class ResizeBehavior {
     }
     
     // MARK: - Panel Resizing
-    func handleResizeLeft(_ sender: NSPanGestureRecognizer, leftPanel: Panel) {
+    func handleResizeLeft(_ sender: NSPanGestureRecognizer, leftPanel: Panel, panelsDelegate: PanelsDelegate?) {
         
         let resizeHandler = LeftResizingHandler()
-        self.handlePanelResize(gesture: sender, resizeHandler: resizeHandler, panel: leftPanel)
+        self.handlePanelResize(gesture: sender, resizeHandler: resizeHandler, panel: leftPanel, panelsDelegate: panelsDelegate)
     }
     
-    func handleResizeRight(_ sender: NSPanGestureRecognizer, rightPanel: Panel) {
+    func handleResizeRight(_ sender: NSPanGestureRecognizer, rightPanel: Panel, panelsDelegate: PanelsDelegate?) {
         
         let resizeHandler = RightResizingHandler()
-        self.handlePanelResize(gesture: sender, resizeHandler: resizeHandler, panel: rightPanel)
+        self.handlePanelResize(gesture: sender, resizeHandler: resizeHandler, panel: rightPanel, panelsDelegate: panelsDelegate)
     }
     
-    private func handlePanelResize(gesture: NSPanGestureRecognizer, resizeHandler: HorizontalResizingHandler, panel: Panel) {
+    private func handlePanelResize(gesture: NSPanGestureRecognizer, resizeHandler: HorizontalResizingHandler, panel: Panel, panelsDelegate: PanelsDelegate?) {
         
         let currentPanelsDimensions = self.delegate.currentPanelsDimensions()
         
@@ -58,7 +58,7 @@ class ResizeBehavior {
         
         if gesture.state == .ended {
             
-            self.handleEndOfPanelResizing(horizontalResizingHandler: resizeHandler, panel: panel, currentPanelsDimensions: currentPanelsDimensions)
+            self.handleEndOfPanelResizing(horizontalResizingHandler: resizeHandler, panel: panel, currentPanelsDimensions: currentPanelsDimensions, panelsDelegate: panelsDelegate)
         }
     }
     
@@ -69,7 +69,7 @@ class ResizeBehavior {
         self.delegate.setAutomaticResizing(true)
     }
     
-    private func handleEndOfPanelResizing(horizontalResizingHandler: HorizontalResizingHandler, panel: Panel, currentPanelsDimensions: PanelsDimensions) {
+    private func handleEndOfPanelResizing(horizontalResizingHandler: HorizontalResizingHandler, panel: Panel, currentPanelsDimensions: PanelsDimensions, panelsDelegate: PanelsDelegate?) {
         
         let panelWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: currentPanelsDimensions) ?? 0
         
@@ -90,6 +90,8 @@ class ResizeBehavior {
             
             self.delegate.didUpdate(panelsDimensions: newFrame, animated: true)
         }
+        
+        panelsDelegate?.didEndResizing(panelPosition: panel.position, hidingPanel: shouldHidePanel)
     }
     
     private func setPanelHidden(hidden: Bool, panel: Panel, animated: Bool, horizontalResizingHandler: HorizontalResizingHandler) {

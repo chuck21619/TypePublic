@@ -11,20 +11,20 @@
             <objects>
                 <viewController id="Fth-dv-2hy" customClass="SideboardViewController" customModule="Type" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="oVg-hi-nxX" customClass="OuterPanelView" customModule="Type" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="312" height="1286"/>
+                        <rect key="frame" x="0.0" y="0.0" width="327" height="1286"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HR-1M-LbP">
-                                <rect key="frame" x="0.0" y="0.0" width="312" height="1286"/>
+                                <rect key="frame" x="0.0" y="0.0" width="327" height="1286"/>
                                 <clipView key="contentView" id="Ycy-8z-bhM">
-                                    <rect key="frame" x="1" y="1" width="310" height="1284"/>
+                                    <rect key="frame" x="1" y="1" width="325" height="1284"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="wJc-Tc-FL8">
-                                            <rect key="frame" x="0.0" y="-2" width="312" height="1286"/>
+                                            <rect key="frame" x="0.0" y="-2" width="300" height="1286"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dec-fL-Jrn">
-                                                    <rect key="frame" x="121" y="1248" width="41" height="18"/>
+                                                    <rect key="frame" x="115" y="1248" width="41" height="18"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="INFO" id="LbN-3O-b7q">
                                                         <font key="font" metaFont="system" size="14"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -32,7 +32,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRU-vR-bUQ">
-                                                    <rect key="frame" x="73" y="1205" width="137" height="23"/>
+                                                    <rect key="frame" x="67" y="1205" width="137" height="23"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="137" id="vb0-E2-FGL"/>
                                                     </constraints>
@@ -209,21 +209,21 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="2sv-Xs-1Ft" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
-                                                    <rect key="frame" x="21" y="961" width="270" height="2"/>
+                                                    <rect key="frame" x="15" y="961" width="270" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="H7G-hZ-REc"/>
                                                         <constraint firstAttribute="width" constant="270" id="gTT-OI-Lb5"/>
                                                     </constraints>
                                                 </customView>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="xLx-LR-CU7" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
-                                                    <rect key="frame" x="21" y="818" width="270" height="2"/>
+                                                    <rect key="frame" x="15" y="818" width="270" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="fZE-cX-AEw"/>
                                                         <constraint firstAttribute="width" constant="270" id="hra-4n-w9o"/>
                                                     </constraints>
                                                 </customView>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="LQA-bm-m7x" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
-                                                    <rect key="frame" x="21" y="639" width="270" height="2"/>
+                                                    <rect key="frame" x="15" y="639" width="270" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="6pH-PO-bR3"/>
                                                         <constraint firstAttribute="width" constant="270" id="JRG-bU-nHD"/>
@@ -238,7 +238,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Gm-GY-nFP">
-                                                    <rect key="frame" x="77" y="228" width="129" height="14"/>
+                                                    <rect key="frame" x="71" y="228" width="129" height="14"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="&lt;        THIS WEEK        &gt;" id="hrr-bw-FID">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
@@ -294,7 +294,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xt1-Za-OMU" customClass="OuterPanelSmallLabel" customModule="Type" customModuleProvider="target">
-                                                    <rect key="frame" x="98" y="48" width="86" height="17"/>
+                                                    <rect key="frame" x="92" y="48" width="86" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Words Added" id="NfL-Y6-OGc">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -302,7 +302,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dDl-ks-0tB" customClass="OuterPanelSmallLabel" customModule="Type" customModuleProvider="target">
-                                                    <rect key="frame" x="90" y="23" width="103" height="17"/>
+                                                    <rect key="frame" x="84" y="23" width="103" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Words Removed" id="mjf-sK-CyD">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -462,7 +462,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OUB-mE-N2j">
-                                                    <rect key="frame" x="157" y="1238" width="81" height="32"/>
+                                                    <rect key="frame" x="151" y="1238" width="81" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="8oR-LZ-BLx"/>
                                                         <constraint firstAttribute="width" constant="69" id="eCS-lb-190"/>
@@ -476,7 +476,7 @@
                                                     </connections>
                                                 </button>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="edw-kV-v3C" customClass="SideboardSectionSeparator" customModule="Type" customModuleProvider="target">
-                                                    <rect key="frame" x="21" y="288" width="270" height="2"/>
+                                                    <rect key="frame" x="15" y="288" width="270" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="NvH-Pa-OtD"/>
                                                         <constraint firstAttribute="width" constant="270" id="ZeW-T7-djn"/>
@@ -529,7 +529,7 @@
                                                 <constraint firstItem="udf-lY-AjK" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="Jkx-7I-Yvy"/>
                                                 <constraint firstItem="bgo-Mw-hcT" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="46" id="LKY-xW-GRI"/>
                                                 <constraint firstItem="gN5-EI-Pau" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="LLJ-B3-TR2"/>
-                                                <constraint firstAttribute="width" constant="312" id="LYi-Wf-jjE"/>
+                                                <constraint firstAttribute="width" constant="300" id="LYi-Wf-jjE"/>
                                                 <constraint firstItem="9RI-xu-wD1" firstAttribute="leading" secondItem="Zoj-Ib-7au" secondAttribute="trailing" constant="21" id="M1Q-BJ-HIp"/>
                                                 <constraint firstItem="xLx-LR-CU7" firstAttribute="centerX" secondItem="wJc-Tc-FL8" secondAttribute="centerX" id="MFo-qs-4aA"/>
                                                 <constraint firstItem="Sg6-z3-DrO" firstAttribute="leading" secondItem="wJc-Tc-FL8" secondAttribute="leading" constant="42" id="Md7-xO-NLg"/>
