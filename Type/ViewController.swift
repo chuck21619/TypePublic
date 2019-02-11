@@ -24,7 +24,7 @@ class ViewController: NSViewController {
         let leftPanel = Panel(position: .left, viewController: leftPanelViewController, hidingThreshold: 100, defaultWidth: 200)
         
         let rightPanelViewController = sideboardStoryboard.instantiateInitialController() as? NSViewController
-        let rightPanel = Panel(position: .right, viewController: rightPanelViewController, hidingThreshold: 100, defaultWidth: 300)
+        let rightPanel = Panel(position: .right, viewController: rightPanelViewController, hidingThreshold: 100, defaultWidth: 312)
         
         
         guard let mainPanelViewController = TextEditorViewController.createInstance() else {
