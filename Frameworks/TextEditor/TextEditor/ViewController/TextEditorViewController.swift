@@ -27,7 +27,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             if let textStorage = self.textStorage {
                 
-                outlineModel?.updateTextGroups(from: self.textStorage)
+                outlineModel?.updateTextGroups(from: textStorage)
             }
         }
     }
