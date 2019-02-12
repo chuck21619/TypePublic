@@ -14,10 +14,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="327" height="1286"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HR-1M-LbP">
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HR-1M-LbP">
                                 <rect key="frame" x="0.0" y="0.0" width="327" height="1286"/>
                                 <clipView key="contentView" id="Ycy-8z-bhM">
-                                    <rect key="frame" x="1" y="1" width="325" height="1284"/>
+                                    <rect key="frame" x="1" y="1" width="310" height="1284"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="wJc-Tc-FL8">
@@ -461,7 +461,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OUB-mE-N2j">
+                                                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OUB-mE-N2j">
                                                     <rect key="frame" x="151" y="1238" width="81" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="8oR-LZ-BLx"/>
@@ -613,8 +613,8 @@
                                     <rect key="frame" x="-100" y="-100" width="265" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.83333333333333337" horizontal="NO" id="HuI-Qv-Oyh">
-                                    <rect key="frame" x="-100" y="-100" width="15" height="1274"/>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="HuI-Qv-Oyh">
+                                    <rect key="frame" x="311" y="1" width="15" height="1284"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
