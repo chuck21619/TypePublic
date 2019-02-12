@@ -200,7 +200,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             adjacentTextGroup = targetParent.textGroups[index-1]
         }
         
-        guard let textGroupString = delegate?.title(for: draggingGroup, outlineModel: self.model) else {
+        guard let textGroupString = delegate?.string(for: draggingGroup, outlineModel: self.model) else {
             return false
         }
         

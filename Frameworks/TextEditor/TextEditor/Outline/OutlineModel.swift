@@ -128,8 +128,7 @@ class OutlineModel {
             }
             else {
                 
-                //figure out the other scenarios
-                //not sure how many more there are
+                //TODO: figure out the other scenarios - not sure how many more there are
             }
         }
     }

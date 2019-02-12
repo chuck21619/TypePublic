@@ -13,7 +13,7 @@ import Foundation
 
 extension NSTextStorage: OutlineViewControllerDelegate {    
     
-    func title(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString? {
+    func string(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString? {
         
         guard let range = outlineModel?.range(of: textGroup) else {
             return nil
