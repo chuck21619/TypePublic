@@ -27,13 +27,7 @@ extension NSTextStorage: OutlineViewControllerDelegate {
         
         if lastCharacter.string != "\n" {
             
-            // adds a newline character
-            let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-            
-            let insertString = NSAttributedString(string: "\n")
-            mutableAttributedString.append(insertString)
-            
-            return mutableAttributedString
+            return attributedString.appended("\n")
         }
         
         return attributedString
@@ -60,7 +54,18 @@ extension NSTextStorage: OutlineViewControllerDelegate {
         
         let locationToInsert = textGroupInserter.locationToInsert(adjacentTextGroupRange: rangeOfAdjacentTextGroup)
         
-        self.insert(attributedString, at: locationToInsert)
+        //if inserting string to end of document, and the end of the document is not a newline character. add a new line charachter so the textgorup is not appended inside the last textgroup
+
+        var attributedStringToInsert = attributedString
+        if locationToInsert == self.string.count {
+            
+            if self.string.suffix(1) != "\n" {
+                
+                attributedStringToInsert = attributedString.prepended("\n")
+            }
+        }
+        
+        self.insert(attributedStringToInsert, at: locationToInsert)
     }
     
     func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?) {

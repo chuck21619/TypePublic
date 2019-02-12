@@ -42,6 +42,7 @@
 		A3951DBB2144DCFC0072095F /* String+ContainsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */; };
 		A39984DF2194A68800477DEA /* String+RegexMatchNothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */; };
 		A3A95E622154439F0038CD9C /* SyntaxHighligher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */; };
+		A3AC220F2213613800A76BD2 /* NSAttributedString+AppendAndPrepend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC220E2213613800A76BD2 /* NSAttributedString+AppendAndPrepend.swift */; };
 		A3B30982219C91A70093744A /* TestRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B30981219C91A70093744A /* TestRulerView.swift */; };
 		A3B78676218A1AA900FB0005 /* OutlineModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */; };
 		A3B78679218A21A700FB0005 /* OutlineViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */; };
@@ -115,6 +116,7 @@
 		A3951DBA2144DCFC0072095F /* String+ContainsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ContainsRange.swift"; sourceTree = "<group>"; };
 		A39984DE2194A68800477DEA /* String+RegexMatchNothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RegexMatchNothing.swift"; sourceTree = "<group>"; };
 		A3A95E612154439F0038CD9C /* SyntaxHighligher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighligher.swift; sourceTree = "<group>"; };
+		A3AC220E2213613800A76BD2 /* NSAttributedString+AppendAndPrepend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+AppendAndPrepend.swift"; sourceTree = "<group>"; };
 		A3B30981219C91A70093744A /* TestRulerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRulerView.swift; sourceTree = "<group>"; };
 		A3B78675218A1AA900FB0005 /* OutlineModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModelDelegate.swift; sourceTree = "<group>"; };
 		A3B78678218A21A700FB0005 /* OutlineViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OutlineViewController.storyboard; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				A3381E0B213F1BBD001C638A /* Array+Difference.swift */,
+				A3AC220D2213610800A76BD2 /* NSAttributedString */,
 				A3B30988219CA7AB0093744A /* NSRange */,
 				A3B30989219CA7B00093744A /* String */,
 			);
@@ -292,6 +295,14 @@
 				A3764B9D2135FEF5006F6675 /* MarkdownFactory.swift */,
 			);
 			path = Languages;
+			sourceTree = "<group>";
+		};
+		A3AC220D2213610800A76BD2 /* NSAttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC220E2213613800A76BD2 /* NSAttributedString+AppendAndPrepend.swift */,
+			);
+			path = NSAttributedString;
 			sourceTree = "<group>";
 		};
 		A3B30980219C91970093744A /* Mine */ = {
@@ -597,6 +608,7 @@
 				A36962EB217A624C00D52175 /* TextGroupToken.swift in Sources */,
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
+				A3AC220F2213613800A76BD2 /* NSAttributedString+AppendAndPrepend.swift in Sources */,
 				A3F6F10121767B66003A6DA2 /* OutlineViewController.swift in Sources */,
 				A3130EA621F6C81100FD37A6 /* CollapsingTranslatorDelegate.swift in Sources */,
 				A36B119421518E950086AD83 /* NSRange+Intersects.swift in Sources */,
