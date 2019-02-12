@@ -14,8 +14,6 @@ class MarkerClickHandler {
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: true)
         
-        //outlineModel?.updateTextGroups(from: textStorage)
-        
         guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location) else {
             return
         }
@@ -86,6 +84,8 @@ class MarkerClickHandler {
         }
         
         rulerView.needsDisplay = true
+        
+        outlineModel?.updateTextGroups(from: textStorage)
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: false)
     }

@@ -27,7 +27,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             if let textStorage = self.textStorage {
                 
-                outlineModel?.updateTextGroups(from: textStorage)
+                outlineModel?.outline(textStorage: textStorage)
             }
         }
     }
@@ -89,7 +89,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         if let outlineView = outlineViewController?.view {
             
-            showOutline(false, animated: false)
+//            showOutline(false, animated: false)
+            showOutline(true, animated: false)
             self.view.addSubview(outlineView)
         }
         
@@ -98,7 +99,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         outlineMouseTrackingArea = NSTrackingArea(rect: rect, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil)
         self.view.addTrackingArea(outlineMouseTrackingArea!)
         
-//        addTestButton()
+        addTestButton()
     }
     
     private func addTestButton() {
@@ -194,12 +195,12 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     
     public override func mouseEntered(with event: NSEvent) {
         
-        showOutline(true, animated: true)
+        //showOutline(true, animated: true)
     }
     
     public override func mouseExited(with event: NSEvent) {
         
-        showOutline(false, animated: true)
+        //showOutline(false, animated: true)
     }
     
     // MARK: - IgnoreProcessingDelegate
