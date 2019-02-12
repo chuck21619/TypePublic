@@ -229,6 +229,10 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         delegate?.beginUpdates()
         if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
             
+            
+            //TODO: fix issue where dragging a collapsed text gorup to the bottom creates an out-of-bounds expection
+            
+            
             delegate?.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model)
             delegate?.removeTextGroup(draggingGroup, outlineModel: self.model)
         }
@@ -237,6 +241,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             delegate?.removeTextGroup(draggingGroup, outlineModel: self.model)
             delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model)
         }
+        
         delegate?.endUpdates()
         
         return true
