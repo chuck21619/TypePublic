@@ -128,7 +128,7 @@ class CollapsingTranslator {
             
             if let editedRange = editedRange {
                 let location = editedRange.location
-                let length = editedRange.length + stringInAttachment.string.maxNSRange.length
+                let length = editedRange.length + stringInAttachment.string.maxNSRange.length - 1 //-1 due to the textAttachment
                 editedRangeReturnValue = NSRange(location: location, length: length)
             }
         }
@@ -180,7 +180,7 @@ class CollapsingTranslator {
         
         let range: NSRange
         if recollapsing {
-            range = outlineModel!.range(of: correspondingTextGroup!, includeTitle: false)!
+            range = outlineModel!.range(of: correspondingTextGroup!, in: string, includeTitle: false)!
         }
         else {
             range = collapsedTextGroupRange(string: string, outlineModel: outlineModel, correspondingTextGroup!)!

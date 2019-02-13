@@ -13,9 +13,14 @@ import Foundation
 
 extension NSTextStorage: OutlineViewControllerDelegate {    
     
+    func documentString() -> NSMutableAttributedString {
+        
+        return self
+    }
+    
     func string(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString? {
         
-        guard let range = outlineModel?.range(of: textGroup) else {
+        guard let range = outlineModel?.range(of: textGroup, in: self) else {
             return nil
         }
         
@@ -48,7 +53,7 @@ extension NSTextStorage: OutlineViewControllerDelegate {
         
         let adjacentTextGroup = textGroupInserter.adjacentTextGroup(textGroups: textGroup.textGroups, index: index)
         
-        guard let rangeOfAdjacentTextGroup = outlineModel?.range(of: adjacentTextGroup) else {
+        guard let rangeOfAdjacentTextGroup = outlineModel?.range(of: adjacentTextGroup, in: self) else {
             return
         }
         
@@ -70,7 +75,7 @@ extension NSTextStorage: OutlineViewControllerDelegate {
     
     func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?) {
         
-        guard let range = outlineModel?.range(of: textGroup) else {
+        guard let range = outlineModel?.range(of: textGroup, in: self) else {
             return
         }
         

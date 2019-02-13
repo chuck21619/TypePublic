@@ -10,6 +10,8 @@ import Foundation
 
 protocol OutlineViewControllerDelegate {
     
+    func documentString() -> NSMutableAttributedString
+    
     func string(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString?
     
     func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?)

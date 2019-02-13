@@ -14,7 +14,6 @@ class OutlineModel {
     var delegate: OutlineModelDelegate?
     var processing: Bool = false // TODO: implement - used by OutlineViewController.allowInteraction
     let language: Language
-    private var string: String = ""
     var parentTextGroup: TextGroup = TextGroup(title: "parent")
     private var workItem: DispatchWorkItem? = nil
     
@@ -91,16 +90,20 @@ class OutlineModel {
             }
         }
         
-        self.string = string.string
         self.parentTextGroup = parentTextGroup
         completion?(parentTextGroup)
     }
     
     func reCalculateTextGroups(editedRange: NSRange, delta: Int) {
         
+        // TODO: validate that this works. i changed the string that outlinemodel uses. it used to use a saved version of the document string
+        guard let documentString = self.delegate?.documentString() else {
+            return
+        }
+        
         for textGroup in self.parentTextGroup {
-            
-            guard let textGroupRange = range(of: textGroup) else {
+        
+            guard let textGroupRange = range(of: textGroup, in: documentString) else {
                 continue
             }
             
@@ -153,12 +156,12 @@ class OutlineModel {
         return textGroup
     }
     
-    func range(of textGroup: TextGroup, includeTitle: Bool = true) -> NSRange? {
+    func range(of textGroup: TextGroup, in string: NSMutableAttributedString, includeTitle: Bool = true) -> NSRange? {
         
         guard let parent = textGroup.parentTextGroup else {
             
             //if there is no parent, than it is the root group
-            return string.maxNSRange
+            return string.string.maxNSRange
         }
         
         let location: Int
@@ -196,7 +199,7 @@ class OutlineModel {
         // then the end of the text group would be the end of the parent text group
         else {
             
-            guard let parentTextGroupRange = range(of: parent) else {
+            guard let parentTextGroupRange = range(of: parent, in: string) else {
                 return nil
             }
                 
