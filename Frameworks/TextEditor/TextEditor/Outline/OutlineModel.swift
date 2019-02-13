@@ -110,7 +110,7 @@ class OutlineModel {
             if textGroupRange.location + textGroupRange.length <= editedRange.location &&
                 textGroupRange.location + textGroupRange.length <= editedRange.location + editedRange.length {
                 
-                print("")
+                //print("")
                 //do nothing
                 //the textgroup is prior to the edit, and will not be changed
             }

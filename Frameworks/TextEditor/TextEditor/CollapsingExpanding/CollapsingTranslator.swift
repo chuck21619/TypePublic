@@ -134,7 +134,7 @@ class CollapsingTranslator {
         }
         else if editedRange?.location ?? 0 > attributeRange.location, let editedRange = editedRange {
             
-            let location = editedRange.location + stringInAttachment.string.maxNSRange.length
+            let location = editedRange.location + stringInAttachment.string.maxNSRange.length - 1 //-1 due to textAttachment
             let length = editedRange.length
             editedRangeReturnValue = NSRange(location: location, length: length)
         }

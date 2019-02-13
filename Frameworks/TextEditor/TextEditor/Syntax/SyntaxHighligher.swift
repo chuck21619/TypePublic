@@ -57,6 +57,12 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
         self.delegate?.ignoreProcessing(ignore: true)
         for invalidAttributeRange in invalidAttributeRanges {
             
+            guard invalidAttributeRange.location + invalidAttributeRange.length <= string.string.count else {
+                
+                print("ERROR")
+                continue
+            }
+            
             string.addAttribute(self.normalColorAttribute.key, value: self.normalColorAttribute.value, range: invalidAttributeRange)
         }
         
