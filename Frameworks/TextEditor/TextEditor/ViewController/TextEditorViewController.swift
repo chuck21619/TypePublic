@@ -10,6 +10,9 @@ import Foundation
 
 public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TestRulerViewDelegate, IgnoreProcessingDelegate, CollapsingTranslatorDelegate {
     
+    // MARK: - Public
+    public var delegate: TextEditorViewControllerDelegate? = nil
+    
     // MARK: - Properties
     var textEditorView: TextEditorView!
     var textStorage: NSTextStorage!
@@ -40,12 +43,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     let language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
     
     // MARK: - Constructors
-    public static func createInstance() -> TextEditorViewController? {
+    public static func createInstance(delegate: TextEditorViewControllerDelegate) -> TextEditorViewController? {
         
         let bundle = Bundle(for: TextEditorViewController.self)
         let storyboardName = String(describing: TextEditorViewController.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
+        viewController?.delegate = delegate
         
         return viewController
     }
@@ -78,6 +82,14 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         outlineViewController = OutlineViewController.createInstance(delegate: self.textStorage)
         outlineModel = OutlineModel(language: language, delegate: outlineViewController)
         outlineViewController?.model = outlineModel
+        self.delegate?.presentSideboard(viewController: outlineViewController!)
+        //        if let outlineView = outlineViewController?.view {
+        //
+        ////            showOutline(false, animated: false)
+        //            showOutline(true, animated: false)
+        //            self.view.addSubview(outlineView)
+        //        }
+
         
         rulerView = TestRulerView(scrollView: textEditorView.enclosingScrollView!, orientation: NSRulerView.Orientation.verticalRuler)
         rulerView.clientView = textEditorView
@@ -87,12 +99,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         rulerView.language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
         textEditorView.enclosingScrollView?.verticalRulerView = rulerView
         
-        if let outlineView = outlineViewController?.view {
-            
-//            showOutline(false, animated: false)
-            showOutline(true, animated: false)
-            self.view.addSubview(outlineView)
-        }
         
         // create mouse area to show/hide the outline
         let rect = NSRect(x: 0, y: 0, width: 100, height: 100)

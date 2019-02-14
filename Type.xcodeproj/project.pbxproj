@@ -12,7 +12,7 @@
 		A327176120E55CA200AD89A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A327176020E55CA200AD89A0 /* Assets.xcassets */; };
 		A327176420E55CA200AD89A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A327176220E55CA200AD89A0 /* Main.storyboard */; };
 		A327177020E55CA200AD89A0 /* TypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A327176F20E55CA200AD89A0 /* TypeTests.swift */; };
-		A364C3892208CC8C0080EFF1 /* Sideboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A364C3882208CC8C0080EFF1 /* Sideboard.swift */; };
+		A364C3892208CC8C0080EFF1 /* SideboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A364C3882208CC8C0080EFF1 /* SideboardViewController.swift */; };
 		A364C38D2208CD4B0080EFF1 /* Sideboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A364C38C2208CD4B0080EFF1 /* Sideboard.storyboard */; };
 		A364C38F2208E21B0080EFF1 /* OuterPanelSmallLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A364C38E2208E21B0080EFF1 /* OuterPanelSmallLabel.swift */; };
 		A364C3922208E2340080EFF1 /* OuterPanelDefaultLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A364C3912208E2340080EFF1 /* OuterPanelDefaultLabel.swift */; };
@@ -104,7 +104,7 @@
 		A327176B20E55CA200AD89A0 /* TypeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A327176F20E55CA200AD89A0 /* TypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTests.swift; sourceTree = "<group>"; };
 		A327177120E55CA200AD89A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A364C3882208CC8C0080EFF1 /* Sideboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sideboard.swift; sourceTree = "<group>"; };
+		A364C3882208CC8C0080EFF1 /* SideboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideboardViewController.swift; sourceTree = "<group>"; };
 		A364C38C2208CD4B0080EFF1 /* Sideboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Sideboard.storyboard; sourceTree = "<group>"; };
 		A364C38E2208E21B0080EFF1 /* OuterPanelSmallLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuterPanelSmallLabel.swift; sourceTree = "<group>"; };
 		A364C3912208E2340080EFF1 /* OuterPanelDefaultLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuterPanelDefaultLabel.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 		A364C3862208CC550080EFF1 /* Sideboard */ = {
 			isa = PBXGroup;
 			children = (
-				A364C3882208CC8C0080EFF1 /* Sideboard.swift */,
+				A364C3882208CC8C0080EFF1 /* SideboardViewController.swift */,
 				A364C3972208E5A60080EFF1 /* SideboardSectionSeparator.swift */,
 				A364C38C2208CD4B0080EFF1 /* Sideboard.storyboard */,
 			);
@@ -415,7 +415,7 @@
 				A36CD4D020ED9B9500ED46FA /* WindowController.swift in Sources */,
 				A3CA41D0220E019A007DB57C /* OuterPanel.swift in Sources */,
 				A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */,
-				A364C3892208CC8C0080EFF1 /* Sideboard.swift in Sources */,
+				A364C3892208CC8C0080EFF1 /* SideboardViewController.swift in Sources */,
 				A327175D20E55CA100AD89A0 /* AppDelegate.swift in Sources */,
 				A364C38F2208E21B0080EFF1 /* OuterPanelSmallLabel.swift in Sources */,
 				A3CA41D5220E0392007DB57C /* FileBrowserViewController.swift in Sources */,

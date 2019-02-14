@@ -11,18 +11,17 @@
             <objects>
                 <viewController id="HDD-eO-pd2" customClass="OutlineViewController" customModule="TextEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="pqL-Ah-QRd">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="285" height="487"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djr-fd-KfL">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" ambiguous="YES" id="cEe-48-VPP">
-                                    <rect key="frame" x="1" y="1" width="448" height="298"/>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djr-fd-KfL">
+                                <rect key="frame" x="0.0" y="0.0" width="285" height="487"/>
+                                <clipView key="contentView" drawsBackground="NO" id="cEe-48-VPP">
+                                    <rect key="frame" x="1" y="1" width="283" height="470"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="YOQ-WM-cUg" id="hlm-7o-PCE">
-                                            <rect key="frame" x="0.0" y="0.0" width="449" height="298"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="449" height="470"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -64,17 +63,24 @@
                                             </tableColumns>
                                         </outlineView>
                                     </subviews>
+                                    <nil key="backgroundColor"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="k2a-pu-zSH">
-                                    <rect key="frame" x="1" y="283" width="448" height="16"/>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="k2a-pu-zSH">
+                                    <rect key="frame" x="1" y="471" width="283" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Jgx-Su-BmF">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Jgx-Su-BmF">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="Djr-fd-KfL" firstAttribute="top" secondItem="pqL-Ah-QRd" secondAttribute="top" id="gpF-AS-kDs"/>
+                            <constraint firstAttribute="bottom" secondItem="Djr-fd-KfL" secondAttribute="bottom" id="mQM-gB-VQN"/>
+                            <constraint firstAttribute="trailing" secondItem="Djr-fd-KfL" secondAttribute="trailing" id="rcl-hP-EIB"/>
+                            <constraint firstItem="Djr-fd-KfL" firstAttribute="leading" secondItem="pqL-Ah-QRd" secondAttribute="leading" id="yqn-Ac-koR"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="outlineView" destination="hlm-7o-PCE" id="NMQ-Tb-2Rt"/>
@@ -82,7 +88,7 @@
                 </viewController>
                 <customObject id="TNr-Q2-3pV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-212" y="-150"/>
+            <point key="canvasLocation" x="-294.5" y="-56.5"/>
         </scene>
     </scenes>
 </document>

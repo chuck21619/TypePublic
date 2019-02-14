@@ -11,6 +11,32 @@ import AppKit
 
 class SideboardViewController: NSViewController {
     
+    static func create(with viewController: NSViewController) -> SideboardViewController? {
+        
+        
+        let sideboardStoryboard = NSStoryboard(name: "Sideboard", bundle: Bundle.main)
+        let sideboardFromStoryboard = sideboardStoryboard.instantiateInitialController() as? SideboardViewController
+        
+        guard let sideboard = sideboardFromStoryboard else {
+            return nil
+        }
+        
+//        sideboard.loadView()
+        
+        let view = viewController.view
+        
+        for view in sideboard.view.subviews {
+            view.removeFromSuperview()
+        }
+        
+        view.frame = sideboard.view.bounds
+        view.autoresizingMask = [.width, .height]
+        sideboard.view.addSubview(view)
+        
+        
+        return sideboard
+    }
+    
     // MARK: - Properties
     @IBOutlet weak var scrollview: NSScrollView!
     
