@@ -99,7 +99,6 @@ class CollapsingTranslator {
         guard let attachment = string.attribute(.attachment, at: attributeLocation, effectiveRange: nil) as? TestTextAttachment else {
             return (adjustedEditedRange: nil, adjustedDelta: nil, invalidRange: nil)
         }
-        //
         
         let stringInAttachment = attachment.myString
         
@@ -110,11 +109,10 @@ class CollapsingTranslator {
         let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
-            print("WHO IS CALLING THIS - needs to be re-written")
+            //TODO: see if this needs to be re-written
+            print("WHO IS CALLING THIS - needs to be re-written") //does it though?
             self.delegate.invalidateRanges(invalidRanges: [invalidRange])
         }
-        
-        
         
         var invalidRangeReturnValue: NSRange? = nil
         var deltaReturnValue = delta
