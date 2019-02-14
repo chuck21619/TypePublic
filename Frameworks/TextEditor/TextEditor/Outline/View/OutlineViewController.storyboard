@@ -14,17 +14,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="285" height="487"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djr-fd-KfL">
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djr-fd-KfL">
                                 <rect key="frame" x="0.0" y="0.0" width="285" height="487"/>
                                 <clipView key="contentView" drawsBackground="NO" id="cEe-48-VPP">
-                                    <rect key="frame" x="1" y="1" width="283" height="470"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="285" height="487"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="YOQ-WM-cUg" id="hlm-7o-PCE">
-                                            <rect key="frame" x="0.0" y="0.0" width="449" height="470"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="449" height="487"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
-                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
                                                 <tableColumn identifier="columnReuseIdentifier" width="446" minWidth="40" maxWidth="1000" id="YOQ-WM-cUg">
@@ -36,7 +36,7 @@
                                                     <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="rkl-3I-yYo">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
@@ -63,10 +63,13 @@
                                             </tableColumns>
                                         </outlineView>
                                     </subviews>
-                                    <nil key="backgroundColor"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="k2a-pu-zSH">
-                                    <rect key="frame" x="1" y="471" width="283" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" constant="487" id="HKC-T6-NPb"/>
+                                </constraints>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="k2a-pu-zSH">
+                                    <rect key="frame" x="-100" y="-100" width="285" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Jgx-Su-BmF">
@@ -76,14 +79,16 @@
                             </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Djr-fd-KfL" firstAttribute="top" secondItem="pqL-Ah-QRd" secondAttribute="top" id="gpF-AS-kDs"/>
-                            <constraint firstAttribute="bottom" secondItem="Djr-fd-KfL" secondAttribute="bottom" id="mQM-gB-VQN"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Djr-fd-KfL" secondAttribute="bottom" id="B46-o5-cV1"/>
+                            <constraint firstItem="Djr-fd-KfL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pqL-Ah-QRd" secondAttribute="top" id="W2f-IN-nFO"/>
                             <constraint firstAttribute="trailing" secondItem="Djr-fd-KfL" secondAttribute="trailing" id="rcl-hP-EIB"/>
+                            <constraint firstItem="Djr-fd-KfL" firstAttribute="centerY" secondItem="pqL-Ah-QRd" secondAttribute="centerY" id="sWp-1L-zZ3"/>
                             <constraint firstItem="Djr-fd-KfL" firstAttribute="leading" secondItem="pqL-Ah-QRd" secondAttribute="leading" id="yqn-Ac-koR"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="outlineView" destination="hlm-7o-PCE" id="NMQ-Tb-2Rt"/>
+                        <outlet property="scrollViewHeightConstraint" destination="HKC-T6-NPb" id="fx7-r0-obV"/>
                     </connections>
                 </viewController>
                 <customObject id="TNr-Q2-3pV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

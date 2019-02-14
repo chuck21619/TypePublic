@@ -61,6 +61,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     }
     
     // MARK: stuff
+    var lastIntrinsicContentSize: NSSize = .zero
+    @IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
     private func updateOutline(parentTextGroup: TextGroup?) {
         
         self.parentTextGroup = parentTextGroup ?? self.parentTextGroup
@@ -73,6 +75,15 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             if let visibleRect = self.visibleRect {
                 
                 self.outlineView.scrollToVisible(visibleRect)
+            }
+            
+            if self.outlineView.intrinsicContentSize != self.lastIntrinsicContentSize {
+                
+                print("resizing outline view")
+                
+                self.lastIntrinsicContentSize = self.outlineView.intrinsicContentSize
+                
+                self.scrollViewHeightConstraint.constant = self.lastIntrinsicContentSize.height + 3
             }
         }
     }

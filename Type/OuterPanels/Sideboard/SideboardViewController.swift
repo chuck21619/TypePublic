@@ -26,6 +26,10 @@ class SideboardViewController: NSViewController {
         let view = viewController.view
         
         for view in sideboard.view.subviews {
+            
+            if view is SideboardSectionSeparator {
+                continue
+            }
             view.removeFromSuperview()
         }
         
