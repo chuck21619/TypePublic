@@ -20,7 +20,6 @@
 		A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3381E0B213F1BBD001C638A /* Array+Difference.swift */; };
 		A346AFA521F8F4470096C660 /* DocumentOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFA421F8F4470096C660 /* DocumentOpener.swift */; };
 		A346AFA921F8F8E80096C660 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFA821F8F8E80096C660 /* Settings.swift */; };
-		A346AFAD21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */; };
 		A346AFB121F9085B0096C660 /* MarkerClickHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */; };
 		A34D0F712201387F005C4C66 /* TextGroup+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34D0F702201387F005C4C66 /* TextGroup+Sequence.swift */; };
 		A36962E9217A605600D52175 /* TextGroupingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36962E8217A605600D52175 /* TextGroupingRule.swift */; };
@@ -95,7 +94,6 @@
 		A3381E0B213F1BBD001C638A /* Array+Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Difference.swift"; sourceTree = "<group>"; };
 		A346AFA421F8F4470096C660 /* DocumentOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOpener.swift; sourceTree = "<group>"; };
 		A346AFA821F8F8E80096C660 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+OutlineViewControllerDelegate..swift"; sourceTree = "<group>"; };
 		A346AFB021F9085B0096C660 /* MarkerClickHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerClickHandler.swift; sourceTree = "<group>"; };
 		A34D0F702201387F005C4C66 /* TextGroup+Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextGroup+Sequence.swift"; sourceTree = "<group>"; };
 		A36962E8217A605600D52175 /* TextGroupingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupingRule.swift; sourceTree = "<group>"; };
@@ -381,7 +379,6 @@
 				A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */,
 				A313B87E21AE276C00B4EEFD /* TextEditorTypeSetter.swift */,
 				A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */,
-				A346AFAC21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift */,
 				A3F59EED21F6A02C00BC271A /* EditingValues.swift */,
 				A346AFB221F9109C0096C660 /* User-todo-move out of text editor framework */,
 				A3130EA721F6CAB100FD37A6 /* CollapsingExpanding */,
@@ -632,7 +629,6 @@
 				A36E72BA21066F2100D8BDA1 /* DefinedLanguage.swift in Sources */,
 				A3130EA421F6C11100FD37A6 /* IgnoreProcessingDelegate.swift in Sources */,
 				A36E72BC2106704B00D8BDA1 /* LanguageFactory.swift in Sources */,
-				A346AFAD21F8FF2D0096C660 /* NSTextStorage+OutlineViewControllerDelegate..swift in Sources */,
 				A3F59EEE21F6A02C00BC271A /* EditingValues.swift in Sources */,
 				A3381E0C213F1BBD001C638A /* Array+Difference.swift in Sources */,
 				A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */,

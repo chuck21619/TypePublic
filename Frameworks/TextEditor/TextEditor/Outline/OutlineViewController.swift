@@ -16,6 +16,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     private var parentTextGroup = TextGroup(title: "parent")
     private let columnReuseIdentifier = NSUserInterfaceItemIdentifier(rawValue: "columnReuseIdentifier")
     public var relaxReorderRules = false
+    var collapsingTranslator: CollapsingTranslator? = nil
     
     // MARK: drag to reorder
     private var draggedFromIndex: Int = -1
@@ -31,13 +32,14 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     // MARK: - Methods
     // MARK: - Constructors
-    public static func createInstance(delegate: OutlineViewControllerDelegate) -> OutlineViewController? {
+    public static func createInstance(delegate: OutlineViewControllerDelegate, collapsingTranslator: CollapsingTranslator?) -> OutlineViewController? {
         
         let bundle = Bundle(for: OutlineViewController.self)
         let storyboardName = String(describing: OutlineViewController.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? OutlineViewController
         viewController?.delegate = delegate
+        viewController?.collapsingTranslator = collapsingTranslator
         
         return viewController
     }
@@ -203,15 +205,38 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
+        guard let collapsingTranslator = collapsingTranslator,
+              let delegate = self.delegate,
+              let string = delegate.documentString(),
+              let model = self.model else {
+            return false
+        }
+        
+        delegate.beginUpdates()
+        
+        collapsingTranslator.expandAllTextGroups(string: string, collapsedTextGroups: delegate.collapsedTextGroups, outlineModel: model)
+        
+        self.model?.updateTextGroups(from: delegate.documentString()!)
+        
         // if item is nil, then target is root
         var targetParent = item as? TextGroup ?? parentTextGroup
         
-        for iteratedTextgroup in model!.parentTextGroup {
+        for iteratedTextGroup in model.parentTextGroup {
             
             //TODO: fix this. comparing titles is not a valid solution
-            if targetParent.title == iteratedTextgroup.title {
+            if targetParent.title == iteratedTextGroup.title {
                 
-                targetParent = iteratedTextgroup
+                targetParent = iteratedTextGroup
+                break
+            }
+        }
+        
+        for iteratedTextGroup in model.parentTextGroup {
+            
+            //TODO: fix this. comparing titles is not a valid solution
+            if draggingGroup?.title == iteratedTextGroup.title {
+                
+                draggingGroup = iteratedTextGroup
                 break
             }
         }
@@ -235,26 +260,27 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             
             adjacentTextGroup = targetParent.textGroups[index-1]
         }
-        
-        guard let textGroupString = delegate?.string(for: draggingGroup, outlineModel: self.model) else {
+        //fix: the draggingGroup.parentTextGroup is nil after collapsing an unrelated textgroup
+        guard let textGroupString = delegate.string(for: draggingGroup, outlineModel: self.model) else {
             return false
         }
         
         visibleRect = outlineView.visibleRect
         
-        delegate?.beginUpdates()
         if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
             
-            delegate?.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model)
-            delegate?.removeTextGroup(draggingGroup, outlineModel: self.model)
+            delegate.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model)
+            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
         }
         else {
             
-            delegate?.removeTextGroup(draggingGroup, outlineModel: self.model)
-            delegate?.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model)
+            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
+            delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model)
         }
         
-        delegate?.endUpdates()
+        collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], collapsedTextGroups: delegate.collapsedTextGroups)
+        
+        delegate.endUpdates()
         
         return true
     }

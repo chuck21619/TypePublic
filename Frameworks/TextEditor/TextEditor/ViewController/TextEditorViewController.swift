@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TestRulerViewDelegate, IgnoreProcessingDelegate, CollapsingTranslatorDelegate {
+public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TestRulerViewDelegate, IgnoreProcessingDelegate, CollapsingTranslatorDelegate, OutlineViewControllerDelegate {
     
     // MARK: - Public
     public var delegate: TextEditorViewControllerDelegate? = nil
@@ -79,7 +79,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         createTextView()
         
-        outlineViewController = OutlineViewController.createInstance(delegate: self.textStorage)
+        outlineViewController = OutlineViewController.createInstance(delegate: self, collapsingTranslator: collapsingTranslator)
         outlineModel = OutlineModel(language: language, delegate: outlineViewController)
         outlineViewController?.model = outlineModel
         self.delegate?.presentSideboard(viewController: outlineViewController!)
@@ -291,7 +291,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 self.invalidRangesSinceLastEditing = []
 
                 self.ignoreProcessing(ignore: true)
-                invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges, collapsedTextGroups: &self.collapsedTextGroups) ?? []
+                invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges, collapsedTextGroups: self.collapsedTextGroups) ?? []
                 self.ignoreProcessing(ignore: false)
 
                 DispatchQueue.main.async {
@@ -361,5 +361,84 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     func markerClicked(_ marker: TextGroupMarker) {
         
         MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsedTextGroups: &self.collapsedTextGroups, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
+    }
+    
+    // MARK: - OutlineViewControllerDelegate    
+    func documentString() -> NSMutableAttributedString? {
+        
+        return textStorage
+    }
+    
+    func string(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString? {
+        
+        guard let textStorage = textStorage, let range = outlineModel?.range(of: textGroup, in: textStorage) else {
+            return nil
+        }
+        
+        let attributedString = textStorage.attributedSubstring(from: range)
+        
+        let rangeOfLastCharacter = NSRange(location: attributedString.length-1, length: 1)
+        
+        let lastCharacter = attributedString.attributedSubstring(from: rangeOfLastCharacter)
+        
+        if lastCharacter.string != "\n" {
+            
+            return attributedString.appended("\n")
+        }
+        
+        return attributedString
+    }
+    
+    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int, outlineModel: OutlineModel?) {
+        
+        let textGroupInserter: TextGroupInserter
+        
+        if index == 0 {
+            
+            textGroupInserter = ZeroIndexTextGroupInserter()
+        }
+        else {
+            
+            textGroupInserter = PositiveIndexTextGroupInserter()
+        }
+        
+        let adjacentTextGroup = textGroupInserter.adjacentTextGroup(textGroups: textGroup.textGroups, index: index)
+        
+        guard let textStorage = textStorage, let rangeOfAdjacentTextGroup = outlineModel?.range(of: adjacentTextGroup, in: textStorage) else {
+            return
+        }
+        
+        let locationToInsert = textGroupInserter.locationToInsert(adjacentTextGroupRange: rangeOfAdjacentTextGroup)
+        
+        //if inserting string to end of document, and the end of the document is not a newline character. add a new line charachter so the textgorup is not appended inside the last textgroup
+        
+        var attributedStringToInsert = attributedString
+        if locationToInsert == textStorage.string.count {
+            
+            if textStorage.string.suffix(1) != "\n" {
+                
+                attributedStringToInsert = attributedString.prepended("\n")
+            }
+        }
+        
+        textStorage.insert(attributedStringToInsert, at: locationToInsert)
+    }
+    
+    func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?) {
+        
+        guard let textStorage = textStorage, let range = outlineModel?.range(of: textGroup, in: textStorage) else {
+            return
+        }
+        
+        textStorage.replaceCharacters(in: range, with: "")
+        outlineModel?.reCalculateTextGroups(replacingRange: range, with: "")
+    }
+    
+    func beginUpdates() {
+        textStorage?.beginEditing()
+    }
+    
+    func endUpdates() {
+        textStorage?.endEditing()
     }
 }
