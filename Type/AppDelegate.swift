@@ -7,12 +7,22 @@
 //
 
 import Cocoa
+import Panels
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
 
-
+    @IBAction func menuViewFolio(_ sender: Any) {
+        
+        NotificationCenter.default.post(showLeftPanel)
+    }
+    
+    @IBAction func menuViewSideboard(_ sender: Any) {
+        
+        NotificationCenter.default.post(showRightPanel)
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }

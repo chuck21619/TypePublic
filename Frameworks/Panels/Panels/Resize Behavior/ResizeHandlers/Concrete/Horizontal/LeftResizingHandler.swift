@@ -91,6 +91,17 @@ class LeftResizingHandler: HorizontalResizingHandler {
         return initialPanelDimensions.windowFrame?.minX ?? 0
     }
     
+    // MARK: - panel toggling
+    func panelTogglingHiddenWindowFrame(panelsDimensions: PanelsDimensions, subtractedWidth: CGFloat) -> NSRect? {
+        
+        return panelsDimensions.windowFrame?.subtractedWidth(subtractedWidth)
+    }
+    
+    func panelTogglingShownWindowFrame(panelWidth: CGFloat, panelsDimensions: PanelsDimensions, addedWidth: CGFloat) -> NSRect? {
+        
+        return panelsDimensions.windowFrame?.addedWidth(panelWidth)
+    }
+    
     // MARK: - resizing from window    
     func windowResizingElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
         

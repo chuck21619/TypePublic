@@ -101,6 +101,28 @@ class RightResizingHandler: HorizontalResizingHandler {
         }
     }
     
+    // MARK: - panel toggling
+    func panelTogglingHiddenWindowFrame(panelsDimensions: PanelsDimensions, subtractedWidth: CGFloat) -> NSRect? {
+        
+        guard var windowFrame = panelsDimensions.windowFrame?.subtractedWidth(subtractedWidth) else {
+            return nil
+        }
+        
+        windowFrame = NSRect(x: windowFrame.minX + subtractedWidth, y: windowFrame.minY, width: windowFrame.width, height: windowFrame.height)
+        return windowFrame
+    }
+    
+    func panelTogglingShownWindowFrame(panelWidth: CGFloat, panelsDimensions: PanelsDimensions, addedWidth: CGFloat) -> NSRect? {
+        
+        guard var windowFrame = panelsDimensions.windowFrame?.addedWidth(panelWidth) else {
+            return nil
+        }
+        
+        windowFrame = NSRect(x: windowFrame.minX - addedWidth, y: windowFrame.minY, width: windowFrame.width, height: windowFrame.height)
+        
+        return windowFrame
+    }
+    
     // MARK: - resizing from window
     func windowResizingElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat {
         

@@ -25,6 +25,10 @@ protocol HorizontalResizingHandler {
     func panelResizingHiddenPanelPanelsDimensions(hidden: Bool, windowFrame: NSRect, defaultWidth: CGFloat?) -> PanelsDimensions
     func panelResizingHiddenPanelWindowXCoordinate(hidden: Bool, initialPanelDimensions: PanelsDimensions, defaultWidth: CGFloat) -> CGFloat
     
+    // panel toggling
+    func panelTogglingHiddenWindowFrame(panelsDimensions: PanelsDimensions, subtractedWidth: CGFloat) -> NSRect?
+    func panelTogglingShownWindowFrame(panelWidth: CGFloat, panelsDimensions: PanelsDimensions, addedWidth: CGFloat) -> NSRect?
+    
     // window resizing
     func windowResizingElasticXCoordinate(initialPanelsDimensions: PanelsDimensions, elasticDifference: CGFloat, minimumSize: NSSize) -> CGFloat
     func windowResizingXCoordinate(initialPanelsDimensions: PanelsDimensions, currentPanelsDimensions: PanelsDimensions) -> CGFloat

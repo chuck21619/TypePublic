@@ -164,13 +164,14 @@ class ResizeBehavior {
         if panelIsHidden(horizontalResizingHandler) {
             
             newPanelsDimensions = horizontalResizingHandler.setRelevantPanelWidth(panelsDimensions: newPanelsDimensions, width: panel.defaultWidth)
-            newPanelsDimensions.windowFrame = newPanelsDimensions.windowFrame?.addedWidth(panel.defaultWidth)
+            
+            newPanelsDimensions.windowFrame = horizontalResizingHandler.panelTogglingShownWindowFrame(panelWidth: panel.defaultWidth, panelsDimensions: newPanelsDimensions, addedWidth: panel.defaultWidth)
         }
         else {
             
             let currentWidth = horizontalResizingHandler.relevantPanelWidth(panelsDimensions: newPanelsDimensions) ?? 0
             newPanelsDimensions = horizontalResizingHandler.setRelevantPanelWidth(panelsDimensions: newPanelsDimensions, width: 0)
-            newPanelsDimensions.windowFrame = newPanelsDimensions.windowFrame?.subtractedWidth(currentWidth)
+            newPanelsDimensions.windowFrame = horizontalResizingHandler.panelTogglingHiddenWindowFrame(panelsDimensions: newPanelsDimensions, subtractedWidth: currentWidth)
         }
         
         self.delegate.didUpdate(panelsDimensions: newPanelsDimensions, animated: true)

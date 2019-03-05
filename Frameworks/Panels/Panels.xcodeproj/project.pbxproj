@@ -12,6 +12,7 @@
 		A32FFE5420FEB91700D4BA58 /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFE5320FEB91700D4BA58 /* Axis.swift */; };
 		A32FFE5720FEB93A00D4BA58 /* Y.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFE5620FEB93A00D4BA58 /* Y.swift */; };
 		A32FFE5920FEB95000D4BA58 /* X.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFE5820FEB95000D4BA58 /* X.swift */; };
+		A336BF71222EE9AA005FC3EE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A336BF70222EE9AA005FC3EE /* Notifications.swift */; };
 		A34FCC7222121F3900182924 /* PanelsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34FCC7122121F3900182924 /* PanelsDelegate.swift */; };
 		A36CD4D520EDA49300ED46FA /* ResizeBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D420EDA49300ED46FA /* ResizeBehavior.swift */; };
 		A36CD4D920EDA88E00ED46FA /* ResizeBehaviorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */; };
@@ -41,6 +42,7 @@
 		A32FFE5320FEB91700D4BA58 /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		A32FFE5620FEB93A00D4BA58 /* Y.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Y.swift; sourceTree = "<group>"; };
 		A32FFE5820FEB95000D4BA58 /* X.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X.swift; sourceTree = "<group>"; };
+		A336BF70222EE9AA005FC3EE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		A34FCC7122121F3900182924 /* PanelsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsDelegate.swift; sourceTree = "<group>"; };
 		A36CD4D420EDA49300ED46FA /* ResizeBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBehavior.swift; sourceTree = "<group>"; };
 		A36CD4D820EDA88E00ED46FA /* ResizeBehaviorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeBehaviorDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				A3828BF520E5612A000FDA72 /* Panels.h */,
 				A3828BF620E5612A000FDA72 /* Info.plist */,
+				A336BF70222EE9AA005FC3EE /* Notifications.swift */,
 				A3828C1820E563DC000FDA72 /* Panels.swift */,
 				A3C325D120E56E65007DFCE4 /* Panels.xib */,
 				A36CD4DA20EDA9D300ED46FA /* PanelsDimensions.swift */,
@@ -327,6 +330,7 @@
 				A3763DD920EF6F74009C84C7 /* RightResizingHandler.swift in Sources */,
 				A327F21920EC02710003B829 /* PanelPosition.swift in Sources */,
 				A3F061872159651E00B012DD /* WindowedWindowState.swift in Sources */,
+				A336BF71222EE9AA005FC3EE /* Notifications.swift in Sources */,
 				A32FFE5920FEB95000D4BA58 /* X.swift in Sources */,
 				A374633420F548A3000E43C2 /* PanelsWindow.swift in Sources */,
 				A37658BE20E8092700BD76B9 /* Panel.swift in Sources */,

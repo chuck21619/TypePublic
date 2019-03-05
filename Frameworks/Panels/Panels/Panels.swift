@@ -63,20 +63,24 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGesture
         }
     }
     
-    public func toggleLeftPanel() {
+    @objc public func toggleLeftPanel() {
         
         guard let leftPanel = self.leftPanel else {
             return
         }
         
+        setAutomaticResizing(true)
+        
         self.resizeBehavior?.toggleLeftPanel(leftPanel)
     }
     
-    public func toggleRightPanel() {
+    @objc public func toggleRightPanel() {
         
         guard let rightPanel = self.rightPanel else {
             return
         }
+        
+        setAutomaticResizing(true)
         
         self.resizeBehavior?.toggleRightPanel(rightPanel)
     }
@@ -93,6 +97,10 @@ public class Panels: NSView, ResizeBehaviorDelegate, NSWindowDelegate, NSGesture
         
         resizeBehavior = ResizeBehavior(delegate: self)
         self.setAutomaticResizing(true)
+        
+        //notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(toggleLeftPanel), name: showLeftPanel.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(toggleRightPanel), name: showRightPanel.name, object: nil)
     }
     
     public override init(frame frameRect: NSRect) {
