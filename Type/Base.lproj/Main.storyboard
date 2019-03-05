@@ -604,13 +604,13 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="HyV-fh-RgO">
                                     <items>
-                                        <menuItem title="Show Folio" keyEquivalent="" id="Ru3-0i-qCa">
+                                        <menuItem title="Toggle Folio" keyEquivalent="" id="Ru3-0i-qCa">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuViewFolio:" target="Voe-Tx-rLC" id="ra3-ra-iNA"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show Sideboard" keyEquivalent="" id="kIP-vf-haE">
+                                        <menuItem title="Toggle Sideboard" keyEquivalent="" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuViewSideboard:" target="Voe-Tx-rLC" id="pkJ-RO-WFI"/>
