@@ -44,9 +44,9 @@
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="0g0-8J-8VK" customClass="ResizeBar" customModule="Panels" customModuleProvider="target">
-                    <rect key="frame" x="329" y="0.0" width="7" height="329"/>
+                    <rect key="frame" x="369" y="0.0" width="8" height="329"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="7" id="b38-DX-1GP"/>
+                        <constraint firstAttribute="width" constant="8" id="b38-DX-1GP"/>
                     </constraints>
                     <gestureRecognizers>
                         <panGestureRecognizer delaysPrimaryMouseButtonEvents="YES" id="alu-LS-raj">
@@ -58,9 +58,9 @@
                     </gestureRecognizers>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="lcU-R6-SMf" customClass="ResizeBar" customModule="Panels" customModuleProvider="target">
-                    <rect key="frame" x="661" y="0.0" width="7" height="329"/>
+                    <rect key="frame" x="659" y="0.0" width="8" height="329"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="7" id="QF1-uw-Aye"/>
+                        <constraint firstAttribute="width" constant="8" id="QF1-uw-Aye"/>
                     </constraints>
                     <gestureRecognizers>
                         <panGestureRecognizer delaysPrimaryMouseButtonEvents="YES" id="f2S-p2-PpV">
@@ -74,8 +74,8 @@
             </subviews>
             <constraints>
                 <constraint firstItem="0g0-8J-8VK" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="1ts-78-Sho"/>
-                <constraint firstItem="0g0-8J-8VK" firstAttribute="leading" secondItem="JQh-tB-bkV" secondAttribute="trailing" constant="-3" id="46d-zb-iaN"/>
-                <constraint firstItem="Qae-ig-qO0" firstAttribute="leading" secondItem="lcU-R6-SMf" secondAttribute="trailing" constant="-4" id="9uh-a2-b53"/>
+                <constraint firstItem="0g0-8J-8VK" firstAttribute="leading" secondItem="JQh-tB-bkV" secondAttribute="trailing" constant="37" id="46d-zb-iaN"/>
+                <constraint firstItem="Qae-ig-qO0" firstAttribute="leading" secondItem="lcU-R6-SMf" secondAttribute="trailing" constant="-3" id="9uh-a2-b53"/>
                 <constraint firstItem="JQh-tB-bkV" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="CCo-Pr-ycL"/>
                 <constraint firstItem="lcU-R6-SMf" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="DCh-kI-qTr"/>
                 <constraint firstAttribute="trailing" secondItem="Qae-ig-qO0" secondAttribute="trailing" id="SJd-6W-Fg9"/>
