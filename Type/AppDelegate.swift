@@ -12,7 +12,18 @@ import Panels
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    // MARK: - PROPERTIES
+    // MARK: - METHODS
+    // MARK: - launch
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        //set the application menu
+        let applicationMenuFactory = ApplicationMenuFactory()
+        let mainMenu = applicationMenuFactory.createApplicationMenu()
+        NSApplication.shared.mainMenu = mainMenu
+    }
 
+    // MARK: - menu actions
     @IBAction func menuViewFolio(_ sender: Any) {
         
         NotificationCenter.default.post(showLeftPanel)
@@ -22,15 +33,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         NotificationCenter.default.post(showRightPanel)
     }
-    
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-    }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
-
 }
 

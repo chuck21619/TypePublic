@@ -25,6 +25,8 @@
 		A37D660F2155F81400947572 /* Panels.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = A37D65F12155F77200947572 /* Panels.xcodeproj */; };
 		A37D66112155F81E00947572 /* TextEditor.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = A37D65F72155F77900947572 /* TextEditor.xcodeproj */; };
 		A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3986EBD20E6B59A00098A81 /* TestViewController.swift */; };
+		A3AF85FC22305067003F537B /* KeyboardShortcutAssigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF85FB22305067003F537B /* KeyboardShortcutAssigner.swift */; };
+		A3AF8602223063C7003F537B /* ApplicationMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF8601223063C7003F537B /* ApplicationMenuFactory.swift */; };
 		A3B0277D20EAC0B800A5C912 /* TestViewControllerTwo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */; };
 		A3B0277F20EAC0C300A5C912 /* TestViewControllerTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0277E20EAC0C300A5C912 /* TestViewControllerTwo.swift */; };
 		A3C325D420E57115007DFCE4 /* TestViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C325D320E57115007DFCE4 /* TestViewController.storyboard */; };
@@ -115,6 +117,8 @@
 		A37D65F12155F77200947572 /* Panels.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Panels.xcodeproj; path = Panels/Panels.xcodeproj; sourceTree = "<group>"; };
 		A37D65F72155F77900947572 /* TextEditor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextEditor.xcodeproj; path = TextEditor/TextEditor.xcodeproj; sourceTree = "<group>"; };
 		A3986EBD20E6B59A00098A81 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		A3AF85FB22305067003F537B /* KeyboardShortcutAssigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutAssigner.swift; sourceTree = "<group>"; };
+		A3AF8601223063C7003F537B /* ApplicationMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMenuFactory.swift; sourceTree = "<group>"; };
 		A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewControllerTwo.storyboard; sourceTree = "<group>"; };
 		A3B0277E20EAC0C300A5C912 /* TestViewControllerTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewControllerTwo.swift; sourceTree = "<group>"; };
 		A3C325D320E57115007DFCE4 /* TestViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewController.storyboard; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				A327175C20E55CA100AD89A0 /* AppDelegate.swift */,
+				A3AF85FE2230637C003F537B /* ApplicationMenu */,
 				A36CD4CF20ED9B9500ED46FA /* WindowController.swift */,
 				A327175E20E55CA100AD89A0 /* ViewController.swift */,
 				A327176020E55CA200AD89A0 /* Assets.xcassets */,
@@ -243,6 +248,15 @@
 				A37D65F12155F77200947572 /* Panels.xcodeproj */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3AF85FE2230637C003F537B /* ApplicationMenu */ = {
+			isa = PBXGroup;
+			children = (
+				A3AF85FB22305067003F537B /* KeyboardShortcutAssigner.swift */,
+				A3AF8601223063C7003F537B /* ApplicationMenuFactory.swift */,
+			);
+			path = ApplicationMenu;
 			sourceTree = "<group>";
 		};
 		A3CA41CE220E00F2007DB57C /* OuterPanels */ = {
@@ -415,7 +429,9 @@
 				A36CD4D020ED9B9500ED46FA /* WindowController.swift in Sources */,
 				A3CA41D0220E019A007DB57C /* OuterPanel.swift in Sources */,
 				A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */,
+				A3AF8602223063C7003F537B /* ApplicationMenuFactory.swift in Sources */,
 				A364C3892208CC8C0080EFF1 /* SideboardViewController.swift in Sources */,
+				A3AF85FC22305067003F537B /* KeyboardShortcutAssigner.swift in Sources */,
 				A327175D20E55CA100AD89A0 /* AppDelegate.swift in Sources */,
 				A364C38F2208E21B0080EFF1 /* OuterPanelSmallLabel.swift in Sources */,
 				A3CA41D5220E0392007DB57C /* FileBrowserViewController.swift in Sources */,
