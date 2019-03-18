@@ -25,7 +25,7 @@ class ViewController: NSViewController, PanelsDelegate, TextEditorViewController
             return
         }
         
-        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 700)
+        let mainPanel = Panel(position: .main, viewController: mainPanelViewController, defaultWidth: 720)
         
         
 //        let sideboardStoryboard = NSStoryboard(name: "Sideboard", bundle: Bundle.main)
@@ -39,7 +39,7 @@ class ViewController: NSViewController, PanelsDelegate, TextEditorViewController
         
         let fileBrowserStoryboard = NSStoryboard(name: "FileBrowser", bundle: Bundle.main)
         let leftPanelViewController = fileBrowserStoryboard.instantiateInitialController() as? NSViewController
-        let leftPanel = Panel(position: .left, viewController: leftPanelViewController, hidingThreshold: 100, defaultWidth: 200)
+        let leftPanel = Panel(position: .left, viewController: leftPanelViewController)
         
         
 

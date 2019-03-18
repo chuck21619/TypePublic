@@ -8,10 +8,11 @@
 
 import Foundation
 import AppKit
+import Panels
 
 class ApplicationMenuFactory {
     
-    func createApplicationMenu() -> NSMenu {
+    func createApplicationMenu(menuItemNotificationPoster: Selector?) -> NSMenu {
         
         let mainMenu = NSMenu(title: "Type")
         
@@ -24,9 +25,9 @@ class ApplicationMenuFactory {
         let viewMenu = NSMenu(title: "View ") // "View" (without space) will cause a default enter fullscreen menu item (bug: https://github.com/nwjs/nw.js/issues/6332)
         let viewFullscreenMenuItem = NSMenuItem(title: "Fullscreen", action: nil, keyEquivalent: "")
         viewMenu.addItem(viewFullscreenMenuItem)
-        let viewToggleFolioMenuItem = NSMenuItem(title: "Toggle Folio", action: nil, keyEquivalent: "")
+        let viewToggleFolioMenuItem = TypeMenuItem(title: "Toggle Folio", action: menuItemNotificationPoster, keyEquivalent: "1", keyEquivalentModifierMask: [.command], notification: showLeftPanel)
         viewMenu.addItem(viewToggleFolioMenuItem)
-        let viewToggleSideboardMenuItem = NSMenuItem(title: "Toggle Sideboard", action: nil, keyEquivalent: "")
+        let viewToggleSideboardMenuItem = TypeMenuItem(title: "Toggle Sideboard", action: menuItemNotificationPoster, keyEquivalent: "2", keyEquivalentModifierMask: [.command], notification: showRightPanel)
         viewMenu.addItem(viewToggleSideboardMenuItem)
         mainMenu.addItem(viewMenuItem)
         mainMenu.setSubmenu(viewMenu, for: viewMenuItem)

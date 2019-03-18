@@ -16,7 +16,7 @@ public struct Panel {
     public var defaultWidth: CGFloat
     public var minimumHeight: CGFloat
     
-    public init(position: PanelPosition, viewController: NSViewController?, hidingThreshold: CGFloat = 65, defaultWidth: CGFloat = 200, minimumHeight: CGFloat = 600) {
+    public init(position: PanelPosition, viewController: NSViewController?, hidingThreshold: CGFloat = 100, defaultWidth: CGFloat = 240, minimumHeight: CGFloat = 600) {
         
         self.position = position
         self.viewController = viewController

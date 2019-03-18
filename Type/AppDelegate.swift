@@ -19,19 +19,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //set the application menu
         let applicationMenuFactory = ApplicationMenuFactory()
-        let mainMenu = applicationMenuFactory.createApplicationMenu()
+        let mainMenu = applicationMenuFactory.createApplicationMenu(menuItemNotificationPoster: #selector(postMenuItemNotification))
         NSApplication.shared.mainMenu = mainMenu
     }
-
-    // MARK: - menu actions
-    @IBAction func menuViewFolio(_ sender: Any) {
-        
-        NotificationCenter.default.post(showLeftPanel)
-    }
     
-    @IBAction func menuViewSideboard(_ sender: Any) {
+    @objc func postMenuItemNotification(sender: Any) {
         
-        NotificationCenter.default.post(showRightPanel)
+        guard let menuItem = sender as? TypeMenuItem else {
+            return
+        }
+        
+        let notification = menuItem.notification
+        
+        NotificationCenter.default.post(notification)
     }
 }
 
