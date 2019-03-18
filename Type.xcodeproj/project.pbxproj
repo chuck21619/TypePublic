@@ -26,6 +26,7 @@
 		A37D66112155F81E00947572 /* TextEditor.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = A37D65F72155F77900947572 /* TextEditor.xcodeproj */; };
 		A3986EBE20E6B59A00098A81 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3986EBD20E6B59A00098A81 /* TestViewController.swift */; };
 		A398B26922402038002EC36C /* TypeMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A398B26822402038002EC36C /* TypeMenuItem.swift */; };
+		A398B26C224036B5002EC36C /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A398B26B224036B5002EC36C /* Notifications.swift */; };
 		A3AF85FC22305067003F537B /* KeyboardShortcutAssigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF85FB22305067003F537B /* KeyboardShortcutAssigner.swift */; };
 		A3AF8602223063C7003F537B /* ApplicationMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF8601223063C7003F537B /* ApplicationMenuFactory.swift */; };
 		A3B0277D20EAC0B800A5C912 /* TestViewControllerTwo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */; };
@@ -119,6 +120,7 @@
 		A37D65F72155F77900947572 /* TextEditor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextEditor.xcodeproj; path = TextEditor/TextEditor.xcodeproj; sourceTree = "<group>"; };
 		A3986EBD20E6B59A00098A81 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A398B26822402038002EC36C /* TypeMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMenuItem.swift; sourceTree = "<group>"; };
+		A398B26B224036B5002EC36C /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		A3AF85FB22305067003F537B /* KeyboardShortcutAssigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutAssigner.swift; sourceTree = "<group>"; };
 		A3AF8601223063C7003F537B /* ApplicationMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMenuFactory.swift; sourceTree = "<group>"; };
 		A3B0277C20EAC0B800A5C912 /* TestViewControllerTwo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestViewControllerTwo.storyboard; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				A327175C20E55CA100AD89A0 /* AppDelegate.swift */,
+				A398B26B224036B5002EC36C /* Notifications.swift */,
 				A3AF85FE2230637C003F537B /* ApplicationMenu */,
 				A36CD4CF20ED9B9500ED46FA /* WindowController.swift */,
 				A327175E20E55CA100AD89A0 /* ViewController.swift */,
@@ -438,6 +441,7 @@
 				A3AF85FC22305067003F537B /* KeyboardShortcutAssigner.swift in Sources */,
 				A327175D20E55CA100AD89A0 /* AppDelegate.swift in Sources */,
 				A364C38F2208E21B0080EFF1 /* OuterPanelSmallLabel.swift in Sources */,
+				A398B26C224036B5002EC36C /* Notifications.swift in Sources */,
 				A3CA41D5220E0392007DB57C /* FileBrowserViewController.swift in Sources */,
 				A3B0277F20EAC0C300A5C912 /* TestViewControllerTwo.swift in Sources */,
 				A364C3942208E2480080EFF1 /* OuterPanelSectionLabel.swift in Sources */,
