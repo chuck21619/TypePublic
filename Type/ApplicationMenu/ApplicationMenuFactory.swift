@@ -12,6 +12,8 @@ import Panels
 
 class ApplicationMenuFactory {
     
+    //TODO: view and edit menus are using "view " and "edit " to remove system wide menu items - investigate if this should be done. perhaps it even violates apple user interface guidelines?
+    
     func createApplicationMenu(menuItemNotificationPoster: Selector?) -> NSMenu {
         
         // MARK: - Type
@@ -86,8 +88,8 @@ class ApplicationMenuFactory {
         mainMenu.addItem(fileMenuItem)
         
         // MARK: - Edit
-        let editMenuItem = NSMenuItem(title: "Edit", action: nil, keyEquivalent: "")
-        let editSubmenu = NSMenu(title: "Edit")
+        let editMenuItem = NSMenuItem(title: "Edit ", action: nil, keyEquivalent: "")
+        let editSubmenu = NSMenu(title: "Edit ")
         
         let groupMenuItem = TypeMenuItem(title: "Group", action: menuItemNotificationPoster, keyEquivalent: "g", keyEquivalentModifierMask: [.command], notification: groupNotification)
         editSubmenu.addItem(groupMenuItem)
@@ -100,9 +102,9 @@ class ApplicationMenuFactory {
         editSubmenu.addItem(NSMenuItem.separator())
         
         // TODO: test if backspace works here - i dont think its right
-        let deleteMenuItem = TypeMenuItem(title: "Delete", action: menuItemNotificationPoster, keyEquivalent: String(NSBackspaceCharacter), keyEquivalentModifierMask: [], notification: deleteNotification)
+        let deleteMenuItem = TypeMenuItem(title: "Delete", action: menuItemNotificationPoster, keyEquivalent: "\u{0008}", keyEquivalentModifierMask: [], notification: deleteNotification)
         editSubmenu.addItem(deleteMenuItem)
-        let dissolveMenuItem = TypeMenuItem(title: "Dissolve", action: menuItemNotificationPoster, keyEquivalent: String(NSBackspaceCharacter), keyEquivalentModifierMask: [.command], notification: dissolveNotification)
+        let dissolveMenuItem = TypeMenuItem(title: "Dissolve", action: menuItemNotificationPoster, keyEquivalent: "\u{0008}", keyEquivalentModifierMask: [.command], notification: dissolveNotification)
         editSubmenu.addItem(dissolveMenuItem)
         
         editSubmenu.addItem(NSMenuItem.separator())
@@ -113,14 +115,13 @@ class ApplicationMenuFactory {
         editSubmenu.addItem(promoteMenuItem)
         let demoteMenuItem = TypeMenuItem(title: "Demote", action: menuItemNotificationPoster, keyEquivalent: "[", keyEquivalentModifierMask: [.command], notification: demoteNotification)
         editSubmenu.addItem(demoteMenuItem)
-        // TODO: test if arrows works here - i dont think its right
-        let moveToTopMenuItem = TypeMenuItem(title: "Move to Top", action: menuItemNotificationPoster, keyEquivalent: String(NSUpArrowFunctionKey), keyEquivalentModifierMask: [.command, .option], notification: moveToTopNotification)
+        let moveToTopMenuItem = TypeMenuItem(title: "Move to Top", action: menuItemNotificationPoster, keyEquivalent: "\u{001e}", keyEquivalentModifierMask: [.command, .option], notification: moveToTopNotification)
         editSubmenu.addItem(moveToTopMenuItem)
-        let moveUpMenuItem = TypeMenuItem(title: "Move Up", action: menuItemNotificationPoster, keyEquivalent: String(NSUpArrowFunctionKey), keyEquivalentModifierMask: [.command], notification: moveUpNotification)
+        let moveUpMenuItem = TypeMenuItem(title: "Move Up", action: menuItemNotificationPoster, keyEquivalent: "\u{001e}", keyEquivalentModifierMask: [.command], notification: moveUpNotification)
         editSubmenu.addItem(moveUpMenuItem)
-        let moveDownMenuItem = TypeMenuItem(title: "Move Down", action: menuItemNotificationPoster, keyEquivalent: String(NSDownArrowFunctionKey), keyEquivalentModifierMask: [.command], notification: moveDownNotification)
+        let moveDownMenuItem = TypeMenuItem(title: "Move Down", action: menuItemNotificationPoster, keyEquivalent: "\u{001f}", keyEquivalentModifierMask: [.command], notification: moveDownNotification)
         editSubmenu.addItem(moveDownMenuItem)
-        let moveToBottomMenuItem = TypeMenuItem(title: "Move to Bottom", action: menuItemNotificationPoster, keyEquivalent: String(NSDownArrowFunctionKey), keyEquivalentModifierMask: [.command, .option], notification: moveToBottomNotification)
+        let moveToBottomMenuItem = TypeMenuItem(title: "Move to Bottom", action: menuItemNotificationPoster, keyEquivalent: "\u{001f}", keyEquivalentModifierMask: [.command, .option], notification: moveToBottomNotification)
         editSubmenu.addItem(moveToBottomMenuItem)
         
         editSubmenu.addItem(NSMenuItem.separator())
@@ -209,7 +210,7 @@ class ApplicationMenuFactory {
         
         formatSubmenu.addItem(NSMenuItem.separator())
         
-        let blockQuoteMenuItem = TypeMenuItem(title: "blockQuote", action: menuItemNotificationPoster, keyEquivalent: "..", keyEquivalentModifierMask: [.shift], notification: blockQuoteNotification)
+        let blockQuoteMenuItem = TypeMenuItem(title: "Block Quote", action: menuItemNotificationPoster, keyEquivalent: "..", keyEquivalentModifierMask: [.shift], notification: blockQuoteNotification)
         formatSubmenu.addItem(blockQuoteMenuItem)
         let codeMenuItem = TypeMenuItem(title: "Code", action: menuItemNotificationPoster, keyEquivalent: "`", keyEquivalentModifierMask: [], notification: codeNotification)
         formatSubmenu.addItem(codeMenuItem)
@@ -227,8 +228,8 @@ class ApplicationMenuFactory {
         mainMenu.addItem(formatMenuItem)
         
         // MARK: - View
-        let viewMenuItem = NSMenuItem(title: "View", action: nil, keyEquivalent: "")
-        let viewSubmenu = NSMenu(title: "View ") // "View" (without space) will cause a default enter fullscreen menu item (bug: https://github.com/nwjs/nw.js/issues/6332)
+        let viewMenuItem = NSMenuItem(title: "View ", action: nil, keyEquivalent: "")
+        let viewSubmenu = NSMenu(title: "View ")
         
         let folioMenuItem = TypeMenuItem(title: "Folio", action: menuItemNotificationPoster, keyEquivalent: "1", keyEquivalentModifierMask: [.command], notification: showLeftPanel)
         viewSubmenu.addItem(folioMenuItem)
