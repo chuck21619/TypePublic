@@ -101,7 +101,6 @@ class ApplicationMenuFactory {
         
         editSubmenu.addItem(NSMenuItem.separator())
         
-        // TODO: test if backspace works here - i dont think its right
         let deleteMenuItem = TypeMenuItem(title: "Delete", action: menuItemNotificationPoster, keyEquivalent: "\u{0008}", keyEquivalentModifierMask: [], notification: deleteNotification)
         editSubmenu.addItem(deleteMenuItem)
         let dissolveMenuItem = TypeMenuItem(title: "Dissolve", action: menuItemNotificationPoster, keyEquivalent: "\u{0008}", keyEquivalentModifierMask: [.command], notification: dissolveNotification)
@@ -139,7 +138,18 @@ class ApplicationMenuFactory {
         editSubmenu.addItem(findAndReplaceMenuItem)
         let addTargetMenuItem = TypeMenuItem(title: "Add Target", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: addTargetNotification)
         editSubmenu.addItem(addTargetMenuItem)
-        //TODO: change layout
+        let changeLayoutMenuItem = NSMenuItem(title: "Change Layout", action: nil, keyEquivalent: "")
+        let changeLayoutSubmenu = NSMenu(title: "Change Layout")
+        let changeLayoutLayoutAMenuItem = TypeMenuItem(title: "Layout A", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: changeLayoutLayoutANotification)
+        changeLayoutSubmenu.addItem(changeLayoutLayoutAMenuItem)
+        let changeLayoutLayoutBMenuItem = TypeMenuItem(title: "Layout B", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: changeLayoutLayoutBNotification)
+        changeLayoutSubmenu.addItem(changeLayoutLayoutBMenuItem)
+        let changeLayoutLayoutCMenuItem = TypeMenuItem(title: "Layout C", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: changeLayoutLayoutCNotification)
+        changeLayoutSubmenu.addItem(changeLayoutLayoutCMenuItem)
+        let changeLayoutElipsesMenuItem = TypeMenuItem(title: "...", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: changeLayoutElipsesNotification)
+        changeLayoutSubmenu.addItem(changeLayoutElipsesMenuItem)
+        changeLayoutMenuItem.submenu = changeLayoutSubmenu
+        editSubmenu.addItem(changeLayoutMenuItem)
         let checkSpellingMenuItem = TypeMenuItem(title: "Check Spelling", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: checkSpellingNotification)
         editSubmenu.addItem(checkSpellingMenuItem)
         
@@ -261,8 +271,29 @@ class ApplicationMenuFactory {
         
         viewSubmenu.addItem(NSMenuItem.separator())
         
-        //focus
-        //typewriter
+        // focus
+        let focusItemMenu = NSMenuItem(title: "Focus", action: nil, keyEquivalent: "")
+        let focusSubmenu = NSMenu(title: "Focus")
+        let focusLineMenuItem = TypeMenuItem(title: "Line", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: focusLineNotification)
+        focusSubmenu.addItem(focusLineMenuItem)
+        let focusSentenceMenuItem = TypeMenuItem(title: "Sentence", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: focusSentenceNotification)
+        focusSubmenu.addItem(focusSentenceMenuItem)
+        let focusParagraphMenuItem = TypeMenuItem(title: "Paragraph", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: focusParagraphNotification)
+        focusSubmenu.addItem(focusParagraphMenuItem)
+        focusItemMenu.submenu = focusSubmenu
+        viewSubmenu.addItem(focusItemMenu)
+        
+        // typewriter
+        let typewriterItemMenu = NSMenuItem(title: "Typewriter", action: nil, keyEquivalent: "")
+        let typewriterSubmenu = NSMenu(title: "Typewriter")
+        let typewriterTopMenuItem = TypeMenuItem(title: "Top", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: typewriterTopNotification)
+        typewriterSubmenu.addItem(typewriterTopMenuItem)
+        let typewriterCenterMenuItem = TypeMenuItem(title: "Center", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: typewriterCenterNotification)
+        typewriterSubmenu.addItem(typewriterCenterMenuItem)
+        let typewriterBottomMenuItem = TypeMenuItem(title: "Bottom", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: typewriterBottomNotification)
+        typewriterSubmenu.addItem(typewriterBottomMenuItem)
+        typewriterItemMenu.submenu = typewriterSubmenu
+        viewSubmenu.addItem(typewriterItemMenu)
         
         viewSubmenu.addItem(NSMenuItem.separator())
         

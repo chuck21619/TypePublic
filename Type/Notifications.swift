@@ -46,6 +46,10 @@ public let unlockNotification = Notification(name: Notification.Name(rawValue: "
 public let findNotification = Notification(name: Notification.Name(rawValue: "findNotification"))
 public let findAndReplaceNotification = Notification(name: Notification.Name(rawValue: "findAndReplaceNotification"))
 public let addTargetNotification = Notification(name: Notification.Name(rawValue: "addTargetNotification"))
+public let changeLayoutLayoutANotification = Notification(name: Notification.Name(rawValue: "changeLayoutLayoutANotification"))
+public let changeLayoutLayoutBNotification = Notification(name: Notification.Name(rawValue: "changeLayoutLayoutBNotification"))
+public let changeLayoutLayoutCNotification = Notification(name: Notification.Name(rawValue: "changeLayoutLayoutCNotification"))
+public let changeLayoutElipsesNotification = Notification(name: Notification.Name(rawValue: "changeLayoutElipsesNotification"))
 public let checkSpellingNotification = Notification(name: Notification.Name(rawValue: "checkSpellingNotification"))
 
 //insert
@@ -86,6 +90,12 @@ public let infoNotification = Notification(name: Notification.Name(rawValue: "in
 public let outlineNotification = Notification(name: Notification.Name(rawValue: "outlineNotification"))
 public let dictionaryNotification = Notification(name: Notification.Name(rawValue: "dictionaryNotification"))
 public let thesaurusNotification = Notification(name: Notification.Name(rawValue: "thesaurusNotification"))
+public let focusLineNotification = Notification(name: Notification.Name(rawValue: "focusLineNotification"))
+public let focusSentenceNotification = Notification(name: Notification.Name(rawValue: "focusSentenceNotification"))
+public let focusParagraphNotification = Notification(name: Notification.Name(rawValue: "focusParagraphNotification"))
+public let typewriterTopNotification = Notification(name: Notification.Name(rawValue: "typewriterTopNotification"))
+public let typewriterCenterNotification = Notification(name: Notification.Name(rawValue: "typewriterCenterNotification"))
+public let typewriterBottomNotification = Notification(name: Notification.Name(rawValue: "typewriterBottomNotification"))
 public let splitUnsplitNotification = Notification(name: Notification.Name(rawValue: "splitUnsplitNotification"))
 public let hideToolbarNotification = Notification(name: Notification.Name(rawValue: "hideToolbarNotification"))
 public let customizeToolbarNotification = Notification(name: Notification.Name(rawValue: "customizeToolbarNotification"))
