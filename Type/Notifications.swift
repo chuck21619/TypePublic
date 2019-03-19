@@ -76,9 +76,9 @@ public let highlightNotification = Notification(name: Notification.Name(rawValue
 public let commentNotification = Notification(name: Notification.Name(rawValue: "commentNotification"))
 
 //view
-public let folioNotification = Notification(name: Notification.Name(rawValue: "folioNotification"))
+//public let folioNotification = Notification(name: Notification.Name(rawValue: "folioNotification")) - showLeftPanel from Panels.notifications
 public let workspaceNotification = Notification(name: Notification.Name(rawValue: "workspaceNotification"))
-public let sideboardNotification = Notification(name: Notification.Name(rawValue: "sideboardNotification"))
+//public let sideboardNotification = Notification(name: Notification.Name(rawValue: "sideboardNotification")) - showRightPanel from Panels.notifications
 public let tagsNotification = Notification(name: Notification.Name(rawValue: "tagsNotification"))
 public let referencesNotification = Notification(name: Notification.Name(rawValue: "referencesNotification"))
 public let archiveNotification = Notification(name: Notification.Name(rawValue: "archiveNotification"))

@@ -175,25 +175,133 @@ class ApplicationMenuFactory {
         mainMenu.addItem(insertMenuItem)
         
         //MARK: - Format
+        let formatMenuItem = NSMenuItem(title: "Format", action: nil, keyEquivalent: "")
+        let formatSubmenu = NSMenu(title: "Format")
+
+        // TODO: if we want to overide the shift+3 shortcut image with the # image, we will need to configure the view ourselves
+        let headlineMenuItem = TypeMenuItem(title: "Headline", action: menuItemNotificationPoster, keyEquivalent: "3", keyEquivalentModifierMask: [.shift], notification: headlineNotification)
+//        let someView = NSView(frame: NSRect(x: 0, y: 0, width: 50, height: 50))
+//        someView.wantsLayer = true
+//        someView.layer?.backgroundColor = NSColor.blue.cgColor
+//        headlineMenuItem.view = someView
+        formatSubmenu.addItem(headlineMenuItem)
+        let headlineMenuItem2 = TypeMenuItem(title: "Headline 2", action: menuItemNotificationPoster, keyEquivalent: "33", keyEquivalentModifierMask: [.shift], notification: headlineNotification)
+        formatSubmenu.addItem(headlineMenuItem2)
+        let headlineMenuItem3 = TypeMenuItem(title: "Headline 3", action: menuItemNotificationPoster, keyEquivalent: "333", keyEquivalentModifierMask: [.shift], notification: headlineNotification)
+        formatSubmenu.addItem(headlineMenuItem3)
+        let headlineMenuItem4 = TypeMenuItem(title: "Headline 4", action: menuItemNotificationPoster, keyEquivalent: "3333", keyEquivalentModifierMask: [.shift], notification: headlineNotification)
+        formatSubmenu.addItem(headlineMenuItem4)
         
+        formatSubmenu.addItem(NSMenuItem.separator())
         
-//        // view
-//        let viewMenuItem = NSMenuItem(title: "View", action: nil, keyEquivalent: "")
-//        let viewMenu = NSMenu(title: "View ") // "View" (without space) will cause a default enter fullscreen menu item (bug: https://github.com/nwjs/nw.js/issues/6332)
-//        let viewFullscreenMenuItem = NSMenuItem(title: "Fullscreen", action: nil, keyEquivalent: "")
-//        viewMenu.addItem(viewFullscreenMenuItem)
-//        let viewToggleFolioMenuItem = TypeMenuItem(title: "Toggle Folio", action: menuItemNotificationPoster, keyEquivalent: "1", keyEquivalentModifierMask: [.command], notification: showLeftPanel)
-//        viewMenu.addItem(viewToggleFolioMenuItem)
-//        let viewToggleSideboardMenuItem = TypeMenuItem(title: "Toggle Sideboard", action: menuItemNotificationPoster, keyEquivalent: "2", keyEquivalentModifierMask: [.command], notification: showRightPanel)
-//        viewMenu.addItem(viewToggleSideboardMenuItem)
-//        mainMenu.addItem(viewMenuItem)
-//        mainMenu.setSubmenu(viewMenu, for: viewMenuItem)
-//
-//        // help
-//        let helpMenuItem = NSMenuItem(title: "Help", action: nil, keyEquivalent: "")
-//        let helpMenu = NSMenu(title: "Help")
-//        mainMenu.addItem(helpMenuItem)
-//        mainMenu.setSubmenu(helpMenu, for: helpMenuItem)
+        let boldMenuItem = TypeMenuItem(title: "Bold", action: menuItemNotificationPoster, keyEquivalent: "8", keyEquivalentModifierMask: [.shift], notification: boldNotification)
+        formatSubmenu.addItem(boldMenuItem)
+        let italicMenuItem = TypeMenuItem(title: "Italic", action: menuItemNotificationPoster, keyEquivalent: "88", keyEquivalentModifierMask: [.shift], notification: italicNotification)
+        formatSubmenu.addItem(italicMenuItem)
+        let underlineMenuItem = TypeMenuItem(title: "Underline", action: menuItemNotificationPoster, keyEquivalent: "-", keyEquivalentModifierMask: [.shift], notification: underlineNotification)
+        formatSubmenu.addItem(underlineMenuItem)
+        let strikeThruMenuItem = TypeMenuItem(title: "Strikethru", action: menuItemNotificationPoster, keyEquivalent: "`", keyEquivalentModifierMask: [.shift], notification: strikethruNotification)
+        formatSubmenu.addItem(strikeThruMenuItem)
+        let superscriptMenuItem = TypeMenuItem(title: "Superscript", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: superscriptNotification)
+        formatSubmenu.addItem(superscriptMenuItem)
+        let subscriptMenuItem = TypeMenuItem(title: "Subscript", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: subscriptNotification)
+        formatSubmenu.addItem(subscriptMenuItem)
+        
+        formatSubmenu.addItem(NSMenuItem.separator())
+        
+        let blockQuoteMenuItem = TypeMenuItem(title: "blockQuote", action: menuItemNotificationPoster, keyEquivalent: "..", keyEquivalentModifierMask: [.shift], notification: blockQuoteNotification)
+        formatSubmenu.addItem(blockQuoteMenuItem)
+        let codeMenuItem = TypeMenuItem(title: "Code", action: menuItemNotificationPoster, keyEquivalent: "`", keyEquivalentModifierMask: [], notification: codeNotification)
+        formatSubmenu.addItem(codeMenuItem)
+        let codeBlockMenuItem = TypeMenuItem(title: "Code Block", action: menuItemNotificationPoster, keyEquivalent: "``", keyEquivalentModifierMask: [], notification: codeBlockNotification)
+        formatSubmenu.addItem(codeBlockMenuItem)
+        
+        formatSubmenu.addItem(NSMenuItem.separator())
+        
+        let highlightMenuItem = TypeMenuItem(title: "Highlight", action: menuItemNotificationPoster, keyEquivalent: ";;", keyEquivalentModifierMask: [.shift], notification: highlightNotification)
+        formatSubmenu.addItem(highlightMenuItem)
+        let commentMenuItem = TypeMenuItem(title: "Comment", action: menuItemNotificationPoster, keyEquivalent: "/", keyEquivalentModifierMask: [], notification: commentNotification)
+        formatSubmenu.addItem(commentMenuItem)
+        
+        formatMenuItem.submenu = formatSubmenu
+        mainMenu.addItem(formatMenuItem)
+        
+        // MARK: - View
+        let viewMenuItem = NSMenuItem(title: "View", action: nil, keyEquivalent: "")
+        let viewSubmenu = NSMenu(title: "View ") // "View" (without space) will cause a default enter fullscreen menu item (bug: https://github.com/nwjs/nw.js/issues/6332)
+        
+        let folioMenuItem = TypeMenuItem(title: "Folio", action: menuItemNotificationPoster, keyEquivalent: "1", keyEquivalentModifierMask: [.command], notification: showLeftPanel)
+        viewSubmenu.addItem(folioMenuItem)
+        let workspaceMenuItem = TypeMenuItem(title: "Workspace", action: menuItemNotificationPoster, keyEquivalent: "2", keyEquivalentModifierMask: [.command], notification: workspaceNotification)
+        viewSubmenu.addItem(workspaceMenuItem)
+        let sideboardMenuItem = TypeMenuItem(title: "Sideboard", action: menuItemNotificationPoster, keyEquivalent: "3", keyEquivalentModifierMask: [.command], notification: showRightPanel)
+        viewSubmenu.addItem(sideboardMenuItem)
+        let tagsMenuItem = TypeMenuItem(title: "Tags", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: tagsNotification)
+        viewSubmenu.addItem(tagsMenuItem)
+        let referencesMenuItem = TypeMenuItem(title: "References", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: referencesNotification)
+        viewSubmenu.addItem(referencesMenuItem)
+        let archiveMenuItem = TypeMenuItem(title: "Archive", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: archiveNotification)
+        viewSubmenu.addItem(archiveMenuItem)
+        
+        viewSubmenu.addItem(NSMenuItem.separator())
+        
+        let infoMenuItem = TypeMenuItem(title: "Info", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: infoNotification)
+        viewSubmenu.addItem(infoMenuItem)
+        let outlineMenuItem = TypeMenuItem(title: "Outline", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: outlineNotification)
+        viewSubmenu.addItem(outlineMenuItem)
+        let dictionaryMenuItem = TypeMenuItem(title: "Dictionary", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: dictionaryNotification)
+        viewSubmenu.addItem(dictionaryMenuItem)
+        let thesaurusMenuItem = TypeMenuItem(title: "Thesaurus", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: thesaurusNotification)
+        viewSubmenu.addItem(thesaurusMenuItem)
+        
+        viewSubmenu.addItem(NSMenuItem.separator())
+        
+        //not implemented yet
+        
+        viewSubmenu.addItem(NSMenuItem.separator())
+        
+        //focus
+        //typewriter
+        
+        viewSubmenu.addItem(NSMenuItem.separator())
+        
+        let splitUnsplitMenuItem = TypeMenuItem(title: "Split/Unsplit", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: splitUnsplitNotification)
+        viewSubmenu.addItem(splitUnsplitMenuItem)
+        
+        viewSubmenu.addItem(NSMenuItem.separator())
+        
+        let hideToolbarMenuItem = TypeMenuItem(title: "Hide Toolbar", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: hideToolbarNotification)
+        viewSubmenu.addItem(hideToolbarMenuItem)
+        let customizeToolbarMenuItem = TypeMenuItem(title: "Customize Toolbar", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: customizeToolbarNotification)
+        viewSubmenu.addItem(customizeToolbarMenuItem)
+        
+        viewMenuItem.submenu = viewSubmenu
+        mainMenu.addItem(viewMenuItem)
+        
+        //MARK: - Help
+        let helpMenuItem = NSMenuItem(title: "Help", action: nil, keyEquivalent: "")
+        let helpSubmenu = NSMenu(title: "Help")
+        
+        //  search menu item is added by default
+        let keyboardShortcutsMenuItem = TypeMenuItem(title: "Keyboard Shortcuts", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: keyboardShortcutsNotification)
+        helpSubmenu.addItem(keyboardShortcutsMenuItem)
+        let keyboardMechanicsMenuItem = TypeMenuItem(title: "Keyboard Mechanics", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: keyboardMechanicsNotification)
+        helpSubmenu.addItem(keyboardMechanicsMenuItem)
+        
+        helpSubmenu.addItem(NSMenuItem.separator())
+        
+        let whatsNewInTypeMenuItem = TypeMenuItem(title: "Whats new in Type", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: whatsNewInTypeNotification)
+        helpSubmenu.addItem(whatsNewInTypeMenuItem)
+        
+        helpSubmenu.addItem(NSMenuItem.separator())
+        
+        let reportABugMenuItem = TypeMenuItem(title: "Report a bug", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: reportABugNotification)
+        helpSubmenu.addItem(reportABugMenuItem)
+        let zinHelpPageMenuItem = TypeMenuItem(title: "Zin Help Page", action: menuItemNotificationPoster, keyEquivalent: "", keyEquivalentModifierMask: [], notification: zinHelpPageNotification)
+        helpSubmenu.addItem(zinHelpPageMenuItem)
+        
+        helpMenuItem.submenu = helpSubmenu
+        mainMenu.addItem(helpMenuItem)
         
         return mainMenu
     }
