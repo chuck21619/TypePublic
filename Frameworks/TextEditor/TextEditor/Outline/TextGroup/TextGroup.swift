@@ -45,18 +45,16 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     // TODO: validate this method
     func isDescendant(of parent: TextGroup) -> Bool {
         
-        var parentTextGroup: TextGroup? = parent
-        
-        while parentTextGroup != nil {
-            
-            if self == parentTextGroup {
-                return true
-            }
-            
-            parentTextGroup = parentTextGroup?.parentTextGroup
+        if self.parentTextGroup == parent {
+            return true
         }
         
-        return false
+        guard let myParentTextGroup = self.parentTextGroup else {
+            return false
+        }
+    
+        return myParentTextGroup.isDescendant(of: parent)
+        
     }
     
     // MARK: - Description

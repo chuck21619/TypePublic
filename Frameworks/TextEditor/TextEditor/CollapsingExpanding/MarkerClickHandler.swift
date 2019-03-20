@@ -85,7 +85,7 @@ class MarkerClickHandler {
         
         rulerView.needsDisplay = true
         
-        outlineModel?.updateTextGroups(from: textStorage)
+//        outlineModel?.updateTextGroups(from: textStorage)
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: false)
     }

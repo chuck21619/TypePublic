@@ -94,16 +94,12 @@ class OutlineModel {
         completion?(parentTextGroup)
     }
     
-    func reCalculateTextGroups(editedRange: NSRange, delta: Int) {
-        
-        // TODO: validate that this works. i changed the string that outlinemodel uses. it used to use a saved version of the document string
-        guard let documentString = self.delegate?.documentString() else {
-            return
-        }
+    //expandingTextGroup is the text group that is currently being expanding which is causing the recalculation of text groups
+    func reCalculateTextGroups(editedRange: NSRange, delta: Int, expandingTextGroup: TextGroup? = nil) {
         
         for textGroup in self.parentTextGroup {
-        
-            guard let textGroupRange = range(of: textGroup, in: documentString) else {
+            
+            guard let textGroupRange = textGroup.token?.range else {
                 continue
             }
             
@@ -116,6 +112,13 @@ class OutlineModel {
             }
             else if textGroupRange.location >= editedRange.location &&
                 textGroupRange.location >= editedRange.location + editedRange.length {
+                
+                if let expandingTextGroup = expandingTextGroup {
+                    // if the textgroup is a descendant of the textgroup than the range should not need to be recalculated
+                    guard textGroup.isDescendant(of: expandingTextGroup) == false else {
+                        continue
+                    }
+                }
                 
                 guard let previousTokenRange = textGroup.token?.range else {
                     continue
@@ -132,13 +135,14 @@ class OutlineModel {
             else {
                 
                 //TODO: figure out the other scenarios - not sure how many more there are
+                print("ERROR RECALCULATING TEXT GROUPS - INCOMPLETE IMPLEMENTATION")
             }
         }
     }
     
-    func reCalculateTextGroups(replacingRange: NSRange, with str: String) {
+    func reCalculateTextGroups(replacingRange: NSRange, with str: String, expandingTextGroup: TextGroup? = nil) {
         
-       reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length)
+        reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length, expandingTextGroup: expandingTextGroup)
     }
     
     func textGroup(at location: Int) -> TextGroup? {

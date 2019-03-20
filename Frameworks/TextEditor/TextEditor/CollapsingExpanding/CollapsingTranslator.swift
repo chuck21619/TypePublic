@@ -56,8 +56,8 @@ class CollapsingTranslator {
         
         for collapsedTextGroup in collapsedTextGroups {
             
-            outlineModel?.updateTextGroups(from: string)
-            
+//            outlineModel?.updateTextGroups(from: string)
+ 
             guard let parentTextGroup = outlineModel?.parentTextGroup else {
                 continue
             }
@@ -104,13 +104,11 @@ class CollapsingTranslator {
         
         let replacingRange = NSRange(location: attributeRange.location, length: attributeRange.length)
         string.replaceCharacters(in: replacingRange, with: stringInAttachment)
-        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: stringInAttachment.string)
+        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: stringInAttachment.string, expandingTextGroup: textGroup)
         
         let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
-            //TODO: see if this needs to be re-written
-            print("WHO IS CALLING THIS - needs to be re-written") //does it though?
             self.delegate.invalidateRanges(invalidRanges: [invalidRange])
         }
         
@@ -157,7 +155,7 @@ class CollapsingTranslator {
     
     @discardableResult func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], outlineModel: OutlineModel?, collapsedTextGroups: inout [TextGroup], recollapsing: Bool = false) -> [NSRange] {
         
-        outlineModel?.updateTextGroups(from: string)
+//        outlineModel?.updateTextGroups(from: string)
         
         var correspondingTextGroup: TextGroup? = nil
         
