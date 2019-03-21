@@ -216,8 +216,6 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         collapsingTranslator.expandAllTextGroups(string: string, collapsedTextGroups: delegate.collapsedTextGroups, outlineModel: model)
         
-        self.model?.updateTextGroups(from: delegate.documentString()!)
-        
         // if item is nil, then target is root
         var targetParent = item as? TextGroup ?? parentTextGroup
         
@@ -251,15 +249,6 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             insertIndex -= 1
         }
         
-        let adjacentTextGroup: TextGroup
-        if index == 0 {
-            
-            adjacentTextGroup = targetParent.textGroups[index]
-        }
-        else {
-            
-            adjacentTextGroup = targetParent.textGroups[index-1]
-        }
         //fix: the draggingGroup.parentTextGroup is nil after collapsing an unrelated textgroup
         guard let textGroupString = delegate.string(for: draggingGroup, outlineModel: self.model) else {
             return false
@@ -267,16 +256,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         visibleRect = outlineView.visibleRect
         
-        if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
-            
-            delegate.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model)
-            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
-        }
-        else {
-            
-            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
-            delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model)
-        }
+        delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
+        delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
         
         collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], collapsedTextGroups: delegate.collapsedTextGroups)
         

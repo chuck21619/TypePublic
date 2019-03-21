@@ -163,10 +163,16 @@ class CollapsingTranslator {
             return []
         }
         
+        correspondingTextGroup = textGroup
         for iteratedTextGroup in parentTextGroup {
             
             if iteratedTextGroup.title == textGroup.title {
                 correspondingTextGroup = iteratedTextGroup
+                
+                if correspondingTextGroup != textGroup {
+                    print("ERROR - revert to using corresponding textgroup")
+                    //TODO: find other places where i am finding the corresponding text group and test if they are still necessasary
+                }
                 break
             }
         }

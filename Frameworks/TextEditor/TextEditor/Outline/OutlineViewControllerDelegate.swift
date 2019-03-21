@@ -17,7 +17,7 @@ protocol OutlineViewControllerDelegate {
     func string(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString?
     
     func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?)
-    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int, outlineModel: OutlineModel?)
+    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int, outlineModel: OutlineModel?, movedTextGroup: TextGroup?)
     
     func beginUpdates()
     func endUpdates()

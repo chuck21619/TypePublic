@@ -94,7 +94,7 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
 
                 string = "\(string)    "
             }
-            string = "\(string)\(textGroup.title)\n"
+            string = "\(string)\(textGroup.title) : \(textGroup.token?.range ?? NSRange(location: 0, length: 0))\n"
 
 
             lastTextGroup = textGroup

@@ -389,7 +389,8 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         return attributedString
     }
     
-    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int, outlineModel: OutlineModel?) {
+    //movedTextGroup = textgroup that was dragNDropped which is resulting in the call. passed to that we can correctly recalculate its range
+    func insertAttributedString(_ attributedString: NSAttributedString, in textGroup: TextGroup, at index: Int, outlineModel: OutlineModel?, movedTextGroup: TextGroup?) {
         
         let textGroupInserter: TextGroupInserter
         
@@ -422,6 +423,29 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         }
         
         textStorage.insert(attributedStringToInsert, at: locationToInsert)
+        
+        //recalculate all subsequent textgroups ranges to account for prepended string
+        if let parentTextgroup = outlineModel?.parentTextGroup {
+            
+            for textGroup in parentTextgroup {
+                
+                guard let textGroupRange = textGroup.token?.range else {
+                    continue
+                }
+                
+                if textGroup == movedTextGroup {
+                    
+                    let newTextGroupRange = NSRange(location: locationToInsert, length: textGroupRange.length)
+                    textGroup.token?.range = newTextGroupRange
+                    
+                }
+                else if textGroupRange.location >= locationToInsert {
+                    
+                    let newTextGroupRange = NSRange(location: textGroupRange.location + attributedString.string.count, length: textGroupRange.length)
+                    textGroup.token?.range = newTextGroupRange
+                }
+            }
+        }
     }
     
     func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?) {

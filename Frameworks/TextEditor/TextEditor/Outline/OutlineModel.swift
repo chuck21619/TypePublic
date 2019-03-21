@@ -217,11 +217,11 @@ class OutlineModel {
     
     func nextTextGroupWithEqualOrHigherPriority(after textGroup: TextGroup) -> TextGroup? {
         
-        guard let textGroups = textGroup.parentTextGroup?.textGroups else {
-            return nil
+        let sortedTextGroups = (textGroup.parentTextGroup?.textGroups ?? []).sorted { (firstTextGroup, secondTextGroup) -> Bool in
+            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
         }
         
-        guard let indexOfTextGroupInParent = textGroups.firstIndex(of: textGroup) else {
+        guard let indexOfTextGroupInParent = sortedTextGroups.firstIndex(of: textGroup) else {
             return nil
         }
         
@@ -233,9 +233,9 @@ class OutlineModel {
         
         var nextTextGroupWithEqualOrHigherPriority: TextGroup? = nil
         
-        for i in startIndex..<textGroups.count {
+        for i in startIndex..<sortedTextGroups.count {
             
-            let textGroup = textGroups[i]
+            let textGroup = sortedTextGroups[i]
             guard let iteratedToken = textGroup.token else {
                 continue
             }
