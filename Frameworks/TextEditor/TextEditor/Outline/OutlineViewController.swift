@@ -175,7 +175,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
         
         // do not allow dropping into itself
-        guard draggingGroup.isDescendant(of: targetParent) == false else {
+        guard targetParent.isDescendant(of: draggingGroup) == false else {
             return []
         }
         
