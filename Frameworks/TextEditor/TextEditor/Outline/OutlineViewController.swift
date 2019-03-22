@@ -249,6 +249,15 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             insertIndex -= 1
         }
         
+        let adjacentTextGroup: TextGroup
+        if index == 0 {
+            
+            adjacentTextGroup = targetParent.textGroups[index]
+        }
+        else {
+            
+            adjacentTextGroup = targetParent.textGroups[index-1]
+        }
         //fix: the draggingGroup.parentTextGroup is nil after collapsing an unrelated textgroup
         guard let textGroupString = delegate.string(for: draggingGroup, outlineModel: self.model) else {
             return false
@@ -256,8 +265,16 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         visibleRect = outlineView.visibleRect
         
-        delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
-        delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
+        if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
+            
+            delegate.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model, movedTextGroup: nil)
+            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
+        }
+        else {
+            
+            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
+            delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
+        }
         
         collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], collapsedTextGroups: delegate.collapsedTextGroups)
         
