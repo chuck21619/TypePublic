@@ -218,7 +218,12 @@ class OutlineModel {
     
     func nextTextGroupWithEqualOrHigherPriority(after textGroup: TextGroup) -> TextGroup? {
         
-        let sortedTextGroups = (textGroup.parentTextGroup?.textGroups ?? []).sorted { (firstTextGroup, secondTextGroup) -> Bool in
+        var flattenedTextGroups: [TextGroup] = []
+        for textGroup in parentTextGroup {
+            flattenedTextGroups.append(textGroup)
+        }
+        
+        let sortedTextGroups = (flattenedTextGroups).sorted { (firstTextGroup, secondTextGroup) -> Bool in
             return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
         }
         
