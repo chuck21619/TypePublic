@@ -227,13 +227,17 @@ class OutlineModel {
             return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
         }
         
+        guard let startIndex = sortedTextGroups.firstIndex(of: textGroup) else {
+            return nil
+        }
+        
         guard let textGroupToken = textGroup.token else {
             return nil
         }
         
         var nextTextGroupWithEqualOrHigherPriority: TextGroup? = nil
         
-        for i in 0..<sortedTextGroups.count {
+        for i in startIndex..<sortedTextGroups.count {
             
             let iteratedTextGroup = sortedTextGroups[i]
             guard let iteratedToken = iteratedTextGroup.token else {
