@@ -227,29 +227,24 @@ class OutlineModel {
             return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
         }
         
-        guard let indexOfTextGroupInParent = sortedTextGroups.firstIndex(of: textGroup) else {
-            return nil
-        }
-        
-        let startIndex = indexOfTextGroupInParent + 1
-        
         guard let textGroupToken = textGroup.token else {
             return nil
         }
         
         var nextTextGroupWithEqualOrHigherPriority: TextGroup? = nil
         
-        for i in startIndex..<sortedTextGroups.count {
+        for i in 0..<sortedTextGroups.count {
             
-            let textGroup = sortedTextGroups[i]
-            guard let iteratedToken = textGroup.token else {
+            let iteratedTextGroup = sortedTextGroups[i]
+            guard let iteratedToken = iteratedTextGroup.token else {
                 continue
             }
             
             if language.priority(of: iteratedToken, isHigherThan: textGroupToken) ||
-               language.priority(of: iteratedToken, isEqualTo: textGroupToken) {
+               language.priority(of: iteratedToken, isEqualTo: textGroupToken) &&
+               textGroup != iteratedTextGroup {
                 
-                nextTextGroupWithEqualOrHigherPriority = textGroup
+                nextTextGroupWithEqualOrHigherPriority = iteratedTextGroup
                 break
             }
         }

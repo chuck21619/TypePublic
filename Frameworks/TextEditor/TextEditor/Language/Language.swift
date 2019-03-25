@@ -179,7 +179,14 @@ class Language {
             return false
         }
         
-        // a lower index means higher priority
-        return firstRuleIndex == secondRuleIndex
+        // when tokens are associated with the same rule, and the rule is ideterminate - compare token amount
+        if firstRuleIndex == secondRuleIndex {
+            
+            return secondTextGroupToken.tokenAmount == firstTextGroupToken.tokenAmount
+        }
+        else {
+            // a lower index means higher priority
+            return firstRuleIndex == secondRuleIndex
+        }
     }
 }
