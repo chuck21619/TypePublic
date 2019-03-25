@@ -256,11 +256,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
             
-            self.outlineModel?.outline(textStorage: stringCopy)
-            
             guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, collapsedTextGroups: self.collapsedTextGroups, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
                 return
             }
+            
+            self.outlineModel?.outline(textStorage: stringCopy)
             
             guard newWorkItem.isCancelled == false else {
                 return

@@ -279,6 +279,13 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             }
             
             delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
+            
+            let indexOfDraggingGroup = draggingGroup.parentTextGroup?.textGroups.firstIndex(of: draggingGroup)
+            if let indexOfDraggingGroup = indexOfDraggingGroup {
+                
+                draggingGroup.parentTextGroup?.textGroups.remove(at: indexOfDraggingGroup)
+            }
+            targetParent.textGroups.append(draggingGroup)
         }
         
         collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], collapsedTextGroups: delegate.collapsedTextGroups)

@@ -57,7 +57,12 @@ class CollapsingTranslator {
         for collapsedTextGroup in collapsedTextGroups {
             
 //            outlineModel?.updateTextGroups(from: string)
- 
+            
+            if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
+                
+                continue
+            }
+            
             guard let parentTextGroup = outlineModel?.parentTextGroup else {
                 continue
             }
@@ -147,6 +152,11 @@ class CollapsingTranslator {
         var adjustedInvalidRanges = invalidRanges
         var collapsedTextGroups = collapsedTextGroups
         for collapsedTextGroup in collapsedTextGroups {
+            
+            if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
+                continue
+            }
+            
             adjustedInvalidRanges = self.collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, collapsedTextGroups: &collapsedTextGroups, recollapsing: true)
         }
         
