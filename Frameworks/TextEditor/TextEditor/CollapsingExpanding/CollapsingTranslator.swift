@@ -104,7 +104,7 @@ class CollapsingTranslator {
         
         let replacingRange = NSRange(location: attributeRange.location, length: attributeRange.length)
         string.replaceCharacters(in: replacingRange, with: stringInAttachment)
-        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: stringInAttachment.string, expandingTextGroup: textGroup)
+        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: stringInAttachment.string, expandingTextGroup: textGroup, downwardDraggingGroup: nil)
         
         let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
@@ -203,7 +203,7 @@ class CollapsingTranslator {
         
         let replacingRange = NSRange(location: location, length: endIndex-location)
         string.replaceCharacters(in: replacingRange, with: attachmentString)
-        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: attachmentString.string)
+        outlineModel?.reCalculateTextGroups(replacingRange: replacingRange, with: attachmentString.string, expandingTextGroup: nil, downwardDraggingGroup: nil)
         
         var collapsedGroupRangeNeedsToBeInvalidated = false
         for invalidRange in invalidRanges {

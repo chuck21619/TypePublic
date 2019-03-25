@@ -263,16 +263,21 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             return false
         }
         
+        // if dragging down AND into the same parent, increase index to account for itself that still exists earlier in the parents textgroups
+        if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location && draggingGroup.parentTextGroup == targetParent {
+            
+            insertIndex += 1
+        }
+        
         visibleRect = outlineView.visibleRect
         
-        if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location {
             
-            delegate.insertAttributedString(textGroupString, in: targetParent, at: index, outlineModel: self.model, movedTextGroup: nil)
-            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
-        }
-        else {
+        delegate.removeTextGroup(draggingGroup, outlineModel: self.model, downwardDraggingGroup: nil) { success in
             
-            delegate.removeTextGroup(draggingGroup, outlineModel: self.model)
+            guard success == true else {
+                return
+            }
+            
             delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
         }
         

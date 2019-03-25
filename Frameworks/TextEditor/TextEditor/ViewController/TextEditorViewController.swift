@@ -256,7 +256,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
             
-            self.outlineModel?.updateTextGroups(from: textStorage, workItem: newWorkItem)
+            self.outlineModel?.outline(textStorage: stringCopy)
             
             guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, collapsedTextGroups: self.collapsedTextGroups, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
                 return
@@ -272,7 +272,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             self.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
             
-            self.outlineModel?.outline(textStorage: stringCopy)
             
             guard newWorkItem.isCancelled == false else {
                 return
@@ -448,14 +447,21 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         }
     }
     
-    func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?) {
+    func removeTextGroup(_ textGroup: TextGroup, outlineModel: OutlineModel?, downwardDraggingGroup: TextGroup?, completion: ((Bool)->())?) {
         
         guard let textStorage = textStorage, let range = outlineModel?.range(of: textGroup, in: textStorage) else {
+            completion?(false)
             return
         }
         
+        remove(range: range, expandingTextGroup: nil, downwardDraggingGroup: downwardDraggingGroup)
+        completion?(true)
+    }
+    
+    func remove(range: NSRange, expandingTextGroup: TextGroup?, downwardDraggingGroup: TextGroup?) {
+        
         textStorage.replaceCharacters(in: range, with: "")
-        outlineModel?.reCalculateTextGroups(replacingRange: range, with: "")
+        outlineModel?.reCalculateTextGroups(replacingRange: range, with: "", expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup)
     }
     
     func beginUpdates() {

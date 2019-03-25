@@ -95,7 +95,7 @@ class OutlineModel {
     }
     
     //expandingTextGroup is the text group that is currently being expanding which is causing the recalculation of text groups
-    func reCalculateTextGroups(editedRange: NSRange, delta: Int, expandingTextGroup: TextGroup? = nil) {
+    func reCalculateTextGroups(editedRange: NSRange, delta: Int, expandingTextGroup: TextGroup? = nil, downwardDraggingGroup: TextGroup? = nil) {
         
         for textGroup in self.parentTextGroup {
             
@@ -110,8 +110,9 @@ class OutlineModel {
                 //do nothing
                 //the textgroup is prior to the edit, and will not be changed
             }
-            else if textGroupRange.location >= editedRange.location &&
-                textGroupRange.location >= editedRange.location + editedRange.length {
+            else if (textGroupRange.location >= editedRange.location &&
+                     textGroupRange.location >= editedRange.location + editedRange.length) ||
+                    (textGroup == downwardDraggingGroup) {
                 
                 if let expandingTextGroup = expandingTextGroup {
                     // if the textgroup is a descendant of the textgroup than the range should not need to be recalculated
@@ -140,9 +141,9 @@ class OutlineModel {
         }
     }
     
-    func reCalculateTextGroups(replacingRange: NSRange, with str: String, expandingTextGroup: TextGroup? = nil) {
+    func reCalculateTextGroups(replacingRange: NSRange, with str: String, expandingTextGroup: TextGroup?, downwardDraggingGroup: TextGroup?) {
         
-        reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length, expandingTextGroup: expandingTextGroup)
+        reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length, expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup)
     }
     
     func textGroup(at location: Int) -> TextGroup? {
