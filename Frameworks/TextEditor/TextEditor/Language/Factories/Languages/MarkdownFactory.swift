@@ -30,7 +30,7 @@ class MarkdownFactory {
         let italicFont = NSFont(name: "Menlo-Italic", size: 11)!
         let boldFont = NSFont(name: "Menlo-Bold", size: 11)!
         
-        let keywords = [            
+        let keywords = [
             // #h1 titles, ##h2 titles,  etc.
             createKeyword("(^|\\n)\\s*#+(?![^\\s])", headerTitleAttributeKey, headerTitleColor),
             
