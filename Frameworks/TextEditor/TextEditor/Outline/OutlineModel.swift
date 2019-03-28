@@ -146,13 +146,37 @@ class OutlineModel {
         reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length, expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup)
     }
     
-    func textGroup(at location: Int) -> TextGroup? {
+    //collapsedTextGroups: if passed. then the location will be adjusted to account for the collapsed groups
+    func textGroup(at location: Int, collapsedTextGroups: inout [TextGroup]) -> TextGroup? {
+        
+        var adjustedLocation = location
+        
+        for collapsedTextGroup in collapsedTextGroups {
+            
+            if let collapsedParentTextGroup = collapsedTextGroup.parentTextGroup {
+                
+                guard collapsedTextGroups.contains(collapsedParentTextGroup) == false else {
+                    continue
+                }
+            }
+            
+            guard let range = collapsedTextGroup.token?.range else {
+                continue
+            }
+            
+            if range.location < adjustedLocation {
+                let range = self.range(of: collapsedTextGroup, in: delegate!.documentString()!, includeTitle: false)
+                adjustedLocation += range!.length
+                adjustedLocation -= 1 // account for replacing the attachment image
+            }
+        }
+        
         
         var textGroup: TextGroup?
         
         for iteratedTextGroup in parentTextGroup {
             
-            if iteratedTextGroup.token?.range.location == location {
+            if iteratedTextGroup.token?.range.location == adjustedLocation {
                 textGroup = iteratedTextGroup
                 break
             }
