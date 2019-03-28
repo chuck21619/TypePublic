@@ -153,19 +153,38 @@ class OutlineModel {
         
         for collapsedTextGroup in collapsedTextGroups {
             
-            if let collapsedParentTextGroup = collapsedTextGroup.parentTextGroup {
+            var correspondingTextGroup: TextGroup! = nil
+            for iteratedTextGroup in self.parentTextGroup {
+                
+                if iteratedTextGroup.title == collapsedTextGroup.title {
+                    correspondingTextGroup = iteratedTextGroup
+                    
+                    if correspondingTextGroup != collapsedTextGroup {
+                        print("ERROR - revert to using corresponding textgroup")
+                        //TODO: find other places where i am finding the corresponding text group and test if they are still necessasary
+                    }
+                    break
+                }
+            }
+            
+            guard correspondingTextGroup != nil else {
+                print("error locationg group")
+                return nil
+            }
+            
+            if let collapsedParentTextGroup = correspondingTextGroup.parentTextGroup {
                 
                 guard collapsedTextGroups.contains(collapsedParentTextGroup) == false else {
                     continue
                 }
             }
             
-            guard let range = collapsedTextGroup.token?.range else {
+            guard let range = correspondingTextGroup.token?.range else {
                 continue
             }
             
             if range.location < adjustedLocation {
-                let range = self.range(of: collapsedTextGroup, in: delegate!.documentString()!, includeTitle: false)
+                let range = self.range(of: correspondingTextGroup, in: delegate!.documentString()!, includeTitle: false)
                 adjustedLocation += range!.length
                 adjustedLocation -= 1 // account for replacing the attachment image
             }
