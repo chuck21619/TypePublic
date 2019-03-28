@@ -141,17 +141,55 @@ class CollapsingTranslator {
         
         let expandedString = NSMutableAttributedString(attributedString: string)
         
-        let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
+        //TODO: consolidate textgroups. so not every method/class/instance/etc has to go and grab the updated ones
+        //TODO: consolidate textgroups
+        //TODO: consolidate textgroups
+        // this is going to be a significant improvement to the design
+        var updatedCollapsedTextGroups: [TextGroup] = []
+        for textGroup in outlineModel!.parentTextGroup {
+            
+            for collapsedTextGroup in collapsedTextGroups {
+                
+                if textGroup.title == collapsedTextGroup.title {
+                    updatedCollapsedTextGroups.append(textGroup)
+                }
+            }
+        }
+        
+        let sortedCollapsedTextGroups = updatedCollapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
             return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
         }
         
         for collapsedTextGroup in sortedCollapsedTextGroups {
             
-            if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
+            var correspondingTextGroup: TextGroup! = nil
+            
+            guard let parentTextGroup = outlineModel?.parentTextGroup else {
                 continue
             }
             
-            let changes = self.collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, collapsedTextGroups: &collapsedTextGroups, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
+            for iteratedTextGroup in parentTextGroup {
+                
+                if iteratedTextGroup.title == collapsedTextGroup.title {
+                    correspondingTextGroup = iteratedTextGroup
+                    
+                    if correspondingTextGroup != collapsedTextGroup {
+                        print("ERROR - revert to using corresponding textgroup")
+                        //TODO: find other places where i am finding the corresponding text group and test if they are still necessasary
+                    }
+                    break
+                }
+            }
+            
+            guard correspondingTextGroup != nil else {
+                continue
+            }
+            
+            if let collapsedTextGroupsParentTextGroup = correspondingTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
+                continue
+            }
+            
+            let changes = self.collapseTextGroup(string: string, correspondingTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, collapsedTextGroups: &collapsedTextGroups, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
             adjustedInvalidRanges = changes.adjustedInvalidRanges
             deltaFromPreviousCollapses += changes.delta
             deltaFromPreviousCollapses -= 1
