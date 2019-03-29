@@ -54,7 +54,23 @@ class CollapsingTranslator {
         var adjustedDelta = delta
         var invalidRanges: [NSRange] = []
         
-        let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
+        var updatedCollapsedTextGroups: [TextGroup] = []
+        
+        guard let outlineModel = outlineModel else {
+            return (adjustedEditedRange: adjustedEditedRange, adjustedDelta: adjustedDelta, invalidRanges: invalidRanges)
+        }
+        
+        for textGroup in outlineModel.parentTextGroup {
+            
+            for collapsedTextGroup in collapsedTextGroups {
+                
+                if textGroup.title == collapsedTextGroup.title {
+                    updatedCollapsedTextGroups.append(textGroup)
+                }
+            }
+        }
+        
+        let sortedCollapsedTextGroups = updatedCollapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
             return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
         }
         
@@ -146,7 +162,10 @@ class CollapsingTranslator {
         //TODO: consolidate textgroups
         // this is going to be a significant improvement to the design
         var updatedCollapsedTextGroups: [TextGroup] = []
-        for textGroup in outlineModel!.parentTextGroup {
+        guard let outlineModel = outlineModel else {
+            return adjustedInvalidRanges
+        }
+        for textGroup in outlineModel.parentTextGroup {
             
             for collapsedTextGroup in collapsedTextGroups {
                 
@@ -164,11 +183,7 @@ class CollapsingTranslator {
             
             var correspondingTextGroup: TextGroup! = nil
             
-            guard let parentTextGroup = outlineModel?.parentTextGroup else {
-                continue
-            }
-            
-            for iteratedTextGroup in parentTextGroup {
+            for iteratedTextGroup in outlineModel.parentTextGroup {
                 
                 if iteratedTextGroup.title == collapsedTextGroup.title {
                     correspondingTextGroup = iteratedTextGroup
@@ -186,6 +201,20 @@ class CollapsingTranslator {
             }
             
             if let collapsedTextGroupsParentTextGroup = correspondingTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
+                continue
+            }
+            
+            //TODO: optimize
+            var skip = false
+            for collapsedTextGroup in collapsedTextGroups {
+                
+                if correspondingTextGroup.parentTextGroup?.title ?? "" == collapsedTextGroup.title {
+                    skip = true
+                    break
+                }
+            }
+            
+            guard skip == false else {
                 continue
             }
             

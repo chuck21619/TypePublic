@@ -278,17 +278,35 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
                 return
             }
             
-            delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
-            
             let indexOfDraggingGroup = draggingGroup.parentTextGroup?.textGroups.firstIndex(of: draggingGroup)
             if let indexOfDraggingGroup = indexOfDraggingGroup {
                 
                 draggingGroup.parentTextGroup?.textGroups.remove(at: indexOfDraggingGroup)
             }
-            targetParent.textGroups.append(draggingGroup)
+            
+            
+            
+            
+            
+            
+            if targetParent == draggingGroup.parentTextGroup, index > self.draggedFromIndex {
+                insertIndex -= 1
+            }
+            
+            delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
+            targetParent.textGroups.insert(draggingGroup, at: insertIndex)
+            
+            
         }
         
+        //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
+        
         collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], collapsedTextGroups: delegate.collapsedTextGroups)
+        
+        if let parent = self.model?.parentTextGroup {
+            
+            self.didUpdate(parentTextGroup: parent)
+        }
         
         delegate.endUpdates()
         

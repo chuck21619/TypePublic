@@ -442,6 +442,10 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         if let movedTextGroupOriginalRange = movedTextGroup?.token?.range {
             movedTextGroupDelta = locationToInsert - movedTextGroupOriginalRange.location
         }
+        
+        let newTextGroupRange = NSRange(location: locationToInsert, length: movedTextGroup?.token?.range.length ?? 0)
+        movedTextGroup?.token?.range = newTextGroupRange
+        
         if let parentTextgroup = outlineModel?.parentTextGroup {
             
             for textGroup in parentTextgroup {
@@ -450,13 +454,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                     continue
                 }
                 
-                if textGroup == movedTextGroup {
-                    
-                    let newTextGroupRange = NSRange(location: locationToInsert, length: textGroupRange.length)
-                    textGroup.token?.range = newTextGroupRange
-                    
-                }
-                else if textGroup.parentTextGroup == movedTextGroup {
+                if textGroup.parentTextGroup == movedTextGroup {
                     
                     guard let movedTextGroupDelta = movedTextGroupDelta else {
                         print("Error recalculating child text group")
