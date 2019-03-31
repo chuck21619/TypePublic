@@ -48,9 +48,7 @@ The visual order of files in the folio determines the order the text appears in 
 Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.
 
 ## Renaming
-Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name in the title bar (with the document open in the workspace), or in the context menu (edit \> Rename)
-
-
+Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name in the title bar (with the document open in the workspace), or in the context menu (edit > Rename)
 
 ## Sorting
 **Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.** Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).
@@ -75,14 +73,14 @@ If a document is selected from the folio, then it appears in the workspace. Howe
 Documents are plain-text markdown (.md) files. These files store additional meta/compositional data that can be viewed in the app. Additionally, documents can be styled by applying a layout
 
 ## Creating Documents
-Create a new document with the shortcut **⌘N**, by clicking on the Plus button at the bottom of the folio, in the context menu of the folio, or menu bar (File \> New Document). 
+Create a new document with the shortcut **⌘N**, by clicking on the Plus button at the bottom of the folio, in the context menu of the folio, or menu bar (File > New Document). 
 
 When a new document is created…
 1. The first option you have is to name it.
 2. If you’re working on a document, and a new one is created, then it is created below the one you’re working on (in the folio).
 
 ## Merging Documents
-Documents can be merged together by selecting them in the folio and choosing "merge" from either the context menu, or Menubar (edit \> merge) or with the shortcut **⌘E**. Documents merge in order of appearance (top to bottom) in the folio. When documents are merged, the **Top document** becomes the name and layout of the document after the merge
+Documents can be merged together by selecting them in the folio and choosing "merge" from either the context menu, or Menubar (edit > merge) or with the shortcut **⌘E**. Documents merge in order of appearance (top to bottom) in the folio. When documents are merged, the **Top document** becomes the name and layout of the document after the merge
 
 # Folders
 Folders are groups of files (documents and other folders).
@@ -91,14 +89,14 @@ Folders are groups of files (documents and other folders).
 **Create a new folder: **
 - with the shortcut: **⌘⇧N**
 - selecting “New Folder” from the context menu in the folio
-- Selecting the menubar option (edit \> New Folder) or (edit \> Group)
+- Selecting the menubar option (edit > New Folder) or (edit > Group)
 - selecting multiple files and using the shortcut: **⌘G** 
 
 **Deleting or Ungrouping A Folder**
 Folders can be deleted, sending it and all it’s contents to the Trashcan, or they can be “ungrouped” which frees all of its contents to the folio. Alternatively, if a single document in a folder is selected and *ungrouped* it alone will be removed from the folder.
 - Ungroup with the keyboard shortcut: **⇧⌘G**
 - Selecting “Ungroup” from the context menu in the folio
-- Selecting the menubar option (edit \> New folder) or (edit \> Group)
+- Selecting the menubar option (edit > New folder) or (edit > Group)
 
 # Folder Focus
 Folder focus is a more elegant way of decluttering the folio and zero-in on a project. 
@@ -119,7 +117,7 @@ When a folder is in focus…
 Layouts were created as a solution against the need to format a page while writing. A Layout is a set of styles which determine how a document will look once it is published/printed. Documents can only have **one** layout, but can have any layout applied.
 
 ## Applying a layout
-Layouts are assigned to documents and folders from the Sideboard (info, Publish, and Print), Context Menu, and/or menu bar (edit \> layout \> name).
+Layouts are assigned to documents and folders from the Sideboard (info, Publish, and Print), Context Menu, and/or menu bar (edit > layout > name).
 
 ## Unique Icons
 When a document or folder has a layout applied, the icon(s) will change according to said layout. Icons for folders are “collective” whereas icons for documents are “parts.” i.e. documents have “page” layouts where the folder would be “book.”
@@ -195,8 +193,8 @@ Type has its own font which comes in: Serif, Sans-Serif, & Monospaced typefaces.
 The **Font Size**, **Line Height**, and **Text Column** all relate to one another using the golden ratio. Since the font size can be changed at will, its value determines the relative values for both the line height and text column.
 
 Luckily This work has already been done:
-**Golden Ratio Type Calculator `[https://grtcalculator.com/]`**
-Here’s the math: `[https://grtcalculator.com/math/]`
+**Golden Ratio Type Calculator [GRCALC](https://grtcalculator.com/)**
+Here’s the math: [Math](https://grtcalculator.com/math/)
 
 ### Line Numbers
 Line numbers appear in the right margin of the workspace and indicate lines, which is a series of text unbroken by a return. lines without text do not have numbers assigned to them.
@@ -208,7 +206,7 @@ text in the workspace can be displayed in different views and modes. A **view** 
 Preview mode displays how the document will appear according to its **Layout**.
 The preview can be toggled or peeked by tapping or holding **⌘P.**
 
-**Q: should writers be able to edit the document while in preview mode?**
+**Q:should writers be able to edit the document while in preview mode?**
 
 ## Split
 The workspace can be split in half vertically, displaying two documents at the same time (or the same document extended to both views). In split view, The **outline** is only displayed in the active document containing the cursor.
@@ -255,22 +253,22 @@ The outline serves as a quick reference to the structure of the document and all
 Headline tags ( #, ##, ### ) act in a nested hierarchy with H1 being at the highest, followed by H2, and then H3. Each Headline groups all the text (and child headlines) that follow until the next occurrence of itself.
 
 # Sideboard
-The sideboard is a panel that reveals itself from the right of the workspace. It displays information and settings related to the selected document/folder in the workspace as well the app itself. The idea behind the sideboard is that you can see important information or tinker with settings while maintaining an unobstructed view of the writing. Sideboards are coupled with related sideboards. The only ones without a pair are “Updates” and “Dictionary.” 
+
+[WIREFRAMES](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2039%3A224)
+
+The sideboard is a panel that reveals itself from the right of the workspace. It displays information and settings related to the selected document/folder in the workspace as well the app itself. The idea behind the sideboard is that you can see important information or tinker with settings while maintaining an unobstructed view of the writing. Sideboards are coupled with related sideboards. The only ones without a pair are “Updates” and “Dictionary.”
 
 > Sideboards are also built with extending functionality in mind. Anything new we need to build or add can be accessed and tinkered with via the sideboard.
 
 ## Settings & Shortcuts
 The general settings. Shortcuts can be customized.
-`https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2039%3A224`
 
 ## Info & Outline
 Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data & stats about the writing.
-`https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2039%3A0`
 
 The outline for the document in the workspace. This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
 1. Filtering
 2. displaying indicator dots for things like: misspellings, comments, or highlighted text as these are areas where you’d want to see from a top-level view.
-`https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=1968%3A4405`
 
 ## Publish & Print
 
@@ -280,7 +278,7 @@ Maybe one of the larger time-saving ideas, being able to search for the definiti
 2. Replace words by highlighting them and THEN clicking the definitions, synonyms/antonyms.
 
 ## Updates
-Release notes, Feature updates, and Bug fixes can be viewed here as well as the option to:
+Release notes, Change log, Feature updates, and Bug fixes can be viewed here as well as the option to:
 1. update TYPE
 2. rollback to an earlier version
 3. enroll in any beta we might run
@@ -298,33 +296,33 @@ Deleting or changing either the opening or closing tag or punctuation automatica
 If an opening tag for syntax or punctuation is entered, the closing tag will appear automatically after the cursor. Hitting Return or arrowing up/down from the line will close the tag.
 
 ## Auto-Wrap
-Entering bracketed punctuation and/or syntax `(,[,{,",'` on highlighted words will toggle the punctuation on/off the word. **The syntax always goes outside the punctuation.**
+Entering bracketed punctuation and/or syntax (,[,{,",' on highlighted words will toggle the punctuation on/off the word. **The syntax always goes outside the punctuation.**
 
 # Links
 
 Plain urls like www.google.com will appear as clickable hyperlinks in the document.
-Links in markdown syntax `[displayName](url)` will appear as hyperlinks as the displayName.
+Links in markdown syntax [displayName](url) will appear as hyperlinks as the displayName.
 
-Using the shortcut **⌘K** without any text highlighted will add a blank syntax placeholder of: `[Name](url)`.
+Using the shortcut **⌘K** without any text highlighted will add a blank syntax placeholder of: [Name](url).
 
 ## Internal Links (custom-ish syntax)
 
 Links can point to headlines within documents in type. clicking these links will direct the workspace to the headline in the open document or a different document all together. This is incredibly useful for building a database or wiki.
 
 **Syntax ideas:**
-`[displayName](#headline)` link to a headline in the same document
-`[displayName](DocumentName/#Headline)` link to a headline in a different document
+[displayName](#headline) link to a headline in the same document
+[displayName](DocumentName/#Headline) link to a headline in a different document
 
 ## References/Footnotes
 Technically links, but their source can be from anywhere. instead of parenthesis, the url is wrapped in curly brackets.
 
-**For the future**
+**Future Development**
 Adding a reference generates an instance that is stored in the Folio. Here you can edit the formatting details (Author, Date, Title, etc), this info will be linked to when publishing to create a bibliography/works cited page.
 
 **Snytax**
-`[referenceName]{reference}`
+[referenceName]{reference}
 
-# Tables
+#Tables
 Writing and reading tables sucks in markdown, this is the only attribute where the raw text is a worse substitute for any rendered solution. In Type, Tables will be rendered, making them easier to edit, and read. Dropbox paper & Apple Notes have good implementations that we should steal.
 
 ## Images
@@ -357,10 +355,10 @@ This is smart:
 |Bold | ⌘B | ** ** |
 |Italic | ⌘I | * * |
 |Strikethrough | |   |
-|Divider | | - - - - |
+|Divider | | ---- |
 |Link | ⌘K | `[name](url)` |
 |Image | | `![imageTxt](url)` |
-|Blockquote | \> | |
+|Blockquote | > | |
 |Code | | |
 |Code Block | | |
 |Checkbox Item | | `[]` |
@@ -548,10 +546,10 @@ common grammar
 |Promote | `⌘]` | |
 |Demote | `⌘[` | |
 
-
+----
 
 # Concepts
-Napkin Sketches & Ideas for future updates.
+Napkin Sketches & Ideas for future updates & Development. Some of this are half-baked ideas.
 
 ## Layout Styles
 styling set to a layout, created with PFD layout in mind- if you want to differentiate between a standard PDF and something like a CV or resume. It would be an additional dropdown for certain Layouts
@@ -640,6 +638,9 @@ putting a pin in a part of the document or line that you want to return to, mayb
 # Plugin API for the Assistant and Sideboards
 Programs like [sketch](#), Sublime Text, and Framer thrive on a community of designers and developers who build functionality into the application. This was only possible because the devs opened up the API and made it easy to create plugins and allow the creators to profit from their contributions (if they desire). It democratizes the feature-set for the application and only strengthens the user-base.
 
+# Git Integration
+- changes indicated graphically, probably by the line numbers.
+
 # Where the cursor was last
 jumping around a document with something like *FIND* can leave you in a place within the document that you don’t want to be, maybe you just wanted to check something from earlier in the document, there should be a way to return to the last known position of the cursor AFTER an action that travels around the doc.
 
@@ -679,6 +680,4 @@ A sleeper feature would be to generate newsletters from within Type, Email marke
 Publishing Sideboard
 This sideboard pops-out whenever the writer wishes to publish. (submit to a platform) or export (create a copy outside of Type in a particular format)
 
-
-
-> It’d be cool to establish our own platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
+It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
