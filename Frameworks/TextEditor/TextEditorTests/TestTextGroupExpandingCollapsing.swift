@@ -37,10 +37,9 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
             }
             
             DispatchQueue.main.async {
+                
+                //collapse group and check string
                 viewController?.markerClicked(marker)
-                
-                XCTAssert(viewController?.textStorage.string.count == 12)
-                
                 
                 let attributedString = NSAttributedString(attributedString: viewController!.textStorage)
                 var range = attributedString.string.maxNSRange
@@ -49,6 +48,7 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
                 
                 XCTAssert(substring.string == "\n# creation")
                 
+                //expand group and check string
                 viewController?.markerClicked(marker)
                 
                 XCTAssert(viewController?.textStorage.string == demoString)
@@ -60,7 +60,7 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
         wait(for: [expectation], timeout: 16.0)
     }
     
-    func testCollapseNestedGroups() {
+    func testNestedGroupsCollapseThenExpand() {
         
         let demoString = "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n"
         
@@ -91,8 +91,6 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
                 //collapse child and check string
                 viewController?.markerClicked(childMarker)
                 
-                XCTAssert(viewController?.textStorage.string.count == 102)
-                
                 let attributedString = NSAttributedString(attributedString: viewController!.textStorage)
                 var range = attributedString.string.maxNSRange
                 range = NSRange(location: range.location, length: range.length - 1)
@@ -111,6 +109,21 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
                 
                 XCTAssert(substring2.string == "\n# creation")
                 
+                
+                //expand parent and check string
+                viewController?.markerClicked(parentMarker)
+                
+                let attributedString3 = NSAttributedString(attributedString: viewController!.textStorage)
+                var range3 = attributedString3.string.maxNSRange
+                range3 = NSRange(location: range3.location, length: range3.length - 1)
+                let substring3 = attributedString.attributedSubstring(from: range3)
+                
+                XCTAssert(substring3.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression")
+                
+                //expand child and check string
+                viewController?.markerClicked(childMarker)
+                
+                XCTAssert(viewController?.textStorage.string == demoString)
                 
                 expectation.fulfill()
             }
