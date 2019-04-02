@@ -60,6 +60,8 @@
 		A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */; };
 		A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */; };
 		A3E1F5142183A51600A3C1C7 /* TextGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E1F5132183A51600A3C1C7 /* TextGroupTests.swift */; };
+		A3E70E942252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E70E932252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift */; };
+		A3E70E9722530B5E00D28AEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3E70E952253080A00D28AEA /* Assets.xcassets */; };
 		A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46A2134818800FA0A74 /* AttributeOccurrencesProvider.swift */; };
 		A3F0F4702134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46F2134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift */; };
 		A3F0F4742134883B00FA0A74 /* AttributeOccurrence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */; };
@@ -137,6 +139,8 @@
 		A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorLayoutManager.swift; sourceTree = "<group>"; };
 		A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTextContainer.swift; sourceTree = "<group>"; };
 		A3E1F5132183A51600A3C1C7 /* TextGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupTests.swift; sourceTree = "<group>"; };
+		A3E70E932252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextGroupExpandingCollapsing.swift; sourceTree = "<group>"; };
+		A3E70E952253080A00D28AEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3F0F46A2134818800FA0A74 /* AttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3F0F46F2134823300FA0A74 /* SimpleAttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
 		A3F0F4732134883B00FA0A74 /* AttributeOccurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeOccurrence.swift; sourceTree = "<group>"; };
@@ -356,6 +360,7 @@
 		A3C316A420FFF7BA0028D466 = {
 			isa = PBXGroup;
 			children = (
+				A3E70E952253080A00D28AEA /* Assets.xcassets */,
 				A3C316B020FFF7BA0028D466 /* TextEditor */,
 				A3C316BB20FFF7BA0028D466 /* TextEditorTests */,
 				A3C316AF20FFF7BA0028D466 /* Products */,
@@ -396,6 +401,7 @@
 		A3C316BB20FFF7BA0028D466 /* TextEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				A3E70E932252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift */,
 				A3E1F5132183A51600A3C1C7 /* TextGroupTests.swift */,
 				A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */,
 				A36E72B221066D1300D8BDA1 /* TextEditorViewTests.swift */,
@@ -584,6 +590,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3E70E9722530B5E00D28AEA /* Assets.xcassets in Resources */,
 				A3B78679218A21A700FB0005 /* OutlineViewController.storyboard in Resources */,
 				A3886F97210059E1009E0420 /* TextEditorViewController.storyboard in Resources */,
 			);
@@ -665,6 +672,7 @@
 			files = (
 				A3E1F5142183A51600A3C1C7 /* TextGroupTests.swift in Sources */,
 				A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */,
+				A3E70E942252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift in Sources */,
 				A36E72B321066D1300D8BDA1 /* TextEditorViewTests.swift in Sources */,
 				A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */,
 			);

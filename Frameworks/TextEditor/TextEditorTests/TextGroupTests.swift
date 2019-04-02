@@ -138,7 +138,7 @@ class TextGroupTests: XCTestCase {
         parentTextGroup.textGroups.append(one)
         
         let secondTokenRange = NSRange(location: 1, length: 1)
-        let secondToken = TextGroupToken(label: "1.1", range: secondTokenRange, groupingRule: rules[1])
+        let secondToken = TextGroupToken(label: "1.1", range: secondTokenRange, groupingRule: rules[0])
         let two = TextGroup(title: secondToken.label, token: secondToken)
         one.textGroups.append(two)
         
@@ -148,17 +148,17 @@ class TextGroupTests: XCTestCase {
         parentTextGroup.textGroups.append(two_one)
         
         let fourthTokenRange = NSRange(location: 3, length: 1)
-        let fourthToken = TextGroupToken(label: "2.1", range: fourthTokenRange, groupingRule: rules[2])
+        let fourthToken = TextGroupToken(label: "2.1", range: fourthTokenRange, groupingRule: rules[0])
         let two_two = TextGroup(title: fourthToken.label, token: fourthToken)
         two_one.textGroups.append(two_two)
         
         let fifthTokenRange = NSRange(location: 4, length: 1)
-        let fifthToken = TextGroupToken(label: "2.2", range: fifthTokenRange, groupingRule: rules[1])
+        let fifthToken = TextGroupToken(label: "2.2", range: fifthTokenRange, groupingRule: rules[0])
         let two_two_one = TextGroup(title: fifthToken.label, token: fifthToken)
         two_one.textGroups.append(two_two_one)
         
         let sixthTokenRange = NSRange(location: 5, length: 1)
-        let sixthToken = TextGroupToken(label: "2.2.1", range: sixthTokenRange, groupingRule: rules[2])
+        let sixthToken = TextGroupToken(label: "2.2.1", range: sixthTokenRange, groupingRule: rules[0])
         let two_two_two = TextGroup(title: sixthToken.label, token: sixthToken)
         two_two_one.textGroups.append(two_two_two)
         

@@ -24,6 +24,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     var syntaxHighlighter: SyntaxHighligher? = nil
     // used to prevent infinite loop. during processEditing, syntaxHighlighting and expanding/collapsing cause another processEditing call
     var ignoreProcessEditing = false
+    var documentOpener: DocumentOpener!
     var outlineModel: OutlineModel? = nil {
         
         didSet {
@@ -43,12 +44,13 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     let language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
     
     // MARK: - Constructors
-    public static func createInstance(delegate: TextEditorViewControllerDelegate) -> TextEditorViewController? {
+    public static func createInstance(delegate: TextEditorViewControllerDelegate, documentOpener: DocumentOpener) -> TextEditorViewController? {
         
         let bundle = Bundle(for: TextEditorViewController.self)
         let storyboardName = String(describing: TextEditorViewController.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let viewController = storyboard.instantiateInitialController() as? TextEditorViewController
+        viewController?.documentOpener = documentOpener
         viewController?.delegate = delegate
         
         return viewController
@@ -129,7 +131,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         textStorage.font = settings.standardFont
         textStorage.delegate = self
         
-        DocumentOpener().string { (string) in
+        self.documentOpener.string { (string) in
             
             let attributedString = NSAttributedString(string: string, attributes: attributes)
             self.textStorage.append(attributedString)

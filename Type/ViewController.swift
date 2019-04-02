@@ -21,7 +21,7 @@ class ViewController: NSViewController, PanelsDelegate, TextEditorViewController
         
         self.panels.delegate = self
         
-        guard let mainPanelViewController = TextEditorViewController.createInstance(delegate: self) else {
+        guard let mainPanelViewController = TextEditorViewController.createInstance(delegate: self, documentOpener: DocumentOpener()) else {
             return
         }
         

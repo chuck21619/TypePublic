@@ -267,10 +267,13 @@ class CollapsingTranslator {
         
         let location = range.location
         let endIndex = (location + range.length)
+
         
         let textGroupString = string.attributedSubstring(from: range)
         let attachment = TestTextAttachment(data: nil, ofType: "someType")
-        attachment.image = #imageLiteral(resourceName: "elipses")
+        let bundle = Bundle(for: type(of: self))
+        let image = bundle.image(forResource: NSImage.Name("tmpTextGroupImage"))
+        attachment.image = image
         attachment.bounds = NSRect(x: 1, y: -1, width: 15, height: 10)
         
         attachment.myString = textGroupString
