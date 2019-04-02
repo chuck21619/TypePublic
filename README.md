@@ -135,8 +135,9 @@ Certain layouts offer unique components and functionality related to the type of
 5. Index/Glossary of Terms - created by a note
 
 # Layout Table
-| Layout | Icon | Folder | Description | 
-|:—|:—:|:—|
+
+| Layout | Icon | Folder | Description |
+|-----|------|------|-----|
 | Page | i | Book |the default layout option |
 | Poem | i | Book | - |
 | Screenplay | i | Script | - |
@@ -345,7 +346,7 @@ This is smart:
 
 ## Syntax (GitHub Flavored Markdown)
 | Name | Shortcut | Syntax |
-|:—-|:—:|:—|
+|----|----|----|
 |Headline | | # |
 |Headline 2 | | ## |
 |Headline 3 | | ### |
@@ -365,8 +366,9 @@ This is smart:
 |Checkbox Item (checked) | | `[x]` |
  
 ## Syntax (Custom)
+
 | Name | Shortcut | Syntax |
-|:—-|:—:|:—|
+|----|----|----|
 |Underline | ⌘U | __ __ |
 |Comment | ⌘/ | // |
 |Highlight | |   | or !! !! |
@@ -493,9 +495,10 @@ common grammar
 # Shortcuts
 
 ## Application
+
 | Name | Shortcut | Description |
-|:—-|:—:|:—|
-|Settings | ⌘, | |
+|----|----|----|
+|Settings | ⌘, | - |
 |Action | ⌘. | Toggles Action Bar in workspace |
 |Folio | ⌘1 | |
 |Workspace | ⌘2 | |
@@ -507,38 +510,42 @@ common grammar
 |Toggle Find | ⌘F | context sensitive to where cursor is or if somethings selected |
 
 ## Folio
-|Focus Folder | ⌘Enter | |
-|Unfocus Folder | Esc | |
-|Delete File | ⌘DEL | |
-|Group File(s) | ⌘G | |
-|Ungroup File(s) | ⇧⌘G | | 
-|Rename File(s) | ⌘R | |
-|Merge documents | ⌘E | |
-|Duplicate documents | ⌘D | |
+
+| Name | Shortcut | Description |
+|----|----|----|
+|Focus Folder | ⌘Enter | - |
+|Unfocus Folder | Esc | - |
+|Delete File | ⌘DEL | - |
+|Group File(s) | ⌘G | - |
+|Ungroup File(s) | ⇧⌘G | - | 
+|Rename File(s) | ⌘R | - |
+|Merge documents | ⌘E | - |
+|Duplicate documents | ⌘D |-  |
 
 ## Workspace
+
 | Name | Shortcut | Description |
-|:—-|:—:|:—|
-|Split Workspace | ⌘T | |
+|----|----|----|
+|Split Workspace | ⌘T |
 |Toggle between split | ⌥⌘T | moves cursor between split docs|
-|Slice Document | ``⌘\\`` | |
-|Next Document | ⌘PGDN | |
-|Previous Document | ⌘PGUP | |
+|Slice Document | ``⌘\\`` |
+|Next Document | ⌘PGDN |
+|Previous Document | ⌘PGUP |
 |Focus | ⌥⌘F | Toggles text focus |
 |Typewriter | ⌥⌘T | Toggles Typewriter scrolling |
-|Increase Font Size | ⌘+ | |
-|Decrease Font Size | ⌘- | |
+|Increase Font Size | ⌘+ |
+|Decrease Font Size | ⌘- |
 |Toggle Fold | ⌘’ | Folds/unfolds line(s) |
 |Find Next | ⌘D | Finds next instance of selected word |
-|Toggle Find & Replace | ⇧⌘F | |
+|Toggle Find & Replace | ⇧⌘F |
 
 ## Writing Mechanics
 | Name | Shortcut | Description |
-|:—-|:—:|:—|
+|----|----|----|
 |Shift Select (Word) | ⇧ | Tap shift to select a word nearest/touching the cursor (Left shift selects previous word, right shift selects the next word) |
 |Shift Select (Sentence) | ⇧⇧ | double tap shift rapidly to select the next/prev sentence)
-|Shift Select (Line) | ⇧⇧⇧ | `` |
-|Move Selected | ⇧⌘M | |
+|Shift Select (Line) | ⇧⇧⇧ | - |
+|Move Selected | ⇧⌘M | - |
 |Move up| ⇧⌘↑ | |
 |Move Down| ⇧⌘↓ | |
 |Move to top | ⇧⌥⌘↑ | |
