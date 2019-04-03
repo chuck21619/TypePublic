@@ -60,6 +60,8 @@
 		A3DF51E42139CECF00A8A1AF /* TextEditorLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */; };
 		A3DF51E62139D12F00A8A1AF /* TextEditorTextContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */; };
 		A3E1F5142183A51600A3C1C7 /* TextGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E1F5132183A51600A3C1C7 /* TextGroupTests.swift */; };
+		A3E45FFB22554F5F00DE239F /* TestOutlineDragNDropTextGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E45FFA22554F5F00DE239F /* TestOutlineDragNDropTextGroups.swift */; };
+		A3E45FFE2255665A00DE239F /* StubDraggingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E45FFD2255665A00DE239F /* StubDraggingInfo.swift */; };
 		A3E70E942252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E70E932252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift */; };
 		A3E70E9722530B5E00D28AEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3E70E952253080A00D28AEA /* Assets.xcassets */; };
 		A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0F46A2134818800FA0A74 /* AttributeOccurrencesProvider.swift */; };
@@ -139,6 +141,8 @@
 		A3DF51E32139CECF00A8A1AF /* TextEditorLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorLayoutManager.swift; sourceTree = "<group>"; };
 		A3DF51E52139D12F00A8A1AF /* TextEditorTextContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTextContainer.swift; sourceTree = "<group>"; };
 		A3E1F5132183A51600A3C1C7 /* TextGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGroupTests.swift; sourceTree = "<group>"; };
+		A3E45FFA22554F5F00DE239F /* TestOutlineDragNDropTextGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOutlineDragNDropTextGroups.swift; sourceTree = "<group>"; };
+		A3E45FFD2255665A00DE239F /* StubDraggingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubDraggingInfo.swift; sourceTree = "<group>"; };
 		A3E70E932252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextGroupExpandingCollapsing.swift; sourceTree = "<group>"; };
 		A3E70E952253080A00D28AEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3F0F46A2134818800FA0A74 /* AttributeOccurrencesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeOccurrencesProvider.swift; sourceTree = "<group>"; };
@@ -401,6 +405,7 @@
 		A3C316BB20FFF7BA0028D466 /* TextEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				A3E45FFA22554F5F00DE239F /* TestOutlineDragNDropTextGroups.swift */,
 				A3E70E932252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift */,
 				A3E1F5132183A51600A3C1C7 /* TextGroupTests.swift */,
 				A36E72C52106752400D8BDA1 /* SyntaxParserTests.swift */,
@@ -445,6 +450,14 @@
 				A3B30980219C91970093744A /* Mine */,
 			);
 			path = "Line Numbers";
+			sourceTree = "<group>";
+		};
+		A3E45FFC2255664200DE239F /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				A3E45FFD2255665A00DE239F /* StubDraggingInfo.swift */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 		A3F0F4692134817600FA0A74 /* Keyword */ = {
@@ -494,6 +507,7 @@
 				A3BA2EB42194C8FC00054D98 /* OutlineViewControllerDelegate.swift */,
 				A3B78677218A218600FB0005 /* View */,
 				A3751D852180FF7A00D3D1C0 /* TextGroup */,
+				A3E45FFC2255664200DE239F /* Stubs */,
 			);
 			path = Outline;
 			sourceTree = "<group>";
@@ -616,6 +630,7 @@
 				A36962EB217A624C00D52175 /* TextGroupToken.swift in Sources */,
 				A36E72C02106724000D8BDA1 /* SyntaxParser.swift in Sources */,
 				A3F0F46B2134818800FA0A74 /* AttributeOccurrencesProvider.swift in Sources */,
+				A3E45FFE2255665A00DE239F /* StubDraggingInfo.swift in Sources */,
 				A3AC220F2213613800A76BD2 /* NSAttributedString+AppendAndPrepend.swift in Sources */,
 				A3F6F10121767B66003A6DA2 /* OutlineViewController.swift in Sources */,
 				A3130EA621F6C81100FD37A6 /* CollapsingTranslatorDelegate.swift in Sources */,
@@ -673,6 +688,7 @@
 				A3E1F5142183A51600A3C1C7 /* TextGroupTests.swift in Sources */,
 				A36E72C62106752400D8BDA1 /* SyntaxParserTests.swift in Sources */,
 				A3E70E942252F32C00D28AEA /* TestTextGroupExpandingCollapsing.swift in Sources */,
+				A3E45FFB22554F5F00DE239F /* TestOutlineDragNDropTextGroups.swift in Sources */,
 				A36E72B321066D1300D8BDA1 /* TextEditorViewTests.swift in Sources */,
 				A3C316BD20FFF7BA0028D466 /* TextEditorTests.swift in Sources */,
 			);
