@@ -78,7 +78,6 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         
         viewController?.collapsingTranslator?.expandAllTextGroups(string: viewController!.textStorage, collapsedTextGroups: [collapsedTextGroup], outlineModel: viewController!.outlineModel!)
         
-        
         XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group")
         
     }
@@ -112,7 +111,6 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         
         viewController?.collapsingTranslator?.expandAllTextGroups(string: viewController!.textStorage, collapsedTextGroups: [collapsedTextGroup], outlineModel: viewController!.outlineModel!)
         
-        
         XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## nested second group\ntext insdie the nested second group")
     }
     
@@ -135,9 +133,8 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         
         //not the best validation here. this is to check that the text group collapsed
         XCTAssert(viewController!.textStorage.string.count < demoString.count)
-        
+
         viewController?.rulerView.drawHashMarksAndLabels(in: NSRect(x: 0, y: 0, width: 5000, height: 5000))
-        
         
         let stringCountAfterFirstCollapse = viewController!.textStorage.string.count
         
@@ -152,15 +149,12 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         //not the best validation here. this is to check that the second text group collapsed
         XCTAssert(viewController!.textStorage.string.count < stringCountAfterFirstCollapse)
         
-        
-        
         let draggingGroup = viewController!.outlineModel!.parentTextGroup.textGroups[0].textGroups[0]
         let targetParentTextGroup = viewController!.outlineModel!.parentTextGroup.textGroups[1]
         let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, pasteboardWriterForItem: draggingGroup as Any)
         let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, acceptDrop: StubDraggingInfo(), item: targetParentTextGroup as Any, childIndex: 0)
         
         viewController?.collapsingTranslator?.expandAllTextGroups(string: viewController!.textStorage, collapsedTextGroups: [draggingGroup, targetParentTextGroup], outlineModel: viewController!.outlineModel!)
-        
         
         XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## nested second group\ntext insdie the nested second group")
     }
