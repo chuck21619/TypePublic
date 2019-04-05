@@ -147,7 +147,7 @@ class OutlineModel {
     }
     
     //collapsedTextGroups: if passed. then the location will be adjusted to account for the collapsed groups
-    func textGroup(at location: Int, collapsedTextGroups: inout [TextGroup]) -> TextGroup? {
+    func textGroup(at location: Int, collapsedTextGroups: [TextGroup]) -> TextGroup? {
         
         var adjustedLocation = location
         

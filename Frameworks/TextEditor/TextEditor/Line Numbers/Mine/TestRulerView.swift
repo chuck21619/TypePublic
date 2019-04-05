@@ -33,6 +33,7 @@ class TestRulerView: NSRulerView {
     var textGroupMarkers: [TextGroupMarker] = []
     var visibleTextGroupTokens: [TextGroupToken] = []
     var delegate: TestRulerViewDelegate? = nil
+    var collapsingTranslator: CollapsingTranslator? = nil
     
     var language: Language? = nil
     
@@ -174,9 +175,8 @@ class TestRulerView: NSRulerView {
                     let textGroupMarker = TextGroupMarker(frame: lineRect, token: token)
                     self.textGroupMarkers.append(textGroupMarker)
                     
-                    let TEVC = self.delegate as! TextEditorViewController
                     var collapsed = false
-                    for textGroup in TEVC.collapsedTextGroups {
+                    for textGroup in collapsingTranslator?.collapsedTextGroups ?? [] {
                         
                         if textGroup.token?.range == token.range {
                             collapsed = true

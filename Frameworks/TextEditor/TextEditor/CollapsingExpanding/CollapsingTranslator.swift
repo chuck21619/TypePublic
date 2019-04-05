@@ -19,10 +19,18 @@ class CollapsingTranslator {
     var ignoreProcessingDelegate: IgnoreProcessingDelegate
     var delegate: CollapsingTranslatorDelegate
     
-//    var invalidRangesSinceLastEditing: [NSRange] = []
-//    var editingValuesSinceLastParsing: EditingValues? = nil
+    var collapsedTextGroups: [TextGroup] = [] {
+        
+        didSet {
+            let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
+                return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
+            }
+            
+            collapsedTextGroups = sortedCollapsedTextGroups
+        }
+    }
     
-    func calculateTranslations(string: NSMutableAttributedString, collapsedTextGroups: inout [TextGroup], outlineModel: OutlineModel?, editedRange: NSRange, delta: Int, editingValuesSinceLastProcess: EditingValues?, invalidRangesSinceLastProcess: [NSRange]) -> ((editingValues: EditingValues, invalidRanges: [NSRange])?) {
+    func calculateTranslations(string: NSMutableAttributedString, outlineModel: OutlineModel?, editedRange: NSRange, delta: Int, editingValuesSinceLastProcess: EditingValues?, invalidRangesSinceLastProcess: [NSRange]) -> ((editingValues: EditingValues, invalidRanges: [NSRange])?) {
         
         let translations: (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRanges: [NSRange])
         
@@ -30,7 +38,7 @@ class CollapsingTranslator {
         if editingValuesSinceLastProcess == nil {
             
             self.ignoreProcessingDelegate.ignoreProcessing(ignore: true)
-            translations = self.expandAllTextGroups(string: string, collapsedTextGroups: collapsedTextGroups, outlineModel: outlineModel, editedRange: editedRange, delta: delta)
+            translations = self.expandAllTextGroups(string: string, outlineModel: outlineModel, editedRange: editedRange, delta: delta)
             self.ignoreProcessingDelegate.ignoreProcessing(ignore: false)
         }
         else {
@@ -48,7 +56,7 @@ class CollapsingTranslator {
         return (editingValues: editingValues, invalidRanges: translations.invalidRanges)
     }
     
-    @discardableResult func expandAllTextGroups(string: NSMutableAttributedString, collapsedTextGroups: [TextGroup], outlineModel: OutlineModel?, editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRanges: [NSRange]) {
+    @discardableResult func expandAllTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, editedRange: NSRange? = nil, delta: Int? = nil) -> (adjustedEditedRange: NSRange?, adjustedDelta: Int?, invalidRanges: [NSRange]) {
         
         var adjustedEditedRange = editedRange
         var adjustedDelta = delta
@@ -149,10 +157,9 @@ class CollapsingTranslator {
         return (adjustedEditedRange: editedRangeReturnValue, adjustedDelta: deltaReturnValue, invalidRange: invalidRangeReturnValue)
     }
     
-    @discardableResult func recollapseTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, invalidRanges: [NSRange], collapsedTextGroups: [TextGroup]) -> [NSRange] {
+    @discardableResult func recollapseTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, invalidRanges: [NSRange]) -> [NSRange] {
         
         var adjustedInvalidRanges = invalidRanges
-        var collapsedTextGroups = collapsedTextGroups
         var deltaFromPreviousCollapses = 0
         
         let expandedString = NSMutableAttributedString(attributedString: string)
@@ -218,7 +225,7 @@ class CollapsingTranslator {
                 continue
             }
             
-            let changes = self.collapseTextGroup(string: string, correspondingTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, collapsedTextGroups: &collapsedTextGroups, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
+            let changes = self.collapseTextGroup(string: string, correspondingTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
             adjustedInvalidRanges = changes.adjustedInvalidRanges
             deltaFromPreviousCollapses += changes.delta
             deltaFromPreviousCollapses -= 1
@@ -227,7 +234,7 @@ class CollapsingTranslator {
         return adjustedInvalidRanges
     }
     
-    @discardableResult func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], outlineModel: OutlineModel?, collapsedTextGroups: inout [TextGroup], recollapsing: Bool = false, adjustForDelta: Int, expandedString: NSMutableAttributedString) -> (adjustedInvalidRanges: [NSRange], delta: Int) {
+    @discardableResult func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], outlineModel: OutlineModel?, recollapsing: Bool = false, adjustForDelta: Int, expandedString: NSMutableAttributedString) -> (adjustedInvalidRanges: [NSRange], delta: Int) {
         
 //        outlineModel?.updateTextGroups(from: string)
         

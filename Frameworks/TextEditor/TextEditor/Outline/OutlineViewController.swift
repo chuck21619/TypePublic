@@ -214,7 +214,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         delegate.beginUpdates()
         
-        collapsingTranslator.expandAllTextGroups(string: string, collapsedTextGroups: delegate.collapsedTextGroups, outlineModel: model)
+        collapsingTranslator.expandAllTextGroups(string: string, outlineModel: model)
         
         // if item is nil, then target is root
         var targetParent = item as? TextGroup ?? parentTextGroup
@@ -301,7 +301,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
         
-        collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], collapsedTextGroups: delegate.collapsedTextGroups)
+        collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [])
         
         if let parent = self.model?.parentTextGroup {
             

@@ -96,6 +96,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         rulerView = TestRulerView(scrollView: textEditorView.enclosingScrollView!, orientation: NSRulerView.Orientation.verticalRuler)
         rulerView.clientView = textEditorView
         rulerView.delegate = self
+        rulerView.collapsingTranslator = collapsingTranslator
         // TODO: change every object that holds onto language into a getter that pulls it from a common location
         // in order to handle the user changing the language
         rulerView.language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
@@ -258,7 +259,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
             
-            guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, collapsedTextGroups: &self.collapsedTextGroups, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
+            guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
                 return
             }
             
@@ -292,7 +293,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 self.invalidRangesSinceLastEditing = []
 
                 self.ignoreProcessing(ignore: true)
-                invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges, collapsedTextGroups: self.collapsedTextGroups) ?? []
+                invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges) ?? []
                 self.ignoreProcessing(ignore: false)
 
                 DispatchQueue.main.async {
@@ -324,17 +325,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         //TODO: validateCollapsedTextGroups()
     }
     
-    // MARK: - etc.
-    var collapsedTextGroups: [TextGroup] = [] {
-        
-        didSet {
-            let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
-                return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
-            }
-            
-            collapsedTextGroups = sortedCollapsedTextGroups
-        }
-    }
 //    private func validateCollapsedTextGroups() {
 //        //TODO: fix for textAttachment
 //        return
@@ -370,7 +360,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     
     func markerClicked(_ marker: TextGroupMarker) {
         
-        MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsedTextGroups: &self.collapsedTextGroups, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
+        MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
         //TODO: figure out invalid range
         self.invalidateRanges(invalidRanges: [textStorage.string.maxNSRange])
         self.rulerView.needsDisplay = true

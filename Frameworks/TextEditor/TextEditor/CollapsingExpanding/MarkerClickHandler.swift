@@ -10,21 +10,24 @@ import Foundation
 
 class MarkerClickHandler {
     
-    static func markerClicked(_ marker: TextGroupMarker, outlineModel: OutlineModel?, textStorage: NSTextStorage, collapsedTextGroups: inout [TextGroup], collapsingTranslator: CollapsingTranslator?, rulerView: TestRulerView, ignoreProcessingDelegate: IgnoreProcessingDelegate) {
+    static func markerClicked(_ marker: TextGroupMarker, outlineModel: OutlineModel?, textStorage: NSTextStorage, collapsingTranslator: CollapsingTranslator?, rulerView: TestRulerView, ignoreProcessingDelegate: IgnoreProcessingDelegate) {
         
-        ignoreProcessingDelegate.ignoreProcessing(ignore: true)
-        
-        collapsingTranslator?.expandAllTextGroups(string: textStorage, collapsedTextGroups: collapsedTextGroups, outlineModel: outlineModel!)
-        
-        guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location, collapsedTextGroups: &collapsedTextGroups) else {
-            print("Error locating textgroup at marker")
-            collapsingTranslator?.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], collapsedTextGroups: collapsedTextGroups)
+        guard let collapsingTranslator = collapsingTranslator else {
             return
         }
         
+        collapsingTranslator.expandAllTextGroups(string: textStorage, outlineModel: outlineModel!)
+        
+        guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location, collapsedTextGroups: collapsingTranslator.collapsedTextGroups) else {
+            print("Error locating textgroup at marker")
+            collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [])
+            return
+        }
+        
+        ignoreProcessingDelegate.ignoreProcessing(ignore: true)
         var textGroupIsCollapsed = false
         
-        for collapsedTextGroup in collapsedTextGroups {
+        for collapsedTextGroup in collapsingTranslator.collapsedTextGroups {
             
             if collapsedTextGroup.title == textGroup.title {
                 textGroupIsCollapsed = true
@@ -34,22 +37,22 @@ class MarkerClickHandler {
         
         if textGroupIsCollapsed {
             
-//            collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: textGroup, outlineModel: outlineModel)
+            //            collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: textGroup, outlineModel: outlineModel)
             
-            let indexOfCollapsedTextGroup = collapsedTextGroups.firstIndex { (collapsedTextGroup) -> Bool in
+            let indexOfCollapsedTextGroup = collapsingTranslator.collapsedTextGroups.firstIndex { (collapsedTextGroup) -> Bool in
                 collapsedTextGroup.title == textGroup.title
             }
             
             if let indexOfCollapsedTextGroup = indexOfCollapsedTextGroup {
-                collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
+                collapsingTranslator.collapsedTextGroups.remove(at: indexOfCollapsedTextGroup)
             }
         }
         else {
             
-            collapsedTextGroups.append(textGroup)
+            collapsingTranslator.collapsedTextGroups.append(textGroup)
         }
         
-        collapsingTranslator?.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], collapsedTextGroups: collapsedTextGroups)
+        collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [])
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: false)
     }

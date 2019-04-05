@@ -10,8 +10,6 @@ import Foundation
 
 protocol OutlineViewControllerDelegate {
     
-    var collapsedTextGroups: [TextGroup] { get }
-    
     func documentString() -> NSMutableAttributedString?
     
     func string(for textGroup: TextGroup, outlineModel: OutlineModel?) -> NSAttributedString?
