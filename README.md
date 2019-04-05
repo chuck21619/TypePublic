@@ -3,6 +3,9 @@
 # Abstract
 Type is a markdown editor designed as a “soup-to-nuts” solution for writers of various disciplines. It features unique mechanics built around typing, a smarter system for organizing documents and text, and an interface which encourages better writing by design.
 
+# Wireframe
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59)
+
 # Folio
 The **Folio** is the left panel where Files are managed. All files are stored locally in the user's documents folder (by default) with the option to change and add locations. The folio can be hidden, sliding into the workspace. When it is revealed it **pushes** the workspace to the right. If the app window is narrow enough, the folio will hide automatically.
 
@@ -13,7 +16,7 @@ The top of the folio contains the tabs:**Folio**, **Tags**, And the **Archive**.
 - **Archive** displays documents which have been published or sent to the archive manually by the writer.
 
 ### Filter
-A filter text field appears below the Tab buttons when called (⌘F). Typing in this field will fuzzy filter the files & folders of the tab you are currently in.
+Located at the bottom of the folio, typing in this field will fuzzy filter the files & folders of the tab you are currently in.
 
 Filtering with markdown syntax and text will return documents which have tagged text. For example, entering "#Pineapple" would filter for documents that contained   headlines with the word pineapple.
 
@@ -48,7 +51,7 @@ The visual order of files in the folio determines the order the text appears in 
 Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.
 
 ## Renaming
-Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name in the title bar (with the document open in the workspace), or in the context menu (edit > Rename)
+Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name at the top of the Tool bar (with the document open in the workspace), or in the context menu (edit > Rename)
 
 ## Sorting
 **Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.** Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).
@@ -161,6 +164,8 @@ Investigate: *There’s a way to add a tab to the color panel, I’ve seen other
 ## Tagging Documents
 Tagging documents works a lot like it does in MacOS with a range of tag dots to select from the context or menu bar. A document can also have a tag added from its **info sideboard** under the tags section.
 
+When renaming a document from the toolbar, the dropdown also provides a dialogue box to add/remove tags.
+
 ## Editing Names & Colors
 To edit a tags name, the tag needs to be displayed as a **token** (or a folder if you are in the Tags View). Tag dots next to documents can become tag tokens by clicking on any of the dots. doing so will open a **token field** below the document where tags can be renamed.
 
@@ -249,6 +254,8 @@ The outline serves as a quick reference to the structure of the document and all
 - Bolds/highlights the headline containing the cursor.
 
 *Having the option of customizing the level of headline you can view? If you only want to look at the H1’s or H1’s and H2s?*
+
+*Outline collapses when window is narrow*
 
 ## Rules of Arrangement
 Headline tags ( #, ##, ### ) act in a nested hierarchy with H1 being at the highest, followed by H2, and then H3. Each Headline groups all the text (and child headlines) that follow until the next occurrence of itself.
