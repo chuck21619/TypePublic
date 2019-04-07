@@ -9,7 +9,7 @@ Type is a markdown editor designed as a “soup-to-nuts” solution for writers 
 # Folio
 The **Folio** is the left panel where Files are managed. All files are stored locally in the user's documents folder (by default) with the option to change and add locations. The folio can be hidden, sliding into the workspace. When it is revealed it **pushes** the workspace to the right. If the app window is narrow enough, the folio will hide automatically.
 
-![embed](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
+[embed](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
 
 ### Folio Tab Views
 The top of the folio contains the tabs:**Folio**, **Tags**, And the **Archive**. Each of these tabs present a different view of the documents contained within TYPE. 
