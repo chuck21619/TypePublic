@@ -73,6 +73,7 @@ Deleted files go to the MacOS trashcan if deleted from the Folio. When a new doc
 If a document is selected from the folio, then it appears in the workspace. However, if a folder is selected, then all of the documents it contains are displayed in the workspace in the same order they appear in the folder.
 
 # Documents
+[figure](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
 Documents are plain-text markdown (.md) files. These files store additional meta/compositional data that can be viewed in the app. Additionally, documents can be styled by applying a layout
 
 ## Creating Documents
@@ -100,6 +101,9 @@ Folders can be deleted, sending it and all it’s contents to the Trashcan, or t
 - Ungroup with the keyboard shortcut: **⇧⌘G**
 - Selecting “Ungroup” from the context menu in the folio
 - Selecting the menubar option (edit > New folder) or (edit > Group)
+
+## Prev/Next Document
+When documents are in a folder, you can jump to the next/previous document with the arrow keys. If the beginning or end of a document is displayed in the workspace, arrow up to go to the document that preceedes it, and arrow down to move to the next document.
 
 # Folder Focus
 Folder focus is a more elegant way of decluttering the folio and zero-in on a project. 
@@ -376,12 +380,16 @@ This is smart:
 
 | Name | Shortcut | Syntax |
 |----|----|----|
-|Underline | ⌘U | __ __ |
-|Comment | ⌘/ | // |
-|Highlight | |   | or !! !! |
+|Underline | ⌘U | `_` |
+|Comment | ⌘/ | `//` |
+|Highlight | |   | `::` or `!!` |
 |Mentions | | @username |
 |Inner-link | ⌘K | `[linkName](#Headline)`|
 |Reference | `{referenceName}(link)` | |
+|HTML Button | | `!<button>(link`)`|
+|Box form | for print, signature box, etc | `[_]` |
+|SuperScript | This is from LaTeX | `^{x}` |
+|SubScript | This is from LaTeX | `_{x}`  |
 
 # Themes
 Themes define the colors of the UI and Markdown Syntax highlighting. Every theme has a light and dark version. The default theme also has color blind options
@@ -695,3 +703,11 @@ Publishing Sideboard
 This sideboard pops-out whenever the writer wishes to publish. (submit to a platform) or export (create a copy outside of Type in a particular format)
 
 It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
+
+### Slash commands
+simple commands
+- /date - enters the current date
+- /time - current time
+- /tomorrow - date after current date
+
+
