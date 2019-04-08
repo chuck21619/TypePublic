@@ -154,6 +154,10 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, pasteboardWriterForItem: draggingGroup as Any)
         let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, acceptDrop: StubDraggingInfo(), item: targetParentTextGroup as Any, childIndex: 0)
         
+        //validate the text groups after moving
+        XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group￼") )
+        
+        //validate the expanded string
         viewController?.collapsingTranslator?.expandAllTextGroups(string: viewController!.textStorage, outlineModel: viewController!.outlineModel!)
         
         XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## nested second group\ntext insdie the nested second group")
