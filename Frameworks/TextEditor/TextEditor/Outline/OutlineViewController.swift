@@ -140,18 +140,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     // MARK: drag to reorder
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
 
-        guard var textGroup = item as? TextGroup else {
+        guard let textGroup = item as? TextGroup else {
             return nil
-        }
-        
-        for iteratedTextgroup in model!.parentTextGroup {
-            
-            //TODO: fix this. comparing titles is not a valid solution
-            if textGroup.title == iteratedTextgroup.title {
-                
-                textGroup = iteratedTextgroup
-                break
-            }
         }
         
         draggedFromIndex = outlineView.childIndex(forItem: item)
@@ -217,27 +207,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         collapsingTranslator.expandAllTextGroups(string: string, outlineModel: model)
         
         // if item is nil, then target is root
-        var targetParent = item as? TextGroup ?? parentTextGroup
-        
-        for iteratedTextGroup in model.parentTextGroup {
-            
-            //TODO: fix this. comparing titles is not a valid solution
-            if targetParent.title == iteratedTextGroup.title {
-                
-                targetParent = iteratedTextGroup
-                break
-            }
-        }
-        
-        for iteratedTextGroup in model.parentTextGroup {
-            
-            //TODO: fix this. comparing titles is not a valid solution
-            if draggingGroup?.title == iteratedTextGroup.title {
-                
-                draggingGroup = iteratedTextGroup
-                break
-            }
-        }
+        let targetParent = item as? TextGroup ?? parentTextGroup
         
         guard let draggingGroup = draggingGroup else {
             return false

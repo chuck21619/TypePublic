@@ -37,8 +37,6 @@ class MarkerClickHandler {
         
         if textGroupIsCollapsed {
             
-            //            collapsingTranslator?.expandTextGroup(string: textStorage, textGroup: textGroup, outlineModel: outlineModel)
-            
             let indexOfCollapsedTextGroup = collapsingTranslator.collapsedTextGroups.firstIndex { (collapsedTextGroup) -> Bool in
                 collapsedTextGroup.title == textGroup.title
             }

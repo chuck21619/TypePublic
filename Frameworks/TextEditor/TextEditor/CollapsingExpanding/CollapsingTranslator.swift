@@ -62,27 +62,11 @@ class CollapsingTranslator {
         var adjustedDelta = delta
         var invalidRanges: [NSRange] = []
         
-        var updatedCollapsedTextGroups: [TextGroup] = []
-        
         guard let outlineModel = outlineModel else {
             return (adjustedEditedRange: adjustedEditedRange, adjustedDelta: adjustedDelta, invalidRanges: invalidRanges)
         }
         
-        for textGroup in outlineModel.parentTextGroup {
-            
-            for collapsedTextGroup in collapsedTextGroups {
-                
-                if textGroup.title == collapsedTextGroup.title {
-                    updatedCollapsedTextGroups.append(textGroup)
-                }
-            }
-        }
-        
-        let sortedCollapsedTextGroups = updatedCollapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
-            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
-        }
-        
-        for collapsedTextGroup in sortedCollapsedTextGroups {
+        for collapsedTextGroup in collapsedTextGroups {
             
             if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
                 
@@ -164,68 +148,17 @@ class CollapsingTranslator {
         
         let expandedString = NSMutableAttributedString(attributedString: string)
         
-        //TODO: consolidate textgroups. so not every method/class/instance/etc has to go and grab the updated ones
-        //TODO: consolidate textgroups
-        //TODO: consolidate textgroups
-        // this is going to be a significant improvement to the design
-        var updatedCollapsedTextGroups: [TextGroup] = []
         guard let outlineModel = outlineModel else {
             return adjustedInvalidRanges
         }
-        for textGroup in outlineModel.parentTextGroup {
-            
-            for collapsedTextGroup in collapsedTextGroups {
-                
-                if textGroup.title == collapsedTextGroup.title {
-                    updatedCollapsedTextGroups.append(textGroup)
-                }
-            }
-        }
         
-        let sortedCollapsedTextGroups = updatedCollapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
-            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
-        }
-        
-        for collapsedTextGroup in sortedCollapsedTextGroups {
+        for collapsedTextGroup in collapsedTextGroups {
             
-            var correspondingTextGroup: TextGroup! = nil
-            
-            for iteratedTextGroup in outlineModel.parentTextGroup {
-                
-                if iteratedTextGroup.title == collapsedTextGroup.title {
-                    correspondingTextGroup = iteratedTextGroup
-                    
-                    if correspondingTextGroup != collapsedTextGroup {
-                        print("ERROR - revert to using corresponding textgroup")
-                        //TODO: find other places where i am finding the corresponding text group and test if they are still necessasary
-                    }
-                    break
-                }
-            }
-            
-            guard correspondingTextGroup != nil else {
+            if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
                 continue
             }
             
-            if let collapsedTextGroupsParentTextGroup = correspondingTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
-                continue
-            }
-            
-            //TODO: optimize
-            var skip = false
-            for collapsedTextGroup in collapsedTextGroups {
-                
-                if correspondingTextGroup.parentTextGroup?.title ?? "" == collapsedTextGroup.title {
-                    skip = true
-                    break
-                }
-            }
-            
-            guard skip == false else {
-                continue
-            }
-            
-            let changes = self.collapseTextGroup(string: string, correspondingTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
+            let changes = self.collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
             adjustedInvalidRanges = changes.adjustedInvalidRanges
             deltaFromPreviousCollapses += changes.delta
             deltaFromPreviousCollapses -= 1
@@ -236,39 +169,7 @@ class CollapsingTranslator {
     
     @discardableResult func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], outlineModel: OutlineModel?, recollapsing: Bool = false, adjustForDelta: Int, expandedString: NSMutableAttributedString) -> (adjustedInvalidRanges: [NSRange], delta: Int) {
         
-//        outlineModel?.updateTextGroups(from: string)
-        
-        var correspondingTextGroup: TextGroup? = nil
-        
-        guard let parentTextGroup = outlineModel?.parentTextGroup else {
-            return (adjustedInvalidRanges: [], delta: 0)
-        }
-        
-        correspondingTextGroup = textGroup
-        for iteratedTextGroup in parentTextGroup {
-            
-            if iteratedTextGroup.title == textGroup.title {
-                correspondingTextGroup = iteratedTextGroup
-                
-                if correspondingTextGroup != textGroup {
-                    print("ERROR - revert to using corresponding textgroup")
-                    //TODO: find other places where i am finding the corresponding text group and test if they are still necessasary
-                }
-                break
-            }
-        }
-        
-        guard correspondingTextGroup != nil else {
-            return (adjustedInvalidRanges: [], delta: 0)
-        }
-        
-        var range: NSRange
-        if recollapsing {
-            range = outlineModel!.range(of: correspondingTextGroup!, in: expandedString, includeTitle: false)!
-        }
-        else {
-            range = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, correspondingTextGroup!)!
-        }
+        var range = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, textGroup)!
         
         range = NSRange(location: range.location - adjustForDelta, length: range.length)
         
@@ -371,22 +272,8 @@ class CollapsingTranslator {
     
     private func collapsedTextGroupRange(string: NSMutableAttributedString, outlineModel: OutlineModel?, _ textGroup: TextGroup) -> NSRange? {
         
-        var correspondingTextGroup: TextGroup? = nil
-        
-        guard let parentTextGroup = textGroup.parentTextGroup else {
-            return nil
-        }
-        
-        for iteratedTextGroup in parentTextGroup {
-            
-            if iteratedTextGroup.title == textGroup.title {
-                correspondingTextGroup = iteratedTextGroup
-                break
-            }
-        }
-        
-        guard let locationOfToken = correspondingTextGroup?.token?.range.location,
-            let lengthOfToken = correspondingTextGroup?.token?.range.length else {
+        guard let locationOfToken = textGroup.token?.range.location,
+              let lengthOfToken = textGroup.token?.range.length else {
                 return nil
         }
         
