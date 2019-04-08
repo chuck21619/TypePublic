@@ -82,7 +82,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         createTextView()
         
         outlineViewController = OutlineViewController.createInstance(delegate: self, collapsingTranslator: collapsingTranslator)
-        outlineModel = OutlineModel(language: language, delegate: outlineViewController)
+        outlineModel = OutlineModel(language: language, collapsingTranslator: collapsingTranslator!, delegate: outlineViewController)
         outlineViewController?.model = outlineModel
         self.delegate?.presentSideboard(viewController: outlineViewController!)
         //        if let outlineView = outlineViewController?.view {

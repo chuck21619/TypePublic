@@ -32,9 +32,17 @@ class TextGroupToken: NSObject, NSCoding {
     }
     
     // MARK: - Equatable
-    static func == (lhs: TextGroupToken, rhs: TextGroupToken) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
+        
+        guard let rhs = object as? TextGroupToken else {
+            return false
+        }
+        
+        let lhs = self
+        
         return lhs.label == rhs.label && lhs.range == rhs.range && lhs.groupingRule == rhs.groupingRule && lhs.tokenAmount == rhs.tokenAmount
     }
+    
     
     // MARK: - NSCoding
     let labelCodingKey = "labelCodingKey"

@@ -15,13 +15,15 @@ class OutlineModel {
     var processing: Bool = false // TODO: implement - used by OutlineViewController.allowInteraction
     let language: Language
     var parentTextGroup: TextGroup = TextGroup(title: "parent")
+    let collapsingTranslator: CollapsingTranslator
     private var workItem: DispatchWorkItem? = nil
     
     // MARK: - Methods
     // MARK: Constructor
-    init(language: Language, delegate: OutlineModelDelegate?) {
+    init(language: Language, collapsingTranslator: CollapsingTranslator, delegate: OutlineModelDelegate?) {
         
         self.language = language
+        self.collapsingTranslator = collapsingTranslator
         self.delegate = delegate
     }
     
@@ -91,6 +93,8 @@ class OutlineModel {
         }
         
         self.parentTextGroup = parentTextGroup
+        updateCollapsingTranslatorsTextGroups()
+
         completion?(parentTextGroup)
     }
     
@@ -285,5 +289,20 @@ class OutlineModel {
         }
         
         return nextTextGroupWithEqualOrHigherPriority
+    }
+    
+    func updateCollapsingTranslatorsTextGroups() {
+        
+        for collapsedTextGroup in collapsingTranslator.collapsedTextGroups {
+            
+            for newTextGroup in self.parentTextGroup {
+                
+                if collapsedTextGroup.title == newTextGroup.title && collapsedTextGroup.token == newTextGroup.token {
+                    
+                    let index = collapsingTranslator.collapsedTextGroups.firstIndex(of: collapsedTextGroup)
+                    collapsingTranslator.collapsedTextGroups[index!] = newTextGroup
+                }
+            }
+        }
     }
 }
