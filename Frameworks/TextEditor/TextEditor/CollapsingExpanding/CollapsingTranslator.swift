@@ -172,10 +172,10 @@ class CollapsingTranslator {
         //TODO: check if these 2 methods are still necesaarry. i believe they are redundant after redesigning all textgrou ranges to reference the expanded string
         var range: NSRange
         if recollapsing {
-            range = outlineModel!.range(of: correspondingTextGroup!, in: expandedString, includeTitle: false)!
+            range = outlineModel!.range(of: textGroup, in: expandedString, includeTitle: false)!
         }
         else {
-            range = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, correspondingTextGroup!)!
+            range = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, textGroup)!
         }
         
         range = NSRange(location: range.location - adjustForDelta, length: range.length)
