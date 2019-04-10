@@ -16,15 +16,17 @@ class MarkerClickHandler {
             return
         }
         
+        ignoreProcessingDelegate.ignoreProcessing(ignore: true)
+        
         collapsingTranslator.expandAllTextGroups(string: textStorage, outlineModel: outlineModel!)
         
         guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location, collapsedTextGroups: collapsingTranslator.collapsedTextGroups) else {
             print("Error locating textgroup at marker")
             collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [])
+            ignoreProcessingDelegate.ignoreProcessing(ignore: false)
             return
         }
         
-        ignoreProcessingDelegate.ignoreProcessing(ignore: true)
         var textGroupIsCollapsed = false
         
         for collapsedTextGroup in collapsingTranslator.collapsedTextGroups {

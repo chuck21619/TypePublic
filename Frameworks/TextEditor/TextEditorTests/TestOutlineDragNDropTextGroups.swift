@@ -163,6 +163,72 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## nested second group\ntext insdie the nested second group")
     }
     
+    func testDragTopCollapsedGroupToBottomOfParentThenTopCollapsedGroupToBottomOfParent() {
+        
+        for _ in 0...1000 {
+        
+        let documentOpener = DocumentOpener(demoString: demoString)
+        let viewController = TextEditorViewController.createInstance(delegate: self, documentOpener: documentOpener)
+        viewController?.loadView()
+        viewController?.viewDidLoad()
+        viewController?.outlineViewController?.loadView()
+        viewController?.outlineViewController?.viewDidLoad()
+        
+        let expectation = XCTestExpectation(description: "outline the document")
+        
+        viewController?.outlineModel?.outline(textStorage: viewController!.textStorage) {
+            
+            viewController?.rulerView.drawHashMarksAndLabels(in: NSRect(x: 0, y: 0, width: 5000, height: 5000))
+            guard let markerForDraggingGroup = viewController?.rulerView.textGroupMarkers[1] else {
+                XCTFail()
+                return
+            }
+            viewController?.markerClicked(markerForDraggingGroup)
+            
+            //validate after collapsing group            
+            XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression￼\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group"))
+            
+            let draggingGroup = viewController!.outlineModel!.parentTextGroup.textGroups[0].textGroups[0]
+            let targetParentTextGroup = viewController!.outlineModel!.parentTextGroup.textGroups[0]
+            let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, pasteboardWriterForItem: draggingGroup as Any)
+            let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, acceptDrop: StubDraggingInfo(), item: targetParentTextGroup as Any, childIndex: targetParentTextGroup.textGroups.count)
+            
+            //validate the text groups after moving
+            XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n## expression￼\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group"))
+            
+            viewController?.rulerView.drawHashMarksAndLabels(in: NSRect(x: 0, y: 0, width: 5000, height: 5000))
+            guard let markerForSecondDraggingGroup = viewController?.rulerView.textGroupMarkers[1] else {
+                XCTFail()
+                return
+            }
+            
+            viewController?.markerClicked(markerForSecondDraggingGroup)
+
+            if NSString(string: viewController!.textStorage.string) != NSString(string: "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah￼\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n## expression￼\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group") {
+                
+                print("wtwe")
+            }
+            
+            //validate the text groups after collapsing
+            XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah￼\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n## expression￼\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group"))
+
+//            let secondDraggingGroup = viewController!.outlineModel!.parentTextGroup.textGroups[0].textGroups[0]
+//            let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, pasteboardWriterForItem: secondDraggingGroup as Any)
+//            let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, acceptDrop: StubDraggingInfo(), item: targetParentTextGroup as Any, childIndex: targetParentTextGroup.textGroups.count)
+//
+//            //validate the text groups after moving
+//
+//            //validate the expanded string
+//                    viewController?.collapsingTranslator?.expandAllTextGroups(string: viewController!.textStorage, outlineModel: viewController!.outlineModel!)
+//
+//                    XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## nested second group\ntext insdie the nested second group")
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        }
+    }
     //MARK: - TextEditorViewControllerDelegate
     func presentSideboard(viewController: NSViewController) {
         //
