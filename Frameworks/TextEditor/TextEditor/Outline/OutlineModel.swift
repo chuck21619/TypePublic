@@ -99,9 +99,13 @@ class OutlineModel {
     }
     
     //expandingTextGroup is the text group that is currently being expanding which is causing the recalculation of text groups
-    func reCalculateTextGroups(editedRange: NSRange, delta: Int, expandingTextGroup: TextGroup? = nil, downwardDraggingGroup: TextGroup? = nil) {
+    func reCalculateTextGroups(editedRange: NSRange, delta: Int, expandingTextGroup: TextGroup? = nil, downwardDraggingGroup: TextGroup? = nil, removingTextGroup: TextGroup?) {
         
         for textGroup in self.parentTextGroup {
+            
+            guard textGroup != removingTextGroup else {
+                continue
+            }
             
             guard let textGroupRange = textGroup.token?.range else {
                 continue
@@ -145,9 +149,9 @@ class OutlineModel {
         }
     }
     
-    func reCalculateTextGroups(replacingRange: NSRange, with str: String, expandingTextGroup: TextGroup?, downwardDraggingGroup: TextGroup?) {
+    func reCalculateTextGroups(replacingRange: NSRange, with str: String, expandingTextGroup: TextGroup?, downwardDraggingGroup: TextGroup?, removingTextGroup: TextGroup?) {
         
-        reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length, expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup)
+        reCalculateTextGroups(editedRange: replacingRange, delta: str.count - replacingRange.length, expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup, removingTextGroup: removingTextGroup)
     }
     
     //collapsedTextGroups: if passed. then the location will be adjusted to account for the collapsed groups

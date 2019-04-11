@@ -476,14 +476,14 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             return
         }
         
-        remove(range: range, expandingTextGroup: nil, downwardDraggingGroup: downwardDraggingGroup)
+        remove(range: range, expandingTextGroup: nil, downwardDraggingGroup: downwardDraggingGroup, removingTextGroup: textGroup)
         completion?(true)
     }
     
-    func remove(range: NSRange, expandingTextGroup: TextGroup?, downwardDraggingGroup: TextGroup?) {
+    func remove(range: NSRange, expandingTextGroup: TextGroup?, downwardDraggingGroup: TextGroup?, removingTextGroup: TextGroup?) {
         
         textStorage.replaceCharacters(in: range, with: "")
-        outlineModel?.reCalculateTextGroups(replacingRange: range, with: "", expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup)
+        outlineModel?.reCalculateTextGroups(replacingRange: range, with: "", expandingTextGroup: expandingTextGroup, downwardDraggingGroup: downwardDraggingGroup, removingTextGroup: removingTextGroup)
     }
     
     func beginUpdates() {

@@ -23,7 +23,7 @@ class CollapsingTranslator {
         
         didSet {
             let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
-            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
+                return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
             }
             
             collapsedTextGroups = sortedCollapsedTextGroups

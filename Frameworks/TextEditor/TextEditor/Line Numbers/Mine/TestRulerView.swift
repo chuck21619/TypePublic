@@ -168,7 +168,7 @@ class TestRulerView: NSRulerView {
                         token.range == intersectedRange
                     }) else {
                         
-                        print("ERROR")
+                        print("ERROR getting token")
                         return
                     }
                     

@@ -81,8 +81,6 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             
             if self.outlineView.intrinsicContentSize != self.lastIntrinsicContentSize {
                 
-                print("resizing outline view")
-                
                 self.lastIntrinsicContentSize = self.outlineView.intrinsicContentSize
                 
                 self.scrollViewHeightConstraint.constant = self.lastIntrinsicContentSize.height + 3

@@ -59,7 +59,7 @@ class SyntaxHighligher: NSObject, NSTextStorageDelegate {
             
             guard invalidAttributeRange.location + invalidAttributeRange.length <= string.string.count else {
                 
-                print("ERROR")
+                print("ERROR: attribute range is invalid")
                 continue
             }
             

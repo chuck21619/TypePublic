@@ -104,7 +104,13 @@ class TextGroup: NSObject, NSCoding, NSPasteboardWriting, NSPasteboardReading {
     }
     
     // MARK: - Equatable
-    static func == (lhs: TextGroup, rhs: TextGroup) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
+        
+        guard let rhs = object as? TextGroup else {
+            return false
+        }
+        
+        let lhs = self
         
         let isEqual = lhs.title == rhs.title &&
             lhs.textGroups == rhs.textGroups &&
