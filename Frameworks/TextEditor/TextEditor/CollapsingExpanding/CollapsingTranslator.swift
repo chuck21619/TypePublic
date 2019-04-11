@@ -22,17 +22,19 @@ class CollapsingTranslator {
     var collapsedTextGroups: [TextGroup] = [] {
         
         didSet {
-            sortCollapsedTextGroups()
+            let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
+            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
+            }
+            
+            collapsedTextGroups = sortedCollapsedTextGroups
         }
     }
     
     func sortCollapsedTextGroups() {
         
-        let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
-            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
-        }
-        
-        collapsedTextGroups = sortedCollapsedTextGroups
+        //simply triggering didSet
+        let collapsedTextGroups = self.collapsedTextGroups
+        self.collapsedTextGroups = collapsedTextGroups
     }
     
     func calculateTranslations(string: NSMutableAttributedString, outlineModel: OutlineModel?, editedRange: NSRange, delta: Int, editingValuesSinceLastProcess: EditingValues?, invalidRangesSinceLastProcess: [NSRange]) -> ((editingValues: EditingValues, invalidRanges: [NSRange])?) {
