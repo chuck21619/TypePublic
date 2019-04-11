@@ -202,6 +202,13 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             return false
         }
         
+        let semaphore = (self.delegate as! TextEditorViewController).semaphore
+        semaphore.wait()
+        
+        defer {
+            semaphore.signal()
+        }
+        
         delegate.beginUpdates()
         
         collapsingTranslator.expandAllTextGroups(string: string, outlineModel: model)
@@ -271,6 +278,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
         
+        collapsingTranslator.sortCollapsedTextGroups() // possible want to optimize this. the collapsed groups may not be sorted if one is dragged below or above another one
         collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [])
         
         if let parent = self.model?.parentTextGroup {

@@ -245,7 +245,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     var editingValuesSinceLastParsing: EditingValues? = nil
     
     private var workItem: DispatchWorkItem? = nil
-    
+    let semaphore = DispatchSemaphore(value: 1)
     public func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
         guard ignoreProcessEditing == false else {
@@ -257,13 +257,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         newWorkItem = DispatchWorkItem {
             
+            defer {
+                self.semaphore.signal()
+            }
+            
             let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
             
             guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
                 return
             }
-            
-            self.outlineModel?.outline(textStorage: stringCopy)
             
             guard newWorkItem.isCancelled == false else {
                 return
@@ -275,6 +277,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             self.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
             
+            self.semaphore.wait()
+            
+            self.outlineModel?.outline(textStorage: stringCopy)
             
             guard newWorkItem.isCancelled == false else {
                 return

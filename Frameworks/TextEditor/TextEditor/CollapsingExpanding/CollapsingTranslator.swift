@@ -22,12 +22,17 @@ class CollapsingTranslator {
     var collapsedTextGroups: [TextGroup] = [] {
         
         didSet {
-            let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
-                return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
-            }
-            
-            collapsedTextGroups = sortedCollapsedTextGroups
+            sortCollapsedTextGroups()
         }
+    }
+    
+    func sortCollapsedTextGroups() {
+        
+        let sortedCollapsedTextGroups = collapsedTextGroups.sorted { (firstTextGroup, secondTextGroup) -> Bool in
+            return firstTextGroup.token?.range.location ?? 0 < secondTextGroup.token?.range.location ?? 0
+        }
+        
+        collapsedTextGroups = sortedCollapsedTextGroups
     }
     
     func calculateTranslations(string: NSMutableAttributedString, outlineModel: OutlineModel?, editedRange: NSRange, delta: Int, editingValuesSinceLastProcess: EditingValues?, invalidRangesSinceLastProcess: [NSRange]) -> ((editingValues: EditingValues, invalidRanges: [NSRange])?) {
@@ -152,7 +157,7 @@ class CollapsingTranslator {
             return adjustedInvalidRanges
         }
         
-        for collapsedTextGroup in collapsedTextGroups {
+        for collapsedTextGroup in collapsedTextGroups.reversed() {
             
             if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
                 continue
@@ -178,7 +183,7 @@ class CollapsingTranslator {
             range = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, textGroup)!
         }
         
-        range = NSRange(location: range.location - adjustForDelta, length: range.length)
+        range = NSRange(location: range.location, length: range.length)
         
         let location = range.location
         let endIndex = (location + range.length)
