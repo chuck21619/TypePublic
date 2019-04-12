@@ -1,5 +1,3 @@
-# README
-
 # Abstract
 Type is a markdown editor designed as a “soup-to-nuts” solution for writers of various disciplines. It features unique mechanics built around typing, a smarter system for organizing documents and text, and an interface which encourages better writing by design.
 
@@ -7,9 +5,9 @@ Type is a markdown editor designed as a “soup-to-nuts” solution for writers 
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59)
 
 # Folio
-The **Folio** is the left panel where Files are managed. All files are stored locally in the user's documents folder (by default) with the option to change and add locations. The folio can be hidden, sliding into the workspace. When it is revealed it **pushes** the workspace to the right. If the app window is narrow enough, the folio will hide automatically.
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
 
-[embed](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
+The **Folio** is the left panel where Files are managed. All files are stored locally in the user's documents folder (by default) with the option to change and add locations. The folio can be hidden, sliding into the workspace. When it is revealed it **pushes** the workspace to the right. If the app window is narrow enough, the folio will hide automatically.
 
 ### Folio Tab Views
 The top of the folio contains the tabs:**Folio**, **Tags**, And the **Archive**. Each of these tabs present a different view of the documents contained within TYPE. 
@@ -18,6 +16,7 @@ The top of the folio contains the tabs:**Folio**, **Tags**, And the **Archive**.
 - **Archive** displays documents which have been published or sent to the archive manually by the writer.
 
 ### Filter
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A4906)
 Located at the bottom of the folio, typing in this field will fuzzy filter the files & folders of the tab you are currently in.
 
 Filtering with markdown syntax and text will return documents which have tagged text. For example, entering "#Pineapple" would filter for documents that contained   headlines with the word pineapple.
@@ -31,6 +30,7 @@ To close/end the filtered view:
 - Write in the workspace of a selected result.
 
 ### Categories
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59)
 Folders and Documents can be linked within categories if they fit the criteria. Categories always appear before the list of documents & Folders in the folio.
 
 Examples of categories are:
@@ -53,12 +53,14 @@ The visual order of files in the folio determines the order the text appears in 
 Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.
 
 ## Renaming
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2568%3A3)
 Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name at the top of the Tool bar (with the document open in the workspace), or in the context menu (edit > Rename)
 
 ## Sorting
 **Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.** Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).
 
 ## Security
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2567%3A4015)
 Encrypting and protecting writing with passwords should be a feature in Type. Writers should have the option of securing their documents by locking the app behind a password.
 
 Additional Options:
@@ -72,7 +74,9 @@ Additional Options:
 Deleted files go to the MacOS trashcan if deleted from the Folio. When a new document is created, you get the option of naming it immediately. If don't name it, or add text to it- then it automatically removes itself from the folio and does not enter the trashcan. **No reason to clutter the trashcan with a bunch of accidentally created documents.**
 
 ### Selecting documents and Folders
-If a document is selected from the folio, then it appears in the workspace. However, if a folder is selected, then all of the documents it contains are displayed in the workspace in the same order they appear in the folder.
+If a document is selected from the folio, then it appears in the workspace. However, if a folder is selected, then all of the documents it contains are displayed in the workspace in the same order they appear in the folder. The document names are centered above the start of each document. 
+
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2626%3A9)
 
 # Documents
 [figure](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
@@ -90,7 +94,6 @@ Documents can be merged together by selecting them in the folio and choosing "me
 
 # Folders
 Folders are groups of files (documents and other folders).
-**When a folder is selected, all of the documents it contains are displayed in the Workspace in order of appearance.**
 
 **Create a new folder: **
 - with the shortcut: **⌘⇧N**
@@ -108,6 +111,7 @@ Folders can be deleted, sending it and all it’s contents to the Trashcan, or t
 When documents are in a folder, you can jump to the next/previous document with the arrow keys. If the beginning or end of a document is displayed in the workspace, arrow up to go to the document that preceedes it, and arrow down to move to the next document.
 
 # Folder Focus
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2519%3A8015)
 Folder focus is a more elegant way of decluttering the folio and zero-in on a project. 
 
 **To focus on a folder:**
@@ -121,6 +125,12 @@ When a folder is in focus…
 - The Name of the folder appears at the top of the folio.
 - Document icons & text become larger and display additional information (The layout of the folder/documents determine how the documents are displayed)
 - Subfolders are presented as collapsable sections
+
+    (`/\
+    `=\/\
+     `=\/\
+      `=\/
+         \
 
 # Layouts
 Layouts were created as a solution against the need to format a page while writing. A Layout is a set of styles which determine how a document will look once it is published/printed. Documents can only have **one** layout, but can have any layout applied.
@@ -143,13 +153,11 @@ Certain layouts offer unique components and functionality related to the type of
 4. Unique Targets, for something like NanoWriMo could get a target of 10k words a day built in.
 5. Index/Glossary of Terms - created by a note
 
-# Layout Table
-
+##Examples
 | Layout | Icon | Folder | Description |
 |-----|------|------|-----|
 | Page | i | Book |the default layout option |
 | Poem | i | Book | - |
-| Screenplay | i | Script | - |
 | Slide | i | Presentation | - |
 | PDF | i | - | - |
 | PlainText | i | - | - |
@@ -160,7 +168,9 @@ Certain layouts offer unique components and functionality related to the type of
 | Interview | i | Tape Deck | collected from audio transcriptions |
 
 # Tags
-Only documents can be tagged in type. When collapsed, Folders can display the tags of the documents it contains. Tags are displayed as dots after the document name in the folio by default. Tags can also be displayed as [tokens](https://developer.apple.com/design/human-interface-guidelines/macos/fields-and-labels/token-fields/)- displaying their tag color and tag name. When in **token** form, tags can be renamed and recolored.
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A2359)
+
+**Documents can be tagged in type, folders cannot be tagged.** When collapsed, Folders can display the tags of the documents it contains. Tags are displayed as dots after the document name in the folio by default. Tags can also be displayed as [tokens](https://developer.apple.com/design/human-interface-guidelines/macos/fields-and-labels/token-fields/)- displaying their tag color and tag name. When in **token** form, tags can be renamed and recolored.
 
 ## MacOS color Panel (NSColorPanel) to change tag colors.
 To change a tags color, Right click on either a **Tag Token** or **Tag Folder** doing so will display the Mac Color panel. 
@@ -188,6 +198,7 @@ Deleting a tag folder will remove that tag from every document in Type.
 - **In the Tag Tab/View** deleting a document from a tag folder, removes the tag from the document.
 
 # Archive
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A2240)
 The Archive Tab is a collection of documents that have either been published or moved there by the writer. The archive is a way to de-clutter the folio and also catalogue completed work. Documents which enter the Archive receive an "Archived date" in their Info **sideboard**.
 
 Archived documents can be retrieved/copied from the archive and re-enter the Folio. *I am debating if this retrieval is just making a copy of the archived doc, and keeping the original in the folio- if that would create clutter. it depends on if the archive is better for storage only, or storing documents in a manner that keeps a history.*
@@ -196,6 +207,7 @@ Archived documents can be retrieved/copied from the archive and re-enter the Fol
 The Archive is sorted chronologically and groups documents by the month and year they entered.
 
 # Workspace
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2519%3A9570)
 The workspace is the center panel and is never hidden (unlike the Folio & Sideboard). The workspace contains the **outline**, a **text column**, **line numbers**, and the **action bar** (when called).
 
 ## Typography
@@ -215,32 +227,37 @@ Line numbers appear in the right margin of the workspace and indicate lines, whi
 text in the workspace can be displayed in different views and modes. A **view** determines how the workspace appears, where **modes** determine how the text appears when writing.
 
 ## Preview
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A77)
 Preview mode displays how the document will appear according to its **Layout**.
 The preview can be toggled or peeked by tapping or holding **⌘P.**
 
 **Q:should writers be able to edit the document while in preview mode?**
 
 ## Split
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2522%3A1056)
 The workspace can be split in half vertically, displaying two documents at the same time (or the same document extended to both views). In split view, The **outline** is only displayed in the active document containing the cursor.
 
 ### Split Preview
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2522%3A1133)
 Split view and preview can be combined to show markdown on one side, and the layout preview on the other. The windows can scroll in sync with one another, and the preview updates in real time.
 
 ### Split (Continuous)
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2522%3A1173)
 The same document is displayed in both views, it begins on the left and continues on the right.
 
 ## Typewriter (MODE)
 Typewriter mode fixes the cursor to either the top, middle, or bottom of the workspace. Text then scrolls into or out-of the chosen position.
 
-Note: Top and Bottom positions are not the absolute top and absolute bottom. It is more like 30% from the top, and 30% from the bottom of the workspace.
+Note: Top and Bottom positions are not the absolute top and absolute bottom. It is more like 30% from the top, and 30% from the bottom of the workspace. [EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A193)
 
 ## Text Focus (MODE)
-This mode highlights the chosen amount of text which the cursor touches and dims all other text. Text can be focused by:
-1.	Line
-2.	Sentence
-3.	Paragraph
 
-**Text focus and typewriter can be used at the same time, it’s a really good feature.**
+This mode highlights the chosen amount of text which the cursor touches and dims all other text. Text can be focused by:
+1.	[Line](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A154)
+2.	[Sentence](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A232)
+3.	[Paragraph](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A271)
+
+> **Text focus and typewriter can be used at the same time.**
 
 ## Changing documents with arrow keys
 if the workspace view is at the beginning or end of a document, hitting arrow up (if at the beginning) or Down (if at the end) will move to the next or Previous Document in order.
@@ -267,17 +284,13 @@ The outline serves as a quick reference to the structure of the document and all
 Headline tags ( #, ##, ### ) act in a nested hierarchy with H1 being at the highest, followed by H2, and then H3. Each Headline groups all the text (and child headlines) that follow until the next occurrence of itself.
 
 # Sideboard
-
-[WIREFRAMES](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2039%3A224)
-
 The sideboard is a panel that reveals itself from the right of the workspace. It displays information and settings related to the selected document/folder in the workspace as well the app itself. The idea behind the sideboard is that you can see important information or tinker with settings while maintaining an unobstructed view of the writing. Sideboards are coupled with related sideboards. The only ones without a pair are “Updates” and “Dictionary.”
 
 > Sideboards are also built with extending functionality in mind. Anything new we need to build or add can be accessed and tinkered with via the sideboard.
 
-## Settings & Shortcuts
-The general settings. Shortcuts can be customized.
 
 ## Info & Outline
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A8)
 Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data & stats about the writing.
 
 The outline for the document in the workspace. This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
@@ -285,17 +298,13 @@ The outline for the document in the workspace. This outline could be displayed d
 2. displaying indicator dots for things like: misspellings, comments, or highlighted text as these are areas where you’d want to see from a top-level view.
 
 ## Publish & Print
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2514%3A579)
 
 ## Dictionary
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2514%3A1203)
 Maybe one of the larger time-saving ideas, being able to search for the definition of a word, or find synonyms/antonyms without leaving the app. Highlight a word to get its definition and/or change it to a synonym.
 1. Insert words by clicking on the definition, synonyms, and/or antonyms.
 2. Replace words by highlighting them and THEN clicking the definitions, synonyms/antonyms.
-
-## Updates
-Release notes, Change log, Feature updates, and Bug fixes can be viewed here as well as the option to:
-1. update TYPE
-2. rollback to an earlier version
-3. enroll in any beta we might run
 
 # Syntax
 TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few custom tags. Some syntax will receive visual formatting specific to TYPE (like tables and code fences) to make them both easier to read and edit.
@@ -313,7 +322,6 @@ If an opening tag for syntax or punctuation is entered, the closing tag will app
 Entering bracketed punctuation and/or syntax (,[,{,",' on highlighted words will toggle the punctuation on/off the word. **The syntax always goes outside the punctuation.**
 
 # Links
-
 Plain urls like www.google.com will appear as clickable hyperlinks in the document.
 Links in markdown syntax [displayName](url) will appear as hyperlinks as the displayName.
 
@@ -337,6 +345,7 @@ Adding a reference generates an instance that is stored in the Folio. Here you c
 [referenceName]{reference}
 
 #Tables
+[EXAMPLES](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2665%3A0)
 Writing and reading tables sucks in markdown, this is the only attribute where the raw text is a worse substitute for any rendered solution. In Type, Tables will be rendered, making them easier to edit, and read. Dropbox paper & Apple Notes have good implementations that we should steal.
 
 ## Images
@@ -382,13 +391,13 @@ This is smart:
 
 | Name | Shortcut | Syntax |
 |----|----|----|
-|Underline | ⌘U | `_` |
-|Comment | ⌘/ | `//` |
-|Highlight | |   | `::` or `!!` |
-|Mentions | | @username |
+|Underline  | ⌘U  | `_` |
+|Comment    | ⌘/  | `//` |
+|Highlight  | ⇧⌘H | `::` or `!!` |
+|Mentions   |      | @username |
 |Inner-link | ⌘K | `[linkName](#Headline)`|
-|Reference | `{referenceName}(link)` | |
-|HTML Button | | `!<button>(link`)`|
+|Reference | |`{referenceName}(link)` |
+|HTML Button | | `!<button>(link`)|
 |Box form | for print, signature box, etc | `[_]` |
 |SuperScript | This is from LaTeX | `^{x}` |
 |SubScript | This is from LaTeX | `_{x}`  |
@@ -415,6 +424,7 @@ The toolbar is important for new users to markdown. It can be customized with a 
 Not entirely sure what should go here outside of replicating the Toolbar. But this is 
 
 # Actions
+
 Actions are a feature of type that would separate it from every other editor. The idea is to automate repetitive and manual tasks that come with writing through text commands.
 
 You can think of **“Find/Find & Replace”** as an action. It is a string of repetitive actions that have been automated to diminish the task of finding every instance of a word and manually replacing it.
@@ -422,6 +432,7 @@ You can think of **“Find/Find & Replace”** as an action. It is a string of r
 So what if instead of “Find and replace” it was “Bold every ##Headline”, “Create a 2x2 table”, or “Unfold all lines.” Commands like these would take time to complete manually, but by using an action, they’d be instantaneous.
 
 ## Action Bar
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2518%3A7384)
 Action queries occur in the Action bar. This pop up at the top of the workspace and contains a text field(s) and buttons. This is where **Find/Find & Replace** input would appear if you used ⌘F or ⌘⇧F (or if you opened the action bar and typed “Find” and hit enter)
 
 ## Fuzzy Queries
@@ -457,6 +468,8 @@ Opening documents in an action works like **notational velocity**.
 - Fold/Unfold Headlines, Lists, Tables
 
 If pulled off, it’ll make everything that came before it look obsolete, and everything that comes after it seem like a rip off.
+
+
 
 # Mechanics
 Along with Actions, keyboard and writing mechanics are a significant feature of TYPE. A lot of the inspiration comes from the idea that, “The longer your hands are at the keys, the better chance you have of writing.” 
@@ -508,6 +521,11 @@ common grammar
 - stalking when you mean talking
  - satan when you mean satin
 - pubic when you mean public
+
+#Settings
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2495%3A139)
+
+Popup to comply with apple's HIG.
 
 # Shortcuts
 
@@ -583,27 +601,20 @@ Using the references as a character bible for developing a story. example: Chara
 References & Citation Rearrangement
 Rearranging a reference in the sideboard will change the reference numbers in the document
 Moving referenced text above/below other referenced text in the workspace will update the sequence number in the sideboard. If the referenced text is an IBID and moves above the initial reference, then the Ibid becomes the reference, and the initial reference becomes the ibid.
+
+## ”Symbols", Libraries, or Passages (need a good name)
+Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.
+This would be good for something like legal documentation or even character bibles. If the main character's name needs to change, instead of doing find&replace, you'd edit the source.
+•	When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
+•	if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.
+•	writers can detach instances from the source w/o with the context menu
+Quick Note, when you just want to jot something down without going through the process of creating a new doc or opening a document
+The Assistant can be opened from outside the application to edit/add notes from the Folio. When called, the window works similar to notational velocity where the initial keystrokes perform a fuzzy search of all notes, and if no note contains what you've typed, then you can create a new note from whatever it is you entered.
+being able to quickly capture them I think is invaluable.**
+Notes are saved in a special "notebook" folder
+Download Notational Velocity for an example.
+
 In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has "page 10" and the ibid is "page 44" if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as "page 44" and the ibid becomes "page 10"
-
-
-## Dimmer Switch (Gamma Dimmer)
-Increases/Decreases the luminosity of the Theme in steps, adjusting the value of the UI for different light conditions.
-Often with lite and dark themes they are too far to one extreme, often the most comfortable color scheme to stare at on a monitor is in the middle values.
-This would be a keyboard shortcut you can use to increase and decrease the contrast of the theme.
-Idea + Detail
-
-## Auto-Color
-For macbooks, using the cameras light meter to detect the amount of light in the room and adjusting the color theme based on that. It would be interesting for a colorway to change over time or according to a specific lighting condition. Apple kind-of does this with iPad's "True Tone" but the aim is color accuracy rather than viewer comfort.
-
-Auto-Tune Themes that change color depending on the time of day and the weather (report) so the theme used for 12 noon on a rainy day is different from 12 noon on a sunny day.
-Indoor/Outdoor Theme that is suitable for lighting conditions, i.e a theme that works really well for bright sunlight vs one that is conducive to look at when under flourescence
-Cleaning Up Tags
-spaces between a character and the closing tag are automatically deleted.
-
-**Delete The Space between_**
-
-Live preview images in the workspace
-The ability to show the image rather than just the syntax/placeholder.
 
 ## Batch Renaming documents (ACTION BAR?)
 Selecting multiple documents and initiating a rename ⌘R allows for a batch rename in the order they are presented. If writers wanted to Number their documents this would be really helpful.
@@ -625,18 +636,6 @@ Maybe they can link to the system folder?
 
 ## Collecting Commented ToDo's
 if you begin a comment with todo, then those comments can be collected in a sideboard creating a checklist, or maybe even used in another app like Reminders.
-
-## ”Symbols", Libraries, or Passages (need a good name)
-Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.
-This would be good for something like legal documentation or even character bibles. If the main character's name needs to change, instead of doing find&replace, you'd edit the source.
-•	When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
-•	if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.
-•	writers can detach instances from the source w/o with the context menu
-Quick Note, when you just want to jot something down without going through the process of creating a new doc or opening a document
-The Assistant can be opened from outside the application to edit/add notes from the Folio. When called, the window works similar to notational velocity where the initial keystrokes perform a fuzzy search of all notes, and if no note contains what you've typed, then you can create a new note from whatever it is you entered.
-being able to quickly capture them I think is invaluable.**
-Notes are saved in a special "notebook" folder
-Download Notational Velocity for an example.
 
 ## A way to "check done" documents, Turn to "Document Tasks"
 working on a multi-document project non-linearly could use a visual cue to indicate, "this doc is done, and others still need work." Could be a feature of "Focused" folders.
@@ -711,5 +710,7 @@ simple commands
 - /date - enters the current date
 - /time - current time
 - /tomorrow - date after current date
+
+# Technical
 
 
