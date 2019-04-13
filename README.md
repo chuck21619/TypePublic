@@ -133,13 +133,19 @@ When a folder is in focus…
          \
 
 # Layouts
-Layouts were created as a solution against the need to format a page while writing. A Layout is a set of styles which determine how a document will look once it is published/printed. Documents can only have **one** layout, but can have any layout applied.
+
+> "In microsoft word, I move an image 2 pixels left- suddenly all text is capitalized and translated to French, three new pages appear, and in the distance...sirens."
+
+Layouts were created as a solution against the need to format a page while writing. A Layout is a set of styles which determine how a document will look once it is published/printed. Documents can only have **one** layout at a time, but can have any layout applied.
+
+**When a document or folder has a layout applied its icon will change according to said layout.** Icons for folders are “collective” whereas icons for documents are “parts.” i.e. documents have “page” layouts where the folder would be “book.”
 
 ## Applying a layout
-Layouts are assigned to documents and folders from the Sideboard (info, Publish, and Print), Context Menu, and/or menu bar (edit > layout > name).
+Layouts are assigned to documents and folders from:
 
-## Unique Icons
-When a document or folder has a layout applied, the icon(s) will change according to said layout. Icons for folders are “collective” whereas icons for documents are “parts.” i.e. documents have “page” layouts where the folder would be “book.”
+- The sideboard (Info, Publish and Print), 
+- Context menu
+- Menu bar (edit > layout > name).
 
 ## Folder Layouts
 Assigning a layout to a folder applies the same layout to every file it contains. (overriding any layouts previously assigned to individual docs/folders).
@@ -262,8 +268,8 @@ This mode highlights the chosen amount of text which the cursor touches and dims
 ## Changing documents with arrow keys
 if the workspace view is at the beginning or end of a document, hitting arrow up (if at the beginning) or Down (if at the end) will move to the next or Previous Document in order.
 
-## Good aesthetics
-The first line of text in a document starts around the middle of the workspace. The more text that is entered will push the first lines of text up toward the top of the workspace. This keeps the text at eye level in the beginning and is good visual ergonomics.
+## New docs start in the middle
+The first lines of text in a document starts around the middle of the workspace. The more text that is entered will push the first lines of text up toward the top of the workspace. This keeps the text at eye level in the beginning and is good visual ergonomics.
 
 # Outline
 The outline is a list of links to every H1, H2 and, H3 tag in the document. It is positioned (horizontally centered) in either the left margin of the workspace or in its own Sideboard.
@@ -313,23 +319,23 @@ TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few cus
 Syntax can be toggled on/off with keyboard shortcuts. If a word is highlighted or if the cursor is touching a word the writer can use a shortcut(if one is mapped) to toggle the tag on/off. For example, Bolding a word.
 
 ## Mirror Modify Bracketed Syntax & Punctuation
-Deleting or changing either the opening or closing tag or punctuation automatically deletes/changes the opposite.
+Deleting or highlighting & changing either the opening or closing tag or punctuation automatically deletes/changes the opposite.
 
 ## Auto-close
 If an opening tag for syntax or punctuation is entered, the closing tag will appear automatically after the cursor. Hitting Return or arrowing up/down from the line will close the tag.
 
 ## Auto-Wrap
-Entering bracketed punctuation and/or syntax (,[,{,",' on highlighted words will toggle the punctuation on/off the word. **The syntax always goes outside the punctuation.**
+Entering bracketed punctuation (,[,{,",' and/or syntax on highlighted word(s) will wrap the word(s). **The syntax always goes outside the punctuation.**
 
 # Links
 Plain urls like www.google.com will appear as clickable hyperlinks in the document.
+
 Links in markdown syntax [displayName](url) will appear as hyperlinks as the displayName.
 
 Using the shortcut **⌘K** without any text highlighted will add a blank syntax placeholder of: [Name](url).
 
 ## Internal Links (custom-ish syntax)
-
-Links can point to headlines within documents in type. clicking these links will direct the workspace to the headline in the open document or a different document all together. This is incredibly useful for building a database or wiki.
+Links can point to headlines within documents- clicking these links will direct the workspace to the headline in the open document or a different document all together. This is incredibly useful for building a database or wiki.
 
 **Syntax ideas:**
 [displayName](#headline) link to a headline in the same document
@@ -346,10 +352,24 @@ Adding a reference generates an instance that is stored in the Folio. Here you c
 
 #Tables
 [EXAMPLES](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2665%3A0)
-Writing and reading tables sucks in markdown, this is the only attribute where the raw text is a worse substitute for any rendered solution. In Type, Tables will be rendered, making them easier to edit, and read. Dropbox paper & Apple Notes have good implementations that we should steal.
+
+Tables are rendered in the workspace to make them easier to edit and read.	
+
+**Move Handles**
+
+Click and drag entire rows/columns to different parts of the table.
+
+Rows can be moved up and down with keyboard shortcut: *Shift-command-up* and 
+*Shift-Command-Down*.
+
+clicking on a move handle will select the entire row or column and provide additional options. Columns will have **Alignment** options
+
+**Align** - Move - additional dropdown (add rows/columns or delete row/column).
 
 ## Images
-An image link can be represented as the image or as a tag with the image name & alignment options. Both options occupy one line. Dragging an image to the workspace, or Pasting it automatically generates the proper syntax for an image.
+Image tags have an additional **Alignment** options when they are created and/or selected in the workspace. Using the **Promote**/**Demote** Shortcuts or clicking on the alignment icons, the alignment of the image changes in the preview/publish.
+
+Dragging an image to the workspace, or Pasting it automatically generates the proper syntax.
 
 **Alignment Options:**
 - left
@@ -361,7 +381,7 @@ An image link can be represented as the image or as a tag with the image name & 
 Text wrapped in the code tag will be wrapped in a code fence. The writer can declare the syntax by clicking the syntax button at the top right of the fence and the code inside will highlight accordingly. Code fences can have their own line numbers.
 
 ## LaTeX formulas
-Though it is niche, generating mathematical formulas through LaTeX syntax is a good feature to have. I like the idea of scientists and researchers using the same application as poets and screenwriters.
+Though it is niche, generating mathematical formulas through LaTeX syntax is a good feature to have.
 
 This is smart:
 [`https://mathpix.com/`](https://mathpix.com/)
@@ -388,7 +408,6 @@ This is smart:
 |Checkbox Item (checked) | | `[x]` |
  
 ## Syntax (Custom)
-
 | Name | Shortcut | Syntax |
 |----|----|----|
 |Underline  | ⌘U  | `_` |
@@ -424,15 +443,17 @@ The toolbar is important for new users to markdown. It can be customized with a 
 Not entirely sure what should go here outside of replicating the Toolbar. But this is 
 
 # Actions
+Actions are a way to automate repetitive and 	manual tasks that come with writing through text commands.
 
-Actions are a feature of type that would separate it from every other editor. The idea is to automate repetitive and manual tasks that come with writing through text commands.
+You can think of **“Find/Find & Replace”** as an action. As it is a string of repetitive actions that have been automated to diminish the task of finding every instance of a word and manually replacing it.
 
-You can think of **“Find/Find & Replace”** as an action. It is a string of repetitive actions that have been automated to diminish the task of finding every instance of a word and manually replacing it.
-
-So what if instead of “Find and replace” it was “Bold every ##Headline”, “Create a 2x2 table”, or “Unfold all lines.” Commands like these would take time to complete manually, but by using an action, they’d be instantaneous.
+So instead of just “Find and replace” you could say, “Bold every ##Headline”, “Create a 2x2 table”, or “Unfold all lines.” Commands like these would take time to complete manually, but by using an action, they’d be instantaneous.
 
 ## Action Bar
 [EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2518%3A7384)
+
+*Similar to the command palette in Sublime Text*
+
 Action queries occur in the Action bar. This pop up at the top of the workspace and contains a text field(s) and buttons. This is where **Find/Find & Replace** input would appear if you used ⌘F or ⌘⇧F (or if you opened the action bar and typed “Find” and hit enter)
 
 ## Fuzzy Queries
@@ -469,7 +490,7 @@ Opening documents in an action works like **notational velocity**.
 
 If pulled off, it’ll make everything that came before it look obsolete, and everything that comes after it seem like a rip off.
 
-
+----
 
 # Mechanics
 Along with Actions, keyboard and writing mechanics are a significant feature of TYPE. A lot of the inspiration comes from the idea that, “The longer your hands are at the keys, the better chance you have of writing.” 
@@ -480,10 +501,15 @@ Type allows writers to change the position of text in the workspace, as well as 
 Table rows can also be reordered, the only ones that cannot move are the header row and the following "alignment" row for Markdown syntax tables.
 
 ## Promote & Demote
-This comes from text editors where you can indent/de-indent list items easily. Along with indentation, the shortcut would promote/demote other elements like “headlines”- which would add or remove ‘#’ from them. Image alignment could also be promoted/demoted-changing it from (left, center, Full, And right).
+Rearranging deals with "Up and Down" Promotion deals with the directions "Left and Right." Along with indentation, the shortcut would promote/demote other elements like “headlines”- which would add or remove ‘#’ from them. Image alignment could also be promoted/demoted-changing it from (left, center, Full, And right).
+
+- indenting/Deintenting paragraphs and lists
+- Image alignment selection
+- moving table columns left/right
+- Adding/removing '#' to a headline
 
 ## Folding
-Collapse lines of text into a single line, which shrinks the vertical height of the whole document, making it faster to navigate.
+Collapse multiple lines of text into a single line, which shrinks the vertical height of the whole document, making it faster to navigate.
 
 ## Slice & Merge
 While editing a document, it can be divided into multiple individual documents by adding a slice at the cursor. Doing so will create two new documents, one containing all the text above the slice and the other with all the text below the slice.
@@ -506,20 +532,19 @@ If compatible syntax is pasted from the clipboard it will be formatted for Type.
 - add code examples by pasting as Code Block
 
 ## Human Error Spelling and Grammar check
-A spell check which targets common typos that a normal spell check would otherwise miss since nothing is spelled incorrectly
+A spell check which targets common typos that a normal spell check would otherwise miss since nothing is spelled incorrectly.
 
-common grammar
 - complemented vs complimented
 - Principal vs principle
 - hoard vs horde
 - every day vs everyday
-- ass when you mean add
+- ass vs add
 - A dress vs address
-- bowel when you mean bowl
-- Untied States when you mean United States
-- whore when you mean where
-- stalking when you mean talking
- - satan when you mean satin
+- bowel vs bowl
+- Untied States vs United States
+- whore vs where
+- stalking vs talking
+- satan when you mean satin
 - pubic when you mean public
 
 #Settings
@@ -588,13 +613,14 @@ Popup to comply with apple's HIG.
 |Promote | `⌘]` | |
 |Demote | `⌘[` | |
 
+
 ----
 
 # Concepts
-Napkin Sketches & Ideas for future updates & Development. Some of this are half-baked ideas.
+*Napkin Sketches & Ideas for future updates & Development. Some of this are half-baked ideas.*
 
 ## Layout Styles
-styling set to a layout, created with PFD layout in mind- if you want to differentiate between a standard PDF and something like a CV or resume. It would be an additional dropdown for certain Layouts
+Additional styling set to a layout (created with PFD layout in mind-) if you want to differentiate between a standard PDF and something like a CV or resume.
 
 ### Building a Database
 Using the references as a character bible for developing a story. example: Character Name(Description of the character). These pronouns are avoided by Spell Check.
@@ -602,7 +628,7 @@ References & Citation Rearrangement
 Rearranging a reference in the sideboard will change the reference numbers in the document
 Moving referenced text above/below other referenced text in the workspace will update the sequence number in the sideboard. If the referenced text is an IBID and moves above the initial reference, then the Ibid becomes the reference, and the initial reference becomes the ibid.
 
-## ”Symbols", Libraries, or Passages (need a good name)
+### ”Symbols", Libraries, or Passages (some other clever name)
 Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.
 This would be good for something like legal documentation or even character bibles. If the main character's name needs to change, instead of doing find&replace, you'd edit the source.
 •	When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
@@ -635,30 +661,23 @@ Maybe they can link to the system folder?
 /Library/Group Containers/group.com.apple.notes/
 
 ## Collecting Commented ToDo's
-if you begin a comment with todo, then those comments can be collected in a sideboard creating a checklist, or maybe even used in another app like Reminders.
+if you begin a comment with "todo", then those comments can be collected in a sideboard creating a checklist, or maybe even used in another app like Reminders.
 
 ## A way to "check done" documents, Turn to "Document Tasks"
 working on a multi-document project non-linearly could use a visual cue to indicate, "this doc is done, and others still need work." Could be a feature of "Focused" folders.
-References
-Collaboration
-Publishing
-Navigation
-API
 
 ## Pinning lines/Rubber banding
 Set a temporary pin on a line, then you can scroll around the doc, or go to other documents entirely, and when you hit a shortcut you automatically go right back to that line, the pin disappears after returning. It's the equivilent of putting your finger on a page and flipping through a book.
 
 ### Auto Pinning
 If you use the mouse wheel/scroll manually up or down the document, there is an option to pin the row of the line the cursor resides to either the top or bottom of the viewport (depending on which way you scroll). If you scroll up the line sticks to the bottom, if you scroll down the line sticks to the top. (this suggests the relative location of the line where you left the cursor, its either above or below where you are now)
-•	mouse clicking the pinned line or typing will snap you back to the line
-•	are you able to write in the pinned location while viewing the new one? would anyone want to do that?
-•	If you move the cursor outside the line, or if some time has passed, the sticky/pinned line dissapears
-•	This also doesnt work when you’re focusing or in typewriter mode
+- mouse clicking the pinned line or typing will snap you back to the line
+- are you able to write in the pinned location while viewing the new one? would anyone want to do that?
+- If you move the cursor outside the line, or if some time has passed, the sticky/pinned line dissapears
+- This also doesnt work when you’re focusing or in typewriter mode
 
-### Placeholder pins
-putting a pin in a part of the document or line that you want to return to, maybe there’s a sentence that isn’t working, *also isolating JUST the things you have pinned, focusing on them*
 
-# Plugin API for the Assistant and Sideboards
+# Plugin API for Actions and Sideboards
 Programs like [sketch](#), Sublime Text, and Framer thrive on a community of designers and developers who build functionality into the application. This was only possible because the devs opened up the API and made it easy to create plugins and allow the creators to profit from their contributions (if they desire). It democratizes the feature-set for the application and only strengthens the user-base.
 
 # Git Integration
@@ -712,5 +731,3 @@ simple commands
 - /tomorrow - date after current date
 
 # Technical
-
-
