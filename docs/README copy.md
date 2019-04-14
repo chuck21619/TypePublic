@@ -1,6 +1,7 @@
 # Abstract
 Type is a markdown editor designed as a “soup-to-nuts” solution for writers of various disciplines. It features unique mechanics built around typing, a smarter system for organizing documents and text, and an interface which encourages better writing by design.
 
+# Wireframe
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59)
 
 # Folio
@@ -8,7 +9,7 @@ Type is a markdown editor designed as a “soup-to-nuts” solution for writers 
 
 The **Folio** is the left panel where Files are managed. All files are stored locally in the user's documents folder (by default) with the option to change and add locations. The folio can be hidden, sliding into the workspace. When it is revealed it **pushes** the workspace to the right. If the app window is narrow enough, the folio will hide automatically.
 
-### Tabs
+### Folio Tab Views
 The top of the folio contains the tabs:**Folio**, **Tags**, And the **Archive**. Each of these tabs present a different view of the documents contained within TYPE. 
 - **Folio** displays all documents not archived
 - **Tags** displays documents with tags, organized by the tag name(s) in **Tag folders**.
@@ -16,7 +17,6 @@ The top of the folio contains the tabs:**Folio**, **Tags**, And the **Archive**.
 
 ### Filter
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A4906)
-
 Located at the bottom of the folio, typing in this field will fuzzy filter the files & folders of the tab you are currently in.
 
 Filtering with markdown syntax and text will return documents which have tagged text. For example, entering "#Pineapple" would filter for documents that contained   headlines with the word pineapple.
@@ -31,7 +31,6 @@ To close/end the filtered view:
 
 ### Categories
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59)
-
 Folders and Documents can be linked within categories if they fit the criteria. Categories always appear before the list of documents & Folders in the folio.
 
 Examples of categories are:
@@ -41,27 +40,27 @@ Examples of categories are:
 - **New Comments** (future release) When collaborating with an editor or another writer and they’ve left a new comment on the document, New comments appears with the related docs.
 - **Whatever else we can come up with**
 
-### Files in the Folio
+### Document and Folder list
 Documents and folders are displayed as a list with an icon denoting the Layout of the document or folder. Document names long enough to reach the right boundary of the folio panel will append an ellipsis at the point of overflow/break.
 
-**The visual order of files determines the order for how the text appears in the workspace.** The order flows from top to bottom, the top most document is first, and the bottom most document is last.
+**Expanded Folders are stick to the top of the folio when scrolling**
+If there is enough content in the folio to scroll, the position of an open folder will stick to the top of the folio and everything will scroll beneath it. Once all the contents of the folder have scrolled past the top, The folder will become unstuck and will be pushed up. collapsed folders will not become fixed to the top.
 
-**Deleted files go to the MacOS trashcan if deleted from the Folio.** When a new document is created, you get the option of naming it immediately. If don't name it, or add text to it- then it automatically removes itself from the folio and does not enter the trashcan.
+#### Order of Appearance
+The visual order of files in the folio determines the order the text appears in the workspace. The order flows from top to bottom, the top most document is first, and the bottom most document is last.
 
-**Rearrangement**
+## Rearrangement
 Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.
 
-**Renaming**
+## Renaming
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2568%3A3)
-
 Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name at the top of the Tool bar (with the document open in the workspace), or in the context menu (edit > Rename)
 
-#### Sorting
+## Sorting
 **Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.** Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).
 
-#### Security
+## Security
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2567%3A4015)
-
 Encrypting and protecting writing with passwords should be a feature in Type. Writers should have the option of securing their documents by locking the app behind a password.
 
 Additional Options:
@@ -71,26 +70,26 @@ Additional Options:
 4. Apple Keychain or 1Password integration
 5. Emergency key, that unlocks any document if you forget the one you set
 
+## Deleted Files
+Deleted files go to the MacOS trashcan if deleted from the Folio. When a new document is created, you get the option of naming it immediately. If don't name it, or add text to it- then it automatically removes itself from the folio and does not enter the trashcan. **No reason to clutter the trashcan with a bunch of accidentally created documents.**
+
 ### Selecting documents and Folders
 If a document is selected from the folio, then it appears in the workspace. However, if a folder is selected, then all of the documents it contains are displayed in the workspace in the same order they appear in the folder. The document names are centered above the start of each document. 
 
 [EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2626%3A9)
 
 # Documents
-[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
+[figure](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42)
+Documents are plain-text markdown (.md) files. These files store additional meta/compositional data that can be viewed in the app. Additionally, documents can be styled by applying a layout
 
-Documents are plain-text markdown (.md) files. These files store additional meta/compositional data that can be viewed in the app. Additionally, documents can be styled by applying a layout.
-
-#### Creating Documents
+## Creating Documents
 Create a new document with the shortcut **⌘N**, by clicking on the Plus button at the bottom of the folio, in the context menu of the folio, or menu bar (File > New Document). 
 
 When a new document is created…
 1. The first option you have is to name it.
 2. If you’re working on a document, and a new one is created, then it is created below the one you’re working on (in the folio).
 
-**Jump to the next/previous document with the arrow keys.** If the beginning or end of a document is displayed in the workspace, arrow up to go to the document that preceedes it, and arrow down to move to the next document.
-
-#### Merging Documents
+## Merging Documents
 Documents can be merged together by selecting them in the folio and choosing "merge" from either the context menu, or Menubar (edit > merge) or with the shortcut **⌘E**. Documents merge in order of appearance (top to bottom) in the folio. When documents are merged, the **Top document** becomes the name and layout of the document after the merge
 
 # Folders
@@ -108,12 +107,11 @@ Folders can be deleted, sending it and all it’s contents to the Trashcan, or t
 - Selecting “Ungroup” from the context menu in the folio
 - Selecting the menubar option (edit > New folder) or (edit > Group)
 
-**Expanded Folders are stick to the top of the folio when scrolling**
-If there is enough content in the folio to scroll, the position of an open folder will stick to the top of the folio and everything will scroll beneath it. Once all the contents of the folder have scrolled past the top, The folder will become unstuck and will be pushed up. collapsed folders will not become fixed to the top.
+## Prev/Next Document
+When documents are in a folder, you can jump to the next/previous document with the arrow keys. If the beginning or end of a document is displayed in the workspace, arrow up to go to the document that preceedes it, and arrow down to move to the next document.
 
-## Folder Focus
+# Folder Focus
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2519%3A8015)
-
 Folder focus is a more elegant way of decluttering the folio and zero-in on a project. 
 
 **To focus on a folder:**
@@ -127,6 +125,12 @@ When a folder is in focus…
 - The Name of the folder appears at the top of the folio.
 - Document icons & text become larger and display additional information (The layout of the folder/documents determine how the documents are displayed)
 - Subfolders are presented as collapsable sections
+
+    (`/\
+    `=\/\
+     `=\/\
+      `=\/
+         \
 
 # Layouts
 
@@ -491,12 +495,12 @@ If pulled off, it’ll make everything that came before it look obsolete, and ev
 # Mechanics
 Along with Actions, keyboard and writing mechanics are a significant feature of TYPE. A lot of the inspiration comes from the idea that, “The longer your hands are at the keys, the better chance you have of writing.” 
 
-**Rearranging**
+## Rearranging
 Type allows writers to change the position of text in the workspace, as well as documents/folders within the folio using keyboard shortcuts or clicking & dragging.
 
 Table rows can also be reordered, the only ones that cannot move are the header row and the following "alignment" row for Markdown syntax tables.
 
-**Promote & Demote**
+## Promote & Demote
 Rearranging deals with "Up and Down" Promotion deals with the directions "Left and Right." Along with indentation, the shortcut would promote/demote other elements like “headlines”- which would add or remove ‘#’ from them. Image alignment could also be promoted/demoted-changing it from (left, center, Full, And right).
 
 - indenting/Deintenting paragraphs and lists
@@ -504,25 +508,22 @@ Rearranging deals with "Up and Down" Promotion deals with the directions "Left a
 - moving table columns left/right
 - Adding/removing '#' to a headline
 
-**Folding**
+## Folding
 Collapse multiple lines of text into a single line, which shrinks the vertical height of the whole document, making it faster to navigate.
 
-**Slice & Merge**
+## Slice & Merge
 While editing a document, it can be divided into multiple individual documents by adding a slice at the cursor. Doing so will create two new documents, one containing all the text above the slice and the other with all the text below the slice.
 
-**Shift Selecting**
+## Shift Selecting
 tapping right or left shift by itself highlights word the cursor is touching. Rapidly hitting shift will highlight the sentence, and Three times rapidly highlights the whole line.
 
-**Directional Shift Selecting**
+### Directional Shift Selecting
 Left shift selects words/sentences/lines behind the cursor, where right shift selects words/sentences/lines after the cursor.
 
-**Find Next**
-**⌘D** finds & Selects the next instance of selected word or word the cursor touches. begins after the selected word, but wraps to the beginning of the document if theres instances before.
-
-**Linear Copy & Paste**
+## Linear Copy & Paste
 This is lifted directly from text editors, If the cursor is on a line, using the Copy shortcut will copy the entire line **you don’t have to highlight the text**, and pasting that line will place it below the current line.
 
-**Context Sensitive Pasting**
+### Context Sensitive Pasting
 If compatible syntax is pasted from the clipboard it will be formatted for Type.
 - Or - If the last thing you copied was a url and you create a new link in a document, that url will be automatically pasted in the ().
 - convert from Markdown or HTML code,
@@ -530,7 +531,7 @@ If compatible syntax is pasted from the clipboard it will be formatted for Type.
 - strip out all tags by pasting as Plain Text,
 - add code examples by pasting as Code Block
 
-**Human Error Spelling and Grammar check**
+## Human Error Spelling and Grammar check
 A spell check which targets common typos that a normal spell check would otherwise miss since nothing is spelled incorrectly.
 
 - complemented vs complimented
@@ -545,8 +546,6 @@ A spell check which targets common typos that a normal spell check would otherwi
 - stalking vs talking
 - satan when you mean satin
 - pubic when you mean public
-
-
 
 #Settings
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2495%3A139)
@@ -620,61 +619,57 @@ Popup to comply with apple's HIG.
 # Concepts
 *Napkin Sketches & Ideas for future updates & Development. Some of this are half-baked ideas.*
 
-**Layout Styles**
+## Layout Styles
 Additional styling set to a layout (created with PFD layout in mind-) if you want to differentiate between a standard PDF and something like a CV or resume.
 
-**Building a Database**
+### Building a Database
 Using the references as a character bible for developing a story. example: Character Name(Description of the character). These pronouns are avoided by Spell Check.
-
-**References & Citation Rearrangement**
+References & Citation Rearrangement
 Rearranging a reference in the sideboard will change the reference numbers in the document
-
 Moving referenced text above/below other referenced text in the workspace will update the sequence number in the sideboard. If the referenced text is an IBID and moves above the initial reference, then the Ibid becomes the reference, and the initial reference becomes the ibid.
 
-**”Symbols", Libraries, or Passages (some other clever name)**
+### ”Symbols", Libraries, or Passages (some other clever name)
 Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.
-
 This would be good for something like legal documentation or even character bibles. If the main character's name needs to change, instead of doing find&replace, you'd edit the source.
-
-- When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
-- if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.
-- writers can detach instances from the source w/o with the context menu
-
-
+•	When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
+•	if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.
+•	writers can detach instances from the source w/o with the context menu
+Quick Note, when you just want to jot something down without going through the process of creating a new doc or opening a document
+The Assistant can be opened from outside the application to edit/add notes from the Folio. When called, the window works similar to notational velocity where the initial keystrokes perform a fuzzy search of all notes, and if no note contains what you've typed, then you can create a new note from whatever it is you entered.
+being able to quickly capture them I think is invaluable.**
+Notes are saved in a special "notebook" folder
+Download Notational Velocity for an example.
 
 In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has "page 10" and the ibid is "page 44" if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as "page 44" and the ibid becomes "page 10"
 
-**Batch Renaming documents (ACTION BAR?)**
+## Batch Renaming documents (ACTION BAR?)
 Selecting multiple documents and initiating a rename ⌘R allows for a batch rename in the order they are presented. If writers wanted to Number their documents this would be really helpful.
 
-**Auto-Number**
+## Auto-Number
 Set a folder to prepend a number or phrase (like Chapter one, two, three...) to the documents it holds.
 
-**Responsive Panels**
-The folio and sideboard present information different depending on how wide they are.
-
-**Q&A Interview style list items that alternate with Q: and A:**
+## Q&A Interview style Q:_
 transcribing an interview, the list items can alternate between Q: and A: Q&A lists might be the only ones impervious to relabeling when rearranged
 
-**Notes**
+## Notes
 I like the idea of the notes being used for more than just holding text, it should have more functions than that commented text in a document can be sent to a new or existing note. Some writers might want to make notes in the document as they're writing, and later reference them This declutters the document and still available to view. Like shaking an etch-a-sketch
 
-**Apple Notes Onboard new users by linking Apple notes to Type.**
+## Apple Notes Onboard new users by linking Apple notes to Type.
 A lot of writers use the Apple notes app on their phone, and would be good to allow them to access those notes from within type.
 
 Maybe they can link to the system folder?
 /Library/Group Containers/group.com.apple.notes/
 
-**Collecting Commented ToDo's**
+## Collecting Commented ToDo's
 if you begin a comment with "todo", then those comments can be collected in a sideboard creating a checklist, or maybe even used in another app like Reminders.
 
-**A way to "check done" documents, Turn to "Document Tasks"**
+## A way to "check done" documents, Turn to "Document Tasks"
 working on a multi-document project non-linearly could use a visual cue to indicate, "this doc is done, and others still need work." Could be a feature of "Focused" folders.
 
-**Pinning lines/Rubber banding**
+## Pinning lines/Rubber banding
 Set a temporary pin on a line, then you can scroll around the doc, or go to other documents entirely, and when you hit a shortcut you automatically go right back to that line, the pin disappears after returning. It's the equivilent of putting your finger on a page and flipping through a book.
 
-**Auto Pinning**
+### Auto Pinning
 If you use the mouse wheel/scroll manually up or down the document, there is an option to pin the row of the line the cursor resides to either the top or bottom of the viewport (depending on which way you scroll). If you scroll up the line sticks to the bottom, if you scroll down the line sticks to the top. (this suggests the relative location of the line where you left the cursor, its either above or below where you are now)
 - mouse clicking the pinned line or typing will snap you back to the line
 - are you able to write in the pinned location while viewing the new one? would anyone want to do that?
@@ -682,47 +677,55 @@ If you use the mouse wheel/scroll manually up or down the document, there is an 
 - This also doesnt work when you’re focusing or in typewriter mode
 
 
-**Plugin API for Actions and Sideboards**
+# Plugin API for Actions and Sideboards
 Programs like [sketch](#), Sublime Text, and Framer thrive on a community of designers and developers who build functionality into the application. This was only possible because the devs opened up the API and made it easy to create plugins and allow the creators to profit from their contributions (if they desire). It democratizes the feature-set for the application and only strengthens the user-base.
 
-**Git Integration**
+# Git Integration
 - changes indicated graphically, probably by the line numbers.
 
-**Unsplash Integration**
-in the sideboard, you can search for images to use as placeholders or even for the final doc. We should also pull in the contributors credits as a reference for the bibliography.
-
-**Where the cursor was last**
+# Where the cursor was last
 jumping around a document with something like *FIND* can leave you in a place within the document that you don’t want to be, maybe you just wanted to check something from earlier in the document, there should be a way to return to the last known position of the cursor AFTER an action that travels around the doc.
 
-**Serial to List**
+# Serial to List
 the ability to highlight a list of text in a series separated by commas (something, something, something, and something) and turning it into an ordered/unordered list, and vice versa.
 
-**Indie Publishers**
+# Unsplash Integration
+in the sideboard, you can search for images to use as placeholders or even for the final doc. We should also pull in the contributors credits as a reference for the bibliography.
+
+# Indie Publishers
 build integrations with independent publishing or print houses. Empower individuals before getting in bed with a huge publisher.
 
-**Whiteboard/Storyboard**
+### Whiteboard/Storyboard
 The option of viewing documents as a thumbnail gallery either in the folio, or in the workspace. The thumbnails would be sized according to standard 8.5x11 paper. (or their layout?)
 
-**Self Publishing Content Management System.**
+## Collaboration with strangers, Social Engineering better writing.
+sending your writing to be edited or audio to be transcribed. Since the app tracks time spent on a document you can pay freelancers well.
+
+## Self Publishing Content Management System.
 I think with compilers like Jeckyll, and services like blot or Small Victories which use a dropbox folder to host markdown files as web content, I think it'd be a big sell if someone could manage/publish a website (be it a blog, portfolio, or presentation) directly from the app without ever needing to open a browser.
 Type should allow for people to publish their writing on their own. If they have built a website or some other outlet then they should be accommodated
 I think I just want for people to be able to publish and manage their writing within the app. Would be interesting to make this apart of type, and to make the experience more understandable for non-programmers.
 
-**Vendor Layouts**
+## Vendor Layouts
 The ultimate goal for TYPE is to be a headquarters for writing. Someone should be able to start and end their work from within the app and never need to leave and sign-in to another service or copy+paste their markdown somewhere else. Integrations with Online services like *Wordpress, Medium, Small Victories, and Mailchimp* would be extremely valuable to users.
 
-**Newsletter Services**
+#### Newsletter Services
 letterfuel
-
-**Font Foundries**
+Font Foundries
 Partnering with Indie foundries to have print layouts use their unique font faces and font pairings (also for self-published websites?)
 Fatype
 Klim
 GrilliType
 
+### Email Marketing
+A sleeper feature would be to generate newsletters from within Type, Email marketing is a big business and both allowing users to generate their own campaigns or integrate with their company of choice mailchimp, tinyletter would be worth developing. It would be a matter of establishing a layout for them
+Publishing Sideboard
+This sideboard pops-out whenever the writer wishes to publish. (submit to a platform) or export (create a copy outside of Type in a particular format)
+
 It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
 
-**Slash commands**
+### Slash commands
+simple commands
 - /date - enters the current date
 - /time - current time
 - /tomorrow - date after current date
