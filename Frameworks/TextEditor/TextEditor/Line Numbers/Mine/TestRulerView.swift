@@ -24,7 +24,7 @@ class TestRulerView: NSRulerView {
             if invertedY > marker.frame.minY &&
                 invertedY < marker.frame.maxY {
                 
-                self.delegate?.markerClicked(marker)
+                self.delegate?.markerClicked(marker) {}
                 break
             }
         }

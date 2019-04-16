@@ -39,21 +39,23 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
             DispatchQueue.main.async {
                 
                 //collapse group and check string
-                viewController?.markerClicked(marker)
+                viewController?.markerClicked(marker) {
                 
-                let attributedString = NSAttributedString(attributedString: viewController!.textStorage)
-                var range = attributedString.string.maxNSRange
-                range = NSRange(location: range.location, length: range.length - 1)
-                let substring = attributedString.attributedSubstring(from: range)
-                
-                XCTAssert(substring.string == "\n# creation")
-                
-                //expand group and check string
-                viewController?.markerClicked(marker)
-                
-                XCTAssert(viewController?.textStorage.string == demoString)
-                
-                expectation.fulfill()
+                    let attributedString = NSAttributedString(attributedString: viewController!.textStorage)
+                    var range = attributedString.string.maxNSRange
+                    range = NSRange(location: range.location, length: range.length - 1)
+                    let substring = attributedString.attributedSubstring(from: range)
+                    
+                    XCTAssert(substring.string == "\n# creation")
+                    
+                    //expand group and check string
+                    viewController?.markerClicked(marker) {
+                    
+                        XCTAssert(viewController?.textStorage.string == demoString)
+                        
+                        expectation.fulfill()
+                    }
+                }
             }
         }
         
@@ -89,43 +91,47 @@ class TestTextGroupExpandingCollapsing: XCTestCase, TextEditorViewControllerDele
             DispatchQueue.main.async {
                 
                 //collapse child and check string
-                viewController?.markerClicked(childMarker)
+                viewController?.markerClicked(childMarker) {
                 
-                let attributedString = NSAttributedString(attributedString: viewController!.textStorage)
-                var range = attributedString.string.maxNSRange
-                range = NSRange(location: range.location, length: range.length - 1)
-                let substring = attributedString.attributedSubstring(from: range)
-                
-                XCTAssert(substring.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression")
-                
-                
-                //collapse parent and check string
-                viewController?.markerClicked(parentMarker)
-                
-                let attributedString2 = NSAttributedString(attributedString: viewController!.textStorage)
-                var range2 = attributedString2.string.maxNSRange
-                range2 = NSRange(location: range2.location, length: range2.length - 1)
-                let substring2 = attributedString.attributedSubstring(from: range2)
-                
-                XCTAssert(substring2.string == "\n# creation")
-                
-                
-                //expand parent and check string
-                viewController?.markerClicked(parentMarker)
-                
-                let attributedString3 = NSAttributedString(attributedString: viewController!.textStorage)
-                var range3 = attributedString3.string.maxNSRange
-                range3 = NSRange(location: range3.location, length: range3.length - 1)
-                let substring3 = attributedString.attributedSubstring(from: range3)
-                
-                XCTAssert(substring3.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression")
-                
-                //expand child and check string
-                viewController?.markerClicked(childMarker)
-                
-                XCTAssert(viewController?.textStorage.string == demoString)
-                
-                expectation.fulfill()
+                    let attributedString = NSAttributedString(attributedString: viewController!.textStorage)
+                    var range = attributedString.string.maxNSRange
+                    range = NSRange(location: range.location, length: range.length - 1)
+                    let substring = attributedString.attributedSubstring(from: range)
+                    
+                    XCTAssert(substring.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression")
+                    
+                    
+                    //collapse parent and check string
+                    viewController?.markerClicked(parentMarker) {
+                    
+                        let attributedString2 = NSAttributedString(attributedString: viewController!.textStorage)
+                        var range2 = attributedString2.string.maxNSRange
+                        range2 = NSRange(location: range2.location, length: range2.length - 1)
+                        let substring2 = attributedString.attributedSubstring(from: range2)
+                        
+                        XCTAssert(substring2.string == "\n# creation")
+                        
+                        
+                        //expand parent and check string
+                        viewController?.markerClicked(parentMarker) {
+                        
+                            let attributedString3 = NSAttributedString(attributedString: viewController!.textStorage)
+                            var range3 = attributedString3.string.maxNSRange
+                            range3 = NSRange(location: range3.location, length: range3.length - 1)
+                            let substring3 = attributedString.attributedSubstring(from: range3)
+                            
+                            XCTAssert(substring3.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## expression")
+                            
+                            //expand child and check string
+                            viewController?.markerClicked(childMarker) {
+                            
+                                XCTAssert(viewController?.textStorage.string == demoString)
+                                
+                                expectation.fulfill()
+                            }
+                        }
+                    }
+                }
             }
         }
         

@@ -374,12 +374,21 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
 //        }
 //    }
     
-    func markerClicked(_ marker: TextGroupMarker) {
+    func markerClicked(_ marker: TextGroupMarker, completion: @escaping ()->()) {
         
-        MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
-        //TODO: figure out invalid range
-        self.invalidateRanges(invalidRanges: [textStorage.string.maxNSRange])
-        self.rulerView.needsDisplay = true
+        DispatchQueue.global().async {
+            
+            self.semaphore.wait()
+            MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
+            
+            DispatchQueue.main.async {
+                //TODO: figure out invalid range
+                self.invalidateRanges(invalidRanges: [self.textStorage.string.maxNSRange])
+                self.rulerView.needsDisplay = true
+                self.semaphore.signal()
+                completion()
+            }
+        }
     }
     
     // MARK: - OutlineViewControllerDelegate    

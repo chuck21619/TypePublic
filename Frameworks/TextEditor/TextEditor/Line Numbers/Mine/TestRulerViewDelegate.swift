@@ -10,5 +10,5 @@ import Foundation
 
 protocol TestRulerViewDelegate {
     
-    func markerClicked(_ marker: TextGroupMarker)
+    func markerClicked(_ marker: TextGroupMarker, completion: @escaping ()->())
 }
