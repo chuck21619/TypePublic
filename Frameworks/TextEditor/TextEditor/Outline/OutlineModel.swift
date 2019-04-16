@@ -141,6 +141,10 @@ class OutlineModel {
                 
                 //the textgroup is completely after the edit, and will be adjusted by the same as the edit delta
             }
+            else if textGroup.parentTextGroup == removingTextGroup {
+                
+                //text group will be removed from outline
+            }
             else {
                 
                 //TODO: figure out the other scenarios - not sure how many more there are
