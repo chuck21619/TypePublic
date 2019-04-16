@@ -268,7 +268,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
         
-        collapsingTranslator.sortCollapsedTextGroups() // possible want to optimize this. the collapsed groups may not be sorted if one is dragged below or above another one
+        collapsingTranslator.sortCollapsedTextGroups() // the collapsed groups may not be sorted if one is dragged below or above another one. possibly want to optimize this
         collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [])
         
         if let parent = self.model?.parentTextGroup {
