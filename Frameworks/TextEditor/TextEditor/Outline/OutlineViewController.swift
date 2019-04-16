@@ -201,11 +201,9 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
         
         let semaphore = (self.delegate as! TextEditorViewController).semaphore
-        semaphore.wait()
         
-        defer {
-            semaphore.signal()
-        }
+        print("semaphore request - outline")
+        semaphore.wait()
         
         delegate.beginUpdates()
         
@@ -215,6 +213,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         let targetParent = item as? TextGroup ?? parentTextGroup
         
         guard let draggingGroup = draggingGroup else {
+            print("semaphore released - didprocess (no dragging group)")
+            semaphore.signal()
             return false
         }
         
@@ -235,6 +235,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         }
         //fix: the draggingGroup.parentTextGroup is nil after collapsing an unrelated textgroup
         guard let textGroupString = delegate.string(for: draggingGroup, outlineModel: self.model) else {
+            print("semaphore released - didprocess (no textGroupString)")
+            semaphore.signal()
             return false
         }
         
@@ -278,6 +280,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         delegate.endUpdates()
         
+        print("semaphore released - didprocess (completed)")
+        semaphore.signal()
         return true
     }
     

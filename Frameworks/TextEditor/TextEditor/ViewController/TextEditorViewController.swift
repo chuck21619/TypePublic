@@ -257,10 +257,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         newWorkItem = DispatchWorkItem {
             
-            defer {
-                self.semaphore.signal()
-            }
-            
             let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
             
             guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
@@ -277,15 +273,20 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             self.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
             
-            self.semaphore.wait()
-            
             self.outlineModel?.outline(textStorage: stringCopy)
             
+            print("semaphore request - didprocess")
+            self.semaphore.wait()
+            
             guard newWorkItem.isCancelled == false else {
+                print("semaphore released - didprocess (work item cancelled)")
+                self.semaphore.signal()
                 return
             }
             
             guard let editingValues = self.editingValuesSinceLastParsing else {
+                print("semaphore released - didprocess (no editing values)")
+                self.semaphore.signal()
                 return
             }
             
@@ -301,9 +302,16 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges) ?? []
                 self.ignoreProcessing(ignore: false)
 
+                
+                print("didProcess - calling main thread")
+                
                 DispatchQueue.main.async {
                     
+                    print("didProcess - main thread time")
+                    
                     guard newWorkItem.isCancelled == false else {
+                        print("semaphore released - didprocess (work item cancelled 2)")
+                        self.semaphore.signal()
                         return
                     }
                     
@@ -318,6 +326,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                     }
                     
                     newWorkItem = nil
+                    
+                    print("semaphore released - didprocess (completed)")
+                    self.semaphore.signal()
                 }
             }
         }
