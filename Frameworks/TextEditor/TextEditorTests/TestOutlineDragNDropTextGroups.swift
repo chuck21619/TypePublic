@@ -347,8 +347,9 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
                         let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, acceptDrop: StubDraggingInfo(), item: targetParentTextGroup as Any, childIndex: targetParentTextGroup.textGroups.count)
                         
                         //validate the text groups after moving
-                        XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group\n# creatio￼n"))
+                        XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group\n# creation￼"))
                         
+                        expectation.fulfill()
                     }
                 }
             }

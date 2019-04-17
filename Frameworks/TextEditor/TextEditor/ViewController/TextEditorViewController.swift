@@ -444,15 +444,18 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         //if inserting string to end of document, and the end of the document is not a newline character. add a new line charachter so the textgorup is not appended inside the last textgroup
         
         var attributedStringToInsert = attributedString
+        var addition = 0
         if locationToInsert == textStorage.string.count {
             
             if textStorage.string.suffix(1) != "\n" {
                 
                 attributedStringToInsert = attributedString.prepended("\n")
+                addition = 1
             }
         }
         
         textStorage.insert(attributedStringToInsert, at: locationToInsert)
+        
         
         //recalculate moved text group
         //recalculate all child textgroups ranges to account for move
@@ -462,7 +465,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             movedTextGroupDelta = locationToInsert - movedTextGroupOriginalRange.location
         }
         
-        let newTextGroupRange = NSRange(location: locationToInsert, length: movedTextGroup?.token?.range.length ?? 0)
+        let newTextGroupRange = NSRange(location: locationToInsert + addition, length: movedTextGroup?.token?.range.length ?? 0)
         movedTextGroup?.token?.range = newTextGroupRange
         
         if let parentTextgroup = outlineModel?.parentTextGroup {
