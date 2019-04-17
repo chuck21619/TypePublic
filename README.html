@@ -1,0 +1,1988 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>body {
+  max-width: 980px;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headerlink {
+  font: normal 400 16px fontawesome-mini;
+  vertical-align: middle;
+  margin-left: -16px;
+  float: left;
+  display: inline-block;
+  text-decoration: none;
+  opacity: 0;
+  color: #333;
+}
+
+.markdown-body .headerlink:focus {
+  outline: none;
+}
+
+.markdown-body h1 .headerlink {
+  margin-top: 0.8rem;
+}
+
+.markdown-body h2 .headerlink,
+.markdown-body h3 .headerlink {
+  margin-top: 0.6rem;
+}
+
+.markdown-body h4 .headerlink {
+  margin-top: 0.2rem;
+}
+
+.markdown-body h5 .headerlink,
+.markdown-body h6 .headerlink {
+  margin-top: 0;
+}
+
+.markdown-body .headerlink:hover,
+.markdown-body h1:hover .headerlink,
+.markdown-body h2:hover .headerlink,
+.markdown-body h3:hover .headerlink,
+.markdown-body h4:hover .headerlink,
+.markdown-body h5:hover .headerlink,
+.markdown-body h6:hover .headerlink {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* MultiMarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px fontawesome-mini;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\e157';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><style>/*GitHub*/
+.codehilite {background-color:#fff;color:#333333;}
+.codehilite .hll {background-color:#ffffcc;}
+.codehilite .c{color:#999988;font-style:italic}
+.codehilite .err{color:#a61717;background-color:#e3d2d2}
+.codehilite .k{font-weight:bold}
+.codehilite .o{font-weight:bold}
+.codehilite .cm{color:#999988;font-style:italic}
+.codehilite .cp{color:#999999;font-weight:bold}
+.codehilite .c1{color:#999988;font-style:italic}
+.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
+.codehilite .gd{color:#000000;background-color:#ffdddd}
+.codehilite .ge{font-style:italic}
+.codehilite .gr{color:#aa0000}
+.codehilite .gh{color:#999999}
+.codehilite .gi{color:#000000;background-color:#ddffdd}
+.codehilite .go{color:#888888}
+.codehilite .gp{color:#555555}
+.codehilite .gs{font-weight:bold}
+.codehilite .gu{color:#800080;font-weight:bold}
+.codehilite .gt{color:#aa0000}
+.codehilite .kc{font-weight:bold}
+.codehilite .kd{font-weight:bold}
+.codehilite .kn{font-weight:bold}
+.codehilite .kp{font-weight:bold}
+.codehilite .kr{font-weight:bold}
+.codehilite .kt{color:#445588;font-weight:bold}
+.codehilite .m{color:#009999}
+.codehilite .s{color:#dd1144}
+.codehilite .n{color:#333333}
+.codehilite .na{color:teal}
+.codehilite .nb{color:#0086b3}
+.codehilite .nc{color:#445588;font-weight:bold}
+.codehilite .no{color:teal}
+.codehilite .ni{color:purple}
+.codehilite .ne{color:#990000;font-weight:bold}
+.codehilite .nf{color:#990000;font-weight:bold}
+.codehilite .nn{color:#555555}
+.codehilite .nt{color:navy}
+.codehilite .nv{color:teal}
+.codehilite .ow{font-weight:bold}
+.codehilite .w{color:#bbbbbb}
+.codehilite .mf{color:#009999}
+.codehilite .mh{color:#009999}
+.codehilite .mi{color:#009999}
+.codehilite .mo{color:#009999}
+.codehilite .sb{color:#dd1144}
+.codehilite .sc{color:#dd1144}
+.codehilite .sd{color:#dd1144}
+.codehilite .s2{color:#dd1144}
+.codehilite .se{color:#dd1144}
+.codehilite .sh{color:#dd1144}
+.codehilite .si{color:#dd1144}
+.codehilite .sx{color:#dd1144}
+.codehilite .sr{color:#009926}
+.codehilite .s1{color:#dd1144}
+.codehilite .ss{color:#990073}
+.codehilite .bp{color:#999999}
+.codehilite .vc{color:teal}
+.codehilite .vg{color:teal}
+.codehilite .vi{color:teal}
+.codehilite .il{color:#009999}
+.codehilite .gc{color:#999;background-color:#EAF2F5}
+</style><title>README</title></head><body><article class="markdown-body"><h1 id="abstract">Abstract<a class="headerlink" href="#abstract" title="Permanent link"></a></h1>
+<p>Type is a markdown editor designed as a “soup-to-nuts” solution for writers of various disciplines. It features unique mechanics built around typing, a smarter system for organizing documents and text, and an interface which encourages better writing by design.</p>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59">WIREFRAME</a></p>
+<h1 id="folio">Folio<a class="headerlink" href="#folio" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42">WIREFRAME</a></p>
+<p>The <strong>Folio</strong> is the left panel where Files are managed. All files are stored locally in the user&rsquo;s documents folder (by default) with the option to change and add locations. The folio can be hidden, sliding into the workspace. When it is revealed it <strong>pushes</strong> the workspace to the right. If the app window is narrow enough, the folio will hide automatically.</p>
+<h3 id="tab-views">Tab Views<a class="headerlink" href="#tab-views" title="Permanent link"></a></h3>
+<p>The top of the folio contains the tabs:<strong>Folio</strong>, <strong>Tags</strong>, And the <strong>Archive</strong>. Each of these tabs present a different view of the documents contained within TYPE. 
+- <strong>Folio</strong> displays all documents not archived
+- <strong>Tags</strong> displays documents with tags, organized by the tag name(s) in <strong>Tag folders</strong>.
+- <strong>Archive</strong> displays documents which have been published or sent to the archive manually by the writer.</p>
+<h3 id="filter">Filter<a class="headerlink" href="#filter" title="Permanent link"></a></h3>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A4906">WIREFRAME</a></p>
+<p>Located at the bottom of the folio, typing in this field will fuzzy filter the files &amp; folders of the tab you are currently in.</p>
+<p>Filtering with markdown syntax and text will return documents which have tagged text. For example, entering &ldquo;#Pineapple&rdquo; would filter for documents that contained   headlines with the word pineapple.</p>
+<p>Selecting a result will open it in the workspace. </p>
+<p>To close/end the filtered view:
+- Double click on a result.
+- click the “x” in the search field
+- hit the escape key
+- Write in the workspace of a selected result.</p>
+<h3 id="categories">Categories<a class="headerlink" href="#categories" title="Permanent link"></a></h3>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2504%3A59">WIREFRAME</a></p>
+<p>Folders and Documents can be linked within categories if they fit the criteria. Categories always appear before the list of documents &amp; Folders in the folio.</p>
+<p>Examples of categories are:
+- <strong>Recent</strong> shows recently edited documents
+- <strong>Due Soon</strong> if documents have a due date that is approaching (within a week or so)
+- <strong>Embargoed</strong> documents which have a timed publish schedule that is approaching
+- <strong>New Comments</strong> (future release) When collaborating with an editor or another writer and they’ve left a new comment on the document, New comments appears with the related docs.
+- <strong>Whatever else we can come up with</strong></p>
+<h3 id="document-and-folder-list">Document and Folder list<a class="headerlink" href="#document-and-folder-list" title="Permanent link"></a></h3>
+<p>Documents and folders are displayed as a list with an icon denoting the Layout of the document or folder. Document names long enough to reach the right boundary of the folio panel will append an ellipsis at the point of overflow/break.</p>
+<p><strong>The visual order of files in the folio determines the order the text appears in the workspace.</strong> The order flows from top to bottom, the top most document is first, and the bottom most document is last.</p>
+<p><strong>Deleted files go to the MacOS trashcan if deleted from the Folio.</strong> When a new document is created, you get the option of naming it immediately. If don&rsquo;t name it, or add text to it- then it automatically removes itself from the folio and does not enter the trashcan. <strong>No reason to clutter the trashcan with a bunch of accidentally created documents.</strong></p>
+<h2 id="rearrangement">Rearrangement<a class="headerlink" href="#rearrangement" title="Permanent link"></a></h2>
+<p>Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.</p>
+<h3 id="renaming">Renaming<a class="headerlink" href="#renaming" title="Permanent link"></a></h3>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2568%3A3">WIREFRAME</a></p>
+<p>Rename a file in the folio by selecting it and using the Shortcut <strong>⌘R</strong>, clicking the name at the top of the Tool bar (with the document open in the workspace), or in the context menu (edit &gt; Rename)</p>
+<h3 id="sorting">Sorting<a class="headerlink" href="#sorting" title="Permanent link"></a></h3>
+<p><strong>Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.</strong> Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).</p>
+<h3 id="security">Security<a class="headerlink" href="#security" title="Permanent link"></a></h3>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2567%3A4015">WIREFRAME</a></p>
+<p>Encrypting and protecting writing with passwords should be a feature in Type. Writers should have the option of securing their documents by locking the app behind a password.</p>
+<p>Additional Options:
+1. auto-lock on app close
+2. auto-lock on sleep
+3. auto-lock after inactivity.
+4. Apple Keychain or 1Password integration
+5. Emergency key, that unlocks any document if you forget the one you set</p>
+<h3 id="selecting-documents-and-folders">Selecting documents and Folders<a class="headerlink" href="#selecting-documents-and-folders" title="Permanent link"></a></h3>
+<p>If a document is selected from the folio, then it appears in the workspace. However, if a folder is selected, then all of the documents it contains are displayed in the workspace in the same order they appear in the folder. The document names are centered above the start of each document. </p>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2626%3A9">EXAMPLE</a></p>
+<h1 id="documents">Documents<a class="headerlink" href="#documents" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2502%3A42">EXAMPLE</a></p>
+<p>Documents are plain-text markdown (.md) files. These files store additional meta/compositional data that can be viewed in the app. Additionally, documents can be styled by applying a layout.</p>
+<h4 id="creating-documents">Creating Documents<a class="headerlink" href="#creating-documents" title="Permanent link"></a></h4>
+<p>Create a new document with the shortcut <strong>⌘N</strong>, by clicking on the Plus button at the bottom of the folio, in the context menu of the folio, or menu bar (File &gt; New Document). </p>
+<p>When a new document is created…
+1. The first option you have is to name it.
+2. If you’re working on a document, and a new one is created, then it is created below the one you’re working on (in the folio).</p>
+<p><strong>Jump to the next/previous document with the arrow keys.</strong> If the beginning or end of a document is displayed in the workspace, arrow up to go to the document that preceedes it, and arrow down to move to the next document.</p>
+<h4 id="merging-documents">Merging Documents<a class="headerlink" href="#merging-documents" title="Permanent link"></a></h4>
+<p>Documents can be merged together by selecting them in the folio and choosing &ldquo;merge&rdquo; from either the context menu, or Menubar (edit &gt; merge) or with the shortcut <strong>⌘E</strong>. Documents merge in order of appearance (top to bottom) in the folio. When documents are merged, the <strong>Top document</strong> becomes the name and layout of the document after the merge</p>
+<h1 id="folders">Folders<a class="headerlink" href="#folders" title="Permanent link"></a></h1>
+<p>Folders are groups of files (documents and other folders).</p>
+<p>*<em>Create a new folder: *</em>
+- with the shortcut: <strong>⌘⇧N</strong>
+- selecting “New Folder” from the context menu in the folio
+- Selecting the menubar option (edit &gt; New Folder) or (edit &gt; Group)
+- selecting multiple files and using the shortcut: <strong>⌘G</strong> </p>
+<p><strong>Deleting or Ungrouping A Folder</strong>
+Folders can be deleted, sending it and all it’s contents to the Trashcan, or they can be “ungrouped” which frees all of its contents to the folio. Alternatively, if a single document in a folder is selected and <em>ungrouped</em> it alone will be removed from the folder.
+- Ungroup with the keyboard shortcut: <strong>⇧⌘G</strong>
+- Selecting “Ungroup” from the context menu in the folio
+- Selecting the menubar option (edit &gt; New folder) or (edit &gt; Group)</p>
+<p><strong>Expanded Folders are stick to the top of the folio when scrolling</strong>
+If there is enough content in the folio to scroll, the position of an open folder will stick to the top of the folio and everything will scroll beneath it. Once all the contents of the folder have scrolled past the top, The folder will become unstuck and will be pushed up. collapsed folders will not become fixed to the top.</p>
+<h2 id="folder-focus">Folder Focus<a class="headerlink" href="#folder-focus" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2519%3A8015">WIREFRAME</a></p>
+<p>Folder focus is a more elegant way of decluttering the folio and zero-in on a project. </p>
+<p><strong>To focus on a folder:</strong>
+- click the arrow that appears on the right when a folder is selected
+- Use the shortcut <strong>⌘+Return</strong> </p>
+<p>Unfocus a folder by hitting escape or clicking the back arrow at the top of the folio.</p>
+<p>When a folder is in focus…
+- Only the files it contains are displayed.
+- The Name of the folder appears at the top of the folio.
+- Document icons &amp; text become larger and display additional information (The layout of the folder/documents determine how the documents are displayed)
+- Subfolders are presented as collapsable sections</p>
+<h1 id="layouts">Layouts<a class="headerlink" href="#layouts" title="Permanent link"></a></h1>
+<blockquote>
+<p>&ldquo;In microsoft word, I move an image 2 pixels left- suddenly all text is capitalized and translated to French, three new pages appear, and in the distance&hellip;sirens.&rdquo;</p>
+</blockquote>
+<p>Layouts were created as a solution against the need to format a page while writing. A Layout is a set of styles which determine how a document will look once it is published/printed. Documents can only have <strong>one</strong> layout at a time, but can have any layout applied.</p>
+<p><strong>When a document or folder has a layout applied its icon will change according to said layout.</strong> Icons for folders are “collective” whereas icons for documents are “parts.” i.e. documents have “page” layouts where the folder would be “book.”</p>
+<h2 id="applying-a-layout">Applying a layout<a class="headerlink" href="#applying-a-layout" title="Permanent link"></a></h2>
+<p>Layouts are assigned to documents and folders from:</p>
+<ul>
+<li>The sideboard (Info, Publish and Print), </li>
+<li>Context menu</li>
+<li>Menu bar (edit &gt; layout &gt; name).</li>
+</ul>
+<h2 id="folder-layouts">Folder Layouts<a class="headerlink" href="#folder-layouts" title="Permanent link"></a></h2>
+<p>Assigning a layout to a folder applies the same layout to every file it contains. (overriding any layouts previously assigned to individual docs/folders).</p>
+<h2 id="additional-features">Additional Features<a class="headerlink" href="#additional-features" title="Permanent link"></a></h2>
+<p>Certain layouts offer unique components and functionality related to the type of layout.  These components are displayed once the document is published.</p>
+<ol>
+<li>Table of Contents (auto-generated by the outline or document names)</li>
+<li>Clickable Table of Contents (Technical documents &amp; Wikis)</li>
+<li>“Presentation View” for slides and presentations.</li>
+<li>Unique Targets, for something like NanoWriMo could get a target of 10k words a day built in.</li>
+<li>Index/Glossary of Terms - created by a note</li>
+</ol>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Layout</th>
+<th>Icon</th>
+<th>Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page</td>
+<td>i</td>
+<td>Book</td>
+<td>the default layout option</td>
+</tr>
+<tr>
+<td>Poem</td>
+<td>i</td>
+<td>Book</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Slide</td>
+<td>i</td>
+<td>Presentation</td>
+<td>-</td>
+</tr>
+<tr>
+<td>PDF</td>
+<td>i</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>PlainText</td>
+<td>i</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Note</td>
+<td>i</td>
+<td>Notebook</td>
+<td>notes can be generated and edited</td>
+</tr>
+<tr>
+<td>Technical Document</td>
+<td>i</td>
+<td>Wiki</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Recipe</td>
+<td>i</td>
+<td>Recipe Box</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Newsletter</td>
+<td>i</td>
+<td>Campaign</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Interview</td>
+<td>i</td>
+<td>Tape Deck</td>
+<td>collected from audio transcriptions</td>
+</tr>
+</tbody>
+</table>
+<h1 id="tags">Tags<a class="headerlink" href="#tags" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A2359">WIREFRAME</a></p>
+<p><strong>Documents can be tagged in type, folders cannot be tagged.</strong> When collapsed, Folders can display the tags of the documents it contains. Tags are displayed as dots after the document name in the folio by default. Tags can also be displayed as <a href="https://developer.apple.com/design/human-interface-guidelines/macos/fields-and-labels/token-fields/">tokens</a>- displaying their tag color and tag name. When in <strong>token</strong> form, tags can be renamed and recolored.</p>
+<h2 id="macos-color-panel-nscolorpanel-to-change-tag-colors">MacOS color Panel (NSColorPanel) to change tag colors.<a class="headerlink" href="#macos-color-panel-nscolorpanel-to-change-tag-colors" title="Permanent link"></a></h2>
+<p>To change a tags color, Right click on either a <strong>Tag Token</strong> or <strong>Tag Folder</strong> doing so will display the Mac Color panel. </p>
+<p>Investigate: <em>There’s a way to add a tab to the color panel, I’ve seen other apps do it.</em></p>
+<h2 id="tagging-documents">Tagging Documents<a class="headerlink" href="#tagging-documents" title="Permanent link"></a></h2>
+<p>Tagging documents works a lot like it does in MacOS with a range of tag dots to select from the context or menu bar. A document can also have a tag added from its <strong>info sideboard</strong> under the tags section.</p>
+<p>When renaming a document from the toolbar, the dropdown also provides a dialogue box to add/remove tags.</p>
+<h2 id="editing-names-colors">Editing Names &amp; Colors<a class="headerlink" href="#editing-names-colors" title="Permanent link"></a></h2>
+<p>To edit a tags name, the tag needs to be displayed as a <strong>token</strong> (or a folder if you are in the Tags View). Tag dots next to documents can become tag tokens by clicking on any of the dots. doing so will open a <strong>token field</strong> below the document where tags can be renamed.</p>
+<p>Alternatively, a document’s tags can be found as tokens in the <strong>Info Sideboard.</strong></p>
+<h2 id="tag-tab-tag-folders">Tag Tab &amp; Tag Folders<a class="headerlink" href="#tag-tab-tag-folders" title="Permanent link"></a></h2>
+<p>The Tag Tab at the top of the folio displays all tagged documents organized by their tag name(s) as <strong>Tag folders</strong>. These folders can become Focused, but cannot be Published. Since a document can have multiple tags, it can also appear in multiple <strong>Tag folders</strong>.</p>
+<p>Deleting a tag folder will remove that tag from every document in Type.</p>
+<h2 id="deleting-tags">Deleting Tags<a class="headerlink" href="#deleting-tags" title="Permanent link"></a></h2>
+<ul>
+<li>Deleting a tag token In the Info Sideboard under the Tags section.</li>
+<li>Selecting a filled in tag dot from the Context Menu. (Exactly like how it works in MacOS)</li>
+<li><strong>In the Tag Tab/View</strong> deleting a document from a tag folder, removes the tag from the document.</li>
+</ul>
+<h1 id="archive">Archive<a class="headerlink" href="#archive" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A2240">WIREFRAME</a>
+The Archive Tab is a collection of documents that have either been published or moved there by the writer. The archive is a way to de-clutter the folio and also catalogue completed work. Documents which enter the Archive receive an &ldquo;Archived date&rdquo; in their Info <strong>sideboard</strong>.</p>
+<p>Archived documents can be retrieved/copied from the archive and re-enter the Folio. <em>I am debating if this retrieval is just making a copy of the archived doc, and keeping the original in the folio- if that would create clutter. it depends on if the archive is better for storage only, or storing documents in a manner that keeps a history.</em></p>
+<h2 id="date-sections">Date Sections<a class="headerlink" href="#date-sections" title="Permanent link"></a></h2>
+<p>The Archive is sorted chronologically and groups documents by the month and year they entered.</p>
+<h1 id="workspace">Workspace<a class="headerlink" href="#workspace" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2519%3A9570">WIREFRAME</a>
+The workspace is the center panel and is never hidden (unlike the Folio &amp; Sideboard). The workspace contains the <strong>outline</strong>, a <strong>text column</strong>, <strong>line numbers</strong>, and the <strong>action bar</strong> (when called).</p>
+<h2 id="typography">Typography<a class="headerlink" href="#typography" title="Permanent link"></a></h2>
+<p>Type has its own font which comes in: Serif, Sans-Serif, &amp; Monospaced typefaces. This font has special ligatures designed for markdown syntax. The size of the font can be changed at will with the shortcuts ⌘+ and ⌘-. The default size for type is <strong>16</strong>.</p>
+<h3 id="golden-ratio-sizing">Golden Ratio Sizing<a class="headerlink" href="#golden-ratio-sizing" title="Permanent link"></a></h3>
+<p>The <strong>Font Size</strong>, <strong>Line Height</strong>, and <strong>Text Column</strong> all relate to one another using the golden ratio. Since the font size can be changed at will, its value determines the relative values for both the line height and text column.</p>
+<p>Luckily This work has already been done:
+<strong>Golden Ratio Type Calculator <a href="https://grtcalculator.com/">GRCALC</a></strong>
+Here’s the math: <a href="https://grtcalculator.com/math/">Math</a></p>
+<h3 id="line-numbers">Line Numbers<a class="headerlink" href="#line-numbers" title="Permanent link"></a></h3>
+<p>Line numbers appear in the right margin of the workspace and indicate lines, which is a series of text unbroken by a return. lines without text do not have numbers assigned to them.</p>
+<h1 id="views-modes">Views &amp; Modes<a class="headerlink" href="#views-modes" title="Permanent link"></a></h1>
+<p>text in the workspace can be displayed in different views and modes. A <strong>view</strong> determines how the workspace appears, where <strong>modes</strong> determine how the text appears when writing.</p>
+<h2 id="preview">Preview<a class="headerlink" href="#preview" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A77">EXAMPLE</a>
+Preview mode displays how the document will appear according to its <strong>Layout</strong>.
+The preview can be toggled or peeked by tapping or holding <strong>⌘P.</strong></p>
+<p><strong>Q:should writers be able to edit the document while in preview mode?</strong></p>
+<h2 id="split">Split<a class="headerlink" href="#split" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2522%3A1056">EXAMPLE</a>
+The workspace can be split in half vertically, displaying two documents at the same time (or the same document extended to both views). In split view, The <strong>outline</strong> is only displayed in the active document containing the cursor.</p>
+<h3 id="split-preview">Split Preview<a class="headerlink" href="#split-preview" title="Permanent link"></a></h3>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2522%3A1133">EXAMPLE</a>
+Split view and preview can be combined to show markdown on one side, and the layout preview on the other. The windows can scroll in sync with one another, and the preview updates in real time.</p>
+<h3 id="split-continuous">Split (Continuous)<a class="headerlink" href="#split-continuous" title="Permanent link"></a></h3>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2522%3A1173">EXAMPLE</a>
+The same document is displayed in both views, it begins on the left and continues on the right.</p>
+<h2 id="typewriter-mode">Typewriter (MODE)<a class="headerlink" href="#typewriter-mode" title="Permanent link"></a></h2>
+<p>Typewriter mode fixes the cursor to either the top, middle, or bottom of the workspace. Text then scrolls into or out-of the chosen position.</p>
+<p>Note: Top and Bottom positions are not the absolute top and absolute bottom. It is more like 30% from the top, and 30% from the bottom of the workspace. <a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A193">EXAMPLE</a></p>
+<h2 id="text-focus-mode">Text Focus (MODE)<a class="headerlink" href="#text-focus-mode" title="Permanent link"></a></h2>
+<p>This mode highlights the chosen amount of text which the cursor touches and dims all other text. Text can be focused by:
+1.  <a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A154">Line</a>
+2.  <a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A232">Sentence</a>
+3.  <a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2525%3A271">Paragraph</a></p>
+<blockquote>
+<p><strong>Text focus and typewriter can be used at the same time.</strong></p>
+</blockquote>
+<h2 id="changing-documents-with-arrow-keys">Changing documents with arrow keys<a class="headerlink" href="#changing-documents-with-arrow-keys" title="Permanent link"></a></h2>
+<p>if the workspace view is at the beginning or end of a document, hitting arrow up (if at the beginning) or Down (if at the end) will move to the next or Previous Document in order.</p>
+<h2 id="new-docs-start-in-the-middle">New docs start in the middle<a class="headerlink" href="#new-docs-start-in-the-middle" title="Permanent link"></a></h2>
+<p>The first lines of text in a document starts around the middle of the workspace. The more text that is entered will push the first lines of text up toward the top of the workspace. This keeps the text at eye level in the beginning and is good visual ergonomics.</p>
+<h1 id="outline">Outline<a class="headerlink" href="#outline" title="Permanent link"></a></h1>
+<p>The outline is a list of links to every H1, H2 and, H3 tag in the document. It is positioned (horizontally centered) in either the left margin of the workspace or in its own Sideboard.</p>
+<h2 id="features-of-the-outline">Features of the outline<a class="headerlink" href="#features-of-the-outline" title="Permanent link"></a></h2>
+<p>The outline serves as a quick reference to the structure of the document and allows the writer to jump around the document and arrange writing from a top level view. Features of the outline include:
+- Builds in real time as you write.
+- Folds according to Headline Hierarchy
+- Moves the view to any headline selected
+- Rearranges text in the workspace
+- Bolds/highlights the headline containing the cursor.</p>
+<p><em>Having the option of customizing the level of headline you can view? If you only want to look at the H1’s or H1’s and H2s?</em></p>
+<p><em>Outline collapses when window is narrow</em></p>
+<h2 id="rules-of-arrangement">Rules of Arrangement<a class="headerlink" href="#rules-of-arrangement" title="Permanent link"></a></h2>
+<p>Headline tags ( #, ##, ### ) act in a nested hierarchy with H1 being at the highest, followed by H2, and then H3. Each Headline groups all the text (and child headlines) that follow until the next occurrence of itself.</p>
+<h1 id="sideboard">Sideboard<a class="headerlink" href="#sideboard" title="Permanent link"></a></h1>
+<p>The sideboard is a panel that reveals itself from the right of the workspace. It displays information and settings related to the selected document/folder in the workspace as well the app itself. The idea behind the sideboard is that you can see important information or tinker with settings while maintaining an unobstructed view of the writing. Sideboards are coupled with related sideboards. The only ones without a pair are “Updates” and “Dictionary.”</p>
+<blockquote>
+<p>Sideboards are also built with extending functionality in mind. Anything new we need to build or add can be accessed and tinkered with via the sideboard.</p>
+</blockquote>
+<h2 id="info-outline">Info &amp; Outline<a class="headerlink" href="#info-outline" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A8">WIREFRAME</a>
+Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data &amp; stats about the writing.</p>
+<p>The outline for the document in the workspace. This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
+1. Filtering
+2. displaying indicator dots for things like: misspellings, comments, or highlighted text as these are areas where you’d want to see from a top-level view.</p>
+<h2 id="publish-print">Publish &amp; Print<a class="headerlink" href="#publish-print" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2514%3A579">EXAMPLE</a></p>
+<h2 id="dictionary">Dictionary<a class="headerlink" href="#dictionary" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2514%3A1203">EXAMPLE</a>
+Maybe one of the larger time-saving ideas, being able to search for the definition of a word, or find synonyms/antonyms without leaving the app. Highlight a word to get its definition and/or change it to a synonym.
+1. Insert words by clicking on the definition, synonyms, and/or antonyms.
+2. Replace words by highlighting them and THEN clicking the definitions, synonyms/antonyms.</p>
+<h1 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h1>
+<p>TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few custom tags. Some syntax will receive visual formatting specific to TYPE (like tables and code fences) to make them both easier to read and edit.</p>
+<h2 id="tag-toggling">Tag Toggling<a class="headerlink" href="#tag-toggling" title="Permanent link"></a></h2>
+<p>Syntax can be toggled on/off with keyboard shortcuts. If a word is highlighted or if the cursor is touching a word the writer can use a shortcut(if one is mapped) to toggle the tag on/off. For example, Bolding a word.</p>
+<h2 id="mirror-modify-bracketed-syntax-punctuation">Mirror Modify Bracketed Syntax &amp; Punctuation<a class="headerlink" href="#mirror-modify-bracketed-syntax-punctuation" title="Permanent link"></a></h2>
+<p>Deleting or highlighting &amp; changing either the opening or closing tag or punctuation automatically deletes/changes the opposite.</p>
+<h2 id="auto-close">Auto-close<a class="headerlink" href="#auto-close" title="Permanent link"></a></h2>
+<p>If an opening tag for syntax or punctuation is entered, the closing tag will appear automatically after the cursor. Hitting Return or arrowing up/down from the line will close the tag.</p>
+<h2 id="auto-wrap">Auto-Wrap<a class="headerlink" href="#auto-wrap" title="Permanent link"></a></h2>
+<p>Entering bracketed punctuation (,[,{,&rdquo;,&rsquo; and/or syntax on highlighted word(s) will wrap the word(s). <strong>The syntax always goes outside the punctuation.</strong></p>
+<h1 id="links">Links<a class="headerlink" href="#links" title="Permanent link"></a></h1>
+<p>Plain urls like <a href="http://www.google.com">www.google.com</a> will appear as clickable hyperlinks in the document.</p>
+<p>Links in markdown syntax <a href="/Users/Macbook/Documents/Type/url">displayName</a> will appear as hyperlinks as the displayName.</p>
+<p>Using the shortcut <strong>⌘K</strong> without any text highlighted will add a blank syntax placeholder of: <a href="/Users/Macbook/Documents/Type/url">Name</a>.</p>
+<h2 id="internal-links-custom-ish-syntax">Internal Links (custom-ish syntax)<a class="headerlink" href="#internal-links-custom-ish-syntax" title="Permanent link"></a></h2>
+<p>Links can point to headlines within documents- clicking these links will direct the workspace to the headline in the open document or a different document all together. This is incredibly useful for building a database or wiki.</p>
+<p><strong>Syntax ideas:</strong>
+<a href="#headline">displayName</a> link to a headline in the same document
+<a href="/Users/Macbook/Documents/Type/DocumentName#Headline">displayName</a> link to a headline in a different document</p>
+<h2 id="referencesfootnotes">References/Footnotes<a class="headerlink" href="#referencesfootnotes" title="Permanent link"></a></h2>
+<p>Technically links, but their source can be from anywhere. instead of parenthesis, the url is wrapped in curly brackets.</p>
+<p><strong>Future Development</strong>
+Adding a reference generates an instance that is stored in the Folio. Here you can edit the formatting details (Author, Date, Title, etc), this info will be linked to when publishing to create a bibliography/works cited page.</p>
+<p><strong>Snytax</strong>
+[referenceName]{reference}</p>
+<h1 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2665%3A0">EXAMPLES</a></p>
+<p>Tables are rendered in the workspace to make them easier to edit and read.  </p>
+<p><strong>Move Handles</strong></p>
+<p>Click and drag entire rows/columns to different parts of the table.</p>
+<p>Rows can be moved up and down with keyboard shortcut: <em>Shift-command-up</em> and 
+<em>Shift-Command-Down</em>.</p>
+<p>clicking on a move handle will select the entire row or column and provide additional options. Columns will have <strong>Alignment</strong> options</p>
+<p><strong>Align</strong> - Move - additional dropdown (add rows/columns or delete row/column).</p>
+<h2 id="images">Images<a class="headerlink" href="#images" title="Permanent link"></a></h2>
+<p>Image tags have an additional <strong>Alignment</strong> options when they are created and/or selected in the workspace. Using the <strong>Promote</strong>/<strong>Demote</strong> Shortcuts or clicking on the alignment icons, the alignment of the image changes in the preview/publish.</p>
+<p>Dragging an image to the workspace, or Pasting it automatically generates the proper syntax.</p>
+<p><strong>Alignment Options:</strong>
+- left
+- Center
+- Full Width
+- Right</p>
+<h2 id="nice-looking-code-fences-for-documents">Nice looking Code Fences for Documents<a class="headerlink" href="#nice-looking-code-fences-for-documents" title="Permanent link"></a></h2>
+<p>Text wrapped in the code tag will be wrapped in a code fence. The writer can declare the syntax by clicking the syntax button at the top right of the fence and the code inside will highlight accordingly. Code fences can have their own line numbers.</p>
+<h2 id="latex-formulas">LaTeX formulas<a class="headerlink" href="#latex-formulas" title="Permanent link"></a></h2>
+<p>Though it is niche, generating mathematical formulas through LaTeX syntax is a good feature to have.</p>
+<p>This is smart:
+<a href="https://mathpix.com/"><code>https://mathpix.com/</code></a></p>
+<h2 id="syntax-github-flavored-markdown">Syntax (GitHub Flavored Markdown)<a class="headerlink" href="#syntax-github-flavored-markdown" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shortcut</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Headline</td>
+<td></td>
+<td>#</td>
+</tr>
+<tr>
+<td>Headline 2</td>
+<td></td>
+<td>##</td>
+</tr>
+<tr>
+<td>Headline 3</td>
+<td></td>
+<td>###</td>
+</tr>
+<tr>
+<td>headline 4</td>
+<td></td>
+<td>####</td>
+</tr>
+<tr>
+<td>Unordered list</td>
+<td>- or <code>*</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Ordered list</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bold</td>
+<td>⌘B</td>
+<td>** **</td>
+</tr>
+<tr>
+<td>Italic</td>
+<td>⌘I</td>
+<td>* *</td>
+</tr>
+<tr>
+<td>Strikethrough</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Divider</td>
+<td></td>
+<td>----</td>
+</tr>
+<tr>
+<td>Link</td>
+<td>⌘K</td>
+<td><code>[name](url)</code></td>
+</tr>
+<tr>
+<td>Image</td>
+<td></td>
+<td><code>![imageTxt](url)</code></td>
+</tr>
+<tr>
+<td>Blockquote</td>
+<td>&gt;</td>
+<td></td>
+</tr>
+<tr>
+<td>Code</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Code Block</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Checkbox Item</td>
+<td></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>Checkbox Item (checked)</td>
+<td></td>
+<td><code>[x]</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="syntax-custom">Syntax (Custom)<a class="headerlink" href="#syntax-custom" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shortcut</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Underline</td>
+<td>⌘U</td>
+<td><code>_</code></td>
+</tr>
+<tr>
+<td>Comment</td>
+<td>⌘/</td>
+<td><code>//</code></td>
+</tr>
+<tr>
+<td>Highlight</td>
+<td>⇧⌘H</td>
+<td><code>::</code> or <code>!!</code></td>
+</tr>
+<tr>
+<td>Mentions</td>
+<td></td>
+<td><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/username" title="GitHub User: username">@username</a></td>
+</tr>
+<tr>
+<td>Inner-link</td>
+<td>⌘K</td>
+<td><code>[linkName](#Headline)</code></td>
+</tr>
+<tr>
+<td>Reference</td>
+<td></td>
+<td><code>{referenceName}(link)</code></td>
+</tr>
+<tr>
+<td>HTML Button</td>
+<td></td>
+<td><code>!&lt;button&gt;(link</code>)</td>
+</tr>
+<tr>
+<td>Box form</td>
+<td>for print, signature box, etc</td>
+<td><code>[_]</code></td>
+</tr>
+<tr>
+<td>SuperScript</td>
+<td>This is from LaTeX</td>
+<td><code>^{x}</code></td>
+</tr>
+<tr>
+<td>SubScript</td>
+<td>This is from LaTeX</td>
+<td><code>_{x}</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="themes">Themes<a class="headerlink" href="#themes" title="Permanent link"></a></h1>
+<p>Themes define the colors of the UI and Markdown Syntax highlighting. Every theme has a light and dark version. The default theme also has color blind options</p>
+<p><strong>Color Blind Options</strong>
+These would be based on a contrast palette for the different variations of color blindness.
+- Protanomaly Red/Green
+- Protanopia Red/Green
+- Deuteranomaly Red/Green
+- Deuteranopia Red/Green
+- Tritanomaly Blue/Yellow
+- Tritanopia Blue/Yellow
+- Achromatopsia Totally Color blind</p>
+<h1 id="toolbar">Toolbar<a class="headerlink" href="#toolbar" title="Permanent link"></a></h1>
+<p>The toolbar is important for new users to markdown. It can be customized with a variety of buttons used for formatting and viewing different parts of the application.</p>
+<p><em>The toolbar auto-hides after ‘x’ amount of characters have been entered in the workspace.</em></p>
+<h1 id="touch-bar">Touch Bar<a class="headerlink" href="#touch-bar" title="Permanent link"></a></h1>
+<p>Not entirely sure what should go here outside of replicating the Toolbar. But this is </p>
+<h1 id="actions">Actions<a class="headerlink" href="#actions" title="Permanent link"></a></h1>
+<p>Actions are a way to automate repetitive and    manual tasks that come with writing through text commands.</p>
+<p>You can think of <strong>“Find/Find &amp; Replace”</strong> as an action. As it is a string of repetitive actions that have been automated to diminish the task of finding every instance of a word and manually replacing it.</p>
+<p>So instead of just “Find and replace” you could say, “Bold every ##Headline”, “Create a 2x2 table”, or “Unfold all lines.” Commands like these would take time to complete manually, but by using an action, they’d be instantaneous.</p>
+<h2 id="action-bar">Action Bar<a class="headerlink" href="#action-bar" title="Permanent link"></a></h2>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2518%3A7384">EXAMPLE</a></p>
+<p><em>Similar to the command palette in Sublime Text</em></p>
+<p>Action queries occur in the Action bar. This pop up at the top of the workspace and contains a text field(s) and buttons. This is where <strong>Find/Find &amp; Replace</strong> input would appear if you used ⌘F or ⌘⇧F (or if you opened the action bar and typed “Find” and hit enter)</p>
+<h2 id="fuzzy-queries">Fuzzy Queries<a class="headerlink" href="#fuzzy-queries" title="Permanent link"></a></h2>
+<p>When the action bar is called, it has a single text field where you can type whatever you want. However, only specific commands will do anything. When you start writing, the action bar will expand a bit and Fuzzy search from the list of appropriate commands.</p>
+<p>When fuzzy searching for an action, it is context aware of if text is highlighted or not.</p>
+<h3 id="open">Open<a class="headerlink" href="#open" title="Permanent link"></a></h3>
+<p>Opening documents in an action works like <strong>notational velocity</strong>. </p>
+<h3 id="action-examples">Action Examples<a class="headerlink" href="#action-examples" title="Permanent link"></a></h3>
+<ul>
+<li>&ldquo;Bold every X.&rdquo;</li>
+<li>Create a table</li>
+<li>show a preview of the tables dimensions</li>
+<li>Move selected text to (line),(Beginning),(end),(Document Name)</li>
+<li>Add an Image</li>
+<li>Open, Delete, Archive, Tag, and/or move documents</li>
+<li>Change the Layout, mode, or view.</li>
+<li>Change an app setting.</li>
+<li>“Delete all strikethrough text”</li>
+<li>Check for updates.</li>
+<li>Jump the cursor to any #, ##, ###, or Line Number</li>
+<li>Change a list’s format (ordered or unordered)</li>
+<li>Sort a selected list.</li>
+<li>Batch Process edits or functions<ol>
+<li>ex. Expand or collapse all folders</li>
+<li>ex. Demote/Change Every H1 to H2.</li>
+<li>ex. Split the document into Pages (8.5x11 or A4 size)</li>
+</ol>
+</li>
+<li>Send highlighted text to another part of the document or another document entirely.</li>
+<li>Create a table with specific dimensions.</li>
+<li>Add an Image</li>
+<li>Add a markdown tag by name (if you forget the symbol but remember the name)</li>
+<li>Fold/Unfold Headlines, Lists, Tables</li>
+</ul>
+<p>If pulled off, it’ll make everything that came before it look obsolete, and everything that comes after it seem like a rip off.</p>
+<hr />
+<h1 id="mechanics">Mechanics<a class="headerlink" href="#mechanics" title="Permanent link"></a></h1>
+<p>Along with Actions, keyboard and writing mechanics are a significant feature of TYPE. A lot of the inspiration comes from the idea that, “The longer your hands are at the keys, the better chance you have of writing.” </p>
+<p><strong>Rearranging</strong>
+Type allows writers to change the position of text in the workspace, as well as documents/folders within the folio using keyboard shortcuts or clicking &amp; dragging.</p>
+<p>Table rows can also be reordered, the only ones that cannot move are the header row and the following &ldquo;alignment&rdquo; row for Markdown syntax tables.</p>
+<p><strong>Promote &amp; Demote</strong>
+Rearranging deals with &ldquo;Up and Down&rdquo; Promotion deals with the directions &ldquo;Left and Right.&rdquo; Along with indentation, the shortcut would promote/demote other elements like “headlines”- which would add or remove ‘#’ from them. Image alignment could also be promoted/demoted-changing it from (left, center, Full, And right).</p>
+<ul>
+<li>indenting/Deintenting paragraphs and lists</li>
+<li>Image alignment selection</li>
+<li>moving table columns left/right</li>
+<li>Adding/removing &lsquo;#&rsquo; to a headline</li>
+</ul>
+<p><strong>Folding</strong>
+Collapse multiple lines of text into a single line, which shrinks the vertical height of the whole document, making it faster to navigate.</p>
+<p><strong>Slice &amp; Merge</strong>
+While editing a document, it can be divided into multiple individual documents by adding a slice at the cursor. Doing so will create two new documents, one containing all the text above the slice and the other with all the text below the slice.</p>
+<p><strong>Shift Selecting</strong>
+tapping right or left shift by itself highlights word the cursor is touching. Rapidly hitting shift will highlight the sentence, and Three times rapidly highlights the whole line.</p>
+<p><strong>Directional Shift Selecting</strong>
+Left shift selects words/sentences/lines behind the cursor, where right shift selects words/sentences/lines after the cursor.</p>
+<p><strong>Find Next</strong>
+⌘D finds &amp; Selects the next instance of selected word or word the cursor touches. begins after the selected word, but wraps to the beginning of the document if theres instances before.</p>
+<p><strong>Linear Copy &amp; Paste</strong>
+This is lifted directly from text editors, If the cursor is on a line, using the Copy shortcut will copy the entire line <strong>you don’t have to highlight the text</strong>, and pasting that line will place it below the current line.</p>
+<p><strong>Context Sensitive Pasting</strong>
+If compatible syntax is pasted from the clipboard it will be formatted for Type.
+- Or - If the last thing you copied was a url and you create a new link in a document, that url will be automatically pasted in the ().
+- convert from Markdown or HTML code,
+- convert from Rich Text formatted text,
+- strip out all tags by pasting as Plain Text,
+- add code examples by pasting as Code Block</p>
+<p><strong>Human Error Spelling and Grammar check</strong>
+A spell check which targets common typos that a normal spell check would otherwise miss since nothing is spelled incorrectly.</p>
+<ul>
+<li>complemented vs complimented</li>
+<li>Principal vs principle</li>
+<li>hoard vs horde</li>
+<li>every day vs everyday</li>
+<li>ass vs add</li>
+<li>A dress vs address</li>
+<li>bowel vs bowl</li>
+<li>Untied States vs United States</li>
+<li>whore vs where</li>
+<li>stalking vs talking</li>
+<li>satan when you mean satin</li>
+<li>pubic when you mean public</li>
+</ul>
+<h1 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link"></a></h1>
+<p><a href="https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2495%3A139">WIREFRAME</a></p>
+<p>Popup to comply with apple&rsquo;s HIG.</p>
+<h1 id="shortcuts">Shortcuts<a class="headerlink" href="#shortcuts" title="Permanent link"></a></h1>
+<h2 id="application">Application<a class="headerlink" href="#application" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shortcut</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Settings</td>
+<td>⌘,</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Action</td>
+<td>⌘.</td>
+<td>Toggles Action Bar in workspace</td>
+</tr>
+<tr>
+<td>Folio</td>
+<td>⌘1</td>
+<td></td>
+</tr>
+<tr>
+<td>Workspace</td>
+<td>⌘2</td>
+<td></td>
+</tr>
+<tr>
+<td>Sideboard</td>
+<td>⌘3</td>
+<td></td>
+</tr>
+<tr>
+<td>Info Sideboard</td>
+<td>⌘4</td>
+<td></td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>⌘P</td>
+<td></td>
+</tr>
+<tr>
+<td>Publish</td>
+<td>⇧⌘P</td>
+<td></td>
+</tr>
+<tr>
+<td>Print</td>
+<td>⌥⌘P</td>
+<td></td>
+</tr>
+<tr>
+<td>Toggle Find</td>
+<td>⌘F</td>
+<td>context sensitive to where cursor is or if somethings selected</td>
+</tr>
+</tbody>
+</table>
+<h2 id="folio_1">Folio<a class="headerlink" href="#folio_1" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shortcut</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Focus Folder</td>
+<td>⌘Enter</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Unfocus Folder</td>
+<td>Esc</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Delete File</td>
+<td>⌘DEL</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Group File(s)</td>
+<td>⌘G</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Ungroup File(s)</td>
+<td>⇧⌘G</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Rename File(s)</td>
+<td>⌘R</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Merge documents</td>
+<td>⌘E</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Duplicate documents</td>
+<td>⌘D</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="workspace_1">Workspace<a class="headerlink" href="#workspace_1" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shortcut</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split Workspace</td>
+<td>⌘T</td>
+<td></td>
+</tr>
+<tr>
+<td>Toggle between split</td>
+<td>⌥⌘T</td>
+<td>moves cursor between split docs</td>
+</tr>
+<tr>
+<td>Slice Document</td>
+<td><code>⌘\\</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Next Document</td>
+<td>⌘PGDN</td>
+<td></td>
+</tr>
+<tr>
+<td>Previous Document</td>
+<td>⌘PGUP</td>
+<td></td>
+</tr>
+<tr>
+<td>Focus</td>
+<td>⌥⌘F</td>
+<td>Toggles text focus</td>
+</tr>
+<tr>
+<td>Typewriter</td>
+<td>⌥⌘T</td>
+<td>Toggles Typewriter scrolling</td>
+</tr>
+<tr>
+<td>Increase Font Size</td>
+<td>⌘+</td>
+<td></td>
+</tr>
+<tr>
+<td>Decrease Font Size</td>
+<td>⌘-</td>
+<td></td>
+</tr>
+<tr>
+<td>Toggle Fold</td>
+<td>⌘’</td>
+<td>Folds/unfolds line(s)</td>
+</tr>
+<tr>
+<td>Find Next</td>
+<td>⌘D</td>
+<td>Finds next instance of selected word</td>
+</tr>
+<tr>
+<td>Toggle Find &amp; Replace</td>
+<td>⇧⌘F</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="writing-mechanics">Writing Mechanics<a class="headerlink" href="#writing-mechanics" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shortcut</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shift Select (Word)</td>
+<td>⇧</td>
+<td>Tap shift to select a word nearest/touching the cursor (Left shift selects previous word, right shift selects the next word)</td>
+</tr>
+<tr>
+<td>Shift Select (Sentence)</td>
+<td>⇧⇧</td>
+<td>double tap shift rapidly to select the next/prev sentence)</td>
+</tr>
+<tr>
+<td>Shift Select (Line)</td>
+<td>⇧⇧⇧</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Move Selected</td>
+<td>⇧⌘M</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Move up</td>
+<td>⇧⌘↑</td>
+<td></td>
+</tr>
+<tr>
+<td>Move Down</td>
+<td>⇧⌘↓</td>
+<td></td>
+</tr>
+<tr>
+<td>Move to top</td>
+<td>⇧⌥⌘↑</td>
+<td></td>
+</tr>
+<tr>
+<td>Move to bottom</td>
+<td>⇧⌥⌘↓</td>
+<td></td>
+</tr>
+<tr>
+<td>Promote</td>
+<td><code>⌘]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Demote</td>
+<td><code>⌘[</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link"></a></h1>
+<p><em>Napkin Sketches &amp; Ideas for future updates &amp; Development. Some of this are half-baked ideas.</em></p>
+<p><strong>Layout Styles</strong>
+Additional styling set to a layout (created with PFD layout in mind-) if you want to differentiate between a standard PDF and something like a CV or resume.</p>
+<p><strong>Building a Database</strong>
+Using the references as a character bible for developing a story. example: Character Name(Description of the character). These pronouns are avoided by Spell Check.</p>
+<p><strong>References &amp; Citation Rearrangement</strong>
+Rearranging a reference in the sideboard will change the reference numbers in the document</p>
+<p>Moving referenced text above/below other referenced text in the workspace will update the sequence number in the sideboard. If the referenced text is an IBID and moves above the initial reference, then the Ibid becomes the reference, and the initial reference becomes the ibid.</p>
+<p><strong>”Symbols&rdquo;, Libraries, or Passages (some other clever name)</strong>
+Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.</p>
+<p>This would be good for something like legal documentation or even character bibles. If the main character&rsquo;s name needs to change, instead of doing find&amp;replace, you&rsquo;d edit the source.</p>
+<ul>
+<li>When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage</li>
+<li>if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.</li>
+<li>writers can detach instances from the source w/o with the context menu</li>
+</ul>
+<p>In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has &ldquo;page 10&rdquo; and the ibid is &ldquo;page 44&rdquo; if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as &ldquo;page 44&rdquo; and the ibid becomes &ldquo;page 10&rdquo;</p>
+<p><strong>Batch Renaming documents (ACTION BAR?)</strong>
+Selecting multiple documents and initiating a rename ⌘R allows for a batch rename in the order they are presented. If writers wanted to Number their documents this would be really helpful.</p>
+<p><strong>Auto-Number</strong>
+Set a folder to prepend a number or phrase (like Chapter one, two, three&hellip;) to the documents it holds.</p>
+<p><strong>Responsive Panels</strong>
+The folio and sideboard present information different depending on how wide they are.</p>
+<p><strong>Q&amp;A Interview style list items that alternate with Q: and A:</strong>
+transcribing an interview, the list items can alternate between Q: and A: Q&amp;A lists might be the only ones impervious to relabeling when rearranged</p>
+<p><strong>Notes</strong>
+I like the idea of the notes being used for more than just holding text, it should have more functions than that commented text in a document can be sent to a new or existing note. Some writers might want to make notes in the document as they&rsquo;re writing, and later reference them This declutters the document and still available to view. Like shaking an etch-a-sketch</p>
+<p><strong>Apple Notes Onboard new users by linking Apple notes to Type.</strong>
+A lot of writers use the Apple notes app on their phone, and would be good to allow them to access those notes from within type.</p>
+<p>Maybe they can link to the system folder?
+/Library/Group Containers/group.com.apple.notes/</p>
+<p><strong>Collecting Commented ToDo&rsquo;s</strong>
+if you begin a comment with &ldquo;todo&rdquo;, then those comments can be collected in a sideboard creating a checklist, or maybe even used in another app like Reminders.</p>
+<p><strong>A way to &ldquo;check done&rdquo; documents, Turn to &ldquo;Document Tasks&rdquo;</strong>
+working on a multi-document project non-linearly could use a visual cue to indicate, &ldquo;this doc is done, and others still need work.&rdquo; Could be a feature of &ldquo;Focused&rdquo; folders.</p>
+<p><strong>Pinning lines/Rubber banding</strong>
+Set a temporary pin on a line, then you can scroll around the doc, or go to other documents entirely, and when you hit a shortcut you automatically go right back to that line, the pin disappears after returning. It&rsquo;s the equivilent of putting your finger on a page and flipping through a book.</p>
+<p><strong>Auto Pinning</strong>
+If you use the mouse wheel/scroll manually up or down the document, there is an option to pin the row of the line the cursor resides to either the top or bottom of the viewport (depending on which way you scroll). If you scroll up the line sticks to the bottom, if you scroll down the line sticks to the top. (this suggests the relative location of the line where you left the cursor, its either above or below where you are now)
+- mouse clicking the pinned line or typing will snap you back to the line
+- are you able to write in the pinned location while viewing the new one? would anyone want to do that?
+- If you move the cursor outside the line, or if some time has passed, the sticky/pinned line dissapears
+- This also doesnt work when you’re focusing or in typewriter mode</p>
+<p><strong>Plugin API for Actions and Sideboards</strong>
+Programs like <a href="#">sketch</a>, Sublime Text, and Framer thrive on a community of designers and developers who build functionality into the application. This was only possible because the devs opened up the API and made it easy to create plugins and allow the creators to profit from their contributions (if they desire). It democratizes the feature-set for the application and only strengthens the user-base.</p>
+<p><strong>Git Integration</strong>
+- changes indicated graphically, probably by the line numbers.</p>
+<p><strong>Unsplash Integration</strong>
+in the sideboard, you can search for images to use as placeholders or even for the final doc. We should also pull in the contributors credits as a reference for the bibliography.</p>
+<p><strong>Where the cursor was last</strong>
+jumping around a document with something like <em>FIND</em> can leave you in a place within the document that you don’t want to be, maybe you just wanted to check something from earlier in the document, there should be a way to return to the last known position of the cursor AFTER an action that travels around the doc.</p>
+<p><strong>Serial to List</strong>
+the ability to highlight a list of text in a series separated by commas (something, something, something, and something) and turning it into an ordered/unordered list, and vice versa.</p>
+<p><strong>Indie Publishers</strong>
+build integrations with independent publishing or print houses. Empower individuals before getting in bed with a huge publisher.</p>
+<p><strong>Whiteboard/Storyboard</strong>
+The option of viewing documents as a thumbnail gallery either in the folio, or in the workspace. The thumbnails would be sized according to standard 8.5x11 paper. (or their layout?)</p>
+<p><strong>Self Publishing Content Management System.</strong>
+I think with compilers like Jeckyll, and services like blot or Small Victories which use a dropbox folder to host markdown files as web content, I think it&rsquo;d be a big sell if someone could manage/publish a website (be it a blog, portfolio, or presentation) directly from the app without ever needing to open a browser.
+Type should allow for people to publish their writing on their own. If they have built a website or some other outlet then they should be accommodated
+I think I just want for people to be able to publish and manage their writing within the app. Would be interesting to make this apart of type, and to make the experience more understandable for non-programmers.</p>
+<p><strong>Vendor Layouts</strong>
+The ultimate goal for TYPE is to be a headquarters for writing. Someone should be able to start and end their work from within the app and never need to leave and sign-in to another service or copy+paste their markdown somewhere else. Integrations with Online services like <em>Wordpress, Medium, Small Victories, and Mailchimp</em> would be extremely valuable to users.</p>
+<p><strong>Newsletter Services</strong>
+letterfuel</p>
+<p><strong>Font Foundries</strong>
+Partnering with Indie foundries to have print layouts use their unique font faces and font pairings (also for self-published websites?)
+Fatype
+Klim
+GrilliType</p>
+<p>It’d be cool to establish a skunkworks platform, something similar to Small Victories &amp; Tiny Letter where everything is self hosted and all the data can be found in the app.</p>
+<p><strong>Slash commands</strong>
+- /date - enters the current date
+- /time - current time
+- /tomorrow - date after current date</p>
+<h1 id="technical">Technical<a class="headerlink" href="#technical" title="Permanent link"></a></h1></article></body></html>
