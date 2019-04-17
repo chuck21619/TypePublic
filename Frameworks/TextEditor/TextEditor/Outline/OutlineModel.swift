@@ -305,7 +305,8 @@ class OutlineModel {
             
             for newTextGroup in self.parentTextGroup {
                 
-                if collapsedTextGroup.title == newTextGroup.title && collapsedTextGroup.token == newTextGroup.token {
+                //TODO: figure out a way to compare text groups accurately. comparing titles may be invalid if two groups have the same title
+                if collapsedTextGroup.title == newTextGroup.title {
                     
                     let index = collapsingTranslator.collapsedTextGroups.firstIndex(of: collapsedTextGroup)
                     collapsingTranslator.collapsedTextGroups[index!] = newTextGroup

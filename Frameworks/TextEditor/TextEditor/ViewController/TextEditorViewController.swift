@@ -84,6 +84,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         outlineViewController = OutlineViewController.createInstance(delegate: self, collapsingTranslator: collapsingTranslator)
         outlineModel = OutlineModel(language: language, collapsingTranslator: collapsingTranslator!, delegate: outlineViewController)
         outlineViewController?.model = outlineModel
+        self.textStorage(self.textStorage, didProcessEditing: [], range: self.textStorage.string.maxNSRange, changeInLength: 0)
         self.delegate?.presentSideboard(viewController: outlineViewController!)
         //        if let outlineView = outlineViewController?.view {
         //
@@ -273,62 +274,63 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
             
             self.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
             
-            self.outlineModel?.outline(textStorage: stringCopy)
-            
-            print("semaphore request - didprocess")
-            self.semaphore.wait()
-            
-            guard newWorkItem.isCancelled == false else {
-                print("semaphore released - didprocess (work item cancelled)")
-                self.semaphore.signal()
-                return
-            }
-            
-            guard let editingValues = self.editingValuesSinceLastParsing else {
-                print("semaphore released - didprocess (no editing values)")
-                self.semaphore.signal()
-                return
-            }
-            
-            self.syntaxHighlighter?.highlight(editedRange: editingValues.editedRange, changeInLength: editingValues.delta, string: stringCopy, workItem: newWorkItem) { invalidRangesForHighlighting in
-
-                var invalidRanges = self.invalidRangesSinceLastEditing
-                invalidRanges.append(contentsOf: invalidRangesForHighlighting)
-
-                self.editingValuesSinceLastParsing = nil
-                self.invalidRangesSinceLastEditing = []
-
-                self.ignoreProcessing(ignore: true)
-                invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges) ?? []
-                self.ignoreProcessing(ignore: false)
-
+            self.outlineModel?.outline(textStorage: stringCopy) {
                 
-                print("didProcess - calling main thread")
+                print("semaphore request - didprocess")
+                self.semaphore.wait()
                 
-                DispatchQueue.main.async {
-                    
-                    print("didProcess - main thread time")
-                    
-                    guard newWorkItem.isCancelled == false else {
-                        print("semaphore released - didprocess (work item cancelled 2)")
-                        self.semaphore.signal()
-                        return
-                    }
-                    
-                    let selectedRange = self.textEditorView.selectedRange()
-                    self.ignoreProcessEditing = true
-                    self.textStorage.setAttributedString(stringCopy)
-                    self.textEditorView.setSelectedRange(selectedRange)
-                    self.ignoreProcessEditing = false
-                    self.invalidateRanges(invalidRanges: invalidRanges)
-                    if self.rulerView != nil {
-                        self.rulerView.needsDisplay = true //TODO: re-write testRulerView to calculate line #s with collapsedGroups
-                    }
-                    
-                    newWorkItem = nil
-                    
-                    print("semaphore released - didprocess (completed)")
+                guard newWorkItem.isCancelled == false else {
+                    print("semaphore released - didprocess (work item cancelled)")
                     self.semaphore.signal()
+                    return
+                }
+                
+                guard let editingValues = self.editingValuesSinceLastParsing else {
+                    print("semaphore released - didprocess (no editing values)")
+                    self.semaphore.signal()
+                    return
+                }
+                
+                self.syntaxHighlighter?.highlight(editedRange: editingValues.editedRange, changeInLength: editingValues.delta, string: stringCopy, workItem: newWorkItem) { invalidRangesForHighlighting in
+                    
+                    var invalidRanges = self.invalidRangesSinceLastEditing
+                    invalidRanges.append(contentsOf: invalidRangesForHighlighting)
+                    
+                    self.editingValuesSinceLastParsing = nil
+                    self.invalidRangesSinceLastEditing = []
+                    
+                    self.ignoreProcessing(ignore: true)
+                    invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges) ?? []
+                    self.ignoreProcessing(ignore: false)
+                    
+                    
+                    print("didProcess - calling main thread")
+                    
+                    DispatchQueue.main.async {
+                        
+                        print("didProcess - main thread time")
+                        
+                        guard newWorkItem.isCancelled == false else {
+                            print("semaphore released - didprocess (work item cancelled 2)")
+                            self.semaphore.signal()
+                            return
+                        }
+                        
+                        let selectedRange = self.textEditorView.selectedRange()
+                        self.ignoreProcessEditing = true
+                        self.textStorage.setAttributedString(stringCopy)
+                        self.textEditorView.setSelectedRange(selectedRange)
+                        self.ignoreProcessEditing = false
+                        self.invalidateRanges(invalidRanges: invalidRanges)
+                        if self.rulerView != nil {
+                            self.rulerView.needsDisplay = true //TODO: re-write testRulerView to calculate line #s with collapsedGroups
+                        }
+                        
+                        newWorkItem = nil
+                        
+                        print("semaphore released - didprocess (completed)")
+                        self.semaphore.signal()
+                    }
                 }
             }
         }
