@@ -32,7 +32,7 @@ class TestRulerView: NSRulerView {
     
     var textGroupMarkers: [TextGroupMarker] = []
     var visibleTextGroupTokens: [TextGroupToken] = []
-    var delegate: TestRulerViewDelegate? = nil
+    weak var delegate: TestRulerViewDelegate? = nil
     var collapsingTranslator: CollapsingTranslator? = nil
     
     var language: Language? = nil

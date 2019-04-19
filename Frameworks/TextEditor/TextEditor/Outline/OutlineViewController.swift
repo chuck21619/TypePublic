@@ -12,7 +12,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     
     // MARK: - Properties
     var model: OutlineModel? = nil
-    var delegate: OutlineViewControllerDelegate? = nil
+    weak var delegate: OutlineViewControllerDelegate? = nil
     private var parentTextGroup = TextGroup(title: "parent")
     private let columnReuseIdentifier = NSUserInterfaceItemIdentifier(rawValue: "columnReuseIdentifier")
     public var relaxReorderRules = false
@@ -210,16 +210,16 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         collapsingTranslator.expandAllTextGroups(string: string, outlineModel: model)
         
         // if item is nil, then target is root
-        let targetParent = item as? TextGroup ?? parentTextGroup
+        let targetParent = item as? TextGroup ?? self.parentTextGroup
         
-        guard let draggingGroup = draggingGroup else {
+        guard let draggingGroup = self.draggingGroup else {
             print("semaphore released - didprocess (no dragging group)")
             semaphore.signal()
             return false
         }
         
         var insertIndex = index
-        if targetParent == draggingGroup.parentTextGroup, index > draggedFromIndex {
+        if targetParent == draggingGroup.parentTextGroup, index > self.draggedFromIndex {
             
             insertIndex -= 1
         }
@@ -246,8 +246,8 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
             insertIndex += 1
         }
         
-        visibleRect = outlineView.visibleRect
-            
+        self.visibleRect = outlineView.visibleRect
+        
         delegate.removeTextGroup(draggingGroup, outlineModel: self.model, downwardDraggingGroup: nil) { success in
             
             guard success == true else {
@@ -271,7 +271,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
         
         collapsingTranslator.sortCollapsedTextGroups() // the collapsed groups may not be sorted if one is dragged below or above another one. possibly want to optimize this
-        collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [])
+        collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], testValue: "acceptDrop")
         
         if let parent = self.model?.parentTextGroup {
             
@@ -282,6 +282,7 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         
         print("semaphore released - didprocess (completed)")
         semaphore.signal()
+        
         return true
     }
     

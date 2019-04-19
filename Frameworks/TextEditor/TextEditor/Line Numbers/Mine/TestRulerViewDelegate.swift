@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TestRulerViewDelegate {
+protocol TestRulerViewDelegate: class {
     
     func markerClicked(_ marker: TextGroupMarker, completion: @escaping ()->())
 }

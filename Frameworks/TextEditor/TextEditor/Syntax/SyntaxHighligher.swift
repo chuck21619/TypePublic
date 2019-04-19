@@ -11,7 +11,7 @@ import Foundation
 class SyntaxHighligher: NSObject, NSTextStorageDelegate {
     
     // MARK: - Properties
-    var delegate: IgnoreProcessingDelegate? = nil
+    weak var delegate: IgnoreProcessingDelegate? = nil
     private let syntaxParser: SyntaxParser
     
     // keep track of any request's edits, in case a new request is made before completion

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol TextEditorViewControllerDelegate {
+public protocol TextEditorViewControllerDelegate: class {
     
     func presentSideboard(viewController: NSViewController)
 }

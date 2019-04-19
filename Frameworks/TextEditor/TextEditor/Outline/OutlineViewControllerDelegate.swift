@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol OutlineViewControllerDelegate {
+protocol OutlineViewControllerDelegate: class {
     
     func documentString() -> NSMutableAttributedString?
     

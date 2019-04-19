@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CollapsingTranslatorDelegate {
+protocol CollapsingTranslatorDelegate: class {
     
     func invalidateRanges(invalidRanges: [NSRange])
 }

@@ -22,7 +22,7 @@ class MarkerClickHandler {
         
         guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location, collapsedTextGroups: collapsingTranslator.collapsedTextGroups) else {
             print("Error locating textgroup at marker")
-            collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [])
+            collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], testValue: "markerClickHandler exit early")
             ignoreProcessingDelegate.ignoreProcessing(ignore: false)
             return
         }
@@ -52,7 +52,7 @@ class MarkerClickHandler {
             collapsingTranslator.collapsedTextGroups.append(textGroup)
         }
         
-        collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [])
+        collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], testValue: "markerClickHandler")
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: false)
     }

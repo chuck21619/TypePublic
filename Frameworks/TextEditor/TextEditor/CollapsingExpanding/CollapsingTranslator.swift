@@ -10,14 +10,18 @@ import Foundation
 
 class CollapsingTranslator {
     
+    static var someInt = 0
+    
     init(delegate: CollapsingTranslatorDelegate, ignoreProcessingDelegate: IgnoreProcessingDelegate) {
         
+        self.someInt = CollapsingTranslator.someInt
         self.delegate = delegate
         self.ignoreProcessingDelegate = ignoreProcessingDelegate
     }
     
-    var ignoreProcessingDelegate: IgnoreProcessingDelegate
-    var delegate: CollapsingTranslatorDelegate
+    let someInt: Int
+    weak var ignoreProcessingDelegate: IgnoreProcessingDelegate?
+    weak var delegate: CollapsingTranslatorDelegate?
     
     var collapsedTextGroups: [TextGroup] = [] {
         
@@ -44,9 +48,9 @@ class CollapsingTranslator {
         //a non-nil lastEditing var means they have been expanded by a previous processEditing call
         if editingValuesSinceLastProcess == nil {
             
-            self.ignoreProcessingDelegate.ignoreProcessing(ignore: true)
+            self.ignoreProcessingDelegate?.ignoreProcessing(ignore: true)
             translations = self.expandAllTextGroups(string: string, outlineModel: outlineModel, editedRange: editedRange, delta: delta)
-            self.ignoreProcessingDelegate.ignoreProcessing(ignore: false)
+            self.ignoreProcessingDelegate?.ignoreProcessing(ignore: false)
         }
         else {
             
@@ -115,7 +119,7 @@ class CollapsingTranslator {
         let invalidRange = NSRange(location: attributeRange.location, length: stringInAttachment.string.maxNSRange.length)
         
         if invalidateDisplay {
-            self.delegate.invalidateRanges(invalidRanges: [invalidRange])
+            self.delegate?.invalidateRanges(invalidRanges: [invalidRange])
         }
         
         var invalidRangeReturnValue: NSRange? = nil
@@ -148,10 +152,11 @@ class CollapsingTranslator {
         return (adjustedEditedRange: editedRangeReturnValue, adjustedDelta: deltaReturnValue, invalidRange: invalidRangeReturnValue)
     }
     
-    @discardableResult func recollapseTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, invalidRanges: [NSRange]) -> [NSRange] {
+    @discardableResult func recollapseTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, invalidRanges: [NSRange], testValue: String = "") -> [NSRange] {
+        
+        print("\(someInt)recollapse \(testValue) start")
         
         var adjustedInvalidRanges = invalidRanges
-        var deltaFromPreviousCollapses = 0
         
         let expandedString = NSMutableAttributedString(attributedString: string)
         
@@ -159,31 +164,41 @@ class CollapsingTranslator {
             return adjustedInvalidRanges
         }
         
+        var i = 0
         for collapsedTextGroup in collapsedTextGroups.reversed() {
             
+            print("\(someInt)recollapse \(testValue) #: \(i) start")
             if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
                 continue
             }
             
-            let changes = self.collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, recollapsing: true, adjustForDelta: deltaFromPreviousCollapses, expandedString: expandedString)
-            adjustedInvalidRanges = changes.adjustedInvalidRanges
-            deltaFromPreviousCollapses += changes.delta
-            deltaFromPreviousCollapses -= 1
+            adjustedInvalidRanges = self.collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, recollapsing: true, expandedString: expandedString)
+            print("\(someInt)recollapse \(testValue) #: \(i) end")
+            i += 1
         }
         
+//        if someInt < CollapsingTranslator.someInt {
+//            
+//            print("a")
+//        }
+        
+        print("\(someInt)recollapse \(testValue) finish")
         return adjustedInvalidRanges
     }
     
-    @discardableResult func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], outlineModel: OutlineModel?, recollapsing: Bool = false, adjustForDelta: Int, expandedString: NSMutableAttributedString) -> (adjustedInvalidRanges: [NSRange], delta: Int) {
+    @discardableResult func collapseTextGroup(string: NSMutableAttributedString, _ textGroup: TextGroup, invalidRanges: [NSRange] = [], outlineModel: OutlineModel?, recollapsing: Bool = false, expandedString: NSMutableAttributedString) -> ([NSRange]) {
         
         //TODO: check if these 2 methods are still necesaarry. i believe they are redundant after redesigning all textgrou ranges to reference the expanded string
         var range: NSRange
-        if recollapsing {
-            range = outlineModel!.range(of: textGroup, in: expandedString, includeTitle: false)!
-        }
-        else {
+//        if recollapsing {
+//            range = outlineModel!.range(of: textGroup, in: expandedString, includeTitle: false)!
+//        }
+//        else {
+        //TODO: figure out why sometimes outlineModel.range() returns invalid range
+            // it is becuase the collapsedTextGroup.parent has become nil
+                // figure out why that is. will most liekly cause problems in others areas
             range = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, textGroup)!
-        }
+//        }
         
         range = NSRange(location: range.location, length: range.length)
         
@@ -281,7 +296,7 @@ class CollapsingTranslator {
             collapsedTextGroups.append(textGroup)
         }
         
-        return (adjustedInvalidRanges: adjustedInvalidRanges, delta: range.length)
+        return adjustedInvalidRanges
     }
     
     private func collapsedTextGroupRange(string: NSMutableAttributedString, outlineModel: OutlineModel?, _ textGroup: TextGroup) -> NSRange? {

@@ -238,7 +238,9 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
         
         let semaphore = DispatchSemaphore(value: 1)
         
-        for _ in 0...1000 {
+        for i in 0...1000 {
+            
+            print("test #: \(i) start")
             
             semaphore.wait()
             
@@ -288,8 +290,6 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
                                 XCTAssert(NSString(string: viewController!.textStorage.string) == NSString(string: "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah￼\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n## expression￼\n# second group\ntext inside the second group\n\n## nested second group\ntext insdie the nested second group"))
                                 
                                 
-                                
-                                
                                 //            let secondDraggingGroup = viewController!.outlineModel!.parentTextGroup.textGroups[0].textGroups[0]
                                 //            let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, pasteboardWriterForItem: secondDraggingGroup as Any)
                                 //            let _ = viewController?.outlineViewController?.outlineView(viewController!.outlineViewController!.outlineView, acceptDrop: StubDraggingInfo(), item: targetParentTextGroup as Any, childIndex: targetParentTextGroup.textGroups.count)
@@ -301,8 +301,6 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
                                 //
                                 //                    XCTAssert(viewController!.textStorage.string == "\n# creation\nRegExr was created by gskinner.com, and is proudly hosted by Media Temple.\n\n## cheetah\nThe side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community, and view patterns you create or favorite in My Patterns.\n\n## toolbox\nExplore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.\n\n## idfk\nsomething else\n\n# second group\ntext inside the second group\n\n## expression\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & Javascript flavors of RegEx are supported.\n\n## nested second group\ntext insdie the nested second group")
                                 
-                                
-                                
                                 expectation.fulfill()
                             }
                         }
@@ -311,6 +309,12 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
             }
             self.wait(for: [expectation], timeout: 5.0)
             semaphore.signal()
+            
+            if i > 10 {
+                print("a")
+            }
+            print("test #: \(i) end")
+            CollapsingTranslator.someInt += 1
         }
     }
     

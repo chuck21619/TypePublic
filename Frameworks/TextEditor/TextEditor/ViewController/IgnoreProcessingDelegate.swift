@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol IgnoreProcessingDelegate {
+protocol IgnoreProcessingDelegate: class {
     
     func ignoreProcessing(ignore: Bool)
 }

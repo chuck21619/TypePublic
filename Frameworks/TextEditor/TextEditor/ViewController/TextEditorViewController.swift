@@ -11,7 +11,7 @@ import Foundation
 public class TextEditorViewController: NSViewController, NSTextViewDelegate, NSTextStorageDelegate, TestRulerViewDelegate, IgnoreProcessingDelegate, CollapsingTranslatorDelegate, OutlineViewControllerDelegate {
     
     // MARK: - Public
-    public var delegate: TextEditorViewControllerDelegate? = nil
+    public weak var delegate: TextEditorViewControllerDelegate? = nil
     
     // MARK: - Properties
     var textEditorView: TextEditorView!
@@ -36,7 +36,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         }
     }
     var outlineViewController: OutlineViewController? = nil
-    var outlineMouseTrackingArea: NSTrackingArea? = nil
     var collapsingTranslator: CollapsingTranslator? = nil
     
     // TODO: change every object that holds onto language into a getter that pulls it from a common location
@@ -102,12 +101,6 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         // in order to handle the user changing the language
         rulerView.language = LanguageFactory().createLanguage(LanguageFactory.defaultLanguage)
         textEditorView.enclosingScrollView?.verticalRulerView = rulerView
-        
-        
-        // create mouse area to show/hide the outline
-        let rect = NSRect(x: 0, y: 0, width: 100, height: 100)
-        outlineMouseTrackingArea = NSTrackingArea(rect: rect, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil)
-        self.view.addTrackingArea(outlineMouseTrackingArea!)
         
 //        addTestButton()
     }
@@ -249,6 +242,11 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     let semaphore = DispatchSemaphore(value: 1)
     public func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         
+//        if collapsingTranslator?.someInt ?? 100000 < CollapsingTranslator.someInt {
+//            
+//            print("a")
+//        }
+        
         guard ignoreProcessEditing == false else {
             return
         }
@@ -256,11 +254,17 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         workItem?.cancel()
         var newWorkItem: DispatchWorkItem!
         
-        newWorkItem = DispatchWorkItem {
+        newWorkItem = DispatchWorkItem { [weak self] in
             
-            let stringCopy = NSMutableAttributedString(attributedString: self.textStorage)
+            guard let weakSelf = self else {
+                return
+            }
             
-            guard let translations = self.collapsingTranslator?.calculateTranslations(string: stringCopy, outlineModel: self.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: self.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: self.invalidRangesSinceLastEditing) else {
+//            self.semaphore.wait()
+            let stringCopy = NSMutableAttributedString(attributedString: weakSelf.textStorage)
+//            self.semaphore.signal()
+            
+            guard let translations = weakSelf.collapsingTranslator?.calculateTranslations(string: stringCopy, outlineModel: weakSelf.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: weakSelf.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: weakSelf.invalidRangesSinceLastEditing) else {
                 return
             }
             
@@ -268,68 +272,82 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 return
             }
             
-            let editingRangeSinceLastParsing =  self.editingValuesSinceLastParsing?.editedRange.union(translations.editingValues.editedRange) ?? translations.editingValues.editedRange
-            let editingDeltaSinceLastParsing = (self.editingValuesSinceLastParsing?.delta ?? 0) + translations.editingValues.delta
-            self.editingValuesSinceLastParsing = EditingValues(editedRange: editingRangeSinceLastParsing, delta: editingDeltaSinceLastParsing)
+            let editingRangeSinceLastParsing =  weakSelf.editingValuesSinceLastParsing?.editedRange.union(translations.editingValues.editedRange) ?? translations.editingValues.editedRange
+            let editingDeltaSinceLastParsing = (weakSelf.editingValuesSinceLastParsing?.delta ?? 0) + translations.editingValues.delta
+            weakSelf.editingValuesSinceLastParsing = EditingValues(editedRange: editingRangeSinceLastParsing, delta: editingDeltaSinceLastParsing)
             
-            self.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
+            weakSelf.invalidRangesSinceLastEditing.append(contentsOf: translations.invalidRanges)
             
-            self.outlineModel?.outline(textStorage: stringCopy) {
+            let semaphore = weakSelf.semaphore
+            
+            weakSelf.outlineModel?.outline(textStorage: stringCopy) { [weak self] in
                 
-                print("semaphore request - didprocess")
-                self.semaphore.wait()
+                guard let weakSelf = self else {
+                    
+                    print("semaphore released - didprocess (no self)")
+                    semaphore.signal()
+                    return
+                }
+                
+                print("semaphore request - didprocess (\(Thread.isMainThread ? "main thread" : "background thread"))")
+                weakSelf.semaphore.wait()
                 
                 guard newWorkItem.isCancelled == false else {
                     print("semaphore released - didprocess (work item cancelled)")
-                    self.semaphore.signal()
+                    weakSelf.semaphore.signal()
                     return
                 }
                 
-                guard let editingValues = self.editingValuesSinceLastParsing else {
+                guard let editingValues = weakSelf.editingValuesSinceLastParsing else {
                     print("semaphore released - didprocess (no editing values)")
-                    self.semaphore.signal()
+                    weakSelf.semaphore.signal()
                     return
                 }
                 
-                self.syntaxHighlighter?.highlight(editedRange: editingValues.editedRange, changeInLength: editingValues.delta, string: stringCopy, workItem: newWorkItem) { invalidRangesForHighlighting in
+                weakSelf.syntaxHighlighter?.highlight(editedRange: editingValues.editedRange, changeInLength: editingValues.delta, string: stringCopy, workItem: newWorkItem) { [weak self] invalidRangesForHighlighting in
                     
-                    var invalidRanges = self.invalidRangesSinceLastEditing
+                    guard let weakSelf = self else {
+                        semaphore.signal()
+                        return
+                    }
+                    
+                    var invalidRanges = weakSelf.invalidRangesSinceLastEditing
                     invalidRanges.append(contentsOf: invalidRangesForHighlighting)
                     
-                    self.editingValuesSinceLastParsing = nil
-                    self.invalidRangesSinceLastEditing = []
+                    weakSelf.editingValuesSinceLastParsing = nil
+                    weakSelf.invalidRangesSinceLastEditing = []
                     
-                    self.ignoreProcessing(ignore: true)
-                    invalidRanges = self.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: self.outlineModel, invalidRanges: invalidRanges) ?? []
-                    self.ignoreProcessing(ignore: false)
+                    weakSelf.ignoreProcessing(ignore: true)
+                    invalidRanges = weakSelf.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: weakSelf.outlineModel, invalidRanges: invalidRanges, testValue: "didProcess") ?? []
+                    weakSelf.ignoreProcessing(ignore: false)
                     
                     
                     print("didProcess - calling main thread")
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         
                         print("didProcess - main thread time")
                         
-                        guard newWorkItem.isCancelled == false else {
+                        guard let weakSelf = self, newWorkItem.isCancelled == false else {
                             print("semaphore released - didprocess (work item cancelled 2)")
-                            self.semaphore.signal()
+                            semaphore.signal()
                             return
                         }
                         
-                        let selectedRange = self.textEditorView.selectedRange()
-                        self.ignoreProcessEditing = true
-                        self.textStorage.setAttributedString(stringCopy)
-                        self.textEditorView.setSelectedRange(selectedRange)
-                        self.ignoreProcessEditing = false
-                        self.invalidateRanges(invalidRanges: invalidRanges)
-                        if self.rulerView != nil {
-                            self.rulerView.needsDisplay = true //TODO: re-write testRulerView to calculate line #s with collapsedGroups
+                        let selectedRange = weakSelf.textEditorView.selectedRange()
+                        weakSelf.ignoreProcessEditing = true
+                        weakSelf.textStorage.setAttributedString(stringCopy)
+                        weakSelf.textEditorView.setSelectedRange(selectedRange)
+                        weakSelf.ignoreProcessEditing = false
+                        weakSelf.invalidateRanges(invalidRanges: invalidRanges)
+                        if weakSelf.rulerView != nil {
+                            weakSelf.rulerView.needsDisplay = true //TODO: re-write testRulerView to calculate line #s with collapsedGroups
                         }
                         
                         newWorkItem = nil
                         
                         print("semaphore released - didprocess (completed)")
-                        self.semaphore.signal()
+                        weakSelf.semaphore.signal()
                     }
                 }
             }
@@ -380,6 +398,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         DispatchQueue.global().async {
             
+            print("semaphore request - markerClick (\(Thread.isMainThread ? "main thread" : "background thread"))")
             self.semaphore.wait()
             MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
             
@@ -387,6 +406,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 //TODO: figure out invalid range
                 self.invalidateRanges(invalidRanges: [self.textStorage.string.maxNSRange])
                 self.rulerView.needsDisplay = true
+                print("semaphore released - markerClicked")
                 self.semaphore.signal()
                 completion()
             }

@@ -11,7 +11,7 @@ import Foundation
 class OutlineModel {
     
     // MARK: - Properties
-    var delegate: OutlineModelDelegate?
+    weak var delegate: OutlineModelDelegate?
     var processing: Bool = false // TODO: implement - used by OutlineViewController.allowInteraction
     let language: Language
     var parentTextGroup: TextGroup = TextGroup(title: "parent")
