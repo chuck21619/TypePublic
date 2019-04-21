@@ -307,20 +307,42 @@ The sideboard is a panel that reveals itself from the right of the workspace. It
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A8)
 Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data & stats about the writing.
 
-**Targets**
+1. Layout
+
+Easily change the layout for the document.
+
+2. Credits
+
+Add Author, and Editor Credits.
+
+3. Composition
+
+4. Targets
 
 Exactly, At most, At least, Approx., Due
 
 Pages, Characters, Characters w/o Spaces, Read Time (min), Speech (Min)
 
-show up as rings in Folio, and a circled check when completed.
+**Target Rings** show up as rings in Folio, and a circled check when completed.
 
-**Analytics**
+5. Analysis
 
-- Word Count
-- Activity ()
+histogram displaying the progress made in the document.
 
-The outline for the document in the workspace. This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
+data is historical, kept as long as the document remains in the app.
+
+features:
+- hovering over the line will display the specific metric above the graph
+- 
+
+6. Collaboration (future feature)
+
+
+
+### The outline 
+displays the same list of headlines for the document in the workspace. 
+
+This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
 1. Filtering
 2. displaying indicator dots for things like: misspellings, comments, or highlighted text as these are areas where you’d want to see from a top-level view.
 
@@ -355,16 +377,16 @@ In the sideboard, moving a reference below an Ibid, the ibid data (like page num
 # Syntax
 TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few custom tags. Some syntax will receive visual formatting specific to TYPE (like tables and code fences) to make them both easier to read and edit.
 
-## Tag Toggling
+### Tag Toggling
 Syntax can be toggled on/off with keyboard shortcuts. If a word is highlighted or if the cursor is touching a word the writer can use a shortcut(if one is mapped) to toggle the tag on/off. For example, Bolding a word.
 
-## Mirror Modify Bracketed Syntax & Punctuation
+### Mirror Modify Bracketed Syntax & Punctuation
 Deleting or highlighting & changing either the opening or closing tag or punctuation automatically deletes/changes the opposite.
 
-## Auto-close
+### Auto-close
 If an opening tag for syntax or punctuation is entered, the closing tag will appear automatically after the cursor. Hitting Return or arrowing up/down from the line will close the tag.
 
-## Auto-Wrap
+### Auto-Wrap
 Entering bracketed punctuation (,[,{,",' and/or syntax on highlighted word(s) will wrap the word(s). **The syntax always goes outside the punctuation.**
 
 # Links
@@ -374,14 +396,14 @@ Links in markdown syntax [displayName](url) will appear as hyperlinks as the dis
 
 Using the shortcut **⌘K** without any text highlighted will add a blank syntax placeholder of: [Name](url).
 
-## Internal Links (custom-ish syntax)
+### Internal Links (custom-ish syntax)
 Links can point to headlines within documents- clicking these links will direct the workspace to the headline in the open document or a different document all together. This is incredibly useful for building a database or wiki.
 
 **Syntax ideas:**
 [displayName](#headline) link to a headline in the same document
 [displayName](DocumentName/#Headline) link to a headline in a different document
 
-## References/Footnotes
+### References/Footnotes
 Technically links, but their source can be from anywhere. instead of parenthesis, the url is wrapped in curly brackets.
 
 **Future Development**
