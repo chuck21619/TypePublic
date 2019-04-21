@@ -51,10 +51,22 @@ Documents and folders are displayed as a list with an icon denoting the Layout o
 **Rearrangement**
 Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.
 
-**Renaming**
+**Renaming files**
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2568%3A3)
 
 Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name at the top of the Tool bar (with the document open in the workspace), or in the context menu (edit > Rename)
+
+**Batch Renaming documents**
+Selecting multiple documents and initiating a rename (⌘R) allows for a batch rename from the action bar.
+
+**Renaming Formulas**
+writers can use terms like `%n` or `%date` to automate numbering or dating for a batch rename. For exmaple, three documents selected to be renamed "Document - %n" would be renamed as such:
+
+- Document - 1
+- Document - 2
+- Document - 3
+
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2641%3A27)
 
 #### Sorting
 **Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.** Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).
@@ -175,7 +187,7 @@ Certain layouts offer unique components and functionality related to the type of
 **Documents can be tagged in type, folders cannot be tagged.** When collapsed, Folders can display the tags of the documents it contains. Tags are displayed as dots after the document name in the folio by default. Tags can also be displayed as [tokens](https://developer.apple.com/design/human-interface-guidelines/macos/fields-and-labels/token-fields/)- displaying their tag color and tag name. When in **token** form, tags can be renamed and recolored.
 
 ## MacOS color Panel (NSColorPanel) to change tag colors.
-To change a tags color, Right click on either a **Tag Token** or **Tag Folder** doing so will display the Mac Color panel. 
+To change a tags color, Right click on either a [**Tag token**](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TokenField_Guide/Introduction/Introduction.html) or **Tag Folder** doing so will display the Mac Color panel. 
 
 Investigate: *There’s a way to add a tab to the color panel, I’ve seen other apps do it.*
 
@@ -295,9 +307,23 @@ The sideboard is a panel that reveals itself from the right of the workspace. It
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A8)
 Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data & stats about the writing.
 
+**Targets**
+
+Exactly, At most, At least, Approx., Due
+
+Pages, Characters, Characters w/o Spaces, Read Time (min), Speech (Min)
+
+show up as rings in Folio, and a circled check when completed.
+
+**Analytics**
+
+- Word Count
+- Activity ()
+
 The outline for the document in the workspace. This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
 1. Filtering
 2. displaying indicator dots for things like: misspellings, comments, or highlighted text as these are areas where you’d want to see from a top-level view.
+
 
 ## Publish & Print
 [EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2514%3A579)
@@ -307,6 +333,24 @@ The outline for the document in the workspace. This outline could be displayed d
 Maybe one of the larger time-saving ideas, being able to search for the definition of a word, or find synonyms/antonyms without leaving the app. Highlight a word to get its definition and/or change it to a synonym.
 1. Insert words by clicking on the definition, synonyms, and/or antonyms.
 2. Replace words by highlighting them and THEN clicking the definitions, synonyms/antonyms.
+
+## Index
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2850%3A0)
+
+**⌘+⇧+i**
+
+With writing symbols/passages, you can create an instance for a word or passage from the symbol, editing the source changes every instance of the symbol/passage. 
+
+**Where this would be valuable**
+- Fiction writing: character names. if you want to change the name of the Main character, you just have to change the source, then it's updated everywhere.
+- Leagal writing, for boilerplate passages that are used in a lot of contracts/documents.
+
+- you can detach the symbol from the source
+
+- Symbols autocomplete. this is for things like Characters as Pronouns, instead of the character name being highlighted as incorrectly spelled, you can make it a symbol.
+
+
+In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has "page 10" and the ibid is "page 44" if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as "page 44" and the ibid becomes "page 10"
 
 # Syntax
 TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few custom tags. Some syntax will receive visual formatting specific to TYPE (like tables and code fences) to make them both easier to read and edit.
@@ -358,12 +402,19 @@ Click and drag entire rows/columns to different parts of the table.
 Rows can be moved up and down with keyboard shortcut: *Shift-command-up* and 
 *Shift-Command-Down*.
 
+Move the entire table up/down the document by selecting the header row.
+
 clicking on a move handle will select the entire row or column and provide additional options. Columns will have **Alignment** options
 
 **Align** - Move - additional dropdown (add rows/columns or delete row/column).
 
 ## Images
+
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2798%3A23)
+
 Image tags have an additional **Alignment** options when they are created and/or selected in the workspace. Using the **Promote**/**Demote** Shortcuts or clicking on the alignment icons, the alignment of the image changes in the preview/publish.
+
+**Alignment only applies to the published document. Images appear the same way no matter what in type.** Images can be displayed as the syntax tag or in as a preview- both of them occupy one line and are full width of the *text column* in the document.
 
 Dragging an image to the workspace, or Pasting it automatically generates the proper syntax.
 
@@ -373,7 +424,9 @@ Dragging an image to the workspace, or Pasting it automatically generates the pr
 - Full Width
 - Right
 
-## Nice looking Code Fences for Documents
+*note* image alignments are determined by the document's layout. some layouts (specifically ones where the document is published to a platform) will not be able to display images in certain alignments.
+
+## Code Fences
 Text wrapped in the code tag will be wrapped in a code fence. The writer can declare the syntax by clicking the syntax button at the top right of the fence and the code inside will highlight accordingly. Code fences can have their own line numbers.
 
 ## LaTeX formulas
@@ -631,25 +684,6 @@ Rearranging a reference in the sideboard will change the reference numbers in th
 
 Moving referenced text above/below other referenced text in the workspace will update the sequence number in the sideboard. If the referenced text is an IBID and moves above the initial reference, then the Ibid becomes the reference, and the initial reference becomes the ibid.
 
-**”Symbols", Libraries, or Passages (some other clever name)**
-Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.
-
-This would be good for something like legal documentation or even character bibles. If the main character's name needs to change, instead of doing find&replace, you'd edit the source.
-
-- When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
-- if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.
-- writers can detach instances from the source w/o with the context menu
-
-
-
-In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has "page 10" and the ibid is "page 44" if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as "page 44" and the ibid becomes "page 10"
-
-**Batch Renaming documents (ACTION BAR?)**
-Selecting multiple documents and initiating a rename ⌘R allows for a batch rename in the order they are presented. If writers wanted to Number their documents this would be really helpful.
-
-**Auto-Number**
-Set a folder to prepend a number or phrase (like Chapter one, two, three...) to the documents it holds.
-
 **Responsive Panels**
 The folio and sideboard present information different depending on how wide they are.
 
@@ -726,5 +760,9 @@ It’d be cool to establish a skunkworks platform, something similar to Small Vi
 - /date - enters the current date
 - /time - current time
 - /tomorrow - date after current date
+
+**Bionic Reading**
+maybe for previewing?
+[link](https://bionic-reading.com/en/)
 
 # Technical
