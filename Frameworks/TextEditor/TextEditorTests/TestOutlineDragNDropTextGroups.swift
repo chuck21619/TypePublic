@@ -250,6 +250,8 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
             viewController?.viewDidLoad()
             viewController?.outlineViewController?.loadView()
             viewController?.outlineViewController?.viewDidLoad()
+            viewController?.testInt = i
+            viewController?.outlineViewController?.testInt = i
             
             let expectation = XCTestExpectation(description: "outline the document")
             
@@ -310,11 +312,10 @@ class TestOutlineDragNDropTextGroups: XCTestCase, TextEditorViewControllerDelega
             self.wait(for: [expectation], timeout: 5.0)
             semaphore.signal()
             
-            if i > 10 {
-                print("a")
-            }
+//            if i > 10 {
+//                print("a")
+//            }
             print("test #: \(i) end")
-            CollapsingTranslator.someInt += 1
         }
     }
     

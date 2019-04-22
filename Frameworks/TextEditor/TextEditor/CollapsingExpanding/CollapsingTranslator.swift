@@ -10,16 +10,12 @@ import Foundation
 
 class CollapsingTranslator {
     
-    static var someInt = 0
-    
     init(delegate: CollapsingTranslatorDelegate, ignoreProcessingDelegate: IgnoreProcessingDelegate) {
         
-        self.someInt = CollapsingTranslator.someInt
         self.delegate = delegate
         self.ignoreProcessingDelegate = ignoreProcessingDelegate
     }
     
-    let someInt: Int
     weak var ignoreProcessingDelegate: IgnoreProcessingDelegate?
     weak var delegate: CollapsingTranslatorDelegate?
     
@@ -152,9 +148,9 @@ class CollapsingTranslator {
         return (adjustedEditedRange: editedRangeReturnValue, adjustedDelta: deltaReturnValue, invalidRange: invalidRangeReturnValue)
     }
     
-    @discardableResult func recollapseTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, invalidRanges: [NSRange], testValue: String = "") -> [NSRange] {
+    @discardableResult func recollapseTextGroups(string: NSMutableAttributedString, outlineModel: OutlineModel?, invalidRanges: [NSRange], testValue: String = "", testInt: Int) -> [NSRange] {
         
-        print("\(someInt)recollapse \(testValue) start")
+        print("\(testInt)recollapse \(testValue) start")
         
         var adjustedInvalidRanges = invalidRanges
         
@@ -167,13 +163,13 @@ class CollapsingTranslator {
         var i = 0
         for collapsedTextGroup in collapsedTextGroups.reversed() {
             
-            print("\(someInt)recollapse \(testValue) #: \(i) start")
+            print("\(testInt)recollapse \(testValue) #: \(i) start")
             if let collapsedTextGroupsParentTextGroup = collapsedTextGroup.parentTextGroup, collapsedTextGroups.contains(collapsedTextGroupsParentTextGroup) == true {
                 continue
             }
             
             adjustedInvalidRanges = self.collapseTextGroup(string: string, collapsedTextGroup, invalidRanges: invalidRanges, outlineModel: outlineModel, recollapsing: true, expandedString: expandedString)
-            print("\(someInt)recollapse \(testValue) #: \(i) end")
+            print("\(testInt)recollapse \(testValue) #: \(i) end")
             i += 1
         }
         
@@ -182,7 +178,7 @@ class CollapsingTranslator {
 //            print("a")
 //        }
         
-        print("\(someInt)recollapse \(testValue) finish")
+        print("\(testInt)recollapse \(testValue) finish")
         return adjustedInvalidRanges
     }
     
@@ -205,6 +201,9 @@ class CollapsingTranslator {
         let location = range.location
         let endIndex = (location + range.length)
 
+        if range.length < 0  || (range.location + range.length) > string.string.count {
+            let _ = collapsedTextGroupRange(string: expandedString, outlineModel: outlineModel, textGroup)!
+        }
         
         let textGroupString = string.attributedSubstring(from: range)
         let attachment = TestTextAttachment(data: nil, ofType: "someType")

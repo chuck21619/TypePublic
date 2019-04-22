@@ -10,7 +10,7 @@ import Foundation
 
 class MarkerClickHandler {
     
-    static func markerClicked(_ marker: TextGroupMarker, outlineModel: OutlineModel?, textStorage: NSTextStorage, collapsingTranslator: CollapsingTranslator?, rulerView: TestRulerView, ignoreProcessingDelegate: IgnoreProcessingDelegate) {
+    static func markerClicked(_ marker: TextGroupMarker, outlineModel: OutlineModel?, textStorage: NSTextStorage, collapsingTranslator: CollapsingTranslator?, rulerView: TestRulerView, ignoreProcessingDelegate: IgnoreProcessingDelegate, testInt: Int) {
         
         guard let collapsingTranslator = collapsingTranslator else {
             return
@@ -22,7 +22,7 @@ class MarkerClickHandler {
         
         guard let textGroup = outlineModel?.textGroup(at: marker.token.range.location, collapsedTextGroups: collapsingTranslator.collapsedTextGroups) else {
             print("Error locating textgroup at marker")
-            collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], testValue: "markerClickHandler exit early")
+            collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], testValue: "markerClickHandler exit early", testInt: testInt)
             ignoreProcessingDelegate.ignoreProcessing(ignore: false)
             return
         }
@@ -52,7 +52,7 @@ class MarkerClickHandler {
             collapsingTranslator.collapsedTextGroups.append(textGroup)
         }
         
-        collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], testValue: "markerClickHandler")
+        collapsingTranslator.recollapseTextGroups(string: textStorage, outlineModel: outlineModel!, invalidRanges: [], testValue: "markerClickHandler", testInt: testInt)
         
         ignoreProcessingDelegate.ignoreProcessing(ignore: false)
     }

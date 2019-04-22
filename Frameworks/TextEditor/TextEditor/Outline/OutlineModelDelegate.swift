@@ -10,6 +10,7 @@ import Foundation
 
 protocol OutlineModelDelegate: class {
     
+    func testUpdate(parent: TextGroup?)
     func didUpdate(parentTextGroup: TextGroup?)
     func documentString() -> NSMutableAttributedString?
 }

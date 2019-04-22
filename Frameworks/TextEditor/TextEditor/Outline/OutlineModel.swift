@@ -94,7 +94,8 @@ class OutlineModel {
         
         self.parentTextGroup = parentTextGroup
         updateCollapsingTranslatorsTextGroups()
-
+        
+        self.delegate?.testUpdate(parent: parentTextGroup)
         completion?(parentTextGroup)
     }
     

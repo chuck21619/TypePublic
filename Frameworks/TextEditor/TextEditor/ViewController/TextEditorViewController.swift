@@ -238,6 +238,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
     var invalidRangesSinceLastEditing: [NSRange] = []
     var editingValuesSinceLastParsing: EditingValues? = nil
     
+    var testInt = 0
     private var workItem: DispatchWorkItem? = nil
     let semaphore = DispatchSemaphore(value: 1)
     public func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
@@ -260,9 +261,9 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 return
             }
             
-//            self.semaphore.wait()
+            weakSelf.semaphore.wait()
             let stringCopy = NSMutableAttributedString(attributedString: weakSelf.textStorage)
-//            self.semaphore.signal()
+            weakSelf.semaphore.signal()
             
             guard let translations = weakSelf.collapsingTranslator?.calculateTranslations(string: stringCopy, outlineModel: weakSelf.outlineModel, editedRange: editedRange, delta: delta, editingValuesSinceLastProcess: weakSelf.editingValuesSinceLastParsing, invalidRangesSinceLastProcess: weakSelf.invalidRangesSinceLastEditing) else {
                 return
@@ -284,22 +285,22 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                 
                 guard let weakSelf = self else {
                     
-                    print("semaphore released - didprocess (no self)")
+                    print("\(self?.testInt)semaphore released - didprocess (no self)")
                     semaphore.signal()
                     return
                 }
                 
-                print("semaphore request - didprocess (\(Thread.isMainThread ? "main thread" : "background thread"))")
+                print("\(weakSelf.testInt)semaphore request - didprocess (\(Thread.isMainThread ? "main thread" : "background thread"))")
                 weakSelf.semaphore.wait()
                 
                 guard newWorkItem.isCancelled == false else {
-                    print("semaphore released - didprocess (work item cancelled)")
+                    print("\(weakSelf.testInt)semaphore released - didprocess (work item cancelled)")
                     weakSelf.semaphore.signal()
                     return
                 }
                 
                 guard let editingValues = weakSelf.editingValuesSinceLastParsing else {
-                    print("semaphore released - didprocess (no editing values)")
+                    print("\(weakSelf.testInt)semaphore released - didprocess (no editing values)")
                     weakSelf.semaphore.signal()
                     return
                 }
@@ -318,18 +319,18 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                     weakSelf.invalidRangesSinceLastEditing = []
                     
                     weakSelf.ignoreProcessing(ignore: true)
-                    invalidRanges = weakSelf.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: weakSelf.outlineModel, invalidRanges: invalidRanges, testValue: "didProcess") ?? []
+                    invalidRanges = weakSelf.collapsingTranslator?.recollapseTextGroups(string: stringCopy, outlineModel: weakSelf.outlineModel, invalidRanges: invalidRanges, testValue: "didProcess", testInt: weakSelf.testInt) ?? []
                     weakSelf.ignoreProcessing(ignore: false)
                     
                     
-                    print("didProcess - calling main thread")
+                    print("\(weakSelf.testInt)didProcess - calling main thread")
                     
                     DispatchQueue.main.async { [weak self] in
                         
-                        print("didProcess - main thread time")
+                        print("\(weakSelf.testInt)didProcess - main thread time")
                         
                         guard let weakSelf = self, newWorkItem.isCancelled == false else {
-                            print("semaphore released - didprocess (work item cancelled 2)")
+                            print("\(self?.testInt)semaphore released - didprocess (work item cancelled 2)")
                             semaphore.signal()
                             return
                         }
@@ -346,7 +347,7 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
                         
                         newWorkItem = nil
                         
-                        print("semaphore released - didprocess (completed)")
+                        print("\(weakSelf.testInt)semaphore released - didprocess (completed)")
                         weakSelf.semaphore.signal()
                     }
                 }
@@ -398,15 +399,15 @@ public class TextEditorViewController: NSViewController, NSTextViewDelegate, NST
         
         DispatchQueue.global().async {
             
-            print("semaphore request - markerClick (\(Thread.isMainThread ? "main thread" : "background thread"))")
+            print("\(self.testInt)semaphore request - markerClick (\(Thread.isMainThread ? "main thread" : "background thread"))")
             self.semaphore.wait()
-            MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self)
+            MarkerClickHandler.markerClicked(marker, outlineModel: self.outlineModel, textStorage: self.textStorage, collapsingTranslator: self.collapsingTranslator, rulerView: self.rulerView, ignoreProcessingDelegate: self, testInt: self.testInt)
             
             DispatchQueue.main.async {
                 //TODO: figure out invalid range
                 self.invalidateRanges(invalidRanges: [self.textStorage.string.maxNSRange])
                 self.rulerView.needsDisplay = true
-                print("semaphore released - markerClicked")
+                print("\(self.testInt)semaphore released - markerClicked")
                 self.semaphore.signal()
                 completion()
             }

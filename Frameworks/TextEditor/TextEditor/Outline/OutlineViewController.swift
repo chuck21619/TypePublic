@@ -89,6 +89,35 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
     }
     
     // MARK: - OutlineModelDelegate
+    
+    
+    
+    //TODO: FIGURE OUT WHY THIS DOESNT FIX THE PROBLEMO
+    // is it being called?
+    func testUpdate(parent: TextGroup?) {
+        
+        var didReplace = false
+        
+        //replace draggingGroup with updated instance
+        //TODO: optimize?        
+        for textGroup in parentTextGroup {
+            
+            if textGroup.title == draggingGroup?.title {
+                
+                draggingGroup = textGroup
+                didReplace = true
+                break
+            }
+        }
+        
+        if draggingGroup != nil && didReplace == false {
+            print("fuckola")
+        }
+        else {
+            print("replaced dragging group")
+        }
+    }
+    
     func didUpdate(parentTextGroup: TextGroup?) {
         
         updateOutline(parentTextGroup: parentTextGroup)
@@ -191,98 +220,105 @@ class OutlineViewController: NSViewController, OutlineModelDelegate, NSOutlineVi
         return .move
     }
     
+    var testInt = 0
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         
         guard let collapsingTranslator = collapsingTranslator,
-              let delegate = self.delegate,
-              let string = delegate.documentString(),
-              let model = self.model else {
-            return false
+            let delegate = self.delegate,
+            let string = delegate.documentString(),
+            let model = self.model else {
+                return false
         }
         
-        let semaphore = (self.delegate as! TextEditorViewController).semaphore
         
-        print("semaphore request - outline")
-        semaphore.wait()
-        
-        delegate.beginUpdates()
-        
-        collapsingTranslator.expandAllTextGroups(string: string, outlineModel: model)
-        
-        // if item is nil, then target is root
-        let targetParent = item as? TextGroup ?? self.parentTextGroup
-        
-        guard let draggingGroup = self.draggingGroup else {
-            print("semaphore released - didprocess (no dragging group)")
-            semaphore.signal()
-            return false
-        }
-        
-        var insertIndex = index
-        if targetParent == draggingGroup.parentTextGroup, index > self.draggedFromIndex {
+        DispatchQueue.global().async {
             
-            insertIndex -= 1
-        }
-        
-        let adjacentTextGroup: TextGroup
-        if index == 0 {
+            let semaphore = (self.delegate as! TextEditorViewController).semaphore
             
-            adjacentTextGroup = targetParent.textGroups[index]
-        }
-        else {
+            print("\(self.testInt)semaphore request - acceptDrop")
+            semaphore.wait()
             
-            adjacentTextGroup = targetParent.textGroups[index-1]
-        }
-        //fix: the draggingGroup.parentTextGroup is nil after collapsing an unrelated textgroup
-        guard let textGroupString = delegate.string(for: draggingGroup, outlineModel: self.model) else {
-            print("semaphore released - didprocess (no textGroupString)")
-            semaphore.signal()
-            return false
-        }
-        
-        // if dragging down AND into the same parent, increase index to account for itself that still exists earlier in the parents textgroups
-        if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location && draggingGroup.parentTextGroup == targetParent {
-            
-            insertIndex += 1
-        }
-        
-        self.visibleRect = outlineView.visibleRect
-        
-        delegate.removeTextGroup(draggingGroup, outlineModel: self.model, downwardDraggingGroup: nil) { success in
-            
-            guard success == true else {
-                return
-            }
-            
-            let indexOfDraggingGroup = draggingGroup.parentTextGroup?.textGroups.firstIndex(of: draggingGroup)
-            if let indexOfDraggingGroup = indexOfDraggingGroup {
+            DispatchQueue.main.async {
                 
-                draggingGroup.parentTextGroup?.textGroups.remove(at: indexOfDraggingGroup)
+                delegate.beginUpdates()
+                
+                collapsingTranslator.expandAllTextGroups(string: string, outlineModel: model)
+                
+                // if item is nil, then target is root
+                let targetParent = item as? TextGroup ?? self.parentTextGroup
+                
+                guard let draggingGroup = self.draggingGroup else {
+                    print("\(self.testInt)semaphore released - acceptDrop (no dragging group)")
+                    semaphore.signal()
+                    return //false
+                }
+                
+                var insertIndex = index
+                if targetParent == draggingGroup.parentTextGroup, index > self.draggedFromIndex {
+                    
+                    insertIndex -= 1
+                }
+                
+                let adjacentTextGroup: TextGroup
+                if index == 0 {
+                    
+                    adjacentTextGroup = targetParent.textGroups[index]
+                }
+                else {
+                    
+                    adjacentTextGroup = targetParent.textGroups[index-1]
+                }
+                //fix: the draggingGroup.parentTextGroup is nil after collapsing an unrelated textgroup
+                guard let textGroupString = delegate.string(for: draggingGroup, outlineModel: self.model) else {
+                    print("\(self.testInt)semaphore released - acceptDrop (no textGroupString)")
+                    semaphore.signal()
+                    return //false
+                }
+                
+                // if dragging down AND into the same parent, increase index to account for itself that still exists earlier in the parents textgroups
+                if draggingGroup.token!.range.location < adjacentTextGroup.token!.range.location && draggingGroup.parentTextGroup == targetParent {
+                    
+                    insertIndex += 1
+                }
+                
+                self.visibleRect = outlineView.visibleRect
+                
+                delegate.removeTextGroup(draggingGroup, outlineModel: self.model, downwardDraggingGroup: nil) { success in
+                    
+                    guard success == true else {
+                        return
+                    }
+                    
+                    let indexOfDraggingGroup = draggingGroup.parentTextGroup?.textGroups.firstIndex(of: draggingGroup)
+                    if let indexOfDraggingGroup = indexOfDraggingGroup {
+                        
+                        draggingGroup.parentTextGroup?.textGroups.remove(at: indexOfDraggingGroup)
+                    }
+                    
+                    if targetParent == draggingGroup.parentTextGroup, index > self.draggedFromIndex {
+                        insertIndex -= 1
+                    }
+                    
+                    delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
+                    targetParent.textGroups.insert(draggingGroup, at: insertIndex)
+                }
+                
+                //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
+                
+                collapsingTranslator.sortCollapsedTextGroups() // the collapsed groups may not be sorted if one is dragged below or above another one. possibly want to optimize this
+                collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], testValue: "acceptDrop", testInt: self.testInt)
+                
+                if let parent = self.model?.parentTextGroup {
+                    
+                    self.didUpdate(parentTextGroup: parent)
+                }
+                
+                delegate.endUpdates()
+                
+                print("\(self.testInt)semaphore released - acceptDrop (completed)")
+                semaphore.signal()
             }
-            
-            if targetParent == draggingGroup.parentTextGroup, index > self.draggedFromIndex {
-                insertIndex -= 1
-            }
-            
-            delegate.insertAttributedString(textGroupString, in: targetParent, at: insertIndex, outlineModel: self.model, movedTextGroup: draggingGroup)
-            targetParent.textGroups.insert(draggingGroup, at: insertIndex)
         }
-        
-        //TODO: optimize: the highlighting should occur now - before recollapsing. otherwise in didProcessEditing, it will have to re-expand and then re-collapse
-        
-        collapsingTranslator.sortCollapsedTextGroups() // the collapsed groups may not be sorted if one is dragged below or above another one. possibly want to optimize this
-        collapsingTranslator.recollapseTextGroups(string: string, outlineModel: model, invalidRanges: [], testValue: "acceptDrop")
-        
-        if let parent = self.model?.parentTextGroup {
-            
-            self.didUpdate(parentTextGroup: parent)
-        }
-        
-        delegate.endUpdates()
-        
-        print("semaphore released - didprocess (completed)")
-        semaphore.signal()
-        
         return true
     }
     
