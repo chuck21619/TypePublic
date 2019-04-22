@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "mac",
-      "filename" : "index.png",
+      "filename" : "letter.png",
       "scale" : "1x"
     },
     {
       "idiom" : "mac",
-      "filename" : "index-D.png",
+      "filename" : "letter-D.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -18,12 +18,12 @@
     },
     {
       "idiom" : "mac",
-      "filename" : "index@2x.png",
+      "filename" : "letter@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "mac",
-      "filename" : "index-D@2x.png",
+      "filename" : "letter-D@2x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
