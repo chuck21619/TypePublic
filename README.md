@@ -302,7 +302,6 @@ The sideboard is a panel that reveals itself from the right of the workspace. It
 
 > Sideboards are also built with extending functionality in mind. Anything new we need to build or add can be accessed and tinkered with via the sideboard.
 
-
 ## Info & Outline
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A8)
 Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data & stats about the writing.
@@ -337,8 +336,6 @@ features:
 
 6. Collaboration (future feature)
 
-
-
 ### The outline 
 displays the same list of headlines for the document in the workspace. 
 
@@ -357,22 +354,7 @@ Maybe one of the larger time-saving ideas, being able to search for the definiti
 2. Replace words by highlighting them and THEN clicking the definitions, synonyms/antonyms.
 
 ## Index
-[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2850%3A0)
-
-**⌘+⇧+i**
-
-With writing symbols/passages, you can create an instance for a word or passage from the symbol, editing the source changes every instance of the symbol/passage. 
-
-**Where this would be valuable**
-- Fiction writing: character names. if you want to change the name of the Main character, you just have to change the source, then it's updated everywhere.
-- Leagal writing, for boilerplate passages that are used in a lot of contracts/documents.
-
-- you can detach the symbol from the source
-
-- Symbols autocomplete. this is for things like Characters as Pronouns, instead of the character name being highlighted as incorrectly spelled, you can make it a symbol.
-
-
-In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has "page 10" and the ibid is "page 44" if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as "page 44" and the ibid becomes "page 10"
+in the index sideboard you can edit the sources of the indexed terms in the document. Each source has a list of locations beneath the term. Clicking on these line numbers will move the workspace to said line.
 
 # Syntax
 TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few custom tags. Some syntax will receive visual formatting specific to TYPE (like tables and code fences) to make them both easier to read and edit.
@@ -563,8 +545,34 @@ If pulled off, it’ll make everything that came before it look obsolete, and ev
 
 ----
 
-# Mechanics
+# Mechanics & Features
 Along with Actions, keyboard and writing mechanics are a significant feature of TYPE. A lot of the inspiration comes from the idea that, “The longer your hands are at the keys, the better chance you have of writing.” 
+
+### Indexing
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2850%3A0)
+
+**⌘+⇧+i**
+
+Indexing a word creates a source for that word. you can insert an instance of the source in the document, and if the source changes, all of the instances update from the source. 
+
+**Creating an Index term**
+
+**Adding an Instance**
+use a keyboard shortcut, toolbar, menu item to insert an instance, typing will try to auto-complete from the source list created for the document. hitting enter will end the entry, ESC will cancel it.
+
+**Indexes are associated with individual documents, but documents grouped in a folder will share the same indexes**
+
+**Importing an index from another document**
+
+
+Typing a word that is identitcal to an indexed term does not create an instance, but any text can be converted to an instance.
+
+With writing symbols/passages, you can create an instance for a word or passage from the symbol, editing the source changes every instance of the symbol/passage. 
+
+**Detaching instances and deleting the source**
+You can detach an instance so that the word becomes plain text. Deleting the source (in the sideboard) does this in mass for every instance in the document.
+
+Every instance has a line location in the **Index Sideboard**, clicking on any of these numbers will take the workspace to that line.
 
 **Rearranging**
 Type allows writers to change the position of text in the workspace, as well as documents/folders within the folio using keyboard shortcuts or clicking & dragging.
@@ -621,12 +629,11 @@ A spell check which targets common typos that a normal spell check would otherwi
 - satan when you mean satin
 - pubic when you mean public
 
-
-
 #Settings
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2495%3A139)
 
 Popup to comply with apple's HIG.
+
 
 # Shortcuts
 
@@ -688,7 +695,7 @@ Popup to comply with apple's HIG.
 |Move to bottom | ⇧⌥⌘↓ |
 |Promote | `⌘]` | |
 |Demote | `⌘[` | |
-
+|Index | |`⇧⌘i` | adds index prompt, creates/detaches selected word from instance |
 
 ----
 
@@ -697,9 +704,6 @@ Popup to comply with apple's HIG.
 
 **Layout Styles**
 Additional styling set to a layout (created with PFD layout in mind-) if you want to differentiate between a standard PDF and something like a CV or resume.
-
-**Building a Database**
-Using the references as a character bible for developing a story. example: Character Name(Description of the character). These pronouns are avoided by Spell Check.
 
 **References & Citation Rearrangement**
 Rearranging a reference in the sideboard will change the reference numbers in the document
@@ -741,42 +745,42 @@ If you use the mouse wheel/scroll manually up or down the document, there is an 
 **Plugin API for Actions and Sideboards**
 Programs like [sketch](#), Sublime Text, and Framer thrive on a community of designers and developers who build functionality into the application. This was only possible because the devs opened up the API and made it easy to create plugins and allow the creators to profit from their contributions (if they desire). It democratizes the feature-set for the application and only strengthens the user-base.
 
-**Git Integration**
-- changes indicated graphically, probably by the line numbers.
+**Integrations**
 
-**Unsplash Integration**
+**GitHub**
+
+**Unsplash**
 in the sideboard, you can search for images to use as placeholders or even for the final doc. We should also pull in the contributors credits as a reference for the bibliography.
 
-**Where the cursor was last**
+**Jump to where the cursor was last**
 jumping around a document with something like *FIND* can leave you in a place within the document that you don’t want to be, maybe you just wanted to check something from earlier in the document, there should be a way to return to the last known position of the cursor AFTER an action that travels around the doc.
 
 **Serial to List**
 the ability to highlight a list of text in a series separated by commas (something, something, something, and something) and turning it into an ordered/unordered list, and vice versa.
-
-**Indie Publishers**
-build integrations with independent publishing or print houses. Empower individuals before getting in bed with a huge publisher.
 
 **Whiteboard/Storyboard**
 The option of viewing documents as a thumbnail gallery either in the folio, or in the workspace. The thumbnails would be sized according to standard 8.5x11 paper. (or their layout?)
 
 **Self Publishing Content Management System.**
 I think with compilers like Jeckyll, and services like blot or Small Victories which use a dropbox folder to host markdown files as web content, I think it'd be a big sell if someone could manage/publish a website (be it a blog, portfolio, or presentation) directly from the app without ever needing to open a browser.
+
 Type should allow for people to publish their writing on their own. If they have built a website or some other outlet then they should be accommodated
 I think I just want for people to be able to publish and manage their writing within the app. Would be interesting to make this apart of type, and to make the experience more understandable for non-programmers.
+
+It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
 
 **Vendor Layouts**
 The ultimate goal for TYPE is to be a headquarters for writing. Someone should be able to start and end their work from within the app and never need to leave and sign-in to another service or copy+paste their markdown somewhere else. Integrations with Online services like *Wordpress, Medium, Small Victories, and Mailchimp* would be extremely valuable to users.
 
 **Newsletter Services**
-letterfuel
+Could Typy be its own engine for newsletters?
+- letterfuel
 
 **Font Foundries**
 Partnering with Indie foundries to have print layouts use their unique font faces and font pairings (also for self-published websites?)
 Fatype
 Klim
 GrilliType
-
-It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
 
 **Slash commands**
 - /date - enters the current date
@@ -786,5 +790,3 @@ It’d be cool to establish a skunkworks platform, something similar to Small Vi
 **Bionic Reading**
 maybe for previewing?
 [link](https://bionic-reading.com/en/)
-
-# Technical
