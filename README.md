@@ -51,10 +51,22 @@ Documents and folders are displayed as a list with an icon denoting the Layout o
 **Rearrangement**
 Documents and folders can be moved up and down the list with keyboard shortcuts or by clicking + dragging. If a file is contained within a folder, then that file’s movement up or down is restricted to the top or bottom of the folder.
 
-**Renaming**
+**Renaming files**
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2568%3A3)
 
 Rename a file in the folio by selecting it and using the Shortcut **⌘R**, clicking the name at the top of the Tool bar (with the document open in the workspace), or in the context menu (edit > Rename)
+
+**Batch Renaming documents**
+Selecting multiple documents and initiating a rename (⌘R) allows for a batch rename from the action bar.
+
+**Renaming Formulas**
+writers can use terms like `%n` or `%date` to automate numbering or dating for a batch rename. For exmaple, three documents selected to be renamed "Document - %n" would be renamed as such:
+
+- Document - 1
+- Document - 2
+- Document - 3
+
+[EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2641%3A27)
 
 #### Sorting
 **Sorting the folio is a temporary action that only effects the top level folders or orphaned documents (w/o a folder) in the Folio.** Folders and Subfolders can be sorted individually through the context menu (ctrl+clicking on the desired folder/subfolder).
@@ -175,7 +187,7 @@ Certain layouts offer unique components and functionality related to the type of
 **Documents can be tagged in type, folders cannot be tagged.** When collapsed, Folders can display the tags of the documents it contains. Tags are displayed as dots after the document name in the folio by default. Tags can also be displayed as [tokens](https://developer.apple.com/design/human-interface-guidelines/macos/fields-and-labels/token-fields/)- displaying their tag color and tag name. When in **token** form, tags can be renamed and recolored.
 
 ## MacOS color Panel (NSColorPanel) to change tag colors.
-To change a tags color, Right click on either a **Tag Token** or **Tag Folder** doing so will display the Mac Color panel. 
+To change a tags color, Right click on either a [**Tag token**](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TokenField_Guide/Introduction/Introduction.html) or **Tag Folder** doing so will display the Mac Color panel. 
 
 Investigate: *There’s a way to add a tab to the color panel, I’ve seen other apps do it.*
 
@@ -290,14 +302,47 @@ The sideboard is a panel that reveals itself from the right of the workspace. It
 
 > Sideboards are also built with extending functionality in mind. Anything new we need to build or add can be accessed and tinkered with via the sideboard.
 
-
 ## Info & Outline
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2505%3A8)
 Information about the document selected in the folio or open in the workspace. Here, you can set the layout, edit tags, set targets, add collaborators, or view data & stats about the writing.
 
-The outline for the document in the workspace. This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
+1. Layout
+
+Easily change the layout for the document.
+
+2. Credits
+
+Add Author, and Editor Credits.
+
+3. Composition
+
+4. Targets
+
+Exactly, At most, At least, Approx., Due
+
+Pages, Characters, Characters w/o Spaces, Read Time (min), Speech (Min)
+
+**Target Rings** show up as rings in Folio, and a circled check when completed.
+
+5. Analysis
+
+histogram displaying the progress made in the document.
+
+data is historical, kept as long as the document remains in the app.
+
+features:
+- hovering over the line will display the specific metric above the graph
+- 
+
+6. Collaboration (future feature)
+
+### The outline 
+displays the same list of headlines for the document in the workspace. 
+
+This outline could be displayed differently than the one in the workspace. It could also have a few additional features:
 1. Filtering
 2. displaying indicator dots for things like: misspellings, comments, or highlighted text as these are areas where you’d want to see from a top-level view.
+
 
 ## Publish & Print
 [EXAMPLE](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2514%3A579)
@@ -308,19 +353,22 @@ Maybe one of the larger time-saving ideas, being able to search for the definiti
 1. Insert words by clicking on the definition, synonyms, and/or antonyms.
 2. Replace words by highlighting them and THEN clicking the definitions, synonyms/antonyms.
 
+## Index
+in the index sideboard you can edit the sources of the indexed terms in the document. Each source has a list of locations beneath the term. Clicking on these line numbers will move the workspace to said line.
+
 # Syntax
 TYPE uses Markdown based on GitHub Flavored Markdown (GFM) syntax with a few custom tags. Some syntax will receive visual formatting specific to TYPE (like tables and code fences) to make them both easier to read and edit.
 
-## Tag Toggling
+### Tag Toggling
 Syntax can be toggled on/off with keyboard shortcuts. If a word is highlighted or if the cursor is touching a word the writer can use a shortcut(if one is mapped) to toggle the tag on/off. For example, Bolding a word.
 
-## Mirror Modify Bracketed Syntax & Punctuation
+### Mirror Modify Bracketed Syntax & Punctuation
 Deleting or highlighting & changing either the opening or closing tag or punctuation automatically deletes/changes the opposite.
 
-## Auto-close
+### Auto-close
 If an opening tag for syntax or punctuation is entered, the closing tag will appear automatically after the cursor. Hitting Return or arrowing up/down from the line will close the tag.
 
-## Auto-Wrap
+### Auto-Wrap
 Entering bracketed punctuation (,[,{,",' and/or syntax on highlighted word(s) will wrap the word(s). **The syntax always goes outside the punctuation.**
 
 # Links
@@ -330,14 +378,14 @@ Links in markdown syntax [displayName](url) will appear as hyperlinks as the dis
 
 Using the shortcut **⌘K** without any text highlighted will add a blank syntax placeholder of: [Name](url).
 
-## Internal Links (custom-ish syntax)
+### Internal Links (custom-ish syntax)
 Links can point to headlines within documents- clicking these links will direct the workspace to the headline in the open document or a different document all together. This is incredibly useful for building a database or wiki.
 
 **Syntax ideas:**
 [displayName](#headline) link to a headline in the same document
 [displayName](DocumentName/#Headline) link to a headline in a different document
 
-## References/Footnotes
+### References/Footnotes
 Technically links, but their source can be from anywhere. instead of parenthesis, the url is wrapped in curly brackets.
 
 **Future Development**
@@ -358,12 +406,19 @@ Click and drag entire rows/columns to different parts of the table.
 Rows can be moved up and down with keyboard shortcut: *Shift-command-up* and 
 *Shift-Command-Down*.
 
+Move the entire table up/down the document by selecting the header row.
+
 clicking on a move handle will select the entire row or column and provide additional options. Columns will have **Alignment** options
 
 **Align** - Move - additional dropdown (add rows/columns or delete row/column).
 
 ## Images
+
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2798%3A23)
+
 Image tags have an additional **Alignment** options when they are created and/or selected in the workspace. Using the **Promote**/**Demote** Shortcuts or clicking on the alignment icons, the alignment of the image changes in the preview/publish.
+
+**Alignment only applies to the published document. Images appear the same way no matter what in type.** Images can be displayed as the syntax tag or in as a preview- both of them occupy one line and are full width of the *text column* in the document.
 
 Dragging an image to the workspace, or Pasting it automatically generates the proper syntax.
 
@@ -373,7 +428,9 @@ Dragging an image to the workspace, or Pasting it automatically generates the pr
 - Full Width
 - Right
 
-## Nice looking Code Fences for Documents
+*note* image alignments are determined by the document's layout. some layouts (specifically ones where the document is published to a platform) will not be able to display images in certain alignments.
+
+## Code Fences
 Text wrapped in the code tag will be wrapped in a code fence. The writer can declare the syntax by clicking the syntax button at the top right of the fence and the code inside will highlight accordingly. Code fences can have their own line numbers.
 
 ## LaTeX formulas
@@ -488,8 +545,34 @@ If pulled off, it’ll make everything that came before it look obsolete, and ev
 
 ----
 
-# Mechanics
+# Mechanics & Features
 Along with Actions, keyboard and writing mechanics are a significant feature of TYPE. A lot of the inspiration comes from the idea that, “The longer your hands are at the keys, the better chance you have of writing.” 
+
+### Indexing
+[WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2850%3A0)
+
+**⌘+⇧+i**
+
+Indexing a word creates a source for that word. you can insert an instance of the source in the document, and if the source changes, all of the instances update from the source. 
+
+**Creating an Index term**
+
+**Adding an Instance**
+use a keyboard shortcut, toolbar, menu item to insert an instance, typing will try to auto-complete from the source list created for the document. hitting enter will end the entry, ESC will cancel it.
+
+**Indexes are associated with individual documents, but documents grouped in a folder will share the same indexes**
+
+**Importing an index from another document**
+
+
+Typing a word that is identitcal to an indexed term does not create an instance, but any text can be converted to an instance.
+
+With writing symbols/passages, you can create an instance for a word or passage from the symbol, editing the source changes every instance of the symbol/passage. 
+
+**Detaching instances and deleting the source**
+You can detach an instance so that the word becomes plain text. Deleting the source (in the sideboard) does this in mass for every instance in the document.
+
+Every instance has a line location in the **Index Sideboard**, clicking on any of these numbers will take the workspace to that line.
 
 **Rearranging**
 Type allows writers to change the position of text in the workspace, as well as documents/folders within the folio using keyboard shortcuts or clicking & dragging.
@@ -546,12 +629,11 @@ A spell check which targets common typos that a normal spell check would otherwi
 - satan when you mean satin
 - pubic when you mean public
 
-
-
 #Settings
 [WIREFRAME](https://www.figma.com/file/SYqD5LWkzhuOmtJCYjvOkMTz/Type?node-id=2495%3A139)
 
 Popup to comply with apple's HIG.
+
 
 # Shortcuts
 
@@ -613,7 +695,7 @@ Popup to comply with apple's HIG.
 |Move to bottom | ⇧⌥⌘↓ |
 |Promote | `⌘]` | |
 |Demote | `⌘[` | |
-
+|Index | |`⇧⌘i` | adds index prompt, creates/detaches selected word from instance |
 
 ----
 
@@ -623,32 +705,10 @@ Popup to comply with apple's HIG.
 **Layout Styles**
 Additional styling set to a layout (created with PFD layout in mind-) if you want to differentiate between a standard PDF and something like a CV or resume.
 
-**Building a Database**
-Using the references as a character bible for developing a story. example: Character Name(Description of the character). These pronouns are avoided by Spell Check.
-
 **References & Citation Rearrangement**
 Rearranging a reference in the sideboard will change the reference numbers in the document
 
 Moving referenced text above/below other referenced text in the workspace will update the sequence number in the sideboard. If the referenced text is an IBID and moves above the initial reference, then the Ibid becomes the reference, and the initial reference becomes the ibid.
-
-**”Symbols", Libraries, or Passages (some other clever name)**
-Like design tools which reuse elements, writing can use a similar feature. With writing symbols, one would create a source file for the symbol, then that same text can be added to other documents, editing the source would update every instance in every document.
-
-This would be good for something like legal documentation or even character bibles. If the main character's name needs to change, instead of doing find&replace, you'd edit the source.
-
-- When a passage is used in a document, there is an asterisk next to the line number of the containing passage, click on the line number to go to the original passage
-- if you edit an instance, it detaches itself from the source, so it wont be updated automatically since it differs from the original.
-- writers can detach instances from the source w/o with the context menu
-
-
-
-In the sideboard, moving a reference below an Ibid, the ibid data (like page number) should swap places with the reference data. i.e. if the reference has "page 10" and the ibid is "page 44" if the sentence(s) in the workspace move ABOVE the initial reference, the sideboard would display the page number for the reference as "page 44" and the ibid becomes "page 10"
-
-**Batch Renaming documents (ACTION BAR?)**
-Selecting multiple documents and initiating a rename ⌘R allows for a batch rename in the order they are presented. If writers wanted to Number their documents this would be really helpful.
-
-**Auto-Number**
-Set a folder to prepend a number or phrase (like Chapter one, two, three...) to the documents it holds.
 
 **Responsive Panels**
 The folio and sideboard present information different depending on how wide they are.
@@ -685,34 +745,36 @@ If you use the mouse wheel/scroll manually up or down the document, there is an 
 **Plugin API for Actions and Sideboards**
 Programs like [sketch](#), Sublime Text, and Framer thrive on a community of designers and developers who build functionality into the application. This was only possible because the devs opened up the API and made it easy to create plugins and allow the creators to profit from their contributions (if they desire). It democratizes the feature-set for the application and only strengthens the user-base.
 
-**Git Integration**
-- changes indicated graphically, probably by the line numbers.
+**Integrations**
 
-**Unsplash Integration**
+**GitHub**
+
+**Unsplash**
 in the sideboard, you can search for images to use as placeholders or even for the final doc. We should also pull in the contributors credits as a reference for the bibliography.
 
-**Where the cursor was last**
+**Jump to where the cursor was last**
 jumping around a document with something like *FIND* can leave you in a place within the document that you don’t want to be, maybe you just wanted to check something from earlier in the document, there should be a way to return to the last known position of the cursor AFTER an action that travels around the doc.
 
 **Serial to List**
 the ability to highlight a list of text in a series separated by commas (something, something, something, and something) and turning it into an ordered/unordered list, and vice versa.
-
-**Indie Publishers**
-build integrations with independent publishing or print houses. Empower individuals before getting in bed with a huge publisher.
 
 **Whiteboard/Storyboard**
 The option of viewing documents as a thumbnail gallery either in the folio, or in the workspace. The thumbnails would be sized according to standard 8.5x11 paper. (or their layout?)
 
 **Self Publishing Content Management System.**
 I think with compilers like Jeckyll, and services like blot or Small Victories which use a dropbox folder to host markdown files as web content, I think it'd be a big sell if someone could manage/publish a website (be it a blog, portfolio, or presentation) directly from the app without ever needing to open a browser.
+
 Type should allow for people to publish their writing on their own. If they have built a website or some other outlet then they should be accommodated
 I think I just want for people to be able to publish and manage their writing within the app. Would be interesting to make this apart of type, and to make the experience more understandable for non-programmers.
+
+It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
 
 **Vendor Layouts**
 The ultimate goal for TYPE is to be a headquarters for writing. Someone should be able to start and end their work from within the app and never need to leave and sign-in to another service or copy+paste their markdown somewhere else. Integrations with Online services like *Wordpress, Medium, Small Victories, and Mailchimp* would be extremely valuable to users.
 
 **Newsletter Services**
-letterfuel
+Could Typy be its own engine for newsletters?
+- letterfuel
 
 **Font Foundries**
 Partnering with Indie foundries to have print layouts use their unique font faces and font pairings (also for self-published websites?)
@@ -720,11 +782,11 @@ Fatype
 Klim
 GrilliType
 
-It’d be cool to establish a skunkworks platform, something similar to Small Victories & Tiny Letter where everything is self hosted and all the data can be found in the app.
-
 **Slash commands**
 - /date - enters the current date
 - /time - current time
 - /tomorrow - date after current date
 
-# Technical
+**Bionic Reading**
+maybe for previewing?
+[link](https://bionic-reading.com/en/)
