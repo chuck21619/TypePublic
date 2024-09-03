@@ -611,13 +611,12 @@
 				CODE_SIGN_ENTITLEMENTS = Type/Type.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LSN9P4E87M;
+				DEVELOPMENT_TEAM = J32P7D7K8V;
 				INFOPLIST_FILE = Type/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.Type;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -631,13 +630,12 @@
 				CODE_SIGN_ENTITLEMENTS = Type/Type.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LSN9P4E87M;
+				DEVELOPMENT_TEAM = J32P7D7K8V;
 				INFOPLIST_FILE = Type/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ZinStudio.Type;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
